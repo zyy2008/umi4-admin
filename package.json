@@ -2,14 +2,14 @@
   "private": true,
   "author": "zyy <zyy2008@vip.qq.com>",
   "scripts": {
-    "dev": "umi dev",
-    "build": "umi build",
-    "postinstall": "umi setup",
-    "setup": "umi setup",
+    "dev": "max dev",
+    "build": "max build",
+    "postinstall": "max setup",
+    "setup": "max setup",
     "start": "npm run dev"
   },
   "dependencies": {
-    "umi": "^4.0.22"
+    "@umijs/max": "^4.0.22"
   },
   "devDependencies": {
     "@types/react": "^18.0.21",
