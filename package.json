@@ -9,6 +9,7 @@
     "start": "npm run dev"
   },
   "dependencies": {
+    "@ant-design/pro-components": "^2.3.12",
     "@umijs/max": "^4.0.22"
   },
   "devDependencies": {
