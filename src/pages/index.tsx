@@ -10,12 +10,7 @@ import "antd/dist/antd.css";
 import "@antv/xflow/dist/index.css";
 import "./index.less";
 
-/**  Demo Props  */
-export interface IDemoProps {
-  anything: string;
-}
-
-const XFlowDemo: React.FC<{}> = (props) => {
+const XFlowView: React.FC<{}> = (props) => {
   const toolbarConfig = useToolbarConfig(props);
   return (
     <XFlow className="xflow-workspace">
@@ -29,10 +24,9 @@ const XFlowDemo: React.FC<{}> = (props) => {
           config={toolbarConfig}
           position={{ top: 0, left: 0, right: 0, height: 40 }}
         />
-        {/* <CanvasMiniMap position={{ bottom: 12, left: 12 }} /> */}
       </FlowchartCanvas>
     </XFlow>
   );
 };
 
-export default XFlowDemo;
+export default XFlowView;
