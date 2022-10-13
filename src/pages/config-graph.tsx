@@ -1,11 +1,13 @@
 import type { IProps } from "./index";
-import type { NsGraph, NsNodeCmd } from "@antv/xflow";
-import type { Graph } from "@antv/x6";
-import { XFlowNodeCommands } from "@antv/xflow";
 import { createHookConfig, DisposableCollection } from "@antv/xflow";
-import { DND_RENDER_ID } from "./constants";
-import { DecisionNode } from "./nodes";
-import { AlgoNode } from "./algo-node";
+import * as NodesComponent from "./nodes";
+
+export function isValidKey(
+  key: string | number | symbol,
+  object: object
+): key is keyof typeof object {
+  return key in object;
+}
 
 export const useGraphHookConfig = createHookConfig<IProps>((config, proxy) => {
   // 获取 Props
@@ -17,7 +19,11 @@ export const useGraphHookConfig = createHookConfig<IProps>((config, proxy) => {
       hooks.reactNodeRender.registerHook({
         name: "add react node",
         handler: async (renderMap) => {
-          renderMap.set(DND_RENDER_ID, DecisionNode);
+          Object.keys(NodesComponent).forEach((key) => {
+            if (isValidKey(key, NodesComponent)) {
+              renderMap.set(key, NodesComponent[key]);
+            }
+          });
         },
       }),
     ];

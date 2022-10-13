@@ -9,6 +9,14 @@ export const NODE_HEIGHT = 36;
 // svg 绘制起始点，解决边不清晰的问题
 export const NODE_PADDING = 1;
 
+export const XFLOW_NODE_SHAPE = "XFLOW_NODE_SHAPE";
+
+export const EDGE_PROCESSING_CLASSNAME = "processing";
+
+export const NODE_DEFAULT_WIDTH = 160;
+
+export const NODE_DEFAULT_HEIGHT = 32;
+
 export const DefaultNodeConfig = {
   stroke: "#A2B1C3",
   fill: "#FFFFFF",
@@ -16,88 +24,3 @@ export const DefaultNodeConfig = {
   fontSize: 12,
   label: "",
 };
-
-export const NODEPOOL = [
-  {
-    name: "Terminal",
-  },
-  {
-    name: "Process",
-  },
-  {
-    name: "Decision",
-  },
-  {
-    name: "Multi Document",
-  },
-  {
-    name: "Connector",
-    width: NODE_HEIGHT,
-    height: NODE_HEIGHT,
-  },
-  {
-    name: "DataIO",
-    ports: ["top", "bottom"],
-  },
-  {
-    name: "Database",
-  },
-  {
-    name: "Hard Disk",
-  },
-  {
-    name: "Stroed Data",
-  },
-  {
-    name: "Document",
-  },
-  {
-    name: "Predefined Process",
-  },
-  {
-    name: "Extract",
-  },
-  {
-    name: "Merge",
-  },
-  {
-    name: "Or",
-    width: NODE_HEIGHT,
-    height: NODE_HEIGHT,
-  },
-  {
-    name: "Manual Input",
-  },
-  {
-    name: "Preparation",
-  },
-  {
-    name: "Delay",
-  },
-  {
-    name: "Manual Operation",
-  },
-  {
-    name: "Display",
-  },
-  {
-    name: "Off Page Link",
-  },
-  {
-    name: "Note Left",
-    label: "≣",
-  },
-  {
-    name: "Note Right",
-    label: "≣",
-  },
-  {
-    name: "Internal Storage",
-  },
-  {
-    name: "Text",
-    label: "text",
-  },
-];
-// 缩放时保存同比例
-export const ASPECTRATIONODE = ["Connector", "Or"];
