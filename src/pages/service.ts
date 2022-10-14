@@ -13,8 +13,7 @@ export namespace MockApi {
   /** 查图的meta元信息 */
   export const queryGraphMeta: NsGraphCmd.GraphMeta.IArgs["graphMetaService"] =
     async (args) => {
-      console.log("queryMeta", args);
-      return { ...args, flowId: args.meta.flowId };
+      return { ...args, flowId: args.meta?.flowId ?? "" };
     };
 
   /** 保存图数据的api */
@@ -36,7 +35,7 @@ export namespace MockApi {
       {
         type: NsGraph.AnchorType.INPUT,
         group: NsGraph.AnchorGroup.TOP,
-        tooltip: "输入桩4",
+        tooltip: "输入桩",
       },
       {
         type: NsGraph.AnchorType.OUTPUT,
@@ -56,6 +55,7 @@ export namespace MockApi {
         return { ...port, id: uuidv4() };
       }),
     };
+    console.log(node);
     /** group没有链接桩 */
     if (groupChildren && groupChildren.length) {
       node.ports = [];

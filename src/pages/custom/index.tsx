@@ -5,12 +5,7 @@ import { Card, CardProps, Space, Input, List, Row, Col, Empty } from "antd";
 import VirtualList from "rc-virtual-list";
 import { useGraphDnd, IPanelNode } from "./dnd-hook";
 import type { IOnNodeDrop } from "./interface";
-import {
-  DecisionNode,
-  DataIONode,
-  TerminalNode,
-  ConnectorNode,
-} from "../nodes";
+import { DecisionNode, DataIONode, TerminalNode, EllipseNode } from "../nodes";
 import "./index.less";
 
 const { Search } = Input;
@@ -76,25 +71,109 @@ const CardList: React.FC<CardListProps> = (props) => {
   );
 };
 
+const ColNode: React.FC<
+  IConfigRenderOptions & { label: string; node: NsGraph.INodeRender }
+> = ({ onMouseDown, label, node }) => (
+  <Col
+    style={{
+      padding: "20px 10px",
+    }}
+    span={12}
+    onMouseDown={onMouseDown({
+      id: uuidv4(),
+      renderKey: "EllipseNode",
+      width: 120,
+      height: 40,
+      label,
+      fontSize: 16,
+    })}
+  >
+    {React.createElement(node, {
+      size: {
+        width: 110,
+        height: 40,
+      },
+      data: { label },
+      position: {
+        x: 0,
+        y: 0,
+      },
+    })}
+  </Col>
+);
+
 const BaseNode: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   return (
     <Row>
       <Col
+        style={{
+          padding: "20px 10px",
+        }}
         span={12}
         onMouseDown={onMouseDown({
           id: uuidv4(),
           renderKey: "DecisionNode",
           label: "if",
+          width: 120,
+          height: 50,
+          fontSize: 16,
+          ports: [
+            {
+              type: NsGraph.AnchorType.OUTPUT,
+              group: NsGraph.AnchorGroup.LEFT,
+              tooltip: "输出桩",
+            },
+            {
+              type: NsGraph.AnchorType.OUTPUT,
+              group: NsGraph.AnchorGroup.RIGHT,
+              tooltip: "输出桩",
+            },
+            {
+              type: NsGraph.AnchorType.INPUT,
+              group: NsGraph.AnchorGroup.TOP,
+              tooltip: "输入桩",
+            },
+          ] as NsGraph.INodeAnchor[],
         })}
       >
-        {React.createElement(DecisionNode)}
+        {React.createElement(DecisionNode, {
+          data: { label: "if" },
+          size: {
+            width: 80,
+            height: 30,
+          },
+          position: {
+            x: 0,
+            y: 0,
+          },
+        })}
       </Col>
       <Col
+        style={{
+          padding: "20px 10px",
+        }}
         span={12}
-        onMouseDown={onMouseDown({ id: uuidv4(), renderKey: "DataIONode" })}
+        onMouseDown={onMouseDown({
+          id: uuidv4(),
+          renderKey: "DataIONode",
+          label: "for",
+          width: 120,
+          height: 50,
+          fontSize: 16,
+        })}
       >
-        {React.createElement(DataIONode)}
+        {React.createElement(DataIONode, {
+          data: { label: "for" },
+          size: {
+            width: 80,
+            height: 30,
+          },
+          position: {
+            x: 0,
+            y: 0,
+          },
+        })}
       </Col>
       <Col
         span={12}
@@ -107,8 +186,7 @@ const BaseNode: React.FC<IConfigRenderOptions> = (props) => {
 };
 
 const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
-  const { graphConfig, onMouseDown, modelService, commandService } =
-    useGraphDnd(props);
+  const { onMouseDown } = useGraphDnd(props);
   return (
     <>
       <CardList
@@ -120,6 +198,13 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
             renderKey: "ConnectorNode",
             width: 55,
             height: 55,
+            ports: [
+              {
+                type: NsGraph.AnchorType.OUTPUT,
+                group: NsGraph.AnchorGroup.BOTTOM,
+                tooltip: "输出桩",
+              },
+            ] as NsGraph.INodeAnchor[],
           },
         ]}
         onMouseDown={onMouseDown}
@@ -141,26 +226,13 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         <BaseNode onMouseDown={onMouseDown} />
       </Card>
       <Card title="自定义" size="small">
-        <div
-          onMouseDown={onMouseDown({
-            id: uuidv4(),
-            renderKey: "ConnectorNode",
-            width: 100,
-            height: 40,
-          })}
-        >
-          {React.createElement(ConnectorNode, {
-            size: {
-              width: 100,
-              height: 40,
-            },
-            data: {},
-            position: {
-              x: 0,
-              y: 0,
-            },
-          })}
-        </div>
+        <Row>
+          <ColNode
+            onMouseDown={onMouseDown}
+            label="自定义"
+            node={EllipseNode}
+          />
+        </Row>
       </Card>
     </>
   );

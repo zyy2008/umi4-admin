@@ -1,5 +1,6 @@
 import type { IProps } from "./index";
 import { createHookConfig, DisposableCollection } from "@antv/xflow";
+import type { Graph } from "@antv/x6";
 import * as NodesComponent from "./nodes";
 
 export function isValidKey(
@@ -24,6 +25,26 @@ export const useGraphHookConfig = createHookConfig<IProps>((config, proxy) => {
               renderMap.set(key, NodesComponent[key]);
             }
           });
+        },
+      }),
+      // 注册修改graphOptions配置的钩子
+      hooks.graphOptions.registerHook({
+        name: "custom-x6-options",
+        after: "dag-extension-x6-options",
+        handler: async (options) => {
+          const graphOptions: Graph.Options = {
+            connecting: {
+              // 是否触发交互事件
+              validateMagnet() {
+                // return magnet.getAttribute('port-group') !== NsGraph.AnchorGroup.TOP
+                return true;
+              },
+            },
+          };
+          options.connecting = {
+            ...options.connecting,
+            ...graphOptions.connecting,
+          };
         },
       }),
     ];
