@@ -35,13 +35,6 @@ export const useCmdConfig = createCmdConfig((config) => {
         name: "get edge config from backend api",
         handler: async (args) => {
           args.createEdgeService = MockApi.addEdge;
-          args.edgeConfig = {
-            ...args.edgeConfig,
-            connector: { name: "rounded" },
-            router: {
-              name: "manhattan",
-            },
-          };
         },
       }),
       hooks.delEdge.registerHook({

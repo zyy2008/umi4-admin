@@ -45,6 +45,7 @@ export const useGraphHookConfig = createHookConfig<IProps>((config, proxy) => {
             ...options.connecting,
             ...graphOptions.connecting,
           };
+          options.grid = true;
         },
       }),
     ];

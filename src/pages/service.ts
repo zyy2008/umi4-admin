@@ -52,10 +52,25 @@ export namespace MockApi {
       ...args.nodeConfig,
       id: nodeId,
       ports: (ports as NsGraph.INodeAnchor[]).map((port) => {
-        return { ...port, id: uuidv4() };
+        return {
+          ...port,
+          id: uuidv4(),
+          attrs: {
+            circle: {
+              r: 4,
+              magnet: true,
+              stroke: "#31d0c6",
+              strokeWidth: 2,
+              fill: "#fff",
+              style: {
+                visibility: "hidden",
+              },
+              class: "xflow-port x6-port-body",
+            },
+          },
+        };
       }),
     };
-    console.log(node);
     /** group没有链接桩 */
     if (groupChildren && groupChildren.length) {
       node.ports = [];

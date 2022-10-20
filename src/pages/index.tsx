@@ -39,9 +39,15 @@ const XFlowView: React.FC<IProps> = (props) => {
       meta={meta}
       hookConfig={graphHooksConfig}
       commandConfig={cmdConfig}
-      // graphConfig={graphConfig}
     >
-      <DagGraphExtension />
+      <DagGraphExtension
+        router={{
+          name: "manhattan",
+        }}
+        connector={{
+          name: "rounded",
+        }}
+      />
       <CustomPanel
         position={{ width: 230, top: 0, bottom: 0, left: 0 }}
         onNodeDrop={dndPanelConfig.onNodeDrop}
@@ -56,7 +62,10 @@ const XFlowView: React.FC<IProps> = (props) => {
         header={<div>元件</div>}
       /> */}
 
-      <XFlowCanvas position={{ top: 0, left: 230, right: 290, bottom: 0 }}>
+      <XFlowCanvas
+        position={{ top: 0, left: 230, right: 290, bottom: 0 }}
+        config={graphConfig}
+      >
         <CanvasToolbar
           layout="horizontal"
           config={toolbarConfig}

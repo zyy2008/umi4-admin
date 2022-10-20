@@ -1,7 +1,7 @@
 import type { NsGraph } from "@antv/xflow-core";
 import { NODE_HEIGHT, NODE_WIDTH, DefaultNodeConfig } from "../../constants";
 
-export const EllipseNode: NsGraph.INodeRender = (props) => {
+export const RectNode: NsGraph.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data = {} } =
     props;
   const {
@@ -20,14 +20,7 @@ export const EllipseNode: NsGraph.INodeRender = (props) => {
       width="100%"
       height="100%"
     >
-      <ellipse
-        cx={width / 2}
-        cy={height / 2}
-        rx={width / 2}
-        ry={height / 2}
-        fill={fill}
-        stroke={stroke}
-      />
+      <rect width={width} height={height} rx="10" stroke={stroke} fill={fill} />
       <text
         x={width / 2}
         y={height / 2}
