@@ -1,5 +1,6 @@
 import type { IProps } from "./index";
 import { createHookConfig, DisposableCollection } from "@antv/xflow";
+import { Shape } from "@antv/x6";
 import type { Graph } from "@antv/x6";
 import * as NodesComponent from "./nodes";
 
@@ -34,6 +35,22 @@ export const useGraphHookConfig = createHookConfig<IProps>((config, proxy) => {
         handler: async (options) => {
           const graphOptions: Graph.Options = {
             connecting: {
+              createEdge() {
+                return new Shape.Edge({
+                  attrs: {
+                    line: {
+                      stroke: "#A2B1C3",
+                      strokeWidth: 2,
+                      targetMarker: {
+                        name: "block",
+                        width: 12,
+                        height: 8,
+                      },
+                    },
+                  },
+                  zIndex: 0,
+                });
+              },
               // 是否触发交互事件
               validateMagnet() {
                 // return magnet.getAttribute('port-group') !== NsGraph.AnchorGroup.TOP

@@ -61,7 +61,13 @@ const CardList: React.FC<CardListProps> = (props) => {
           itemKey="id"
         >
           {(item) => (
-            <List.Item onMouseDown={onMouseDown(item)} className="node-list">
+            <List.Item
+              onMouseDown={onMouseDown({
+                ...item,
+                fontSize: 15,
+              })}
+              className="node-list"
+            >
               {item.label}
             </List.Item>
           )}
@@ -88,16 +94,14 @@ const ColNode: React.FC<
   const { label } = nodeConfig;
   return (
     <Col
-      style={{
-        padding: "10px",
-      }}
+      className="col-node"
       span={12}
       onMouseDown={onMouseDown({
         width: 110,
         height: 55,
         ...nodeConfig,
         id: uuidv4(),
-        fontSize: 16,
+        fontSize: 15,
       })}
     >
       {React.createElement(node, {

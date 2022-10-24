@@ -15,11 +15,6 @@ export default defineConfig({
       path: "/home",
       component: "./index",
     },
-    {
-      name: "权限演示",
-      path: "/access",
-      component: "./index",
-    },
   ],
   npmClient: "yarn",
 });
