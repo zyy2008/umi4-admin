@@ -11,6 +11,10 @@ export default defineConfig({
   },
   qiankun: {
     master: {
+      sandbox: {
+        strictStyleIsolation: false,
+        experimentalStyleIsolation: true,
+      },
       apps: [
         {
           name: "vue3",
