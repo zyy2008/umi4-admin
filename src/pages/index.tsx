@@ -35,6 +35,13 @@ const XFlowView: React.FC<IProps> = (props) => {
       bodyStyle={{
         padding: 0,
         paddingTop: 1,
+        flex: 1,
+        position: "relative",
+      }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
       }}
       size="small"
     >

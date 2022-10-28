@@ -260,9 +260,15 @@ const CustomPanel: React.FC<
       <Card
         title="123"
         size="small"
-        style={{ height: "100%" }}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+        }}
         bodyStyle={{
           padding: 0,
+          flex: 1,
+          overflow: "auto",
         }}
       >
         <CardBody onNodeDrop={onNodeDrop} />

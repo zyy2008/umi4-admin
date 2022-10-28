@@ -9,12 +9,13 @@
     "start": "npm run dev"
   },
   "dependencies": {
-    "@ant-design/pro-components": "^2.3.12",
-    "@antv/xflow": "^1.0.51",
-    "@umijs/max": "^4.0.22",
-    "antd": "4.22.8",
+    "@alita/plugins": "^3.1.1",
+    "@ant-design/pro-components": "^2.3.25",
+    "@antv/xflow": "^1.0.52",
+    "@umijs/max": "^4.0.27",
+    "antd": "4.23.6",
     "lodash": "^4.17.21",
-    "rc-virtual-list": "^3.4.8",
+    "rc-virtual-list": "^3.4.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
