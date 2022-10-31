@@ -9,7 +9,7 @@ export const NODE_HEIGHT = 36;
 // svg 绘制起始点，解决边不清晰的问题
 export const NODE_PADDING = 1;
 
-export const XFLOW_NODE_SHAPE = "XFLOW_NODE_SHAPE";
+export const XFLOW_NODE_SHAPE = "XFLOW_NODE_SHAPE_ADD";
 
 export const EDGE_PROCESSING_CLASSNAME = "processing";
 

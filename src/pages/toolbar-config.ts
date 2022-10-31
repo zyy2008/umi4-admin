@@ -61,6 +61,7 @@ namespace NsConfig {
           {
             saveGraphDataService: async (meta, data) => {
               console.log(data);
+              console.log(meta);
               message.success("nodes count:" + data.nodes.length);
             },
           }

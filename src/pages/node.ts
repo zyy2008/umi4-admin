@@ -85,18 +85,6 @@ if (Node.registry.exist(XFLOW_NODE_SHAPE)) {
               zIndex: 12,
             },
           },
-          {
-            tagName: "polygon",
-            selector: "xflow-port-arrow",
-            className: "xflow-port-arrow",
-            attrs: {
-              points: "0,0 8,0 4,4 ",
-              fill: "#d9d9d9",
-              stroke: "#d9d9d9",
-              zIndex: 13,
-              transform: "translate(-4,0)",
-            },
-          },
         ],
       },
     ],
