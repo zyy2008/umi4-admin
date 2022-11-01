@@ -79,7 +79,6 @@ const XFlowView: React.FC<IProps> = (props) => {
           formSchemaService={NsJsonForm.formSchemaService}
           formValueUpdateService={NsJsonForm.formValueUpdateService}
           position={{ top: 0, bottom: 0, right: 0, width: 290 }}
-          // header={() => <div>123</div>}
           footerPosition={{
             height: 0,
           }}

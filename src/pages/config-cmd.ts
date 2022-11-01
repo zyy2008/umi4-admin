@@ -4,13 +4,10 @@ import {
   NsEdgeCmd,
   NsNodeCmd,
 } from "@antv/xflow";
-import { Shape, Edge } from "@antv/x6";
+import { Shape } from "@antv/x6";
 import { MockApi } from "./service";
-import { ReactShape } from "@antv/x6-react-shape";
-import { NsGraph, XFlowConstants } from "@antv/xflow-core";
+import { NsGraph } from "@antv/xflow-core";
 import { XFlowNode } from "./node";
-
-const { AnchorGroup } = NsGraph;
 
 export const useCmdConfig = createCmdConfig((config) => {
   // 设置hook
@@ -84,7 +81,6 @@ export const useCmdConfig = createCmdConfig((config) => {
               data: { ...edgeConfig },
               zIndex: 0,
             });
-            console.log(edge);
             return edge;
           };
           args.cellFactory = cellFactory;
