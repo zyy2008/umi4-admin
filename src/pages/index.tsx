@@ -5,12 +5,14 @@ import {
   XFlowCanvas,
   CanvasNodePortTooltip,
   JsonSchemaForm,
+  CanvasContextMenu,
 } from "@antv/xflow";
 import * as dndPanelConfig from "./config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
 import { useGraphConfig } from "./graph-config";
 import { useGraphHookConfig } from "./config-graph";
 import { useCmdConfig } from "./config-cmd";
+import { useMenuConfig } from "./config-menu";
 import { NsJsonForm } from "./form-service";
 import CustomPanel from "./custom";
 import { Card } from "antd";
@@ -28,6 +30,7 @@ const XFlowView: React.FC<IProps> = (props) => {
   const graphConfig = useGraphConfig(props);
   const graphHooksConfig = useGraphHookConfig(props);
   const cmdConfig = useCmdConfig();
+  const menuConfig = useMenuConfig();
 
   return (
     <Card
@@ -73,6 +76,7 @@ const XFlowView: React.FC<IProps> = (props) => {
             config={toolbarConfig}
             position={{ top: 0, left: 0, right: 0, height: 40 }}
           />
+          <CanvasContextMenu config={menuConfig} />
           <CanvasNodePortTooltip />
         </XFlowCanvas>
         <JsonSchemaForm

@@ -1,24 +1,38 @@
 import type { IToolbarItemOptions, IToolbarGroupOptions } from "@antv/xflow";
 import { createToolbarConfig } from "@antv/xflow";
 import { XFlowGraphCommands, XFlowNodeCommands, IconStore } from "@antv/xflow";
-import {
-  SaveOutlined,
-  PlusCircleOutlined,
-  DeleteOutlined,
-} from "@ant-design/icons";
+import { SaveOutlined, CheckOutlined, CodeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import type { NsGraphCmd, NsNodeCmd } from "@antv/xflow";
 
 namespace NsConfig {
   /** 注册icon 类型 */
-  IconStore.set("PlusCircleOutlined", PlusCircleOutlined);
-  IconStore.set("DeleteOutlined", DeleteOutlined);
   IconStore.set("SaveOutlined", SaveOutlined);
+  IconStore.set("CheckOutlined", CheckOutlined);
+  IconStore.set("CodeOutlined", CodeOutlined);
   /** 获取toobar配置项 */
   export const getToolbarItems: () => Promise<
     IToolbarGroupOptions[]
   > = async () => {
-    const toolbarGroup: IToolbarItemOptions[] = [
+    const toolbarGroup1: IToolbarItemOptions[] = [
+      {
+        id: "CheckOutlined",
+        iconName: "CheckOutlined",
+        tooltip: "知识校验",
+        onClick: ({ commandService }) => {
+          console.log(commandService);
+        },
+      },
+      {
+        id: "CodeOutlined",
+        iconName: "CodeOutlined",
+        tooltip: "查看代码",
+        onClick: ({ commandService }) => {
+          console.log(commandService);
+        },
+      },
+    ];
+    const toolbarGroup2: IToolbarItemOptions[] = [
       {
         id: XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         iconName: "SaveOutlined",
@@ -38,7 +52,10 @@ namespace NsConfig {
       },
     ];
 
-    return [{ name: "nodeGroup", items: toolbarGroup }];
+    return [
+      { name: "nodeGroup", items: toolbarGroup1 },
+      { name: "graphGroup", items: toolbarGroup2 },
+    ];
   };
 }
 
