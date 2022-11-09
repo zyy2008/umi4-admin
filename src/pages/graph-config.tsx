@@ -1,17 +1,24 @@
 import { createGraphConfig, NsGraph } from "@antv/xflow";
 import { EdgeView } from "@antv/x6";
+import {
+  XFlowGraphCommands,
+  XFlowEdgeCommands,
+  NsGraphCmd,
+  NsEdgeCmd,
+} from "@antv/xflow";
+import type { EventArgs } from "@antv/x6/lib/graph/events";
 /**  graphConfig：配置Graph  */
 export const useGraphConfig = createGraphConfig<any>((graphConfig) => {
   const events: NsGraph.IEvent[] = [
     {
       eventName: "node:mouseenter",
-      callback: (e) => {
+      callback: () => {
         changePortsVisible(true);
       },
     },
     {
       eventName: "node:mouseleave",
-      callback: (e) => {
+      callback: () => {
         changePortsVisible(false);
       },
     },

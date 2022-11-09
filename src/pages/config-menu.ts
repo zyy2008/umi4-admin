@@ -1,5 +1,5 @@
 import type { NsGraph } from "@antv/xflow";
-import type { NsNodeCmd, NsEdgeCmd, MODELS } from "@antv/xflow";
+import type { NsNodeCmd, NsEdgeCmd } from "@antv/xflow";
 import type { IMenuOptions } from "@antv/xflow";
 import { createCtxMenuConfig } from "@antv/xflow";
 import { MenuItemType } from "@antv/xflow";

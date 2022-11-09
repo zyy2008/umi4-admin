@@ -4,10 +4,10 @@ import {
   NsEdgeCmd,
   NsNodeCmd,
 } from "@antv/xflow";
-import { Shape } from "@antv/x6";
+import { Shape, Node } from "@antv/x6";
 import { MockApi } from "./service";
-import { NsGraph } from "@antv/xflow-core";
 import { XFlowNode } from "./node";
+import type { Graph as X6Graph } from "@antv/x6";
 
 export const useCmdConfig = createCmdConfig((config) => {
   // 设置hook
@@ -87,6 +87,31 @@ export const useCmdConfig = createCmdConfig((config) => {
         },
       }),
       hooks.addEdge.registerHook({
+        name: "after add edge",
+        handler: async (handlerArgs, handler: any) => {
+          const main = async (args: any) => {
+            const res = (await handler(args)) as NsEdgeCmd.AddEdge.IResult;
+            if (res && res.edgeCell) {
+              const getSourceCell = res.edgeCell.getSourceCell() as Node;
+              const portId = res.edgeCell.getSourcePortId() as string;
+              getSourceCell.setPortProp(portId, "connected", true);
+              const { label } = getSourceCell.getData();
+              if (label && label === "if") {
+                const x6Graph = (await args.getX6Graph()) as X6Graph;
+                const edges = x6Graph.getOutgoingEdges(getSourceCell);
+                if (edges && edges.length === 1) {
+                  res.edgeCell.setLabels("true");
+                } else {
+                  res.edgeCell.setLabels("false");
+                }
+              }
+            }
+            return res;
+          };
+          return main;
+        },
+      }),
+      hooks.addEdge.registerHook({
         name: "get edge config from backend api",
         handler: async (args) => {
           args.createEdgeService = MockApi.addEdge;
@@ -97,6 +122,36 @@ export const useCmdConfig = createCmdConfig((config) => {
         name: "get edge config from backend api",
         handler: async (args) => {
           args.deleteEdgeService = MockApi.delEdge;
+        },
+      }),
+      hooks.delEdge.registerHook({
+        name: "after del edge",
+        handler: async (args, handler: any) => {
+          const newHandler = async (handlerArgs: any) => {
+            const result: NsEdgeCmd.DelEdge.IResult = await handler(
+              handlerArgs
+            );
+            const { sourceCell, sourcePortId } = result;
+            if (sourceCell && sourceCell.isNode() && sourcePortId) {
+              sourceCell.setPortProp(sourcePortId, "connected", false);
+              const { label } = sourceCell.getData();
+              if (label && label === "if") {
+                const x6Graph = (await handlerArgs.getX6Graph()) as X6Graph;
+                const edges = x6Graph.getOutgoingEdges(sourceCell);
+                if (edges && edges.length > 0) {
+                  const [edge] = edges;
+                  const sourcePortId = edge.getSourcePortId() as string;
+                  const targetPortId = edge.getTargetPortId() as string;
+                  const targetCell = edge.getTargetCell() as Node;
+                  targetCell.setPortProp(targetPortId, "connected", false);
+                  sourceCell.setPortProp(sourcePortId, "connected", false);
+                  x6Graph.removeEdge(edge);
+                }
+              }
+            }
+            return result;
+          };
+          return newHandler;
         },
       }),
     ];

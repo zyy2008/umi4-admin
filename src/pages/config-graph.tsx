@@ -1,5 +1,5 @@
 import type { IProps } from "./index";
-import { createHookConfig, DisposableCollection } from "@antv/xflow";
+import { createHookConfig, DisposableCollection, NsGraph } from "@antv/xflow";
 import type { Graph } from "@antv/x6";
 import { Shape } from "@antv/x6";
 import * as NodesComponent from "./nodes";
