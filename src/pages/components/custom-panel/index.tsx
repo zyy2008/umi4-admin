@@ -1,7 +1,7 @@
 import React from "react";
 import { WorkspacePanel, IWorkspacePanelProps, uuidv4 } from "@antv/xflow";
 import { NsGraph, IGraphConfig } from "@antv/xflow-core";
-import { Card, CardProps, Space, Input, List, Row, Col, Empty } from "antd";
+import { Card, Input, List, Row, Col, Empty } from "antd";
 import VirtualList from "rc-virtual-list";
 import { useGraphDnd, IPanelNode } from "./dnd-hook";
 import type { IOnNodeDrop } from "./interface";
@@ -12,7 +12,7 @@ import {
   EllipseNode,
   PreparationNode,
   ManualOperationNode,
-} from "../nodes";
+} from "@/pages/nodes";
 import "./index.less";
 
 const { Search } = Input;

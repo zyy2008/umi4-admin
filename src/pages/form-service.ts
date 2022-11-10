@@ -1,6 +1,7 @@
 import { NsJsonSchemaForm, XFlowNodeCommands } from "@antv/xflow";
 import { set } from "lodash";
 import type { NsNodeCmd, NsGraph } from "@antv/xflow";
+import { ControlShapeEnum } from "./components";
 
 export namespace NsJsonForm {
   /** ControlShape的Enum */
@@ -44,6 +45,91 @@ export namespace NsJsonForm {
         ],
       };
     }
+    const { renderKey } = targetData;
+    const groups: () => NsJsonSchemaForm.IGroup[] = () => {
+      let controls: NsJsonSchemaForm.IControlSchema[];
+      switch (renderKey) {
+        case "ConnectorNode":
+          controls = [
+            {
+              name: "label",
+              label: "参数名称",
+              shape: ControlShape.INPUT,
+              value: targetData.label,
+              disabled: true,
+            },
+            {
+              name: "type",
+              label: "参数类型",
+              shape: ControlShape.SELECT,
+              value: targetData.type,
+              options: [
+                {
+                  title: "int",
+                  value: "int",
+                },
+                {
+                  title: "string",
+                  value: "string",
+                },
+              ],
+            },
+          ];
+          break;
+        case "RectNode":
+          controls = [
+            {
+              name: "label",
+              label: "事实名称",
+              shape: ControlShape.INPUT,
+              value: targetData.label,
+              disabled: true,
+            },
+            {
+              name: "version",
+              label: "事实版本",
+              shape: ControlShape.INPUT,
+              value: targetData.version,
+              disabled: true,
+            },
+            {
+              name: "type",
+              label: "事实类型",
+              shape: ControlShape.SELECT,
+              value: targetData.type,
+              options: [
+                {
+                  title: "int",
+                  value: "int",
+                },
+                {
+                  title: "string",
+                  value: "string",
+                },
+              ],
+            },
+          ];
+          break;
+        case "DecisionNode":
+          controls = [
+            {
+              name: "name",
+              label: "条件名称",
+              shape: ControlShape.INPUT,
+              value: targetData.name,
+            },
+          ];
+          break;
+        default:
+          return [];
+      }
+      return [
+        {
+          name: "1",
+          controls,
+        },
+      ];
+    };
 
     return {
       /** 配置一个Tab */
@@ -51,31 +137,7 @@ export namespace NsJsonForm {
         {
           /** Tab的title */
           name: "节点配置",
-          groups: [
-            {
-              name: "group1",
-              controls: [
-                {
-                  name: "label",
-                  label: "节点Label",
-                  shape: ControlShape.INPUT,
-                  value: targetData.label,
-                },
-                {
-                  name: "x",
-                  label: "x",
-                  shape: ControlShape.FLOAT,
-                  value: targetData.x,
-                },
-                {
-                  name: "y",
-                  label: "y",
-                  shape: ControlShape.FLOAT,
-                  value: targetData.y,
-                },
-              ],
-            },
-          ],
+          groups: groups(),
         },
       ],
     };

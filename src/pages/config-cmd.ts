@@ -145,7 +145,7 @@ export const useCmdConfig = createCmdConfig((config) => {
                   const targetCell = edge.getTargetCell() as Node;
                   targetCell.setPortProp(targetPortId, "connected", false);
                   sourceCell.setPortProp(sourcePortId, "connected", false);
-                  x6Graph.removeEdge(edge);
+                  edge.remove();
                 }
               }
             }

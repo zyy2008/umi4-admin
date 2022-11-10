@@ -14,7 +14,7 @@ import { useGraphHookConfig } from "./config-graph";
 import { useCmdConfig } from "./config-cmd";
 import { useMenuConfig } from "./config-menu";
 import { NsJsonForm } from "./form-service";
-import CustomPanel from "./custom";
+import { CustomPanel, controlMapService } from "./components";
 import { Card } from "antd";
 import "antd/dist/antd.css";
 import "@antv/xflow/dist/index.css";
@@ -80,6 +80,7 @@ const XFlowView: React.FC<IProps> = (props) => {
           <CanvasNodePortTooltip />
         </XFlowCanvas>
         <JsonSchemaForm
+          controlMapService={controlMapService}
           formSchemaService={NsJsonForm.formSchemaService}
           formValueUpdateService={NsJsonForm.formValueUpdateService}
           position={{ top: 0, bottom: 0, right: 0, width: 290 }}
