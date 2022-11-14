@@ -1,12 +1,24 @@
 import React from "react";
-import type { NsJsonSchemaForm, NsGraphCmd } from "@antv/xflow";
+import type { NsJsonSchemaForm } from "@antv/xflow";
+import { FormItemWrapper } from "@antv/xflow";
 import {
-  useXFlowApp,
-  MODELS,
-  XFlowGraphCommands,
-  FormItemWrapper,
-} from "@antv/xflow";
-import { Form, Input } from "antd";
+  Form,
+  Input,
+  Dropdown,
+  Button,
+  Space,
+  Menu,
+  Card,
+  Divider,
+} from "antd";
+import insertTextAtCursor from "insert-text-at-cursor";
+
+const tags: string[] = ["+", "-", "*", "/"];
+
+const items = [
+  { label: "菜单项一", key: "item-1" }, // 菜单项务必填写 key
+  { label: "菜单项二", key: "item-2" },
+];
 
 interface IEditorProps extends NsJsonSchemaForm.IFormItemProps {
   controlSchema: NsJsonSchemaForm.IControlSchema;
@@ -16,30 +28,60 @@ interface IEditorProps extends NsJsonSchemaForm.IFormItemProps {
 
 const Editor: React.FC<IEditorProps> = (props) => {
   const { placeholder, disabled, onChange, value } = props;
-  const { commandService, modelService } = useXFlowApp();
-  React.useEffect(() => {
-    commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
-      XFlowGraphCommands.SAVE_GRAPH_DATA.id,
-      {
-        saveGraphDataService: async (meta, graph) => {
-          /** 当前选中节点数据 */
-          const nodes = await MODELS.SELECTED_NODES.useValue(modelService);
-          console.log(graph);
-          /** 拿到数据，触发onChange*/
-          onChange?.(JSON.stringify(graph));
-          return { err: null, data: graph, meta };
-        },
-      }
-    );
-  });
+  const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
+  const insertText = (val: string) => {
+    textAreaRef.current && insertTextAtCursor(textAreaRef.current, val);
+  };
 
   return (
-    <Input.TextArea
-      value={value}
-      placeholder={placeholder}
-      disabled={disabled}
-      rows={10}
-    />
+    <Card
+      type="inner"
+      style={{
+        margin: "0 -14px",
+      }}
+      bordered
+      title={
+        <>
+          <Space>
+            <Dropdown
+              placement="bottom"
+              arrow={{ pointAtCenter: true }}
+              overlay={
+                <Menu items={items} onClick={({ key }) => insertText(key)} />
+              }
+            >
+              <Button>参数</Button>
+            </Dropdown>
+            <Dropdown
+              placement="bottom"
+              arrow={{ pointAtCenter: true }}
+              overlay={
+                <Menu items={items} onClick={({ key }) => insertText(key)} />
+              }
+            >
+              <Button>函数</Button>
+            </Dropdown>
+          </Space>
+          <Divider style={{ margin: "10px 0" }} />
+          <Space>
+            {tags.map((item) => (
+              <Button key={item} onClick={() => insertText(item)}>
+                {item}
+              </Button>
+            ))}
+          </Space>
+        </>
+      }
+    >
+      <Input.TextArea
+        value={value}
+        placeholder={placeholder}
+        disabled={disabled}
+        rows={10}
+        ref={textAreaRef}
+        onChange={(val) => onChange?.(val.currentTarget.value)}
+      />
+    </Card>
   );
 };
 
@@ -48,6 +90,7 @@ export const EditorShape: React.FC<NsJsonSchemaForm.IControlProps> = (
 ) => {
   const { controlSchema } = props;
   const { required, tooltip, extra, name, label, placeholder } = controlSchema;
+  console.log(props);
 
   return (
     <FormItemWrapper schema={controlSchema}>

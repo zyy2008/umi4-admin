@@ -88,7 +88,7 @@ export const useCmdConfig = createCmdConfig((config) => {
       }),
       hooks.addEdge.registerHook({
         name: "after add edge",
-        handler: async (handlerArgs, handler: any) => {
+        handler: async (_, handler: any) => {
           const main = async (args: any) => {
             const res = (await handler(args)) as NsEdgeCmd.AddEdge.IResult;
             if (res && res.edgeCell) {

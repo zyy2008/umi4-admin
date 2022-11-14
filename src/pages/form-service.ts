@@ -118,6 +118,12 @@ export namespace NsJsonForm {
               shape: ControlShape.INPUT,
               value: targetData.name,
             },
+            {
+              name: "expression",
+              label: "表达式编辑",
+              shape: ControlShapeEnum.EDITOR_SHAPE,
+              value: targetData.expression,
+            },
           ];
           break;
         default:
