@@ -91,8 +91,6 @@ export const EditorShape: React.FC<NsJsonSchemaForm.IControlProps> = (
 ) => {
   const { controlSchema } = props;
   const { required, tooltip, extra, name, label, placeholder } = controlSchema;
-  console.log(props);
-
   return (
     <FormItemWrapper schema={controlSchema}>
       {({ disabled, hidden, initialValue }) => {
