@@ -10,12 +10,13 @@ import {
   Menu,
   Card,
   Divider,
+  MenuProps,
 } from "antd";
 import insertTextAtCursor from "insert-text-at-cursor";
 
 const tags: string[] = ["+", "-", "*", "/"];
 
-const items = [
+const items: MenuProps["items"] = [
   { label: "菜单项一", key: "item-1" }, // 菜单项务必填写 key
   { label: "菜单项二", key: "item-2" },
 ];
