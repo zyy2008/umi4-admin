@@ -36,14 +36,14 @@ export default defineConfig({
       component: "./home",
     },
     {
-      name: "页面1",
-      path: "/page1",
-      component: "./index",
+      name: "知识编辑",
+      path: "/edit",
+      component: "./edit",
     },
     {
-      path: "/vue3/dashboard",
-      name: "欢迎",
-      microApp: "vue3",
+      path: "/view",
+      name: "知识图谱",
+      component: "./view",
     },
     {
       path: "/vue3/page1",

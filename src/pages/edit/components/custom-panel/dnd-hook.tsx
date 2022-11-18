@@ -3,7 +3,7 @@ import type { Graph } from "@antv/x6";
 import { useXFlowApp, getNodeReactComponent } from "@antv/xflow-core";
 import type { IGraphConfig, NsGraph } from "@antv/xflow-core";
 import { Addon } from "@antv/x6";
-import { XFlowNode } from "@/pages/node";
+import { XFlowNode } from "../../node";
 
 export interface IPanelNode extends NsGraph.INodeConfig {
   /** disable */

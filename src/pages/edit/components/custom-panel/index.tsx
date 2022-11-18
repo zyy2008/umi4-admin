@@ -12,7 +12,7 @@ import {
   EllipseNode,
   PreparationNode,
   ManualOperationNode,
-} from "@/pages/nodes";
+} from "@/pages/edit/nodes";
 import "./index.less";
 
 const { Search } = Input;
