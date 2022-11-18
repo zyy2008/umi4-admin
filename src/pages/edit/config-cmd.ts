@@ -88,13 +88,23 @@ export const useCmdConfig = createCmdConfig((config) => {
       }),
       hooks.addEdge.registerHook({
         name: "after add edge",
+        after: "after add edge, set target port props",
         handler: async (_, handler: any) => {
           const main = async (args: any) => {
             const res = (await handler(args)) as NsEdgeCmd.AddEdge.IResult;
             if (res && res.edgeCell) {
+              const targetNode = res.edgeCell.getTargetCell() as Node;
               const getSourceCell = res.edgeCell.getSourceCell() as Node;
               const portId = res.edgeCell.getSourcePortId() as string;
               getSourceCell.setPortProp(portId, "connected", true);
+              getSourceCell.setData({
+                ...getSourceCell.getData(),
+                ports: getSourceCell.getParsedPorts(),
+              });
+              targetNode.setData({
+                ...targetNode.getData(),
+                ports: targetNode.getParsedPorts(),
+              });
               const { label } = getSourceCell.getData();
               if (label && label === "if") {
                 const x6Graph = (await args.getX6Graph()) as X6Graph;
@@ -126,14 +136,26 @@ export const useCmdConfig = createCmdConfig((config) => {
       }),
       hooks.delEdge.registerHook({
         name: "after del edge",
+        after: "afetr del edge, reset target node port props",
         handler: async (args, handler: any) => {
           const newHandler = async (handlerArgs: any) => {
             const result: NsEdgeCmd.DelEdge.IResult = await handler(
               handlerArgs
             );
-            const { sourceCell, sourcePortId } = result;
+            const { sourceCell, sourcePortId, targetCell, targetPortId } =
+              result;
+            if (targetCell && targetCell.isNode() && targetPortId) {
+              targetCell.setData({
+                ...targetCell.getData(),
+                ports: targetCell.getParsedPorts(),
+              });
+            }
             if (sourceCell && sourceCell.isNode() && sourcePortId) {
               sourceCell.setPortProp(sourcePortId, "connected", false);
+              sourceCell.setData({
+                ...sourceCell.getData(),
+                ports: sourceCell.getParsedPorts(),
+              });
               const { label } = sourceCell.getData();
               if (label && label === "if") {
                 const x6Graph = (await handlerArgs.getX6Graph()) as X6Graph;
@@ -145,6 +167,14 @@ export const useCmdConfig = createCmdConfig((config) => {
                   const targetCell = edge.getTargetCell() as Node;
                   targetCell.setPortProp(targetPortId, "connected", false);
                   sourceCell.setPortProp(sourcePortId, "connected", false);
+                  targetCell.setData({
+                    ...targetCell.getData(),
+                    ports: targetCell.getParsedPorts(),
+                  });
+                  sourceCell.setData({
+                    ...sourceCell.getData(),
+                    ports: sourceCell.getParsedPorts(),
+                  });
                   edge.remove();
                 }
               }

@@ -32,8 +32,8 @@ export namespace NsJsonForm {
   export const formSchemaService: NsJsonSchemaForm.IFormSchemaService = async (
     args
   ) => {
-    const { targetData } = args;
-    if (!targetData) {
+    const { targetData, targetType } = args;
+    if (!targetData || targetType === "edge") {
       return {
         tabs: [
           {
