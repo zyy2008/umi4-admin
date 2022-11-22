@@ -1,13 +1,11 @@
 import type { NsGraph } from "@antv/xflow-core";
-import { createPath } from "../../utils";
 import {
-  NODE_WIDTH,
   NODE_HEIGHT,
-  NODE_PADDING,
+  NODE_WIDTH,
   DefaultNodeConfig,
-} from "../../constants";
+} from "@/components/flow/constants";
 
-export const DataIONode: NsGraph.INodeRender = (props) => {
+export const SectorNode: NsGraph.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data = {} } =
     props;
   const {
@@ -19,16 +17,6 @@ export const DataIONode: NsGraph.INodeRender = (props) => {
   } = data;
   const { width, height } = size;
 
-  const slope = height / 2; // 用于计算斜率 tan(&) =  slope / height
-
-  const path = [
-    ["M", slope - NODE_PADDING, NODE_PADDING], // top-left
-    ["L", width - 2 * NODE_PADDING, NODE_PADDING], // top-right
-    ["L", width - slope, height - 2 * NODE_PADDING], // bottom-right
-    ["L", NODE_PADDING, height - 2 * NODE_PADDING], // bottom-left
-    ["Z"],
-  ];
-
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
@@ -36,7 +24,14 @@ export const DataIONode: NsGraph.INodeRender = (props) => {
       width="100%"
       height="100%"
     >
-      <path d={createPath(path)} fill={fill} stroke={stroke} />
+      <path
+        d={`M 0 ${height}
+        A ${height} ${height} 0 0 1 ${height * 2} ${height}
+        L 0 ${height}
+        Z`}
+        fill={fill}
+        stroke={stroke}
+      />
       <text
         x={width / 2}
         y={height / 2}

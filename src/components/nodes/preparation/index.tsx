@@ -1,13 +1,13 @@
 import type { NsGraph } from "@antv/xflow-core";
-import { createPath } from "../../utils";
+import { createPath } from "@/components/flow/utils";
 import {
   NODE_WIDTH,
   NODE_HEIGHT,
   NODE_PADDING,
   DefaultNodeConfig,
-} from "../../constants";
+} from "@/components/flow/constants";
 
-export const TerminalNode: NsGraph.INodeRender = (props) => {
+export const PreparationNode: NsGraph.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data = {} } =
     props;
   const {
@@ -18,33 +18,16 @@ export const TerminalNode: NsGraph.INodeRender = (props) => {
     fontSize = DefaultNodeConfig.fontSize,
   } = data;
   const { width, height } = size;
-  const rx = Math.min(height, width) / 2;
+  const rx = Math.tan(Math.PI / 6) * (height / 2);
   const path = [
     ["M", rx, NODE_PADDING], // top-left
     ["L", width - rx, NODE_PADDING], // top-right
-    [
-      "C",
-      width - 2 * NODE_PADDING,
-      NODE_PADDING,
-      width - 2 * NODE_PADDING,
-      height / 2,
-    ],
-    ["", width - 2 * NODE_PADDING, height / 2],
-    [
-      "C",
-      width - 2 * NODE_PADDING,
-      height / 2,
-      width - 2 * NODE_PADDING,
-      height - 2 * NODE_PADDING,
-    ],
-    ["", width - rx, height - 2 * NODE_PADDING], // bottom-right
+    ["L", width - 2 * NODE_PADDING, height / 2],
+    ["L", width - rx, height - 2 * NODE_PADDING], // bottom-right
     ["L", rx, height - 2 * NODE_PADDING], // bottom-left
-    ["C", NODE_PADDING, height - 2 * NODE_PADDING, NODE_PADDING, height / 2],
-    ["", NODE_PADDING, height / 2],
-    ["C", NODE_PADDING, height / 2, NODE_PADDING, NODE_PADDING],
-    ["", rx, NODE_PADDING],
+    ["L", NODE_PADDING, height / 2],
+    ["Z"],
   ];
-
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
@@ -52,12 +35,6 @@ export const TerminalNode: NsGraph.INodeRender = (props) => {
       width="100%"
       height="100%"
     >
-      {/* 一次注册，多次调用 */}
-      {/* <defs>
-        <filter id="shadow">
-          <feDropShadow dx="0" dy="0" stdDeviation="0.5" floodColor="#fff" />
-        </filter>
-      </defs> */}
       <path d={createPath(path)} fill={fill} stroke={stroke} />
       <text
         x={width / 2}

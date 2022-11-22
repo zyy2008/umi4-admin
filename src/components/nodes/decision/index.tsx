@@ -1,7 +1,13 @@
 import type { NsGraph } from "@antv/xflow-core";
-import { NODE_HEIGHT, NODE_WIDTH, DefaultNodeConfig } from "../../constants";
+import { createPath } from "@/components/flow/utils";
+import {
+  NODE_HEIGHT,
+  NODE_PADDING,
+  NODE_WIDTH,
+  DefaultNodeConfig,
+} from "@/components/flow/constants";
 
-export const SectorNode: NsGraph.INodeRender = (props) => {
+export const DecisionNode: NsGraph.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data = {} } =
     props;
   const {
@@ -12,6 +18,13 @@ export const SectorNode: NsGraph.INodeRender = (props) => {
     fontSize = DefaultNodeConfig.fontSize,
   } = data;
   const { width, height } = size;
+  const path = [
+    ["M", width / 2, NODE_PADDING], // top
+    ["L", width - 2 * NODE_PADDING, height / 2], // right
+    ["L", width / 2, height - 2 * NODE_PADDING], // bottom
+    ["L", NODE_PADDING, height / 2], // left
+    ["Z"],
+  ];
 
   return (
     <svg
@@ -20,14 +33,7 @@ export const SectorNode: NsGraph.INodeRender = (props) => {
       width="100%"
       height="100%"
     >
-      <path
-        d={`M 0 ${height}
-        A ${height} ${height} 0 0 1 ${height * 2} ${height}
-        L 0 ${height}
-        Z`}
-        fill={fill}
-        stroke={stroke}
-      />
+      <path d={createPath(path)} fill={fill} stroke={stroke} />
       <text
         x={width / 2}
         y={height / 2}

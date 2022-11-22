@@ -1,13 +1,12 @@
 import type { NsGraph } from "@antv/xflow-core";
-import { createPath } from "../../utils";
 import {
-  NODE_WIDTH,
   NODE_HEIGHT,
+  NODE_WIDTH,
   NODE_PADDING,
   DefaultNodeConfig,
-} from "../../constants";
+} from "@/components/flow/constants";
 
-export const PreparationNode: NsGraph.INodeRender = (props) => {
+export const ConnectorNode: NsGraph.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data = {} } =
     props;
   const {
@@ -18,16 +17,8 @@ export const PreparationNode: NsGraph.INodeRender = (props) => {
     fontSize = DefaultNodeConfig.fontSize,
   } = data;
   const { width, height } = size;
-  const rx = Math.tan(Math.PI / 6) * (height / 2);
-  const path = [
-    ["M", rx, NODE_PADDING], // top-left
-    ["L", width - rx, NODE_PADDING], // top-right
-    ["L", width - 2 * NODE_PADDING, height / 2],
-    ["L", width - rx, height - 2 * NODE_PADDING], // bottom-right
-    ["L", rx, height - 2 * NODE_PADDING], // bottom-left
-    ["L", NODE_PADDING, height / 2],
-    ["Z"],
-  ];
+  const availableR = height - 2 * NODE_PADDING;
+
   return (
     <svg
       viewBox={`0 0 ${width} ${height}`}
@@ -35,9 +26,15 @@ export const PreparationNode: NsGraph.INodeRender = (props) => {
       width="100%"
       height="100%"
     >
-      <path d={createPath(path)} fill={fill} stroke={stroke} />
+      <path
+        d={`M ${NODE_PADDING},${height / 2} a ${availableR / 2} ${
+          availableR / 2
+        } 0 1 1 0 1 z`}
+        fill={fill}
+        stroke={stroke}
+      />
       <text
-        x={width / 2}
+        x={height / 2}
         y={height / 2}
         fill={fontFill}
         textAnchor="middle"

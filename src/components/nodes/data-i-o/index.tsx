@@ -1,13 +1,13 @@
 import type { NsGraph } from "@antv/xflow-core";
-import { createPath } from "../../utils";
+import { createPath } from "../utils";
 import {
+  NODE_WIDTH,
   NODE_HEIGHT,
   NODE_PADDING,
-  NODE_WIDTH,
   DefaultNodeConfig,
-} from "../../constants";
+} from "@/components/flow/constants";
 
-export const DecisionNode: NsGraph.INodeRender = (props) => {
+export const DataIONode: NsGraph.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data = {} } =
     props;
   const {
@@ -18,11 +18,14 @@ export const DecisionNode: NsGraph.INodeRender = (props) => {
     fontSize = DefaultNodeConfig.fontSize,
   } = data;
   const { width, height } = size;
+
+  const slope = height / 2; // 用于计算斜率 tan(&) =  slope / height
+
   const path = [
-    ["M", width / 2, NODE_PADDING], // top
-    ["L", width - 2 * NODE_PADDING, height / 2], // right
-    ["L", width / 2, height - 2 * NODE_PADDING], // bottom
-    ["L", NODE_PADDING, height / 2], // left
+    ["M", slope - NODE_PADDING, NODE_PADDING], // top-left
+    ["L", width - 2 * NODE_PADDING, NODE_PADDING], // top-right
+    ["L", width - slope, height - 2 * NODE_PADDING], // bottom-right
+    ["L", NODE_PADDING, height - 2 * NODE_PADDING], // bottom-left
     ["Z"],
   ];
 
