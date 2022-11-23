@@ -4,17 +4,13 @@ import {
   DagGraphExtension,
   XFlowCanvas,
   CanvasNodePortTooltip,
-  JsonSchemaForm,
   CanvasContextMenu,
 } from "@antv/xflow";
-import * as dndPanelConfig from "./config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
 import { useGraphConfig } from "./graph-config";
 import { useGraphHookConfig } from "./config-graph";
 import { useCmdConfig } from "./config-cmd";
 import { useMenuConfig } from "./config-menu";
-import { NsJsonForm } from "./form-service";
-import { CustomPanel, controlMapService } from "./components";
 import { Card } from "antd";
 import "antd/dist/antd.css";
 import "@antv/xflow/dist/index.css";
@@ -62,11 +58,7 @@ const XFlowView: React.FC<IProps> = (props) => {
             name: "rounded",
           }}
         />
-        <CustomPanel
-          position={{ width: 230, top: 0, bottom: 0, left: 0 }}
-          onNodeDrop={dndPanelConfig.onNodeDrop}
-        />
-
+        {props?.children}
         <XFlowCanvas
           position={{ top: 0, left: 230, right: 290, bottom: 0 }}
           config={graphConfig}
@@ -79,16 +71,6 @@ const XFlowView: React.FC<IProps> = (props) => {
           <CanvasContextMenu config={menuConfig} />
           <CanvasNodePortTooltip />
         </XFlowCanvas>
-        <JsonSchemaForm
-          targetType={["node", "edge", "canvas"]}
-          controlMapService={controlMapService}
-          formSchemaService={NsJsonForm.formSchemaService}
-          formValueUpdateService={NsJsonForm.formValueUpdateService}
-          position={{ top: 0, bottom: 0, right: 0, width: 290 }}
-          footerPosition={{
-            height: 0,
-          }}
-        />
       </XFlow>
     </Card>
   );

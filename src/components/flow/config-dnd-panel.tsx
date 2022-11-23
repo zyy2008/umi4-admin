@@ -5,8 +5,7 @@ import type { NsNodeCollapsePanel } from "@antv/xflow";
 
 export const onNodeDrop: NsNodeCollapsePanel.IOnNodeDrop = async (
   node,
-  commands,
-  modelService
+  commands
 ) => {
   const args: NsNodeCmd.AddNode.IArgs = {
     nodeConfig: { ...node, id: uuidv4() },
