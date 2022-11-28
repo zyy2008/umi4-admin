@@ -269,8 +269,94 @@ export namespace NsJsonForm {
               placeholder: "请输入",
             },
             {
+              name: "source",
+              label: "来源类型",
+              shape: ControlShape.SELECT,
+              value: targetData.source,
+              options: [
+                {
+                  title: "内部",
+                  value: true,
+                },
+                {
+                  title: "外部",
+                  value: false,
+                },
+              ],
+              placeholder: "请选择",
+              defaultValue: true,
+            },
+            {
               name: "content",
               label: "事实内容",
+              shape: ControlShape.TEXTAREA,
+              value: targetData.content,
+            },
+            {
+              name: "getStatus",
+              label: "获取方式",
+              shape: ControlShape.SELECT,
+              value: targetData.getStatus,
+              options: [
+                {
+                  title: "UDP",
+                  value: "UDP",
+                },
+                {
+                  title: "TCP",
+                  value: "TCP",
+                },
+                {
+                  title: "WebService",
+                  value: "WebService",
+                },
+              ],
+              placeholder: "请选择",
+              dependencies: [
+                {
+                  name: "source",
+                  condition: true,
+                  hidden: true,
+                },
+                {
+                  name: "source",
+                  condition: false,
+                  hidden: false,
+                },
+              ],
+            },
+            {
+              name: "address",
+              label: "获取地址",
+              shape: ControlShape.INPUT,
+              value: targetData.address,
+              dependencies: [
+                {
+                  name: "source",
+                  condition: true,
+                  hidden: true,
+                },
+                {
+                  name: "source",
+                  condition: false,
+                  hidden: false,
+                },
+              ],
+            },
+          ];
+          break;
+        case "MultiDocumentNode":
+          controls = [
+            {
+              name: "name",
+              label: "函数名称",
+              shape: ControlShape.INPUT,
+              value: targetData.name,
+              placeholder: "请输入",
+            },
+            {
+              name: "content",
+              label: "函数内容",
               shape: ControlShape.TEXTAREA,
               value: targetData.content,
             },

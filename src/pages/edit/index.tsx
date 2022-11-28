@@ -3,13 +3,19 @@ import KnowledgeFlow from "@/components/flow";
 import { NsJsonForm } from "./form-service";
 import { CustomPanel, controlMapService } from "./components";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
+import { useToolbarConfig } from "./toolbar-config";
 
 const Edit = () => {
+  const toolbarConfig = useToolbarConfig();
   return (
-    <KnowledgeFlow>
+    <KnowledgeFlow
+      toolbarProps={{
+        config: toolbarConfig,
+      }}
+    >
       <>
         <CustomPanel
-          position={{ width: 230, top: 0, bottom: 0, left: 0 }}
+          position={{ width: 260, top: 0, bottom: 0, left: 0 }}
           onNodeDrop={dndPanelConfig.onNodeDrop}
         />
 

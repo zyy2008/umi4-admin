@@ -5,8 +5,9 @@ import {
   XFlowCanvas,
   CanvasNodePortTooltip,
   CanvasContextMenu,
+  IToolbarProps,
+  createToolbarConfig,
 } from "@antv/xflow";
-import { useToolbarConfig } from "./toolbar-config";
 import { useGraphConfig } from "./graph-config";
 import { useGraphHookConfig } from "./config-graph";
 import { useCmdConfig } from "./config-cmd";
@@ -18,11 +19,14 @@ import "./index.less";
 
 export interface IProps {
   meta?: { flowId: string };
+  toolbarProps?: Partial<IToolbarProps>;
 }
 
+const toolbarConfig = createToolbarConfig(() => {});
+
 const XFlowView: React.FC<IProps> = (props) => {
-  const { meta } = props;
-  const toolbarConfig = useToolbarConfig(props);
+  const { meta, toolbarProps } = props;
+  const config = toolbarConfig();
   const graphConfig = useGraphConfig(props);
   const graphHooksConfig = useGraphHookConfig(props);
   const cmdConfig = useCmdConfig();
@@ -60,13 +64,14 @@ const XFlowView: React.FC<IProps> = (props) => {
         />
         {props?.children}
         <XFlowCanvas
-          position={{ top: 0, left: 230, right: 290, bottom: 0 }}
+          position={{ top: 0, left: 260, right: 290, bottom: 0 }}
           config={graphConfig}
         >
           <CanvasToolbar
             layout="horizontal"
-            config={toolbarConfig}
+            config={config}
             position={{ top: 0, left: 0, right: 0, height: 40 }}
+            {...toolbarProps}
           />
           <CanvasContextMenu config={menuConfig} />
           <CanvasNodePortTooltip />

@@ -1,6 +1,6 @@
 import type { IToolbarItemOptions, IToolbarGroupOptions } from "@antv/xflow";
 import { createToolbarConfig } from "@antv/xflow";
-import { XFlowGraphCommands, XFlowNodeCommands, IconStore } from "@antv/xflow";
+import { XFlowGraphCommands, IconStore } from "@antv/xflow";
 import { SaveOutlined, CheckOutlined, CodeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import type { NsGraphCmd, NsNodeCmd } from "@antv/xflow";

@@ -1,7 +1,7 @@
 import React from "react";
 import { WorkspacePanel, IWorkspacePanelProps, uuidv4 } from "@antv/xflow";
 import { NsGraph, IGraphConfig } from "@antv/xflow-core";
-import { Card, Input, List, Row, Col, Empty } from "antd";
+import { Card, Input, List, Row, Col, Empty, Button } from "antd";
 import VirtualList from "rc-virtual-list";
 import { useGraphDnd, IPanelNode } from "./dnd-hook";
 import type { IOnNodeDrop } from "./interface";
@@ -9,10 +9,10 @@ import {
   DecisionNode,
   DataIONode,
   SectorNode,
-  EllipseNode,
   PreparationNode,
   ManualOperationNode,
 } from "@/components/nodes";
+import { BetaSchemaForm } from "@ant-design/pro-components";
 import "./index.less";
 
 const { Search } = Input;
@@ -24,6 +24,7 @@ type CardListProps = {
   onMouseDown: (
     nodeConfig: NsGraph.INodeConfig
   ) => (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  header?: React.ReactNode;
 };
 
 interface IConfigRenderOptions {
@@ -34,7 +35,7 @@ interface IConfigRenderOptions {
 }
 
 const CardList: React.FC<CardListProps> = (props) => {
-  const { dataSource, title, onMouseDown, loading } = props;
+  const { dataSource, title, onMouseDown, loading, header } = props;
   const [keyword, setKeyword] = React.useState<string>("");
   const filterData = React.useMemo<IPanelNode[]>(() => {
     const list = dataSource.filter((node) => node.label?.includes(keyword));
@@ -45,12 +46,16 @@ const CardList: React.FC<CardListProps> = (props) => {
       loading={loading}
       dataSource={[]}
       header={
-        <Row align="middle" justify="center">
-          <Col span={4}>{title}</Col>
-          <Col span={19}>
-            <Search onSearch={setKeyword} allowClear placeholder="过滤条件" />
-          </Col>
-        </Row>
+        <div className="node-title">
+          <span>{title}</span>
+          <Search
+            onSearch={setKeyword}
+            allowClear
+            placeholder="过滤条件"
+            size="middle"
+          />
+          {header}
+        </div>
       }
     >
       {filterData.length > 0 ? (
@@ -230,14 +235,6 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
           <ColNode
             onMouseDown={onMouseDown}
             nodeConfig={{
-              renderKey: "EllipseNode",
-              label: "自定义",
-            }}
-            node={EllipseNode}
-          />
-          <ColNode
-            onMouseDown={onMouseDown}
-            nodeConfig={{
               renderKey: "PreparationNode",
               label: "中间事件",
             }}
@@ -245,6 +242,52 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
           />
         </Row>
       </Card>
+      <CardList
+        title="公共函数"
+        header={
+          <BetaSchemaForm
+            modalProps={{ destroyOnClose: true }}
+            trigger={<Button type="primary">新增</Button>}
+            layoutType="ModalForm"
+            columns={[
+              {
+                title: "函数名称",
+                dataIndex: "groupState",
+                valueType: "text",
+                formItemProps: {
+                  rules: [
+                    {
+                      required: true,
+                    },
+                  ],
+                },
+              },
+              {
+                title: "函数内容",
+                dataIndex: "groupState1",
+                valueType: "textarea",
+                formItemProps: {
+                  rules: [
+                    {
+                      required: true,
+                    },
+                  ],
+                },
+              },
+            ]}
+          />
+        }
+        dataSource={[
+          {
+            id: uuidv4(),
+            label: "函数组件1",
+            renderKey: "MultiDocumentNode",
+            width: 90,
+            height: 60,
+          },
+        ]}
+        onMouseDown={onMouseDown}
+      />
     </>
   );
 };
