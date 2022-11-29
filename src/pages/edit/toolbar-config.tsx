@@ -1,9 +1,46 @@
+import React from "react";
 import type { IToolbarItemOptions, IToolbarGroupOptions } from "@antv/xflow";
 import { createToolbarConfig } from "@antv/xflow";
 import { XFlowGraphCommands, IconStore } from "@antv/xflow";
 import { SaveOutlined, CheckOutlined, CodeOutlined } from "@ant-design/icons";
 import { message } from "antd";
-import type { NsGraphCmd, NsNodeCmd } from "@antv/xflow";
+import type { NsGraphCmd } from "@antv/xflow";
+import { Modal, Button, Tooltip } from "antd";
+import { ProCard } from "@ant-design/pro-components";
+
+const Check: React.FC<{}> = () => {
+  const [open, setOpen] = React.useState<boolean>(false);
+  return (
+    <>
+      <Tooltip placement="bottom" title="知识校验">
+        <Button
+          icon={<CheckOutlined />}
+          className="x6-toolbar-item xflow-toolbar-item"
+          type="text"
+          onClick={() => setOpen(true)}
+        />
+      </Tooltip>
+
+      <Modal title="知识校验" open={open} onCancel={() => setOpen(false)}>
+        <ProCard
+          title="竖向内部卡片"
+          bordered
+          headerBordered
+          direction="column"
+          gutter={[0, 16]}
+          style={{ marginBlockStart: 8 }}
+        >
+          <ProCard title="内部卡片标题" type="inner" bordered>
+            内部卡片内容
+          </ProCard>
+          <ProCard title="内部卡片标题" type="inner" bordered>
+            内部卡片内容
+          </ProCard>
+        </ProCard>
+      </Modal>
+    </>
+  );
+};
 
 namespace NsConfig {
   /** 注册icon 类型 */
@@ -22,6 +59,7 @@ namespace NsConfig {
         onClick: ({ commandService }) => {
           console.log(commandService);
         },
+        render: () => <Check />,
       },
       {
         id: "CodeOutlined",
