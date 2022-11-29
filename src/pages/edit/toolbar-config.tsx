@@ -5,35 +5,80 @@ import { XFlowGraphCommands, IconStore } from "@antv/xflow";
 import { SaveOutlined, CheckOutlined, CodeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import type { NsGraphCmd } from "@antv/xflow";
-import { Modal, Button, Tooltip } from "antd";
+import { Modal, DatePicker, Form } from "antd";
 import { ProCard } from "@ant-design/pro-components";
 
-const Check: React.FC<{}> = () => {
+const { RangePicker } = DatePicker;
+
+const Check: React.FC<{}> = (props) => {
+  console.log(props);
   const [open, setOpen] = React.useState<boolean>(false);
   return (
     <>
-      <Tooltip placement="bottom" title="知识校验">
-        <Button
-          icon={<CheckOutlined />}
-          className="x6-toolbar-item xflow-toolbar-item"
-          type="text"
-          onClick={() => setOpen(true)}
-        />
-      </Tooltip>
-
+      <span
+        className="x6-toolbar-item xflow-toolbar-item"
+        style={{
+          padding: 0,
+          marginLeft: 0,
+          marginRight: 0,
+        }}
+        onClick={() => setOpen(true)}
+      >
+        {props.children}
+      </span>
       <Modal title="知识校验" open={open} onCancel={() => setOpen(false)}>
         <ProCard
-          title="竖向内部卡片"
-          bordered
-          headerBordered
+          title={
+            <Form>
+              <Form.Item>
+                <RangePicker showTime />
+              </Form.Item>
+            </Form>
+          }
           direction="column"
           gutter={[0, 16]}
           style={{ marginBlockStart: 8 }}
+          headStyle={{
+            padding: 0,
+          }}
+          bodyStyle={{
+            paddingLeft: 0,
+            paddingRight: 0,
+          }}
+          size="small"
         >
-          <ProCard title="内部卡片标题" type="inner" bordered>
-            内部卡片内容
+          <ProCard bordered headerBordered split="vertical" size="small">
+            <ProCard
+              title="事实列表"
+              headerBordered
+              colSpan="50%"
+              size="small"
+              type="inner"
+              headStyle={{
+                paddingLeft: 0,
+                paddingRight: 0,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <div style={{ height: 360 }}>左侧内容</div>
+            </ProCard>
+            <ProCard
+              title="errorMsg"
+              headerBordered
+              size="small"
+              type="inner"
+              headStyle={{
+                paddingLeft: 0,
+                paddingRight: 0,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <div style={{ height: 360 }}>右侧内容</div>
+            </ProCard>
           </ProCard>
-          <ProCard title="内部卡片标题" type="inner" bordered>
+          <ProCard type="inner" title="输出结果" bordered size="small">
             内部卡片内容
           </ProCard>
         </ProCard>
@@ -56,10 +101,7 @@ namespace NsConfig {
         id: "CheckOutlined",
         iconName: "CheckOutlined",
         tooltip: "知识校验",
-        onClick: ({ commandService }) => {
-          console.log(commandService);
-        },
-        render: () => <Check />,
+        render: Check,
       },
       {
         id: "CodeOutlined",
