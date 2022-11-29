@@ -5,13 +5,105 @@ import { XFlowGraphCommands, IconStore } from "@antv/xflow";
 import { SaveOutlined, CheckOutlined, CodeOutlined } from "@ant-design/icons";
 import { message } from "antd";
 import type { NsGraphCmd } from "@antv/xflow";
-import { Modal, DatePicker, Form } from "antd";
-import { ProCard } from "@ant-design/pro-components";
+import { Modal, DatePicker, Form, Input, Button, Space } from "antd";
+import { ProCard, ProTable } from "@ant-design/pro-components";
 
 const { RangePicker } = DatePicker;
 
-const Check: React.FC<{}> = (props) => {
-  console.log(props);
+const CheckItem = () => {
+  return (
+    <ProCard
+      title={
+        <Form layout="inline">
+          <Form.Item>
+            <RangePicker showTime />
+          </Form.Item>
+          <Form.Item>
+            <Space>
+              <Button type="primary">查询</Button>
+              <Button>修改</Button>
+            </Space>
+          </Form.Item>
+        </Form>
+      }
+      direction="column"
+      gutter={[0, 16]}
+      style={{ marginBlockStart: 8 }}
+      headStyle={{
+        padding: 0,
+      }}
+      bodyStyle={{
+        paddingLeft: 0,
+        paddingRight: 0,
+      }}
+      size="small"
+    >
+      <ProCard bordered headerBordered split="vertical" size="small">
+        <ProCard
+          title="事实列表"
+          headerBordered
+          colSpan="50%"
+          size="small"
+          type="inner"
+          headStyle={{
+            paddingLeft: 0,
+            paddingRight: 0,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ height: 360 }}>
+            <ProTable
+              search={false}
+              options={false}
+              pagination={false}
+              rowKey="name"
+              dataSource={[
+                {
+                  name: "1",
+                  type: "2",
+                },
+              ]}
+              columns={[
+                {
+                  title: "名称",
+                  dataIndex: "name",
+                },
+                {
+                  title: "类型",
+                  dataIndex: "type",
+                },
+              ]}
+            />
+          </div>
+        </ProCard>
+        <ProCard
+          title="errorMsg"
+          headerBordered
+          size="small"
+          type="inner"
+          headStyle={{
+            paddingLeft: 0,
+            paddingRight: 0,
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <div style={{ height: 360 }}>右侧内容</div>
+        </ProCard>
+      </ProCard>
+      <ProCard type="inner" title="输出结果" bordered size="small">
+        <Input.TextArea />
+      </ProCard>
+    </ProCard>
+  );
+};
+
+const ModalItem: React.FC<{
+  modalRender?: React.ReactNode;
+  tooltip?: string;
+}> = (props) => {
+  const { tooltip, modalRender, children } = props;
   const [open, setOpen] = React.useState<boolean>(false);
   return (
     <>
@@ -24,64 +116,15 @@ const Check: React.FC<{}> = (props) => {
         }}
         onClick={() => setOpen(true)}
       >
-        {props.children}
+        {children}
       </span>
-      <Modal title="知识校验" open={open} onCancel={() => setOpen(false)}>
-        <ProCard
-          title={
-            <Form>
-              <Form.Item>
-                <RangePicker showTime />
-              </Form.Item>
-            </Form>
-          }
-          direction="column"
-          gutter={[0, 16]}
-          style={{ marginBlockStart: 8 }}
-          headStyle={{
-            padding: 0,
-          }}
-          bodyStyle={{
-            paddingLeft: 0,
-            paddingRight: 0,
-          }}
-          size="small"
-        >
-          <ProCard bordered headerBordered split="vertical" size="small">
-            <ProCard
-              title="事实列表"
-              headerBordered
-              colSpan="50%"
-              size="small"
-              type="inner"
-              headStyle={{
-                paddingLeft: 0,
-                paddingRight: 0,
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <div style={{ height: 360 }}>左侧内容</div>
-            </ProCard>
-            <ProCard
-              title="errorMsg"
-              headerBordered
-              size="small"
-              type="inner"
-              headStyle={{
-                paddingLeft: 0,
-                paddingRight: 0,
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <div style={{ height: 360 }}>右侧内容</div>
-            </ProCard>
-          </ProCard>
-          <ProCard type="inner" title="输出结果" bordered size="small">
-            内部卡片内容
-          </ProCard>
-        </ProCard>
+      <Modal
+        title={tooltip}
+        open={open}
+        onCancel={() => setOpen(false)}
+        width="800px"
+      >
+        {modalRender}
       </Modal>
     </>
   );
@@ -101,15 +144,15 @@ namespace NsConfig {
         id: "CheckOutlined",
         iconName: "CheckOutlined",
         tooltip: "知识校验",
-        render: Check,
+        render: (props) => <ModalItem modalRender={<CheckItem />} {...props} />,
       },
       {
         id: "CodeOutlined",
         iconName: "CodeOutlined",
         tooltip: "查看代码",
-        onClick: ({ commandService }) => {
-          console.log(commandService);
-        },
+        render: (props) => (
+          <ModalItem modalRender={<Input.TextArea />} {...props} />
+        ),
       },
     ];
     const toolbarGroup2: IToolbarItemOptions[] = [
