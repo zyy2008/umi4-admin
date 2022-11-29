@@ -43,7 +43,6 @@ const CheckItem = () => {
           title="事实列表"
           headerBordered
           colSpan="50%"
-          size="small"
           type="inner"
           headStyle={{
             paddingLeft: 0,
@@ -80,7 +79,6 @@ const CheckItem = () => {
         <ProCard
           title="errorMsg"
           headerBordered
-          size="small"
           type="inner"
           headStyle={{
             paddingLeft: 0,
@@ -92,7 +90,7 @@ const CheckItem = () => {
           <div style={{ height: 360 }}>右侧内容</div>
         </ProCard>
       </ProCard>
-      <ProCard type="inner" title="输出结果" bordered size="small">
+      <ProCard type="inner" title="输出结果" bordered>
         <Input.TextArea />
       </ProCard>
     </ProCard>
