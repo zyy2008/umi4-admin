@@ -28,17 +28,18 @@ export interface IProps {
   connectionType?: "one-to-one" | "one-to-many";
   onLoad?: IAppLoad;
   events?: NsGraph.IEvent[];
+  graphData?: NsGraph.IGraphData;
+  nodeMovable?: boolean;
 }
 
 const toolbarConfig = createToolbarConfig(() => {});
 
 const XFlowView: React.FC<IProps> = (props) => {
-  const { meta, toolbarProps, cardProps, position, connectionType, onLoad } =
-    props;
+  const { meta, toolbarProps, cardProps, position, onLoad, graphData } = props;
   const config = toolbarConfig();
   const graphConfig = useGraphConfig(props);
   const graphHooksConfig = useGraphHookConfig(props);
-  const cmdConfig = useCmdConfig({ connectionType });
+  const cmdConfig = useCmdConfig(props);
   const menuConfig = useMenuConfig();
 
   return (
@@ -63,6 +64,7 @@ const XFlowView: React.FC<IProps> = (props) => {
         hookConfig={graphHooksConfig}
         commandConfig={cmdConfig}
         onLoad={onLoad}
+        graphData={graphData}
       >
         <DagGraphExtension
           router={{

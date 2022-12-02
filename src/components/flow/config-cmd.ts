@@ -8,14 +8,11 @@ import { Shape, Node } from "@antv/x6";
 import { MockApi } from "./service";
 import { XFlowNode } from "./node";
 import type { Graph as X6Graph } from "@antv/x6";
+import type { IProps } from "./index";
 
-type IProps = {
-  connectionType?: "one-to-one" | "one-to-many";
-};
-
-export const useCmdConfig = createCmdConfig((config, proxy) => {
+export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
   // 设置hook
-  const { connectionType = "one-to-one" }: IProps = proxy.getValue();
+  const { connectionType = "one-to-one" } = proxy.getValue();
   config.setRegisterHookFn((hooks) => {
     const list = [
       hooks.graphMeta.registerHook({

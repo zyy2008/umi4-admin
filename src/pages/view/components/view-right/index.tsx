@@ -1,39 +1,34 @@
+import React from "react";
 import ViewFlow from "@/components/flow";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { CustomPanel } from "./components";
-import type { IAppLoad, NsGraph } from "@antv/xflow";
-import {
-  XFlow,
-  createGraphConfig,
-  XFlowCanvas,
-  XFlowGraphCommands,
-  MODELS,
-  useXFlowApp,
-  useModelAsync,
-} from "@antv/xflow";
+import type { IAppLoad, NsGraphCmd, NsGraph } from "@antv/xflow";
+import { XFlowGraphCommands } from "@antv/xflow";
 
-const ViewRight = () => {
-  const events: NsGraph.IEvent[] = [
-    // {
-    //   eventName: "history:change",
-    //   callback: () => {
-    //     console.log("2222");
-    //   },
-    // },
-  ];
+type IProps = {
+  historyData?: (T: NsGraph.IGraphData) => void;
+};
+
+const ViewRight: React.FC<IProps> = (props) => {
+  const { historyData } = props;
   const onLoad: IAppLoad = async (app) => {
     const graph = await app.getGraphInstance();
     graph.enableHistory();
-    console.log(graph.isHistoryEnabled());
     graph.history.on("change", () => {
-      console.log("12321321");
+      app.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
+        XFlowGraphCommands.SAVE_GRAPH_DATA.id,
+        {
+          saveGraphDataService: async (meta, data) => {
+            historyData?.(data);
+          },
+        }
+      );
     });
   };
   return (
     <ViewFlow
       position={{ left: 160, right: 0 }}
       connectionType="one-to-many"
-      events={events}
       onLoad={onLoad}
     >
       <CustomPanel

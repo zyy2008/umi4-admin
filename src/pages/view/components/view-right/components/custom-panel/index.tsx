@@ -4,7 +4,7 @@ import { NsGraph, IGraphConfig } from "@antv/xflow-core";
 import { Card, Row, Col } from "antd";
 import { useGraphDnd, IOnNodeDrop } from "@/components/flow";
 import { ConnectorNode } from "@/components/nodes";
-import "./index.less";
+import style from "./index.less";
 
 interface IConfigRenderOptions {
   graphConfig?: IGraphConfig;
@@ -24,7 +24,7 @@ const ColNode: React.FC<
   return (
     <Col span={24}>
       <div
-        className="col-node"
+        className={style["col-node"]}
         onMouseDown={onMouseDown({
           width: 70,
           height: 70,

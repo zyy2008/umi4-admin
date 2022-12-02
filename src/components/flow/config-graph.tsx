@@ -13,6 +13,7 @@ export function isValidKey(
 export const useGraphHookConfig = createHookConfig<IProps>(
   async (config, proxy) => {
     // 获取 Props
+    const { nodeMovable = true } = proxy.getValue();
     config.setRegisterHook((hooks) => {
       const disposableList = [
         // 注册增加 react Node Render
@@ -44,6 +45,10 @@ export const useGraphHookConfig = createHookConfig<IProps>(
               ...graphOptions.connecting,
             };
             options.grid = true;
+            options.interacting = {
+              nodeMovable,
+              edgeLabelMovable: false,
+            };
           },
         }),
       ];
