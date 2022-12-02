@@ -1,8 +1,15 @@
 import { createGraphConfig, NsGraph } from "@antv/xflow";
 import { EdgeView } from "@antv/x6";
+
+type IProps = {
+  events?: NsGraph.IEvent[];
+};
+
 /**  graphConfig：配置Graph  */
-export const useGraphConfig = createGraphConfig<any>((graphConfig) => {
-  const events: NsGraph.IEvent[] = [
+export const useGraphConfig = createGraphConfig<any>((graphConfig, proxy) => {
+  const { events = [] }: IProps = proxy.getValue();
+  console.log(events);
+  const iEvents: NsGraph.IEvent[] = [
     {
       eventName: "node:mouseenter",
       callback: () => {
@@ -25,9 +32,10 @@ export const useGraphConfig = createGraphConfig<any>((graphConfig) => {
         });
       },
     },
+    ...events,
   ];
   /**  这里绑定事件  */
-  graphConfig.setEvents(events);
+  graphConfig.setEvents(iEvents);
 });
 
 const changePortsVisible = (visible: boolean) => {

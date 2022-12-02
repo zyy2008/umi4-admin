@@ -8,6 +8,8 @@ import {
   IToolbarProps,
   createToolbarConfig,
   IPosition,
+  IAppLoad,
+  NsGraph,
 } from "@antv/xflow";
 import { useGraphConfig } from "./graph-config";
 import { useGraphHookConfig } from "./config-graph";
@@ -24,12 +26,15 @@ export interface IProps {
   cardProps?: CardProps;
   position?: IPosition;
   connectionType?: "one-to-one" | "one-to-many";
+  onLoad?: IAppLoad;
+  events?: NsGraph.IEvent[];
 }
 
 const toolbarConfig = createToolbarConfig(() => {});
 
 const XFlowView: React.FC<IProps> = (props) => {
-  const { meta, toolbarProps, cardProps, position, connectionType } = props;
+  const { meta, toolbarProps, cardProps, position, connectionType, onLoad } =
+    props;
   const config = toolbarConfig();
   const graphConfig = useGraphConfig(props);
   const graphHooksConfig = useGraphHookConfig(props);
@@ -57,6 +62,7 @@ const XFlowView: React.FC<IProps> = (props) => {
         meta={meta}
         hookConfig={graphHooksConfig}
         commandConfig={cmdConfig}
+        onLoad={onLoad}
       >
         <DagGraphExtension
           router={{

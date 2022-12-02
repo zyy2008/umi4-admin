@@ -58,7 +58,7 @@ const View = () => (
             height: "100%",
           }}
           style={{
-            height: "calc(100% - 65px)",
+            height: "100%",
           }}
           title={
             <Space>

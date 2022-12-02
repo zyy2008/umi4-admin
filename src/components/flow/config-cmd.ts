@@ -59,10 +59,10 @@ export const useCmdConfig = createCmdConfig((config, proxy) => {
         after: "dag-add-edge",
         handler: async (args) => {
           const cellFactory: NsEdgeCmd.AddEdge.IArgs["cellFactory"] = async (
-            edgeConfig
+            edgeCfg
           ) => {
+            const edgeConfig = { ...edgeCfg, edge: null };
             const edge = new Shape.Edge({
-              ...edgeConfig,
               id: edgeConfig.id,
               source: {
                 cell: edgeConfig.source,
