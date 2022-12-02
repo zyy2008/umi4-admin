@@ -3,8 +3,7 @@ import { WorkspacePanel, IWorkspacePanelProps, uuidv4 } from "@antv/xflow";
 import { NsGraph, IGraphConfig } from "@antv/xflow-core";
 import { Card, Input, List, Row, Col, Empty, Button } from "antd";
 import VirtualList from "rc-virtual-list";
-import { useGraphDnd, IPanelNode } from "./dnd-hook";
-import type { IOnNodeDrop } from "./interface";
+import { useGraphDnd, IPanelNode, IOnNodeDrop } from "@/components/flow";
 import {
   DecisionNode,
   DataIONode,

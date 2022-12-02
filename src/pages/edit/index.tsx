@@ -12,6 +12,9 @@ const Edit = () => {
       toolbarProps={{
         config: toolbarConfig,
       }}
+      cardProps={{
+        title: "知识编辑器",
+      }}
     >
       <>
         <CustomPanel

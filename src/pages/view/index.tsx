@@ -5,6 +5,9 @@ import {
   ExportOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import ButtonModal from "@/components/button-modal";
+import { Transfer, ListCheck, ViewLeft, ViewRight } from "./components";
+import styles from "./index.less";
 
 const treeData = [
   {
@@ -30,8 +33,13 @@ const treeData = [
 ];
 
 const View = () => (
-  <ProCard split="horizontal" bordered>
-    <ProCard split="vertical">
+  <ProCard split="horizontal" bordered className={styles["view-graph"]}>
+    <ProCard
+      split="vertical"
+      style={{
+        height: "100%",
+      }}
+    >
       <ProCard
         title="整星结构"
         colSpan="30%"
@@ -39,9 +47,19 @@ const View = () => (
         bodyStyle={{
           padding: 0,
         }}
+        style={{
+          height: "100%",
+        }}
       >
         <ProCard
           type="inner"
+          bodyStyle={{
+            padding: 0,
+            height: "100%",
+          }}
+          style={{
+            height: "calc(100% - 65px)",
+          }}
           title={
             <Space>
               <Tooltip placement="bottom" title="导入知识图谱">
@@ -59,17 +77,26 @@ const View = () => (
                 treeData={treeData}
                 treeCheckable
                 style={{
-                  width: 200,
+                  width: 160,
+                }}
+                maxTagCount="responsive"
+              />
+              <ButtonModal
+                buttonProps={{ icon: <SettingOutlined />, type: "default" }}
+                tooltipProps={{
+                  title: "自定义节点显示",
+                }}
+                modalProps={{
+                  title: "自定义显示节点选择页",
+                  width: 800,
+                  children: <ListCheck />,
                 }}
               />
-              <Tooltip placement="bottom" title="自定义节点显示">
-                <Button icon={<SettingOutlined />} />
-              </Tooltip>
             </Space.Compact>
           }
           headerBordered={false}
         >
-          123
+          <ViewLeft />
         </ProCard>
       </ProCard>
       <ProCard
@@ -85,17 +112,38 @@ const View = () => (
         <ProCard
           title="列表"
           headerBordered
-          extra={<Button type="primary">导入</Button>}
+          extra={
+            <ButtonModal
+              buttonProps={{ children: "导入" }}
+              modalProps={{
+                title: "参数导入",
+                children: <Transfer />,
+                width: 600,
+              }}
+            />
+          }
         >
-          123
+          22
         </ProCard>
       </ProCard>
-      <ProCard title="编辑区" headerBordered type="inner">
-        <div style={{ height: 360 }}>右侧内容</div>
+      <ProCard
+        title="编辑区"
+        headerBordered
+        type="inner"
+        style={{
+          height: "100%",
+        }}
+        bodyStyle={{
+          padding: 0,
+        }}
+      >
+        <ViewRight />
       </ProCard>
     </ProCard>
 
-    <ProCard type="inner">左侧内容</ProCard>
+    <ProCard type="inner">
+      已关联卫星知识1个，分系统知识2个，器部件知识3个，参数知识2个，未关联4个
+    </ProCard>
   </ProCard>
 );
 

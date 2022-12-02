@@ -9,8 +9,13 @@ import { MockApi } from "./service";
 import { XFlowNode } from "./node";
 import type { Graph as X6Graph } from "@antv/x6";
 
-export const useCmdConfig = createCmdConfig((config) => {
+type IProps = {
+  connectionType?: "one-to-one" | "one-to-many";
+};
+
+export const useCmdConfig = createCmdConfig((config, proxy) => {
   // 设置hook
+  const { connectionType = "one-to-one" }: IProps = proxy.getValue();
   config.setRegisterHookFn((hooks) => {
     const list = [
       hooks.graphMeta.registerHook({
@@ -86,48 +91,13 @@ export const useCmdConfig = createCmdConfig((config) => {
           args.cellFactory = cellFactory;
         },
       }),
-      hooks.addEdge.registerHook({
-        name: "after add edge",
-        after: "after add edge, set target port props",
-        handler: async (_, handler: any) => {
-          const main = async (args: any) => {
-            const res = (await handler(args)) as NsEdgeCmd.AddEdge.IResult;
-            if (res && res.edgeCell) {
-              const targetNode = res.edgeCell.getTargetCell() as Node;
-              const getSourceCell = res.edgeCell.getSourceCell() as Node;
-              const portId = res.edgeCell.getSourcePortId() as string;
-              getSourceCell.setPortProp(portId, "connected", true);
-              getSourceCell.setData({
-                ...getSourceCell.getData(),
-                ports: getSourceCell.getParsedPorts(),
-              });
-              targetNode.setData({
-                ...targetNode.getData(),
-                ports: targetNode.getParsedPorts(),
-              });
-              const { label } = getSourceCell.getData();
-              if (label && label === "if") {
-                const x6Graph = (await args.getX6Graph()) as X6Graph;
-                const edges = x6Graph.getOutgoingEdges(getSourceCell);
-                if (edges && edges.length === 1) {
-                  res.edgeCell.setLabels("true");
-                } else {
-                  res.edgeCell.setLabels("false");
-                }
-              }
-            }
-            return res;
-          };
-          return main;
-        },
-      }),
+
       hooks.addEdge.registerHook({
         name: "get edge config from backend api",
         handler: async (args) => {
           args.createEdgeService = MockApi.addEdge;
         },
       }),
-
       hooks.delEdge.registerHook({
         name: "get edge config from backend api",
         handler: async (args) => {
@@ -185,6 +155,45 @@ export const useCmdConfig = createCmdConfig((config) => {
         },
       }),
     ];
+    if (connectionType === "one-to-one") {
+      list.push(
+        hooks.addEdge.registerHook({
+          name: "after add edge",
+          after: "after add edge, set target port props",
+          handler: async (_, handler: any) => {
+            const main = async (args: any) => {
+              const res = (await handler(args)) as NsEdgeCmd.AddEdge.IResult;
+              if (res && res.edgeCell) {
+                const targetNode = res.edgeCell.getTargetCell() as Node;
+                const getSourceCell = res.edgeCell.getSourceCell() as Node;
+                const portId = res.edgeCell.getSourcePortId() as string;
+                getSourceCell.setPortProp(portId, "connected", true);
+                getSourceCell.setData({
+                  ...getSourceCell.getData(),
+                  ports: getSourceCell.getParsedPorts(),
+                });
+                targetNode.setData({
+                  ...targetNode.getData(),
+                  ports: targetNode.getParsedPorts(),
+                });
+                const { label } = getSourceCell.getData();
+                if (label && label === "if") {
+                  const x6Graph = (await args.getX6Graph()) as X6Graph;
+                  const edges = x6Graph.getOutgoingEdges(getSourceCell);
+                  if (edges && edges.length === 1) {
+                    res.edgeCell.setLabels("true");
+                  } else {
+                    res.edgeCell.setLabels("false");
+                  }
+                }
+              }
+              return res;
+            };
+            return main;
+          },
+        })
+      );
+    }
     const toDispose = new DisposableCollection();
     toDispose.pushAll(list);
     return toDispose;
