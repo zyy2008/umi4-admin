@@ -1,6 +1,7 @@
 import React from "react";
 import ViewFlow from "@/components/flow";
-import type { NsGraph } from "@antv/xflow";
+import type { NsGraph, IAppLoad } from "@antv/xflow";
+// import type { IAppLoad, NsGraphCmd, NsGraph } from "@antv/xflow";
 
 type IProps = {
   graphData?: NsGraph.IGraphData;
@@ -8,11 +9,17 @@ type IProps = {
 
 const ViewLeft: React.FC<IProps> = (props) => {
   const { graphData } = props;
+  const onLoad: IAppLoad = async (app) => {
+    const graph = await app.getGraphInstance();
+    graph.off("node:mouseenter");
+  };
   return (
     <ViewFlow
       position={{ left: 0, right: 0 }}
       graphData={graphData}
       nodeMovable={false}
+      onLoad={onLoad}
+      contextMenu={false}
     />
   );
 };

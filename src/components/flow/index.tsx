@@ -10,6 +10,7 @@ import {
   IPosition,
   IAppLoad,
   NsGraph,
+  ICanvasContextMenuProps,
 } from "@antv/xflow";
 import { useGraphConfig } from "./graph-config";
 import { useGraphHookConfig } from "./config-graph";
@@ -30,12 +31,21 @@ export interface IProps {
   events?: NsGraph.IEvent[];
   graphData?: NsGraph.IGraphData;
   nodeMovable?: boolean;
+  contextMenu?: boolean | ICanvasContextMenuProps;
 }
 
 const toolbarConfig = createToolbarConfig(() => {});
 
 const XFlowView: React.FC<IProps> = (props) => {
-  const { meta, toolbarProps, cardProps, position, onLoad, graphData } = props;
+  const {
+    meta,
+    toolbarProps,
+    cardProps,
+    position,
+    onLoad,
+    graphData,
+    contextMenu = true,
+  } = props;
   const config = toolbarConfig();
   const graphConfig = useGraphConfig(props);
   const graphHooksConfig = useGraphHookConfig(props);
@@ -87,8 +97,8 @@ const XFlowView: React.FC<IProps> = (props) => {
               {...toolbarProps}
             />
           )}
+          {contextMenu && <CanvasContextMenu config={menuConfig} />}
 
-          <CanvasContextMenu config={menuConfig} />
           <CanvasNodePortTooltip />
         </XFlowCanvas>
       </XFlow>

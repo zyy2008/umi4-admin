@@ -9,14 +9,20 @@ export const useGraphConfig = createGraphConfig<IProps>(
     const iEvents: NsGraph.IEvent[] = [
       {
         eventName: "node:mouseenter",
-        callback: () => {
-          changePortsVisible(true);
+        callback: (e) => {
+          const {
+            e: { delegateTarget },
+          } = e;
+          changePortsVisible(delegateTarget, true);
         },
       },
       {
         eventName: "node:mouseleave",
-        callback: () => {
-          changePortsVisible(false);
+        callback: (e) => {
+          const {
+            e: { delegateTarget },
+          } = e;
+          changePortsVisible(delegateTarget, false);
         },
       },
       {
@@ -36,10 +42,8 @@ export const useGraphConfig = createGraphConfig<IProps>(
   }
 );
 
-const changePortsVisible = (visible: boolean) => {
-  const ports = document.body.querySelectorAll(
-    ".x6-port-body"
-  ) as NodeListOf<SVGElement>;
+const changePortsVisible = (dom: Element, visible: boolean) => {
+  const ports = dom.querySelectorAll(".x6-port-body") as NodeListOf<SVGElement>;
   for (let i = 0, len = ports.length; i < len; i = i + 1) {
     ports[i].style.visibility = visible ? "visible" : "hidden";
   }
