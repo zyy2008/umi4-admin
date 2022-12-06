@@ -8,17 +8,18 @@ import { NsJsonForm } from "./form-service";
 import styles from "./index.less";
 
 type IProps = {
-  historyData?: (T: NsGraph.IGraphData) => void;
+  callbackHistory?: (args: NsGraph.IGraphData) => void;
+  callbackDisabled?: (args: boolean) => void;
 };
 
 type Visibility = "hidden" | "visible";
 
-export type CallbackType = (args: Visibility) => void;
+export type CallbackVisibility = (args: Visibility) => void;
 
 const ViewRight: React.FC<IProps> = (props) => {
-  const { historyData } = props;
+  const { callbackHistory, callbackDisabled } = props;
   const [visibility, setVisibility] = React.useState<Visibility>("hidden");
-  const visibilityCb = React.useCallback<CallbackType>(
+  const callbackVisibility = React.useCallback<CallbackVisibility>(
     (val) => setVisibility(val),
     []
   );
@@ -30,7 +31,7 @@ const ViewRight: React.FC<IProps> = (props) => {
         XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         {
           saveGraphDataService: async (meta, data) => {
-            historyData?.(data);
+            callbackHistory?.(data);
           },
         }
       );
@@ -64,7 +65,11 @@ const ViewRight: React.FC<IProps> = (props) => {
               height: 0,
             }}
             formSchemaService={(val) =>
-              NsJsonForm.formSchemaService(val, visibilityCb)
+              NsJsonForm.formSchemaService(
+                val,
+                callbackVisibility,
+                callbackDisabled
+              )
             }
             formValueUpdateService={NsJsonForm.formValueUpdateService}
           />

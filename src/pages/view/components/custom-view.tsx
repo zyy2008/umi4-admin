@@ -1,7 +1,7 @@
 import React from "react";
 import { ProCard } from "@ant-design/pro-components";
 
-const ListCheck: React.FC<{}> = () => {
+const CustomView: React.FC<{}> = () => {
   return (
     <ProCard split="vertical" bordered headerBordered>
       <ProCard title="所有节点" colSpan="33%">
@@ -17,4 +17,4 @@ const ListCheck: React.FC<{}> = () => {
   );
 };
 
-export default ListCheck;
+export default CustomView;

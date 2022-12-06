@@ -8,7 +8,13 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import ButtonModal from "@/components/button-modal";
-import { Transfer, ListCheck, ViewLeft, ViewRight } from "./components";
+import {
+  Transfer,
+  CustomView,
+  ViewLeft,
+  ViewRight,
+  CheckList,
+} from "./components";
 import styles from "./index.less";
 
 const treeData = [
@@ -34,11 +40,22 @@ const treeData = [
   },
 ];
 
+export type CallbackHistory = (args: NsGraph.IGraphData) => void;
+export type CallbackDisabled = (args: boolean) => void;
+
 const View = () => {
   const [graphData, setGraphData] = React.useState<NsGraph.IGraphData>();
-  const historyData = (val: NsGraph.IGraphData) => {
-    setGraphData(val);
-  };
+  const [disabled, setDisabled] = React.useState<boolean>(true);
+
+  const callbackHistory = React.useCallback<CallbackHistory>(
+    (val) => setGraphData(val),
+    []
+  );
+  const callbackDisabled = React.useCallback<CallbackDisabled>(
+    (val) => setDisabled(val),
+    []
+  );
+
   return (
     <ProCard split="horizontal" bordered className={styles["view-graph"]}>
       <ProCard
@@ -96,7 +113,7 @@ const View = () => {
                   modalProps={{
                     title: "自定义显示节点选择页",
                     width: 800,
-                    children: <ListCheck />,
+                    children: <CustomView />,
                   }}
                 />
               </Space.Compact>
@@ -114,11 +131,21 @@ const View = () => {
           bodyStyle={{
             padding: 0,
           }}
+          style={{
+            height: "100%",
+          }}
           type="inner"
         >
           <ProCard
             title="列表"
             headerBordered
+            bodyStyle={{
+              padding: 0,
+              position: "relative",
+            }}
+            style={{
+              height: "100%",
+            }}
             extra={
               <ButtonModal
                 buttonProps={{ children: "导入" }}
@@ -130,7 +157,7 @@ const View = () => {
               />
             }
           >
-            22
+            <CheckList disabled={disabled} />
           </ProCard>
         </ProCard>
         <ProCard
@@ -144,7 +171,10 @@ const View = () => {
             padding: 0,
           }}
         >
-          <ViewRight historyData={historyData} />
+          <ViewRight
+            callbackHistory={callbackHistory}
+            callbackDisabled={callbackDisabled}
+          />
         </ProCard>
       </ProCard>
 
