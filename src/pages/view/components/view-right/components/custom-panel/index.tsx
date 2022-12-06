@@ -5,6 +5,7 @@ import { Card, Row, Col } from "antd";
 import { useGraphDnd, IOnNodeDrop } from "@/components/flow";
 import { ConnectorNode } from "@/components/nodes";
 import style from "./index.less";
+import { controlShape } from "../index";
 
 interface IConfigRenderOptions {
   graphConfig?: IGraphConfig;
@@ -59,7 +60,7 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         nodeConfig={{
           renderKey: "ConnectorNode",
           label: "卫星",
-          fill: "#87e8de",
+          fill: controlShape.satellite,
           ports: [
             {
               type: NsGraph.AnchorType.OUTPUT,
@@ -75,7 +76,7 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         nodeConfig={{
           renderKey: "ConnectorNode",
           label: "分系统",
-          fill: "#91caff",
+          fill: controlShape.subsystem,
         }}
         node={ConnectorNode}
       />
@@ -84,7 +85,7 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         nodeConfig={{
           renderKey: "ConnectorNode",
           label: "器部件",
-          fill: "#ffe58f",
+          fill: controlShape.components,
         }}
         node={ConnectorNode}
       />
@@ -93,7 +94,7 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         nodeConfig={{
           renderKey: "ConnectorNode",
           label: "参数",
-          fill: "#b7eb8f",
+          fill: controlShape.parameter,
           ports: [
             {
               type: NsGraph.AnchorType.INPUT,

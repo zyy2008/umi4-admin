@@ -1,0 +1,31 @@
+.flow-edit {
+  z-index: 1;
+  position: absolute;
+  left: 160px;
+  right: 0;
+  height: 50px;
+  background-color: #fff;
+
+  :global {
+    .ant-tabs-nav {
+      display: none;
+    }
+
+    .ant-form-item {
+      margin: 0;
+    }
+
+    .ant-form-item-row {
+      flex-direction: row;
+    }
+
+    .ant-form-item-control {
+      flex: 1;
+    }
+
+    .ant-tabs-content-holder {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

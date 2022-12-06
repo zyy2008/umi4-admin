@@ -11,7 +11,6 @@ export namespace NsJsonForm {
   export const formValueUpdateService: NsJsonSchemaForm.IFormValueUpdateService =
     async (args) => {
       const { commandService, targetData, allFields } = args;
-      console.log(args);
       const updateNode = (node: NsGraph.INodeConfig) => {
         return commandService.executeCommand<NsNodeCmd.UpdateNode.IArgs>(
           XFlowNodeCommands.UPDATE_NODE.id,
