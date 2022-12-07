@@ -7,6 +7,7 @@ import {
   ExportOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
+import { useView } from "./hooks";
 import ButtonModal from "@/components/button-modal";
 import {
   Transfer,
@@ -46,6 +47,7 @@ export type CallbackDisabled = (args: boolean) => void;
 const View = () => {
   const [graphData, setGraphData] = React.useState<NsGraph.IGraphData>();
   const [disabled, setDisabled] = React.useState<boolean>(true);
+  const { rightRef, onChange } = useView();
 
   const callbackHistory = React.useCallback<CallbackHistory>(
     (val) => setGraphData(val),
@@ -157,7 +159,7 @@ const View = () => {
               />
             }
           >
-            <CheckList disabled={disabled} />
+            <CheckList disabled={disabled} onChange={onChange} />
           </ProCard>
         </ProCard>
         <ProCard
@@ -174,6 +176,7 @@ const View = () => {
           <ViewRight
             callbackHistory={callbackHistory}
             callbackDisabled={callbackDisabled}
+            ref={rightRef}
           />
         </ProCard>
       </ProCard>

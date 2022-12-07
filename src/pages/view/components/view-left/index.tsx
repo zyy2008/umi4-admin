@@ -1,7 +1,6 @@
 import React from "react";
 import ViewFlow from "@/components/flow";
 import type { NsGraph, IAppLoad } from "@antv/xflow";
-// import type { IAppLoad, NsGraphCmd, NsGraph } from "@antv/xflow";
 
 type IProps = {
   graphData?: NsGraph.IGraphData;

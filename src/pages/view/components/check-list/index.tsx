@@ -1,27 +1,40 @@
 import React from "react";
-import { CheckCard } from "@ant-design/pro-components";
+import { CheckCard, CheckCardProps } from "@ant-design/pro-components";
 import { Empty } from "antd";
 import styles from "./index.less";
 
-const list = [...Array(100).keys()];
+const list: Item[] = [...Array(100).keys()].map((item) => ({
+  label: `label-${item}`,
+  value: item + 1,
+}));
 
-type IProps = {
-  disabled?: boolean;
+type Item = {
+  label: string;
+  value: CheckCardProps["value"];
 };
 
-const CheckList: React.FC<IProps> = (props) => {
-  const { disabled } = props;
+export type CheckListProps = {
+  disabled?: boolean;
+  onChange: (value?: CheckCardProps["value"], item?: Item) => void;
+};
+
+const CheckList: React.FC<CheckListProps> = (props) => {
+  const { disabled, onChange } = props;
   return (
     <CheckCard.Group
-      onChange={(value) => {
-        console.log("value", value);
-      }}
       size="small"
       className={styles["check-card"]}
       disabled={disabled}
     >
       {list.length > 0 ? (
-        list.map((item) => <CheckCard title={item + 1} value={item + 1} />)
+        list.map((item) => (
+          <CheckCard
+            title={item.label}
+            value={item.value}
+            key={item.value}
+            onChange={(val) => onChange(val, item)}
+          />
+        ))
       ) : (
         <Empty
           style={{

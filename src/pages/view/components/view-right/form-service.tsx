@@ -10,6 +10,7 @@ import { controlShape } from "./components";
 import type { Cell, Graph as X6Graph } from "@antv/x6";
 import { CallbackVisibility } from "./index";
 import { CallbackDisabled } from "@/pages/view";
+import Form from "./form";
 
 export interface IFormSchemaService {
   (
@@ -80,11 +81,12 @@ export namespace NsJsonForm {
         callbackDisabled?.(false);
         controls = [
           {
-            name: "name",
-            label: "节点名称",
+            name: "value",
+            label: "节点值",
             shape: ControlShape.INPUT,
-            value: targetData.name,
+            value: targetData.value,
             placeholder: "请输入",
+            disabled: true,
           },
         ];
         return [
@@ -109,5 +111,17 @@ export namespace NsJsonForm {
         },
       ],
     };
+  };
+
+  export const getCustomRenderComponent: NsJsonSchemaForm.ICustomRender = (
+    targetType,
+    targetData
+  ) => {
+    console.log(targetType, targetData);
+    if (targetType === "node") {
+      return Form;
+    }
+
+    return null;
   };
 }
