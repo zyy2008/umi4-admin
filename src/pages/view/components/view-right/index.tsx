@@ -70,7 +70,6 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
           }}
         >
           <JsonSchemaForm
-            // getCustomRenderComponent={ NsJsonForm.getCustomRenderComponent}
             targetType={["node", "edge", "canvas"]}
             position={{ top: 0, left: 0, right: 0, bottom: 0 }}
             footerPosition={{

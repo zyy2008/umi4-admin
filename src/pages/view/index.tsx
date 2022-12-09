@@ -47,8 +47,7 @@ export type CallbackDisabled = (args: boolean) => void;
 const View = () => {
   const [graphData, setGraphData] = React.useState<NsGraph.IGraphData>();
   const [disabled, setDisabled] = React.useState<boolean>(true);
-  const { rightRef, onChange } = useView();
-
+  const { rightRef, onChange, nodesValue, x6Graph } = useView({ graphData });
   const callbackHistory = React.useCallback<CallbackHistory>(
     (val) => setGraphData(val),
     []
@@ -159,7 +158,12 @@ const View = () => {
               />
             }
           >
-            <CheckList disabled={disabled} onChange={onChange} />
+            <CheckList
+              disabled={disabled}
+              onChange={onChange}
+              nodesValue={nodesValue}
+              x6Graph={x6Graph}
+            />
           </ProCard>
         </ProCard>
         <ProCard
