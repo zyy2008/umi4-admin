@@ -12,6 +12,7 @@ import {
   ManualOperationNode,
 } from "@/components/nodes";
 import { BetaSchemaForm } from "@ant-design/pro-components";
+import "./index.less";
 
 const { Search } = Input;
 
@@ -59,7 +60,7 @@ const CardList: React.FC<CardListProps> = (props) => {
       {filterData.length > 0 ? (
         <VirtualList
           data={filterData}
-          height={200}
+          height={400}
           itemHeight={36}
           itemKey="id"
         >
@@ -152,38 +153,6 @@ const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
           ] as NsGraph.INodeAnchor[],
         }}
       />
-      <ColNode
-        onMouseDown={onMouseDown}
-        node={DataIONode}
-        nodeConfig={{
-          label: "for",
-          renderKey: "DataIONode",
-        }}
-      />
-      <ColNode
-        onMouseDown={onMouseDown}
-        node={SectorNode}
-        size={{
-          width: 110,
-          height: 55,
-        }}
-        nodeConfig={{
-          label: "switch",
-          renderKey: "SectorNode",
-        }}
-      />
-      <ColNode
-        onMouseDown={onMouseDown}
-        node={ManualOperationNode}
-        size={{
-          width: 100,
-          height: 50,
-        }}
-        nodeConfig={{
-          label: "while",
-          renderKey: "ManualOperationNode",
-        }}
-      />
     </Row>
   );
 };
@@ -197,30 +166,10 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         dataSource={[
           {
             id: uuidv4(),
-            label: "算法组件1",
+            label: "任务1",
             renderKey: "ConnectorNode",
             width: 70,
             height: 70,
-            ports: [
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.BOTTOM,
-                tooltip: "输出桩",
-              },
-            ] as NsGraph.INodeAnchor[],
-          },
-        ]}
-        onMouseDown={onMouseDown}
-      />
-      <CardList
-        title="事实"
-        dataSource={[
-          {
-            id: uuidv4(),
-            label: "事实组件2",
-            renderKey: "RectNode",
-            width: 110,
-            height: 50,
           },
         ]}
         onMouseDown={onMouseDown}
@@ -228,64 +177,6 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
       <Card title="条件类型" size="small">
         <BaseNodes onMouseDown={onMouseDown} />
       </Card>
-      <Card title="自定义" size="small">
-        <Row>
-          <ColNode
-            onMouseDown={onMouseDown}
-            nodeConfig={{
-              renderKey: "PreparationNode",
-              label: "中间事件",
-            }}
-            node={PreparationNode}
-          />
-        </Row>
-      </Card>
-      <CardList
-        title="公共函数"
-        header={
-          <BetaSchemaForm
-            modalProps={{ destroyOnClose: true }}
-            trigger={<Button type="primary">新增</Button>}
-            layoutType="ModalForm"
-            columns={[
-              {
-                title: "函数名称",
-                dataIndex: "groupState",
-                valueType: "text",
-                formItemProps: {
-                  rules: [
-                    {
-                      required: true,
-                    },
-                  ],
-                },
-              },
-              {
-                title: "函数内容",
-                dataIndex: "groupState1",
-                valueType: "textarea",
-                formItemProps: {
-                  rules: [
-                    {
-                      required: true,
-                    },
-                  ],
-                },
-              },
-            ]}
-          />
-        }
-        dataSource={[
-          {
-            id: uuidv4(),
-            label: "函数组件1",
-            renderKey: "MultiDocumentNode",
-            width: 90,
-            height: 60,
-          },
-        ]}
-        onMouseDown={onMouseDown}
-      />
     </>
   );
 };
@@ -299,7 +190,7 @@ const CustomPanel: React.FC<
   return (
     <WorkspacePanel {...other}>
       <Card
-        title="123"
+        title="任务区"
         size="small"
         style={{
           display: "flex",

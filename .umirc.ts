@@ -46,9 +46,9 @@ export default defineConfig({
       component: "./view",
     },
     {
-      path: "/vue3/page1",
-      name: "欢迎1",
-      microApp: "vue3",
+      path: "/task",
+      name: "任务编辑",
+      component: "./task",
     },
   ],
   npmClient: "yarn",
