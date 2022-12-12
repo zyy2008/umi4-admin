@@ -1,7 +1,8 @@
 import { JsonSchemaForm } from "@antv/xflow";
 import KnowledgeFlow from "@/components/flow";
 import { NsJsonForm } from "./form-service";
-import { CustomPanel, controlMapService } from "./components";
+import { CustomPanel } from "./components";
+import { controlMapService } from "@/components/custom-form";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
 

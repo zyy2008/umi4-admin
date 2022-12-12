@@ -38,7 +38,23 @@
   line-height: 36px;
   justify-content: center;
 
-  &:hover {
+  &.disabled {
+    position: relative;
+    opacity: .45;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 999;
+      cursor: not-allowed;
+      content: "";
+    }
+  }
+
+  &:not(.disabled):hover {
     background-color: #fff;
     box-shadow: 0 0 3px 3px rgba(48, 86, 227, .15);
     cursor: move

@@ -1,6 +1,7 @@
 import { NsJsonSchemaForm, XFlowNodeCommands } from "@antv/xflow";
 import { set } from "lodash";
 import type { NsNodeCmd, NsGraph } from "@antv/xflow";
+import { ControlShapeEnum } from "@/components/custom-form";
 
 export namespace NsJsonForm {
   /** ControlShape的Enum */
@@ -42,10 +43,104 @@ export namespace NsJsonForm {
         ],
       };
     }
+    const { renderKey } = targetData;
     const groups: () => NsJsonSchemaForm.IGroup[] = () => {
       let controls: NsJsonSchemaForm.IControlSchema[];
-      const { fill } = targetData;
-      return [];
+      switch (renderKey) {
+        case "ProcessNode":
+          controls = [
+            {
+              name: "name",
+              label: "名称",
+              shape: ControlShape.INPUT,
+              value: targetData.name,
+              disabled: true,
+            },
+            {
+              name: "input",
+              label: "输入",
+              shape: ControlShape.INPUT,
+              value: targetData.input,
+            },
+            {
+              name: "output",
+              label: "输出",
+              shape: ControlShape.INPUT,
+              value: targetData.output,
+            },
+            {
+              name: "dataSource",
+              label: "数据来源",
+              shape: ControlShape.SELECT,
+              value: targetData.dataSource,
+              options: [
+                {
+                  title: "kafka",
+                  value: "kafka",
+                },
+                {
+                  title: "udp",
+                  value: "udp",
+                },
+                {
+                  title: "mysql",
+                  value: "mysql",
+                },
+                {
+                  title: "hbase",
+                  value: "hbase",
+                },
+              ],
+            },
+            {
+              name: "dataGo",
+              label: "数据去向",
+              shape: ControlShape.SELECT,
+              value: targetData.dataGo,
+              options: [
+                {
+                  title: "mysql",
+                  value: "mysql",
+                },
+                {
+                  title: "hbase",
+                  value: "hbase",
+                },
+                {
+                  title: "txt",
+                  value: "txt",
+                },
+              ],
+            },
+          ];
+          break;
+        case "DecisionNode":
+          controls = [
+            {
+              name: "name",
+              label: "条件名称",
+              shape: ControlShape.INPUT,
+              value: targetData.name,
+              placeholder: "请输入",
+            },
+            {
+              name: "expression",
+              label: "表达式编辑",
+              shape: ControlShapeEnum.EDITOR_SHAPE,
+              value: targetData.expression,
+            },
+          ];
+          break;
+        default:
+          return [];
+      }
+
+      return [
+        {
+          name: "more",
+          controls,
+        },
+      ];
     };
 
     return {

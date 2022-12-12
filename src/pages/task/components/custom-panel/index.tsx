@@ -1,18 +1,16 @@
 import React from "react";
-import { WorkspacePanel, IWorkspacePanelProps, uuidv4 } from "@antv/xflow";
+import {
+  WorkspacePanel,
+  IWorkspacePanelProps,
+  uuidv4,
+  useXFlowApp,
+} from "@antv/xflow";
+import type { Cell } from "@antv/x6";
 import { NsGraph, IGraphConfig } from "@antv/xflow-core";
-import { Card, Input, List, Row, Col, Empty, Button } from "antd";
+import { Card, Input, List, Row, Col, Empty } from "antd";
 import VirtualList from "rc-virtual-list";
 import { useGraphDnd, IPanelNode, IOnNodeDrop } from "@/components/flow";
-import {
-  DecisionNode,
-  DataIONode,
-  SectorNode,
-  PreparationNode,
-  ManualOperationNode,
-} from "@/components/nodes";
-import { BetaSchemaForm } from "@ant-design/pro-components";
-import "./index.less";
+import { DecisionNode } from "@/components/nodes";
 
 const { Search } = Input;
 
@@ -35,11 +33,34 @@ interface IConfigRenderOptions {
 
 const CardList: React.FC<CardListProps> = (props) => {
   const { dataSource, title, onMouseDown, loading, header } = props;
+  const app = useXFlowApp();
+  const [nodes, setNodes] = React.useState<NsGraph.INodeConfig[]>([]);
   const [keyword, setKeyword] = React.useState<string>("");
   const filterData = React.useMemo<IPanelNode[]>(() => {
     const list = dataSource.filter((node) => node.label?.includes(keyword));
+    if (nodes.length > 0) {
+      return list.map((item) => ({
+        ...item,
+        isDisabled: nodes.findIndex(({ itemId }) => itemId === item.id) > -1,
+      }));
+    }
     return list;
-  }, [dataSource, keyword]);
+  }, [dataSource, keyword, nodes]);
+  React.useEffect(() => {
+    (async () => {
+      if (app) {
+        const graph = await app.getGraphInstance();
+        graph.on("node:added", () => {
+          const nodes = graph.getNodes();
+          setNodes(nodes.map((cell) => cell.getData()));
+        });
+        graph.on("node:removed", () => {
+          const nodes = graph.getNodes();
+          setNodes(nodes.map((cell) => cell.getData()));
+        });
+      }
+    })();
+  }, [app]);
   return (
     <List
       loading={loading}
@@ -69,8 +90,9 @@ const CardList: React.FC<CardListProps> = (props) => {
               onMouseDown={onMouseDown({
                 ...item,
                 fontSize: 15,
+                itemId: item.id,
               })}
-              className="node-list"
+              className={`node-list ${item.isDisabled ? "disabled" : ""}`}
             >
               {item.label}
             </List.Item>
@@ -167,9 +189,16 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
           {
             id: uuidv4(),
             label: "任务1",
-            renderKey: "ConnectorNode",
-            width: 70,
-            height: 70,
+            renderKey: "ProcessNode",
+            width: 110,
+            height: 40,
+          },
+          {
+            id: uuidv4(),
+            label: "任务2",
+            renderKey: "ProcessNode",
+            width: 110,
+            height: 40,
           },
         ]}
         onMouseDown={onMouseDown}

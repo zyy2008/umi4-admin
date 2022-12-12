@@ -1,7 +1,7 @@
 import { NsJsonSchemaForm, XFlowNodeCommands } from "@antv/xflow";
 import { set } from "lodash";
 import type { NsNodeCmd, NsGraph } from "@antv/xflow";
-import { ControlShapeEnum } from "./components";
+import { ControlShapeEnum } from "@/components/custom-form";
 
 export namespace NsJsonForm {
   /** ControlShape的Enum */

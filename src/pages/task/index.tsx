@@ -1,8 +1,8 @@
-import React from "react";
 import TaskFlow from "@/components/flow";
 import { CustomPanel } from "./components";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { JsonSchemaForm } from "@antv/xflow";
+import { controlMapService } from "@/components/custom-form";
 import { NsJsonForm } from "./form-service";
 
 const Task = () => {
@@ -24,6 +24,7 @@ const Task = () => {
           }}
           formSchemaService={NsJsonForm.formSchemaService}
           formValueUpdateService={NsJsonForm.formValueUpdateService}
+          controlMapService={controlMapService}
         />
       </>
     </TaskFlow>
