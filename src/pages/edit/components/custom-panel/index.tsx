@@ -1,9 +1,14 @@
 import React from "react";
 import { WorkspacePanel, IWorkspacePanelProps, uuidv4 } from "@antv/xflow";
 import { NsGraph, IGraphConfig } from "@antv/xflow-core";
-import { Card, Input, List, Row, Col, Empty, Button } from "antd";
+import { Card, Input, List, Row, Col, Empty } from "antd";
 import VirtualList from "rc-virtual-list";
-import { useGraphDnd, IPanelNode, IOnNodeDrop } from "@/components/flow";
+import {
+  useGraphDnd,
+  IPanelNode,
+  IOnNodeDrop,
+  IBodyProps,
+} from "@/components/flow";
 import {
   DecisionNode,
   DataIONode,
@@ -11,7 +16,9 @@ import {
   PreparationNode,
   ManualOperationNode,
 } from "@/components/nodes";
-import { BetaSchemaForm } from "@ant-design/pro-components";
+import Param from "./param";
+import Fact from "./fact";
+import Public from "./public";
 
 const { Search } = Input;
 
@@ -32,7 +39,7 @@ interface IConfigRenderOptions {
   ) => (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
-const CardList: React.FC<CardListProps> = (props) => {
+export const CardList: React.FC<CardListProps> = (props) => {
   const { dataSource, title, onMouseDown, loading, header } = props;
   const [keyword, setKeyword] = React.useState<string>("");
   const filterData = React.useMemo<IPanelNode[]>(() => {
@@ -188,43 +195,12 @@ const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
   );
 };
 
-const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
+const CardBody: React.FC<IBodyProps> = (props) => {
   const { onMouseDown } = useGraphDnd(props);
   return (
     <>
-      <CardList
-        title="参数"
-        dataSource={[
-          {
-            id: uuidv4(),
-            label: "算法组件1",
-            renderKey: "ConnectorNode",
-            width: 70,
-            height: 70,
-            ports: [
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.BOTTOM,
-                tooltip: "输出桩",
-              },
-            ] as NsGraph.INodeAnchor[],
-          },
-        ]}
-        onMouseDown={onMouseDown}
-      />
-      <CardList
-        title="事实"
-        dataSource={[
-          {
-            id: uuidv4(),
-            label: "事实组件2",
-            renderKey: "RectNode",
-            width: 110,
-            height: 50,
-          },
-        ]}
-        onMouseDown={onMouseDown}
-      />
+      <Param onMouseDown={onMouseDown} />
+      <Fact onMouseDown={onMouseDown} />
       <Card title="条件类型" size="small">
         <BaseNodes onMouseDown={onMouseDown} />
       </Card>
@@ -240,52 +216,7 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
           />
         </Row>
       </Card>
-      <CardList
-        title="公共函数"
-        header={
-          <BetaSchemaForm
-            modalProps={{ destroyOnClose: true }}
-            trigger={<Button type="primary">新增</Button>}
-            layoutType="ModalForm"
-            columns={[
-              {
-                title: "函数名称",
-                dataIndex: "groupState",
-                valueType: "text",
-                formItemProps: {
-                  rules: [
-                    {
-                      required: true,
-                    },
-                  ],
-                },
-              },
-              {
-                title: "函数内容",
-                dataIndex: "groupState1",
-                valueType: "textarea",
-                formItemProps: {
-                  rules: [
-                    {
-                      required: true,
-                    },
-                  ],
-                },
-              },
-            ]}
-          />
-        }
-        dataSource={[
-          {
-            id: uuidv4(),
-            label: "函数组件1",
-            renderKey: "MultiDocumentNode",
-            width: 90,
-            height: 60,
-          },
-        ]}
-        onMouseDown={onMouseDown}
-      />
+      <Public onMouseDown={onMouseDown} />
     </>
   );
 };

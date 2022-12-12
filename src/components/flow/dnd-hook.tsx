@@ -2,10 +2,36 @@ import React from "react";
 import type { Graph } from "@antv/x6";
 import { useXFlowApp, getNodeReactComponent } from "@antv/xflow-core";
 import type { IGraphConfig, NsGraph } from "@antv/xflow-core";
+import type {
+  INodeCollapsePanelProps,
+  IModelService,
+  IGraphCommandService,
+} from "@antv/xflow";
 import { Addon } from "@antv/x6";
 import { XFlowNode } from "@/components/flow/node";
 
+export interface IBodyProps
+  extends Omit<INodeCollapsePanelProps, "position" | "nodeDataService"> {}
+
+export interface IConfigRenderOptions {
+  graphConfig?: IGraphConfig;
+  onMouseDown: (
+    nodeConfig: NsGraph.INodeConfig
+  ) => (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  modelService?: IModelService;
+  commandService?: IGraphCommandService;
+}
+
 export interface IPanelNode extends NsGraph.INodeConfig {
+  /**  Dnd节点的popover的提示内容，可选  */
+  popoverContent?: React.ReactNode;
+  /**  自定义节点  */
+  renderComponent?: React.ComponentType<{
+    data: IPanelNode;
+    isNodePanel: boolean;
+  }>;
+  /** 自定义数据 */
+  data?: any;
   /** disable */
   isDisabled?: boolean;
 }
@@ -14,7 +40,7 @@ export const defaultNodeFactory = (args: any) => {
   return new XFlowNode(args);
 };
 
-export const useGraphDnd = (props: any) => {
+export const useGraphDnd = (props: IBodyProps): IConfigRenderOptions => {
   const { onNodeDrop, dndOptions, x6NodeFactory } = props;
   const { graphProvider, modelService, commandService } = useXFlowApp();
   const [graphConfig, setConfig] = React.useState<IGraphConfig>();
@@ -81,7 +107,7 @@ export const useGraphDnd = (props: any) => {
           : graphConfig.nodeRender.get(renderKey);
         // 包裹节点组件
         const wrappedComponent = getNodeReactComponent(
-          reactComponent,
+          reactComponent as React.ComponentType<any>,
           commandService,
           modelService
         );
