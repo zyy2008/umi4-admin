@@ -6,7 +6,8 @@
     "build": "max build",
     "postinstall": "max setup",
     "setup": "max setup",
-    "start": "npm run dev"
+    "start": "npm run dev",
+    "api": "autos --quiet"
   },
   "dependencies": {
     "@alita/plugins": "^3.2.3",
@@ -25,7 +26,8 @@
     "@types/lodash": "^4.14.188",
     "@types/react": "^17.0.52",
     "@types/react-dom": "^17.0.18",
-    "typescript": "^4.9.3"
+    "typescript": "^4.9.3",
+    "auto-service": "^4.0.4"
   },
   "resolutions": {
     "@types/react": "17.0.45"

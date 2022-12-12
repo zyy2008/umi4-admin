@@ -1,0 +1,14 @@
+{
+  "url": "api.json",
+  "remoteUrl": "http://192.169.7.200:3000/api/open/plugin/export-full?type=json&pid=53&status=all&token=9bb5c2c760bd39f8ed1b0dabc35247ffe8d1c8089c7bb4dfe6f43806ccbc73cb",
+  "type": "yapi",
+  "swaggerParser": {},
+  "validateResponse": false,
+  "yapiConfig": {
+    "required": false,
+    "bodyJsonRequired": false,
+    "categoryMap": {
+      "中文": "English"
+    }
+  }
+}

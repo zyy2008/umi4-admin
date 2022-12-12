@@ -50,10 +50,10 @@ export namespace NsJsonForm {
         case "ProcessNode":
           controls = [
             {
-              name: "name",
+              name: "label",
               label: "名称",
               shape: ControlShape.INPUT,
-              value: targetData.name,
+              value: targetData.label,
               disabled: true,
             },
             {
