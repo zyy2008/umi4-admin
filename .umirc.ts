@@ -1,4 +1,9 @@
 import { defineConfig } from "@umijs/max";
+import path from "path";
+
+function resolve(dir: string) {
+  return path.join(__dirname, dir);
+}
 
 export default defineConfig({
   plugins: [
@@ -8,6 +13,10 @@ export default defineConfig({
   keepalive: [/./],
   tabsLayout: {
     hasDropdown: true,
+  },
+  chainWebpack(memo, { env, webpack }) {
+    // 设置 alias
+    memo.resolve.alias.set("@ajax", resolve("src/utils/ajax"));
   },
   qiankun: {
     master: {
