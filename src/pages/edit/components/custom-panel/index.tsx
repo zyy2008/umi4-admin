@@ -1,6 +1,6 @@
 import React from "react";
 import { WorkspacePanel, IWorkspacePanelProps, uuidv4 } from "@antv/xflow";
-import { NsGraph, IGraphConfig } from "@antv/xflow-core";
+import { NsGraph } from "@antv/xflow-core";
 import { Card, Input, List, Row, Col, Empty } from "antd";
 import VirtualList from "rc-virtual-list";
 import {
@@ -8,6 +8,7 @@ import {
   IPanelNode,
   IOnNodeDrop,
   IBodyProps,
+  IConfigRenderOptions,
 } from "@/components/flow";
 import {
   DecisionNode,
@@ -26,18 +27,9 @@ type CardListProps = {
   title?: string;
   dataSource: IPanelNode[];
   loading?: boolean;
-  onMouseDown: (
-    nodeConfig: NsGraph.INodeConfig
-  ) => (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  onMouseDown: IConfigRenderOptions["onMouseDown"];
   header?: React.ReactNode;
 };
-
-interface IConfigRenderOptions {
-  graphConfig?: IGraphConfig;
-  onMouseDown: (
-    nodeConfig: NsGraph.INodeConfig
-  ) => (e: React.MouseEvent<HTMLElement, MouseEvent>) => void;
-}
 
 export const CardList: React.FC<CardListProps> = (props) => {
   const { dataSource, title, onMouseDown, loading, header } = props;

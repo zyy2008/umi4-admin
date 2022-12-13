@@ -3,6 +3,7 @@ import { uuidv4 } from "@antv/xflow";
 import { NsGraph } from "@antv/xflow-core";
 import type { IConfigRenderOptions } from "@/components/flow";
 import { CardList } from "./index";
+import { APIS } from "@/services";
 
 const Param: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
