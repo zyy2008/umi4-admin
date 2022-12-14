@@ -21,11 +21,15 @@ export interface ExtraFetchParams {
 
 export interface WrappedFetchParams extends RequestOptionsInit {
   url: string;
+  query?: any;
 }
 
 const ajax = {
-  ajax: ({ url, ...opt }: WrappedFetchParams) => {
-    return request(url, opt);
+  ajax: ({ url, query, ...opt }: WrappedFetchParams) => {
+    return request(url, {
+      ...opt,
+      params: query,
+    });
   },
   check: (value: any, name: string) => {
     if (value === null || value === undefined) {

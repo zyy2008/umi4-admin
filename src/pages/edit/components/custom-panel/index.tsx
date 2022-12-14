@@ -23,7 +23,7 @@ import Public from "./public";
 
 const { Search } = Input;
 
-type CardListProps = {
+export type CardListProps = {
   title?: string;
   dataSource: IPanelNode[];
   loading?: boolean;
@@ -35,7 +35,7 @@ export const CardList: React.FC<CardListProps> = (props) => {
   const { dataSource, title, onMouseDown, loading, header } = props;
   const [keyword, setKeyword] = React.useState<string>("");
   const filterData = React.useMemo<IPanelNode[]>(() => {
-    const list = dataSource.filter((node) => node.label?.includes(keyword));
+    const list = dataSource?.filter((node) => node.label?.includes(keyword));
     return list;
   }, [dataSource, keyword]);
   return (
@@ -55,7 +55,7 @@ export const CardList: React.FC<CardListProps> = (props) => {
         </div>
       }
     >
-      {filterData.length > 0 ? (
+      {filterData?.length > 0 ? (
         <VirtualList
           data={filterData}
           height={200}
