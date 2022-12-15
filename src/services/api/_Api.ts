@@ -34,17 +34,6 @@ export interface ParamskmsZsbjServerApiCommonFunctionListGet {
   * 知识公共函数表
   */
 export type ParamsBodykmsZsbjServerApiCommonFunctionUpdatePut = models.KnowledgeFunction;
-/**
-  * @description kmsZsbjServerApiCommonTelemetryParamsNameGet参数
-  * @property `name` name
-  */
-export interface ParamskmsZsbjServerApiCommonTelemetryParamsNameGet {
-  // pathParams
-  /**
-   * name
-   */
-  name: string;
-}
 
 export class _Api {
   protected $basePath = '/kms-job-server'.replace(/\/$/, '');
@@ -136,52 +125,6 @@ export class _Api {
   ) : AjaxPromise<models.BaseResponseListstring>  => {
     const url = this.$basePath + `/kms-zsbj-server/api/common/subsystems`;
     const p: any = {};
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 获取对象列表
-   
-   
-   * @param opt ajax config
-   * @returns models.BaseResponseListstring
-   */
-  public kmsZsbjServerApiCommonTargetsGet = (
-    
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponseListstring>  => {
-    const url = this.$basePath + `/kms-zsbj-server/api/common/targets`;
-    const p: any = {};
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 获取遥测参数列表
-   * @param params ParamskmsZsbjServerApiCommonTelemetryParamsNameGet
-   
-   * @param opt ajax config
-   * @returns models.BaseResponseListTelemetryParam
-   */
-  public kmsZsbjServerApiCommonTelemetryParamsNameGet = (
-    params: ParamskmsZsbjServerApiCommonTelemetryParamsNameGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponseListTelemetryParam>  => {
-    const {
-    name,
-} = params;
-    const url = this.$basePath + `/kms-zsbj-server/api/common/telemetry-params/${name}`;
-    const p: any = {};
-    ajax.check(params.name, 'name');
     return ajax.ajax({
       ...opt,
       method: 'GET',

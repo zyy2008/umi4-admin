@@ -13,12 +13,12 @@
 import * as models from './models';
 
 /**
-  * @property `uuidList` 待加载的知识uuid列表
+  * @property `[content]` 旧知识的内容
   */
-export interface KmsZsbjServerApiKnowledgeLoadingAllBody {
+export interface KmsZsbjServerApiKnowledgeConvertBody {
   /**
-   * 待加载的知识uuid列表
+   * 旧知识的内容
    */
-  "uuidList": Array<string>;
+  "content"?: string;
 }
 

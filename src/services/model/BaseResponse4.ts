@@ -13,12 +13,13 @@
 import * as models from './models';
 
 /**
-  * @property `uuidList` 待加载的知识uuid列表
+  * @property `[data]` 
+  * @property `[errorMsg]` 
+  * @property `[success]` 
   */
-export interface KmsZsbjServerApiKnowledgeLoadingAllBody {
-  /**
-   * 待加载的知识uuid列表
-   */
-  "uuidList": Array<string>;
+export interface BaseResponse4 {
+  "data"?: 6;
+  "errorMsg"?: string;
+  "success"?: boolean;
 }
 

@@ -356,19 +356,19 @@
         }
       }
     },
-    "/kms-zsbj-server/api/knowledge/update": {
-      "put": {
+    "/kms-zsbj-server/api/knowledge/add": {
+      "post": {
         "tags": [
           "知识管理"
         ],
-        "summary": "更新一条知识信息",
-        "description": "更新一条知识记录",
+        "summary": "新增知识",
+        "description": "新增一条知识信息",
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "KmsZsbjServerApiKnowledgeUpdateBody",
+            "name": "KmsZsbjServerApiKnowledgeAddBody",
             "in": "body",
             "description": "知识",
             "schema": {
@@ -413,6 +413,11 @@
                   "type": "string",
                   "description": "图形信息"
                 },
+                "returnType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)"
+                },
                 "ruleName": {
                   "type": "string",
                   "description": "规则名"
@@ -448,7 +453,124 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object"
+                  "type": "object",
+                  "required": [
+                    "knowledgeUuid",
+                    "ruleName"
+                  ],
+                  "properties": {
+                    "createTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "创建时间"
+                    },
+                    "createType": {
+                      "type": "string",
+                      "description": "创建类型"
+                    },
+                    "editUser": {
+                      "type": "string",
+                      "description": "编辑用户"
+                    },
+                    "filePath": {
+                      "type": "string",
+                      "description": "版本文件路径"
+                    },
+                    "graphInfo": {
+                      "type": "string",
+                      "description": "图形信息"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "主键id"
+                    },
+                    "isChecked": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "是否校验(否_0, 是_1)"
+                    },
+                    "knowledgeUuid": {
+                      "type": "string",
+                      "description": "知识ID"
+                    },
+                    "ruleName": {
+                      "type": "string",
+                      "description": "规则名"
+                    },
+                    "uploadTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "加载时间"
+                    },
+                    "version": {
+                      "type": "string",
+                      "description": "版本号"
+                    },
+                    "versionUuid": {
+                      "type": "string",
+                      "description": "版本标识UUID"
+                    }
+                  },
+                  "title": "KnowledgeVersion对象",
+                  "description": "知识版本历史表",
+                  "$$ref": "#/definitions/KnowledgeVersion对象"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«KnowledgeVersion对象»",
+              "$$ref": "#/definitions/BaseResponse«KnowledgeVersion对象»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/download-multi": {
+      "post": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "下载多个知识文件",
+        "description": "下载多个知识文件",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsZsbjServerApiKnowledgeDownloadMultiBody",
+            "in": "body",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "properties": {
+                "uuidList": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "待下载的知识uuid列表"
+                }
+              },
+              "required": [
+                "uuidList"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
                 },
                 "errorMsg": {
                   "type": "string"
@@ -464,38 +586,57 @@
         }
       }
     },
-    "/kms-zsbj-server/api/knowledge/download": {
-      "get": {
+    "/kms-zsbj-server/api/knowledge/delete": {
+      "delete": {
         "tags": [
           "知识管理"
         ],
-        "summary": "下载知识文件",
+        "summary": "删除知识记录",
+        "description": "删除多条知识记录",
         "consumes": [
-          "text/plain"
+          "application/json"
         ],
         "parameters": [
           {
-            "name": "uuid",
-            "in": "query",
-            "required": true,
-            "description": "待下载的知识标识uuid",
-            "type": "string"
-          },
-          {
-            "name": "version",
-            "in": "query",
-            "required": true,
-            "description": "待下载的知识版本号",
-            "type": "string"
+            "name": "KmsZsbjServerApiKnowledgeDeleteBody",
+            "in": "body",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "properties": {
+                "uuidList": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "待删除的知识uuid列表"
+                }
+              },
+              "required": [
+                "uuidList"
+              ]
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "string",
-              "format": "byte",
-              "title": "KmsZsbjServerApiKnowledgeDownload"
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse",
+              "$$ref": "#/definitions/BaseResponse"
             }
           }
         }
@@ -526,6 +667,59 @@
                   },
                   "description": "待加载的知识uuid列表"
                 }
+              },
+              "required": [
+                "uuidList"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse",
+              "$$ref": "#/definitions/BaseResponse"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/convert": {
+      "post": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "单条知识转换",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsZsbjServerApiKnowledgeConvertBody",
+            "in": "body",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "description": "旧知识的内容"
+                }
               }
             }
           }
@@ -537,7 +731,16 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {
+                    "expression": {
+                      "type": "string",
+                      "description": "知识表达式内容",
+                      "refType": null
+                    }
+                  },
+                  "title": "KnowledgeContentBo",
+                  "$$ref": "#/definitions/KnowledgeContentBo"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -546,8 +749,8 @@
                   "type": "boolean"
                 }
               },
-              "title": "BaseResponse",
-              "$$ref": "#/definitions/BaseResponse"
+              "title": "BaseResponse«KnowledgeContentBo»",
+              "$$ref": "#/definitions/BaseResponse«KnowledgeContentBo»"
             }
           }
         }
@@ -596,6 +799,146 @@
               },
               "title": "BaseResponse",
               "$$ref": "#/definitions/BaseResponse"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/check-batch": {
+      "post": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "多条知识校验",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsZsbjServerApiKnowledgeCheckBatchBody",
+            "in": "body",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "properties": {
+                "uuidList": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "待校验的知识uuid列表"
+                }
+              },
+              "required": [
+                "uuidList"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object",
+                      "description": "多条知识校验结果<uuid, result>",
+                      "additionalProperties": {
+                        "type": "boolean"
+                      },
+                      "properties": {}
+                    }
+                  },
+                  "title": "多条校验结果",
+                  "$$ref": "#/definitions/多条校验结果"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«多条校验结果»",
+              "$$ref": "#/definitions/BaseResponse«多条校验结果»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/convert-multi": {
+      "post": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "多条知识转换",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsZsbjServerApiKnowledgeConvertMultiBody",
+            "in": "body",
+            "schema": {
+              "$schema": "http://json-schema.org/draft-04/schema#",
+              "type": "object",
+              "properties": {
+                "idList": {
+                  "type": "array",
+                  "items": {
+                    "type": "integer"
+                  },
+                  "description": "待转换旧知识id列表"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "failList": {
+                      "type": "array",
+                      "description": "转换失败的旧知识的id列表",
+                      "items": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "refType": "integer"
+                    },
+                    "successUuidList": {
+                      "type": "array",
+                      "description": "转换成功后的新知识的uuid列表",
+                      "items": {
+                        "type": "string"
+                      },
+                      "refType": "string"
+                    }
+                  },
+                  "title": "知识转换结果",
+                  "$$ref": "#/definitions/知识转换结果"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«知识转换结果»",
+              "$$ref": "#/definitions/BaseResponse«知识转换结果»"
             }
           }
         }
@@ -687,7 +1030,11 @@
                 }
               },
               "title": "ExportQo",
-              "$$ref": "#/definitions/ExportQo"
+              "$$ref": "#/definitions/ExportQo",
+              "required": [
+                "targetCode",
+                "uuidList"
+              ]
             }
           }
         ],
@@ -698,7 +1045,8 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 },
                 "errorMsg": {
                   "type": "string"
@@ -714,19 +1062,56 @@
         }
       }
     },
-    "/kms-zsbj-server/api/knowledge/add": {
-      "post": {
+    "/kms-zsbj-server/api/knowledge/download": {
+      "get": {
         "tags": [
           "知识管理"
         ],
-        "summary": "新增知识",
-        "description": "新增一条知识信息",
+        "summary": "下载知识文件",
+        "consumes": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "required": true,
+            "description": "待下载的知识标识uuid",
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": true,
+            "description": "待下载的知识版本号",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string",
+              "format": "byte",
+              "title": "KmsZsbjServerApiKnowledgeDownload"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/update": {
+      "put": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "更新一条知识信息",
+        "description": "更新一条知识记录",
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "KmsZsbjServerApiKnowledgeAddBody",
+            "name": "KmsZsbjServerApiKnowledgeUpdateBody",
             "in": "body",
             "description": "知识",
             "schema": {
@@ -771,6 +1156,11 @@
                   "type": "string",
                   "description": "图形信息"
                 },
+                "returnType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)"
+                },
                 "ruleName": {
                   "type": "string",
                   "description": "规则名"
@@ -807,59 +1197,6 @@
               "properties": {
                 "data": {
                   "type": "object"
-                },
-                "errorMsg": {
-                  "type": "string"
-                },
-                "success": {
-                  "type": "boolean"
-                }
-              },
-              "title": "BaseResponse",
-              "$$ref": "#/definitions/BaseResponse"
-            }
-          }
-        }
-      }
-    },
-    "/kms-zsbj-server/api/knowledge/delete": {
-      "delete": {
-        "tags": [
-          "知识管理"
-        ],
-        "summary": "删除知识记录",
-        "description": "删除多条知识记录",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "KmsZsbjServerApiKnowledgeDeleteBody",
-            "in": "body",
-            "schema": {
-              "$schema": "http://json-schema.org/draft-04/schema#",
-              "type": "object",
-              "properties": {
-                "uuidList": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  },
-                  "description": "待删除的知识uuid列表"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "object",
-                  "properties": {}
                 },
                 "errorMsg": {
                   "type": "string"
@@ -1053,6 +1390,132 @@
               },
               "title": "BaseResponse",
               "$$ref": "#/definitions/BaseResponse"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/check": {
+      "post": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "知识校验",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsZsbjServerApiKnowledgeCheckBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "endTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "结束时间"
+                },
+                "paramList": {
+                  "type": "array",
+                  "description": "遥测参数列表",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "code": {
+                        "type": "string",
+                        "description": "参数代号"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "参数名称"
+                      },
+                      "num": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "参数序号"
+                      },
+                      "staSid": {
+                        "type": "string",
+                        "description": "对象标识"
+                      },
+                      "type": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "参数类型"
+                      },
+                      "values": {
+                        "type": "array",
+                        "description": "参数值",
+                        "items": {
+                          "type": "object"
+                        }
+                      }
+                    },
+                    "title": "TelemetryParam对象",
+                    "description": "遥测参数",
+                    "$$ref": "#/definitions/TelemetryParam对象"
+                  }
+                },
+                "startTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "开始时间"
+                },
+                "uuid": {
+                  "type": "string",
+                  "description": "知识唯一标识uuid"
+                },
+                "version": {
+                  "type": "string",
+                  "description": "知识版本"
+                }
+              },
+              "title": "CheckQo",
+              "$$ref": "#/definitions/CheckQo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "errorMsg": {
+                      "type": "array",
+                      "description": "知识校验错误日志",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "output": {
+                      "type": "array",
+                      "description": "知识校验输出",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "result": {
+                      "type": "boolean",
+                      "description": "知识校验结果"
+                    }
+                  },
+                  "title": "知识校验结果",
+                  "$$ref": "#/definitions/知识校验结果"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«知识校验结果»",
+              "$$ref": "#/definitions/BaseResponse«知识校验结果»"
             }
           }
         }
@@ -1401,6 +1864,11 @@
                   "format": "int32",
                   "description": "是否加载(0_否, 1_是)"
                 },
+                "returnType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)"
+                },
                 "ruleName": {
                   "type": "string",
                   "description": "规则名"
@@ -1514,6 +1982,11 @@
                             "format": "int32",
                             "description": "是否加载(0_否, 1_是)"
                           },
+                          "returnType": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)"
+                          },
                           "ruleName": {
                             "type": "string",
                             "description": "规则名"
@@ -1575,6 +2048,110 @@
               },
               "title": "BaseResponse«IPage«KnowledgeDetailInfo对象»»",
               "$$ref": "#/definitions/BaseResponse«IPage«KnowledgeDetailInfo对象»»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/return-type-list": {
+      "get": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "获取有返回知识列表",
+        "consumes": [
+          "text/plain"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "ruleName",
+                      "uuid"
+                    ],
+                    "properties": {
+                      "diagnosis": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "参与诊断(0_否, 1_是)"
+                      },
+                      "faultDelay": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "故障延迟"
+                      },
+                      "faultLevel": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "故障等级(1_一般, 2_严重，3_警告)"
+                      },
+                      "faultPart": {
+                        "type": "string",
+                        "description": "故障部件"
+                      },
+                      "id": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "主键id"
+                      },
+                      "isUpload": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "是否加载(0_否, 1_是)"
+                      },
+                      "returnType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)"
+                      },
+                      "ruleName": {
+                        "type": "string",
+                        "description": "规则名"
+                      },
+                      "subsystem": {
+                        "type": "string",
+                        "description": "分系统"
+                      },
+                      "targetCode": {
+                        "type": "string",
+                        "description": "对象代号"
+                      },
+                      "targetId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "对象ID"
+                      },
+                      "uuid": {
+                        "type": "string",
+                        "description": "知识唯一标识uuid"
+                      },
+                      "version": {
+                        "type": "string",
+                        "description": "版本号"
+                      }
+                    },
+                    "title": "KnowledgeInfo对象",
+                    "description": "知识信息表",
+                    "$$ref": "#/definitions/KnowledgeInfo对象"
+                  }
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«List«KnowledgeInfo对象»»",
+              "$$ref": "#/definitions/BaseResponse«List«KnowledgeInfo对象»»"
             }
           }
         }
@@ -1810,119 +2387,6 @@
               },
               "title": "BaseResponse«List«string»»",
               "$$ref": "#/definitions/BaseResponse«List«string»»"
-            }
-          }
-        }
-      }
-    },
-    "/kms-zsbj-server/api/common/targets": {
-      "get": {
-        "tags": [
-          "知识管理-公共接口"
-        ],
-        "summary": "获取对象列表",
-        "consumes": [
-          "text/plain"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "errorMsg": {
-                  "type": "string"
-                },
-                "success": {
-                  "type": "boolean"
-                }
-              },
-              "title": "BaseResponse«List«string»»",
-              "$$ref": "#/definitions/BaseResponse«List«string»»"
-            }
-          }
-        }
-      }
-    },
-    "/kms-zsbj-server/api/common/telemetry-params/{name}": {
-      "get": {
-        "tags": [
-          "知识管理-公共接口"
-        ],
-        "summary": "获取遥测参数列表",
-        "consumes": [
-          "text/plain"
-        ],
-        "parameters": [
-          {
-            "name": "name",
-            "in": "path",
-            "description": "name",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "code": {
-                        "type": "string",
-                        "description": "参数代号"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "参数名称"
-                      },
-                      "num": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "参数序号"
-                      },
-                      "staSid": {
-                        "type": "string",
-                        "description": "对象标识"
-                      },
-                      "type": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "参数类型"
-                      },
-                      "values": {
-                        "type": "array",
-                        "items": {
-                          "type": "object"
-                        }
-                      }
-                    },
-                    "title": "TelemetryParam对象",
-                    "description": "遥测参数",
-                    "$$ref": "#/definitions/TelemetryParam对象"
-                  }
-                },
-                "errorMsg": {
-                  "type": "string"
-                },
-                "success": {
-                  "type": "boolean"
-                }
-              },
-              "title": "BaseResponse«List«TelemetryParam对象»»",
-              "$$ref": "#/definitions/BaseResponse«List«TelemetryParam对象»»"
             }
           }
         }

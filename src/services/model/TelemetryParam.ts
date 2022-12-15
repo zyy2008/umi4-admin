@@ -19,7 +19,7 @@ import * as models from './models';
   * @property `[num]` 参数序号
   * @property `[staSid]` 对象标识
   * @property `[type]` 参数类型
-  * @property `[values]` 
+  * @property `[values]` 参数值
   */
 export interface TelemetryParam {
   /**
@@ -42,6 +42,9 @@ export interface TelemetryParam {
    * 参数类型
    */
   "type"?: number;
+  /**
+   * 参数值
+   */
   "values"?: Array<any>;
 }
 

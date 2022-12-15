@@ -1,7 +1,8 @@
 import React from "react";
 import { WorkspacePanel, IWorkspacePanelProps, uuidv4 } from "@antv/xflow";
 import { NsGraph } from "@antv/xflow-core";
-import { Card, Input, List, Row, Col, Empty } from "antd";
+import { Card, Input, List, Row, Col, Empty, Button } from "antd";
+import { EditOutlined } from "@ant-design/icons";
 import VirtualList from "rc-virtual-list";
 import {
   useGraphDnd,
@@ -71,6 +72,15 @@ export const CardList: React.FC<CardListProps> = (props) => {
               className="node-list"
             >
               {item.label}
+              {item?.onEditClick && (
+                <Button
+                  type="link"
+                  size="small"
+                  icon={<EditOutlined />}
+                  onClick={item?.onEditClick}
+                  onMouseDown={(e) => e.stopPropagation()}
+                />
+              )}
             </List.Item>
           )}
         </VirtualList>
@@ -222,7 +232,7 @@ const CustomPanel: React.FC<
   return (
     <WorkspacePanel {...other}>
       <Card
-        title="123"
+        title="元件"
         size="small"
         style={{
           display: "flex",

@@ -15,8 +15,8 @@ import * as models from './models';
 /**
   * @property `[diagnosis]` 是否诊断
   * @property `[subsystem]` 分系统
-  * @property `[targetCode]` 对象代号
-  * @property `[uuidList]` 选择导出的知识列表
+  * @property `targetCode` 对象代号
+  * @property `uuidList` 选择导出的知识列表
   */
 export interface ExportQo {
   /**
@@ -30,10 +30,10 @@ export interface ExportQo {
   /**
    * 对象代号
    */
-  "targetCode"?: string;
+  "targetCode": string;
   /**
    * 选择导出的知识列表
    */
-  "uuidList"?: Array<string>;
+  "uuidList": Array<string>;
 }
 

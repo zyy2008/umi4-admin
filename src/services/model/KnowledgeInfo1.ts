@@ -13,46 +13,26 @@
 import * as models from './models';
 
 /**
-  * @description 知识详细信息表
-  * @property `[createTime]` 创建时间
-  * @property `[createType]` 创建类型
+  * @description 知识信息表
   * @property `[diagnosis]` 参与诊断(0_否, 1_是)
-  * @property `[editUser]` 编辑用户
   * @property `[faultDelay]` 故障延迟
   * @property `[faultLevel]` 故障等级(1_一般, 2_严重，3_警告)
   * @property `[faultPart]` 故障部件
-  * @property `[filePath]` 版本文件路径
-  * @property `[graphInfo]` 图形信息
   * @property `[id]` 主键id
-  * @property `[isChecked]` 是否校验(0_否, 1_是)
   * @property `[isUpload]` 是否加载(0_否, 1_是)
   * @property `[returnType]` 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
   * @property `ruleName` 规则名
   * @property `[subsystem]` 分系统
   * @property `[targetCode]` 对象代号
   * @property `[targetId]` 对象ID
-  * @property `[uploadTime]` 加载时间
   * @property `uuid` 知识唯一标识uuid
   * @property `[version]` 版本号
-  * @property `[versionUuid]` 版本标识UUID
   */
-export interface KnowledgeDetailInfo {
-  /**
-   * 创建时间
-   */
-  "createTime"?: Date;
-  /**
-   * 创建类型
-   */
-  "createType"?: string;
+export interface KnowledgeInfo1 {
   /**
    * 参与诊断(0_否, 1_是)
    */
   "diagnosis"?: number;
-  /**
-   * 编辑用户
-   */
-  "editUser"?: string;
   /**
    * 故障延迟
    */
@@ -66,21 +46,9 @@ export interface KnowledgeDetailInfo {
    */
   "faultPart"?: string;
   /**
-   * 版本文件路径
-   */
-  "filePath"?: string;
-  /**
-   * 图形信息
-   */
-  "graphInfo"?: string;
-  /**
    * 主键id
    */
   "id"?: number;
-  /**
-   * 是否校验(0_否, 1_是)
-   */
-  "isChecked"?: number;
   /**
    * 是否加载(0_否, 1_是)
    */
@@ -106,10 +74,6 @@ export interface KnowledgeDetailInfo {
    */
   "targetId"?: number;
   /**
-   * 加载时间
-   */
-  "uploadTime"?: Date;
-  /**
    * 知识唯一标识uuid
    */
   "uuid": string;
@@ -117,9 +81,5 @@ export interface KnowledgeDetailInfo {
    * 版本号
    */
   "version"?: string;
-  /**
-   * 版本标识UUID
-   */
-  "versionUuid"?: string;
 }
 

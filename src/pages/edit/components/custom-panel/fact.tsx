@@ -1,22 +1,30 @@
 import React from "react";
 import { uuidv4 } from "@antv/xflow";
 import type { IConfigRenderOptions } from "@/components/flow";
-import { CardList } from "./index";
+import { useRequest } from "@umijs/max";
+import { CardList, CardListProps } from "./index";
+import { APIS } from "@/services";
 
 const Fact: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
+  const { data = [], loading } = useRequest(() =>
+    APIS.DefaultApi.kmsZsbjServerApiKnowledgeReturnTypeListGet()
+  );
+  const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
+    return data?.map((item) => ({
+      ...item,
+      id: uuidv4(),
+      label: item.ruleName,
+      renderKey: "RectNode",
+      width: 110,
+      height: 50,
+    }));
+  }, [data]);
   return (
     <CardList
+      loading={loading}
       title="事实"
-      dataSource={[
-        {
-          id: uuidv4(),
-          label: "事实组件2",
-          renderKey: "RectNode",
-          width: 110,
-          height: 50,
-        },
-      ]}
+      dataSource={dataSource}
       onMouseDown={onMouseDown}
     />
   );

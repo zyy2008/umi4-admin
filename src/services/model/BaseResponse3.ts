@@ -17,8 +17,8 @@ import * as models from './models';
   * @property `[errorMsg]` 
   * @property `[success]` 
   */
-export interface BaseResponseListTelemetryParam {
-  "data"?: Array<models.TelemetryParam>;
+export interface BaseResponse3 {
+  "data"?: 2;
   "errorMsg"?: string;
   "success"?: boolean;
 }

@@ -18,4 +18,5 @@ export interface IOnNodeDrop {
 export interface IPanelNode extends NsGraph.INodeConfig {
   /** disable */
   isDisabled?: boolean;
+  onEditClick?: () => void;
 }

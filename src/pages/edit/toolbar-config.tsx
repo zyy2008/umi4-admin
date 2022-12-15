@@ -3,10 +3,11 @@ import type { IToolbarItemOptions, IToolbarGroupOptions } from "@antv/xflow";
 import { createToolbarConfig } from "@antv/xflow";
 import { XFlowGraphCommands, IconStore } from "@antv/xflow";
 import { SaveOutlined, CheckOutlined, CodeOutlined } from "@ant-design/icons";
-import { message } from "antd";
 import type { NsGraphCmd } from "@antv/xflow";
-import { Modal, DatePicker, Form, Input, Button, Space } from "antd";
+import { Modal, DatePicker, Form, Input, Button, Space, message } from "antd";
 import { ProCard, ProTable } from "@ant-design/pro-components";
+import { APIS, Knowledge } from "@/services";
+import { useSearchParams } from "@umijs/max";
 
 const { RangePicker } = DatePicker;
 
@@ -134,9 +135,9 @@ namespace NsConfig {
   IconStore.set("CheckOutlined", CheckOutlined);
   IconStore.set("CodeOutlined", CodeOutlined);
   /** 获取toobar配置项 */
-  export const getToolbarItems: () => Promise<
-    IToolbarGroupOptions[]
-  > = async () => {
+  export const getToolbarItems: (
+    T: any
+  ) => Promise<IToolbarGroupOptions[]> = async (value) => {
     const toolbarGroup1: IToolbarItemOptions[] = [
       {
         id: "CheckOutlined",
@@ -164,8 +165,32 @@ namespace NsConfig {
             {
               saveGraphDataService: async (meta, data) => {
                 console.log(data);
-                console.log(meta);
-                message.success("nodes count:" + data.nodes.length);
+                if (value) {
+                  const object: Knowledge = JSON.parse(value);
+                  if (object?.uuid) {
+                    const { success } =
+                      await APIS.DefaultApi.kmsZsbjServerApiKnowledgeUpdatePut({
+                        uuid: object?.uuid,
+                        graphInfo: JSON.stringify(data),
+                      });
+                    if (success) {
+                      message.success("修改成功！");
+                    } else {
+                      message.warning("修改失败！");
+                    }
+                  } else {
+                    const { success } =
+                      await APIS.DefaultApi.kmsZsbjServerApiKnowledgeAddPost({
+                        ...object,
+                        graphInfo: JSON.stringify(data),
+                      });
+                    if (success) {
+                      message.success("新增成功！");
+                    } else {
+                      message.warning("新增失败！");
+                    }
+                  }
+                }
               },
             }
           );
@@ -181,12 +206,16 @@ namespace NsConfig {
 }
 
 /** wrap出一个hook */
-export const useToolbarConfig = createToolbarConfig((toolbarConfig) => {
-  /** 生产 toolbar item */
-  toolbarConfig.setToolbarModelService(async (toolbarModel) => {
-    const toolbarItems = await NsConfig.getToolbarItems();
-    toolbarModel.setValue((toolbar) => {
-      toolbar.mainGroups = toolbarItems;
+export const useToolbarConfig = () => {
+  const [searchParams] = useSearchParams();
+  const object = searchParams.get("object");
+  return createToolbarConfig((toolbarConfig) => {
+    /** 生产 toolbar item */
+    toolbarConfig.setToolbarModelService(async (toolbarModel) => {
+      const toolbarItems = await NsConfig.getToolbarItems(object);
+      toolbarModel.setValue((toolbar) => {
+        toolbar.mainGroups = toolbarItems;
+      });
     });
-  });
-});
+  })();
+};

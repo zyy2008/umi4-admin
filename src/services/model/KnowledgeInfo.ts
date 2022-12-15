@@ -20,6 +20,7 @@ import * as models from './models';
   * @property `[faultPart]` 故障部件
   * @property `[id]` 主键id
   * @property `[isUpload]` 是否加载(0_否, 1_是)
+  * @property `[returnType]` 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
   * @property `ruleName` 规则名
   * @property `[subsystem]` 分系统
   * @property `[targetCode]` 对象代号
@@ -52,6 +53,10 @@ export interface KnowledgeInfo {
    * 是否加载(0_否, 1_是)
    */
   "isUpload"?: number;
+  /**
+   * 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
+   */
+  "returnType"?: number;
   /**
    * 规则名
    */
