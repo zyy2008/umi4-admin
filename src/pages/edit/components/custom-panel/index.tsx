@@ -1,12 +1,9 @@
 import React from "react";
-import { WorkspacePanel, IWorkspacePanelProps, uuidv4 } from "@antv/xflow";
+import { WorkspacePanel, IWorkspacePanelProps } from "@antv/xflow";
 import { NsGraph } from "@antv/xflow-core";
-import { Card, Input, List, Row, Col, Empty, Button } from "antd";
-import { EditOutlined } from "@ant-design/icons";
-import VirtualList from "rc-virtual-list";
+import { Card, Row } from "antd";
 import {
   useGraphDnd,
-  IPanelNode,
   IOnNodeDrop,
   IBodyProps,
   IConfigRenderOptions,
@@ -21,116 +18,7 @@ import {
 import Param from "./param";
 import Fact from "./fact";
 import Public from "./public";
-
-const { Search } = Input;
-
-export type CardListProps = {
-  title?: string;
-  dataSource: IPanelNode[];
-  loading?: boolean;
-  onMouseDown: IConfigRenderOptions["onMouseDown"];
-  header?: React.ReactNode;
-};
-
-export const CardList: React.FC<CardListProps> = (props) => {
-  const { dataSource, title, onMouseDown, loading, header } = props;
-  const [keyword, setKeyword] = React.useState<string>("");
-  const filterData = React.useMemo<IPanelNode[]>(() => {
-    const list = dataSource?.filter((node) => node.label?.includes(keyword));
-    return list;
-  }, [dataSource, keyword]);
-  return (
-    <List
-      loading={loading}
-      dataSource={[]}
-      header={
-        <div className="node-title">
-          <span>{title}</span>
-          <Search
-            onSearch={setKeyword}
-            allowClear
-            placeholder="过滤条件"
-            size="middle"
-          />
-          {header}
-        </div>
-      }
-    >
-      {filterData?.length > 0 ? (
-        <VirtualList
-          data={filterData}
-          height={200}
-          itemHeight={36}
-          itemKey="id"
-        >
-          {(item) => (
-            <List.Item
-              onMouseDown={onMouseDown({
-                ...item,
-                fontSize: 15,
-              })}
-              className="node-list"
-            >
-              {item.label}
-              {item?.onEditClick && (
-                <Button
-                  type="link"
-                  size="small"
-                  icon={<EditOutlined />}
-                  onClick={item?.onEditClick}
-                  onMouseDown={(e) => e.stopPropagation()}
-                />
-              )}
-            </List.Item>
-          )}
-        </VirtualList>
-      ) : (
-        <Empty
-          style={{
-            height: 200,
-          }}
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-        />
-      )}
-    </List>
-  );
-};
-
-const ColNode: React.FC<
-  IConfigRenderOptions & {
-    node: NsGraph.INodeRender;
-    nodeConfig: Omit<NsGraph.INodeConfig, "id">;
-    size?: NsGraph.IReactNodeProps["size"];
-  }
-> = ({ onMouseDown, node, nodeConfig, size }) => {
-  const { label } = nodeConfig;
-  return (
-    <Col
-      className="col-node"
-      span={12}
-      onMouseDown={onMouseDown({
-        width: 110,
-        height: 55,
-        ...nodeConfig,
-        id: uuidv4(),
-        fontSize: 15,
-      })}
-    >
-      {React.createElement(node, {
-        size: {
-          width: 110,
-          height: 50,
-          ...size,
-        },
-        data: { label, fontSize: 16 },
-        position: {
-          x: 0,
-          y: 0,
-        },
-      })}
-    </Col>
-  );
-};
+import { ColNode } from "@/components/flow-custom";
 
 const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;

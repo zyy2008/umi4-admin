@@ -1,7 +1,7 @@
 import React from "react";
 import { NsGraph } from "@antv/xflow-core";
 import type { IConfigRenderOptions } from "@/components/flow";
-import { CardList, CardListProps } from "./index";
+import { CardList, CardListProps } from "@/components/flow-custom";
 import { APIS } from "@/services";
 import { useRequest, useSearchParams } from "@umijs/max";
 

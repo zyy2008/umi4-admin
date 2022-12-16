@@ -2,7 +2,7 @@ import React from "react";
 import { uuidv4 } from "@antv/xflow";
 import type { IConfigRenderOptions } from "@/components/flow";
 import { useRequest } from "@umijs/max";
-import { CardList, CardListProps } from "./index";
+import { CardList, CardListProps } from "@/components/flow-custom";
 import { APIS } from "@/services";
 
 const Fact: React.FC<IConfigRenderOptions> = (props) => {

@@ -4,7 +4,7 @@ import { BetaSchemaForm, ProFormInstance } from "@ant-design/pro-components";
 import { Button } from "antd";
 import { useRequest } from "@umijs/max";
 import { APIS, KnowledgeFunDto, KnowledgeFunction } from "@/services";
-import { CardList, CardListProps } from "./index";
+import { CardList, CardListProps } from "@/components/flow-custom";
 
 const Public: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
