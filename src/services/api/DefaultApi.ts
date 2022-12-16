@@ -1,5 +1,5 @@
 /**
- * kms
+ * unknown
  * unknown
  *
  * OpenAPI spec version: last
@@ -16,14 +16,36 @@ import * as models from '../model/models';
 /* tslint:disable:no-unused-variable member-ordering object-literal-shorthand */
 
 /**
+  * @description baseServerDataQueryQuerySatBySidGet参数
+  * @property `[satSid]` 卫星标识
+  */
+export interface ParamsbaseServerDataQueryQuerySatBySidGet {
+  // queryParams
+  /**
+   * 卫星标识
+   */
+  satSid?: string;
+}
+/**
+  * @description baseServerDataQueryQueryTmBySidGet参数
+  * @property `[satSid]` 卫星标识
+  */
+export interface ParamsbaseServerDataQueryQueryTmBySidGet {
+  // queryParams
+  /**
+   * 卫星标识
+   */
+  satSid?: string;
+}
+/**
   * 算法表
   */
-export type ParamsBodyalgorithmAddPost = models.Algorithm2;
+export type ParamsBodykmsJobServerAlgorithmAddPost = models.Algorithm2;
 /**
-  * @description algorithmDeleteBatchDelete参数
+  * @description kmsJobServerAlgorithmDeleteBatchDelete参数
   * @property `ids` ids
   */
-export interface ParamsalgorithmDeleteBatchDelete {
+export interface ParamskmsJobServerAlgorithmDeleteBatchDelete {
   // queryParams
   /**
    * ids
@@ -33,12 +55,12 @@ export interface ParamsalgorithmDeleteBatchDelete {
 /**
   * raw paramter
   */
-export type ParamsBodyalgorithmDeleteBatchDelete = string;
+export type ParamsBodykmsJobServerAlgorithmDeleteBatchDelete = string;
 /**
-  * @description algorithmDeleteDelete参数
+  * @description kmsJobServerAlgorithmDeleteDelete参数
   * @property `id` id
   */
-export interface ParamsalgorithmDeleteDelete {
+export interface ParamskmsJobServerAlgorithmDeleteDelete {
   // queryParams
   /**
    * id
@@ -48,17 +70,17 @@ export interface ParamsalgorithmDeleteDelete {
 /**
   * raw paramter
   */
-export type ParamsBodyalgorithmDeleteDelete = string;
+export type ParamsBodykmsJobServerAlgorithmDeleteDelete = string;
 /**
   * 算法表
   */
-export type ParamsBodyalgorithmEditPost = models.Algorithm3;
+export type ParamsBodykmsJobServerAlgorithmEditPost = models.Algorithm3;
 /**
-  * @description algorithmListPost参数
+  * @description kmsJobServerAlgorithmListPost参数
   * @property `[pageNum]` pageNum
   * @property `[pageSize]` pageSize
   */
-export interface ParamsalgorithmListPost {
+export interface ParamskmsJobServerAlgorithmListPost {
   // queryParams
   /**
    * pageNum
@@ -72,14 +94,14 @@ export interface ParamsalgorithmListPost {
 /**
   * 算法表
   */
-export type ParamsBodyalgorithmListPost = models.Algorithm;
+export type ParamsBodykmsJobServerAlgorithmListPost = models.Algorithm;
 /**
-  * @description algorithmQueryAuditLogByIdGet参数
+  * @description kmsJobServerAlgorithmQueryAuditLogByIdGet参数
   * @property `algoId` algoId
   * @property `[pageNum]` pageNum
   * @property `[pageSize]` pageSize
   */
-export interface ParamsalgorithmQueryAuditLogByIdGet {
+export interface ParamskmsJobServerAlgorithmQueryAuditLogByIdGet {
   // queryParams
   /**
    * algoId
@@ -95,10 +117,10 @@ export interface ParamsalgorithmQueryAuditLogByIdGet {
   pageSize?: string;
 }
 /**
-  * @description algorithmQueryByIdGet参数
+  * @description kmsJobServerAlgorithmQueryByIdGet参数
   * @property `id` id
   */
-export interface ParamsalgorithmQueryByIdGet {
+export interface ParamskmsJobServerAlgorithmQueryByIdGet {
   // queryParams
   /**
    * id
@@ -106,12 +128,12 @@ export interface ParamsalgorithmQueryByIdGet {
   id: string;
 }
 /**
-  * @description algorithmQueryVersionByIdGet参数
+  * @description kmsJobServerAlgorithmQueryVersionByIdGet参数
   * @property `algoId` algoId
   * @property `[pageNum]` pageNum
   * @property `[pageSize]` pageSize
   */
-export interface ParamsalgorithmQueryVersionByIdGet {
+export interface ParamskmsJobServerAlgorithmQueryVersionByIdGet {
   // queryParams
   /**
    * algoId
@@ -127,13 +149,17 @@ export interface ParamsalgorithmQueryVersionByIdGet {
   pageSize?: string;
 }
 /**
-  * @description commonTaskAuditPageListTaskIdPageNumPageSizePost参数
+  * @description kmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost参数
+  * @property `taskId` taskId
   * @property `pageNum` pageNum
   * @property `pageSize` pageSize
-  * @property `taskId` taskId
   */
-export interface ParamscommonTaskAuditPageListTaskIdPageNumPageSizePost {
+export interface ParamskmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost {
   // pathParams
+  /**
+   * taskId
+   */
+  taskId: string;
   /**
    * pageNum
    */
@@ -142,19 +168,15 @@ export interface ParamscommonTaskAuditPageListTaskIdPageNumPageSizePost {
    * pageSize
    */
   pageSize: string;
-  /**
-   * taskId
-   */
-  taskId: string;
 }
 /**
   */
-export type ParamsBodycommonTaskAuditPageListTaskIdPageNumPageSizePost = 5;
+export type ParamsBodykmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost = 5;
 /**
-  * @description commonTaskFlowTaskIdPut参数
+  * @description kmsJobServerCommonTaskFlowTaskIdPut参数
   * @property `taskId` taskId
   */
-export interface ParamscommonTaskFlowTaskIdPut {
+export interface ParamskmsJobServerCommonTaskFlowTaskIdPut {
   // pathParams
   /**
    * taskId
@@ -164,15 +186,19 @@ export interface ParamscommonTaskFlowTaskIdPut {
 /**
   * 公共任务
   */
-export type ParamsBodycommonTaskFlowTaskIdPut = models.CommonTask0;
+export type ParamsBodykmsJobServerCommonTaskFlowTaskIdPut = models.CommonTask0;
 /**
-  * @description commonTaskHistoryPageListTaskIdPageNumPageSizePost参数
+  * @description kmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost参数
+  * @property `taskId` taskId
   * @property `pageNum` pageNum
   * @property `pageSize` pageSize
-  * @property `taskId` taskId
   */
-export interface ParamscommonTaskHistoryPageListTaskIdPageNumPageSizePost {
+export interface ParamskmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost {
   // pathParams
+  /**
+   * taskId
+   */
+  taskId: string;
   /**
    * pageNum
    */
@@ -181,20 +207,16 @@ export interface ParamscommonTaskHistoryPageListTaskIdPageNumPageSizePost {
    * pageSize
    */
   pageSize: string;
-  /**
-   * taskId
-   */
-  taskId: string;
 }
 /**
   */
-export type ParamsBodycommonTaskHistoryPageListTaskIdPageNumPageSizePost = 3;
+export type ParamsBodykmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost = 3;
 /**
-  * @description commonTaskPageListPageNumPageSizePost参数
+  * @description kmsJobServerCommonTaskPageListPageNumPageSizePost参数
   * @property `pageNum` pageNum
   * @property `pageSize` pageSize
   */
-export interface ParamscommonTaskPageListPageNumPageSizePost {
+export interface ParamskmsJobServerCommonTaskPageListPageNumPageSizePost {
   // pathParams
   /**
    * pageNum
@@ -208,19 +230,19 @@ export interface ParamscommonTaskPageListPageNumPageSizePost {
 /**
   * 公共任务表
   */
-export type ParamsBodycommonTaskPageListPageNumPageSizePost = models.CommonTask1;
+export type ParamsBodykmsJobServerCommonTaskPageListPageNumPageSizePost = models.CommonTask1;
 /**
   * 公共任务
   */
-export type ParamsBodycommonTaskPost = models.CommonTask01;
+export type ParamsBodykmsJobServerCommonTaskPost = models.CommonTask01;
 /**
   */
-export type ParamsBodycommonTaskPut = 4;
+export type ParamsBodykmsJobServerCommonTaskPut = 4;
 /**
-  * @description commonTaskTaskIdDelete参数
+  * @description kmsJobServerCommonTaskTaskIdDelete参数
   * @property `taskId` taskId
   */
-export interface ParamscommonTaskTaskIdDelete {
+export interface ParamskmsJobServerCommonTaskTaskIdDelete {
   // pathParams
   /**
    * taskId
@@ -230,12 +252,12 @@ export interface ParamscommonTaskTaskIdDelete {
 /**
   * raw paramter
   */
-export type ParamsBodycommonTaskTaskIdDelete = string;
+export type ParamsBodykmsJobServerCommonTaskTaskIdDelete = string;
 /**
-  * @description commonTaskTaskIdGet参数
+  * @description kmsJobServerCommonTaskTaskIdGet参数
   * @property `taskId` taskId
   */
-export interface ParamscommonTaskTaskIdGet {
+export interface ParamskmsJobServerCommonTaskTaskIdGet {
   // pathParams
   /**
    * taskId
@@ -243,27 +265,57 @@ export interface ParamscommonTaskTaskIdGet {
   taskId: string;
 }
 /**
-  * @description dataQueryQuerySatBySidGet参数
-  * @property `[satSid]` 卫星标识
+  * @description kmsJobServerObjectCommonTaskAssessObjectIdGet参数
+  * @property `objectId` objectId
   */
-export interface ParamsdataQueryQuerySatBySidGet {
-  // queryParams
+export interface ParamskmsJobServerObjectCommonTaskAssessObjectIdGet {
+  // pathParams
   /**
-   * 卫星标识
+   * objectId
    */
-  satSid?: string;
+  objectId: string;
 }
 /**
-  * @description dataQueryQueryTmBySidGet参数
-  * @property `[satSid]` 卫星标识
+  * @description kmsJobServerObjectCommonTaskDagObjectIdTaskIdGet参数
+  * @property `objectId` objectId
+  * @property `taskId` taskId
   */
-export interface ParamsdataQueryQueryTmBySidGet {
-  // queryParams
+export interface ParamskmsJobServerObjectCommonTaskDagObjectIdTaskIdGet {
+  // pathParams
   /**
-   * 卫星标识
+   * objectId
    */
-  satSid?: string;
+  objectId: string;
+  /**
+   * taskId
+   */
+  taskId: string;
 }
+/**
+  * @description kmsJobServerObjectCommonTaskObjectIdGet参数
+  * @property `objectId` objectId
+  */
+export interface ParamskmsJobServerObjectCommonTaskObjectIdGet {
+  // pathParams
+  /**
+   * objectId
+   */
+  objectId: string;
+}
+/**
+  * @description kmsJobServerObjectCommonTaskObjectIdPut参数
+  * @property `objectId` objectId
+  */
+export interface ParamskmsJobServerObjectCommonTaskObjectIdPut {
+  // pathParams
+  /**
+   * objectId
+   */
+  objectId: string;
+}
+/**
+  */
+export type ParamsBodykmsJobServerObjectCommonTaskObjectIdPut = Array<models.ObjectCommonTask>;
 /**
   * 知识
   */
@@ -423,61 +475,9 @@ export interface ParamskmsZsbjServerApiKnowledgeViewGet {
    */
   version: string;
 }
-/**
-  * @description objectCommonTaskAssessObjectIdGet参数
-  * @property `objectId` objectId
-  */
-export interface ParamsobjectCommonTaskAssessObjectIdGet {
-  // pathParams
-  /**
-   * objectId
-   */
-  objectId: string;
-}
-/**
-  * @description objectCommonTaskDagObjectIdTaskIdGet参数
-  * @property `objectId` objectId
-  * @property `taskId` taskId
-  */
-export interface ParamsobjectCommonTaskDagObjectIdTaskIdGet {
-  // pathParams
-  /**
-   * objectId
-   */
-  objectId: string;
-  /**
-   * taskId
-   */
-  taskId: string;
-}
-/**
-  * @description objectCommonTaskObjectIdGet参数
-  * @property `objectId` objectId
-  */
-export interface ParamsobjectCommonTaskObjectIdGet {
-  // pathParams
-  /**
-   * objectId
-   */
-  objectId: string;
-}
-/**
-  * @description objectCommonTaskObjectIdPut参数
-  * @property `objectId` objectId
-  */
-export interface ParamsobjectCommonTaskObjectIdPut {
-  // pathParams
-  /**
-   * objectId
-   */
-  objectId: string;
-}
-/**
-  */
-export type ParamsBodyobjectCommonTaskObjectIdPut = Array<models.ObjectCommonTask>;
 
 export class DefaultApi {
-  protected $basePath = '/kms-job-server'.replace(/\/$/, '');
+  protected $basePath = ''.replace(/\/$/, '');
 
   public constructor(basePath?: string) {
     if (basePath !== undefined) {
@@ -487,484 +487,17 @@ export class DefaultApi {
 
   /**
    * 
-   * @summary 算法任务-新增
-   
-   * @param data: ParamsBodyalgorithmAddPost// 算法表
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public algorithmAddPost = (
-    
-    data: ParamsBodyalgorithmAddPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/algorithm/add`;
-    const p: any = {};
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'POST',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 算法任务-批量删除
-   * @param params ParamsalgorithmDeleteBatchDelete
-   * @param data: ParamsBodyalgorithmDeleteBatchDelete// raw paramter
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public algorithmDeleteBatchDelete = (
-    params: ParamsalgorithmDeleteBatchDelete,
-    data: ParamsBodyalgorithmDeleteBatchDelete,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/algorithm/deleteBatch`;
-    const p: any = {};
-    p.query = {};
-    if ('ids' in params) p.query.ids = params.ids;
-    ajax.check(params.ids, 'ids');
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'DELETE',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 算法任务-通过id删除
-   * @param params ParamsalgorithmDeleteDelete
-   * @param data: ParamsBodyalgorithmDeleteDelete// raw paramter
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public algorithmDeleteDelete = (
-    params: ParamsalgorithmDeleteDelete,
-    data: ParamsBodyalgorithmDeleteDelete,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/algorithm/delete`;
-    const p: any = {};
-    p.query = {};
-    if ('id' in params) p.query.id = params.id;
-    ajax.check(params.id, 'id');
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'DELETE',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 算法任务-编辑
-   
-   * @param data: ParamsBodyalgorithmEditPost// 算法表
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public algorithmEditPost = (
-    
-    data: ParamsBodyalgorithmEditPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/algorithm/edit`;
-    const p: any = {};
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'POST',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 算法任务-导出
-   
-   
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public algorithmExportPost = (
-    
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/algorithm/export`;
-    const p: any = {};
-    return ajax.ajax({
-      ...opt,
-      method: 'POST',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 算法任务-导入
-   
-   
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public algorithmImportPost = (
-    
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/algorithm/import`;
-    const p: any = {};
-    return ajax.ajax({
-      ...opt,
-      method: 'POST',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 算法任务-列表
-   * @param params ParamsalgorithmListPost
-   * @param data: ParamsBodyalgorithmListPost// 算法表
-   * @param opt ajax config
-   * @returns models.BaseResponseIPageAlgorithm
-   */
-  public algorithmListPost = (
-    params: ParamsalgorithmListPost,
-    data: ParamsBodyalgorithmListPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponseIPageAlgorithm>  => {
-    const url = this.$basePath + `/algorithm/list`;
-    const p: any = {};
-    p.query = {};
-    if ('pageNum' in params) p.query.pageNum = params.pageNum;
-    if ('pageSize' in params) p.query.pageSize = params.pageSize;
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'POST',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 算法任务-通过算法id查询审计日志
-   * @param params ParamsalgorithmQueryAuditLogByIdGet
-   
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public algorithmQueryAuditLogByIdGet = (
-    params: ParamsalgorithmQueryAuditLogByIdGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/algorithm/queryAuditLogById`;
-    const p: any = {};
-    p.query = {};
-    if ('algoId' in params) p.query.algoId = params.algoId;
-    ajax.check(params.algoId, 'algoId');
-    if ('pageNum' in params) p.query.pageNum = params.pageNum;
-    if ('pageSize' in params) p.query.pageSize = params.pageSize;
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 算法任务-通过id查询
-   * @param params ParamsalgorithmQueryByIdGet
-   
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public algorithmQueryByIdGet = (
-    params: ParamsalgorithmQueryByIdGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/algorithm/queryById`;
-    const p: any = {};
-    p.query = {};
-    if ('id' in params) p.query.id = params.id;
-    ajax.check(params.id, 'id');
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 算法任务-通过算法id查询历史
-   * @param params ParamsalgorithmQueryVersionByIdGet
-   
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public algorithmQueryVersionByIdGet = (
-    params: ParamsalgorithmQueryVersionByIdGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/algorithm/queryVersionById`;
-    const p: any = {};
-    p.query = {};
-    if ('algoId' in params) p.query.algoId = params.algoId;
-    ajax.check(params.algoId, 'algoId');
-    if ('pageNum' in params) p.query.pageNum = params.pageNum;
-    if ('pageSize' in params) p.query.pageSize = params.pageSize;
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 操作日志
-   * @param params ParamscommonTaskAuditPageListTaskIdPageNumPageSizePost
-   * @param data: ParamsBodycommonTaskAuditPageListTaskIdPageNumPageSizePost
-   * @param opt ajax config
-   * @returns models.BaseResponseIPageCommonTaskAuditLog
-   */
-  public commonTaskAuditPageListTaskIdPageNumPageSizePost = (
-    params: ParamscommonTaskAuditPageListTaskIdPageNumPageSizePost,
-    data: ParamsBodycommonTaskAuditPageListTaskIdPageNumPageSizePost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponseIPageCommonTaskAuditLog>  => {
-    const {
-    pageNum,
-    pageSize,
-    taskId,
-} = params;
-    const url = this.$basePath + `/commonTask/audit/pageList/${taskId}/${pageNum}/${pageSize}`;
-    const p: any = {};
-    ajax.check(params.pageNum, 'pageNum');
-    ajax.check(params.pageSize, 'pageSize');
-    ajax.check(params.taskId, 'taskId');
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'POST',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 任务流程编辑
-   * @param params ParamscommonTaskFlowTaskIdPut
-   * @param data: ParamsBodycommonTaskFlowTaskIdPut// 公共任务
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public commonTaskFlowTaskIdPut = (
-    params: ParamscommonTaskFlowTaskIdPut,
-    data: ParamsBodycommonTaskFlowTaskIdPut,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const {
-    taskId,
-} = params;
-    const url = this.$basePath + `/commonTask/flow/${taskId}`;
-    const p: any = {};
-    ajax.check(params.taskId, 'taskId');
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'PUT',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 历史
-   * @param params ParamscommonTaskHistoryPageListTaskIdPageNumPageSizePost
-   * @param data: ParamsBodycommonTaskHistoryPageListTaskIdPageNumPageSizePost
-   * @param opt ajax config
-   * @returns models.BaseResponseIPageCommonTaskVersion
-   */
-  public commonTaskHistoryPageListTaskIdPageNumPageSizePost = (
-    params: ParamscommonTaskHistoryPageListTaskIdPageNumPageSizePost,
-    data: ParamsBodycommonTaskHistoryPageListTaskIdPageNumPageSizePost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponseIPageCommonTaskVersion>  => {
-    const {
-    pageNum,
-    pageSize,
-    taskId,
-} = params;
-    const url = this.$basePath + `/commonTask/history/pageList/${taskId}/${pageNum}/${pageSize}`;
-    const p: any = {};
-    ajax.check(params.pageNum, 'pageNum');
-    ajax.check(params.pageSize, 'pageSize');
-    ajax.check(params.taskId, 'taskId');
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'POST',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 列表查询
-   * @param params ParamscommonTaskPageListPageNumPageSizePost
-   * @param data: ParamsBodycommonTaskPageListPageNumPageSizePost// 公共任务表
-   * @param opt ajax config
-   * @returns models.BaseResponseIPageCommonTask
-   */
-  public commonTaskPageListPageNumPageSizePost = (
-    params: ParamscommonTaskPageListPageNumPageSizePost,
-    data: ParamsBodycommonTaskPageListPageNumPageSizePost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponseIPageCommonTask>  => {
-    const {
-    pageNum,
-    pageSize,
-} = params;
-    const url = this.$basePath + `/commonTask/pageList/${pageNum}/${pageSize}`;
-    const p: any = {};
-    ajax.check(params.pageNum, 'pageNum');
-    ajax.check(params.pageSize, 'pageSize');
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'POST',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 新建
-   
-   * @param data: ParamsBodycommonTaskPost// 公共任务
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public commonTaskPost = (
-    
-    data: ParamsBodycommonTaskPost,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/commonTask`;
-    const p: any = {};
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'POST',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 批量编辑
-   
-   * @param data: ParamsBodycommonTaskPut
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public commonTaskPut = (
-    
-    data: ParamsBodycommonTaskPut,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const url = this.$basePath + `/commonTask`;
-    const p: any = {};
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'PUT',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 删除
-   * @param params ParamscommonTaskTaskIdDelete
-   * @param data: ParamsBodycommonTaskTaskIdDelete// raw paramter
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public commonTaskTaskIdDelete = (
-    params: ParamscommonTaskTaskIdDelete,
-    data: ParamsBodycommonTaskTaskIdDelete,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const {
-    taskId,
-} = params;
-    const url = this.$basePath + `/commonTask/${taskId}`;
-    const p: any = {};
-    ajax.check(params.taskId, 'taskId');
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'DELETE',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 查看
-   * @param params ParamscommonTaskTaskIdGet
-   
-   * @param opt ajax config
-   * @returns models.BaseResponseCommonTask
-   */
-  public commonTaskTaskIdGet = (
-    params: ParamscommonTaskTaskIdGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponseCommonTask>  => {
-    const {
-    taskId,
-} = params;
-    const url = this.$basePath + `/commonTask/${taskId}`;
-    const p: any = {};
-    ajax.check(params.taskId, 'taskId');
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 告警、对象、任务数统计
-   
-   
-   * @param opt ajax config
-   * @returns models.BaseResponse4
-   */
-  public dashboardIndexCountGet = (
-    
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse4>  => {
-    const url = this.$basePath + `/dashboard/indexCount`;
-    const p: any = {};
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
    * @summary 对象组列表查询
    
    
    * @param opt ajax config
    * @returns models.BaseResponseListObjectGroupBean
    */
-  public dataQueryQueryObjectGroupListGet = (
+  public baseServerDataQueryQueryObjectGroupListGet = (
     
     opt?: ExtraFetchParams
   ) : AjaxPromise<models.BaseResponseListObjectGroupBean>  => {
-    const url = this.$basePath + `/DataQuery/queryObjectGroupList`;
+    const url = this.$basePath + `/base-server/DataQuery/queryObjectGroupList`;
     const p: any = {};
     return ajax.ajax({
       ...opt,
@@ -976,16 +509,16 @@ export class DefaultApi {
   /**
    * 
    * @summary 根据卫星标识查询卫星信息
-   * @param params ParamsdataQueryQuerySatBySidGet
+   * @param params ParamsbaseServerDataQueryQuerySatBySidGet
    
    * @param opt ajax config
    * @returns models.BaseResponseSatBean
    */
-  public dataQueryQuerySatBySidGet = (
-    params: ParamsdataQueryQuerySatBySidGet,
+  public baseServerDataQueryQuerySatBySidGet = (
+    params: ParamsbaseServerDataQueryQuerySatBySidGet,
     opt?: ExtraFetchParams
   ) : AjaxPromise<models.BaseResponseSatBean>  => {
-    const url = this.$basePath + `/DataQuery/querySatBySid`;
+    const url = this.$basePath + `/base-server/DataQuery/querySatBySid`;
     const p: any = {};
     p.query = {};
     if ('satSid' in params) p.query.satSid = params.satSid;
@@ -1004,11 +537,11 @@ export class DefaultApi {
    * @param opt ajax config
    * @returns models.BaseResponseListSatBean
    */
-  public dataQueryQuerySatListGet = (
+  public baseServerDataQueryQuerySatListGet = (
     
     opt?: ExtraFetchParams
   ) : AjaxPromise<models.BaseResponseListSatBean>  => {
-    const url = this.$basePath + `/DataQuery/querySatList`;
+    const url = this.$basePath + `/base-server/DataQuery/querySatList`;
     const p: any = {};
     return ajax.ajax({
       ...opt,
@@ -1025,11 +558,11 @@ export class DefaultApi {
    * @param opt ajax config
    * @returns models.BaseResponseListSystemCodeBean
    */
-  public dataQueryQuerySystemCodeListGet = (
+  public baseServerDataQueryQuerySystemCodeListGet = (
     
     opt?: ExtraFetchParams
   ) : AjaxPromise<models.BaseResponseListSystemCodeBean>  => {
-    const url = this.$basePath + `/DataQuery/querySystemCodeList`;
+    const url = this.$basePath + `/base-server/DataQuery/querySystemCodeList`;
     const p: any = {};
     return ajax.ajax({
       ...opt,
@@ -1041,22 +574,592 @@ export class DefaultApi {
   /**
    * 
    * @summary 根据卫星标识查询参数信息
-   * @param params ParamsdataQueryQueryTmBySidGet
+   * @param params ParamsbaseServerDataQueryQueryTmBySidGet
    
    * @param opt ajax config
    * @returns models.BaseResponseListParamBean
    */
-  public dataQueryQueryTmBySidGet = (
-    params: ParamsdataQueryQueryTmBySidGet,
+  public baseServerDataQueryQueryTmBySidGet = (
+    params: ParamsbaseServerDataQueryQueryTmBySidGet,
     opt?: ExtraFetchParams
   ) : AjaxPromise<models.BaseResponseListParamBean>  => {
-    const url = this.$basePath + `/DataQuery/queryTmBySid`;
+    const url = this.$basePath + `/base-server/DataQuery/queryTmBySid`;
     const p: any = {};
     p.query = {};
     if ('satSid' in params) p.query.satSid = params.satSid;
     return ajax.ajax({
       ...opt,
       method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 算法任务-新增
+   * @summary 算法任务-新增
+   
+   * @param data: ParamsBodykmsJobServerAlgorithmAddPost// 算法表
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmAddPost = (
+    
+    data: ParamsBodykmsJobServerAlgorithmAddPost,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/add`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 算法任务-批量删除
+   * @summary 算法任务-批量删除
+   * @param params ParamskmsJobServerAlgorithmDeleteBatchDelete
+   * @param data: ParamsBodykmsJobServerAlgorithmDeleteBatchDelete// raw paramter
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmDeleteBatchDelete = (
+    params: ParamskmsJobServerAlgorithmDeleteBatchDelete,
+    data: ParamsBodykmsJobServerAlgorithmDeleteBatchDelete,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/deleteBatch`;
+    const p: any = {};
+    p.query = {};
+    if ('ids' in params) p.query.ids = params.ids;
+    ajax.check(params.ids, 'ids');
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'DELETE',
+      url,
+      ...p
+    });
+  }
+  /**
+   * upd配置-通过id删除
+   * @summary 算法任务-通过id删除
+   * @param params ParamskmsJobServerAlgorithmDeleteDelete
+   * @param data: ParamsBodykmsJobServerAlgorithmDeleteDelete// raw paramter
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmDeleteDelete = (
+    params: ParamskmsJobServerAlgorithmDeleteDelete,
+    data: ParamsBodykmsJobServerAlgorithmDeleteDelete,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/delete`;
+    const p: any = {};
+    p.query = {};
+    if ('id' in params) p.query.id = params.id;
+    ajax.check(params.id, 'id');
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'DELETE',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 算法任务-编辑
+   * @summary 算法任务-编辑
+   
+   * @param data: ParamsBodykmsJobServerAlgorithmEditPost// 算法表
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmEditPost = (
+    
+    data: ParamsBodykmsJobServerAlgorithmEditPost,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/edit`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 算法任务-导出
+   * @summary 算法任务-导出
+   
+   
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmExportPost = (
+    
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/export`;
+    const p: any = {};
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 算法任务-导入
+   * @summary 算法任务-导入
+   
+   
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmImportPost = (
+    
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/import`;
+    const p: any = {};
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 算法任务-列表
+   * @summary 算法任务-列表
+   * @param params ParamskmsJobServerAlgorithmListPost
+   * @param data: ParamsBodykmsJobServerAlgorithmListPost// 算法表
+   * @param opt ajax config
+   * @returns models.BaseResponseIPageAlgorithm
+   */
+  public kmsJobServerAlgorithmListPost = (
+    params: ParamskmsJobServerAlgorithmListPost,
+    data: ParamsBodykmsJobServerAlgorithmListPost,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponseIPageAlgorithm>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/list`;
+    const p: any = {};
+    p.query = {};
+    if ('pageNum' in params) p.query.pageNum = params.pageNum;
+    if ('pageSize' in params) p.query.pageSize = params.pageSize;
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 算法任务-通过算法id查询审计日志
+   * @summary 算法任务-通过算法id查询审计日志
+   * @param params ParamskmsJobServerAlgorithmQueryAuditLogByIdGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmQueryAuditLogByIdGet = (
+    params: ParamskmsJobServerAlgorithmQueryAuditLogByIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/queryAuditLogById`;
+    const p: any = {};
+    p.query = {};
+    if ('algoId' in params) p.query.algoId = params.algoId;
+    ajax.check(params.algoId, 'algoId');
+    if ('pageNum' in params) p.query.pageNum = params.pageNum;
+    if ('pageSize' in params) p.query.pageSize = params.pageSize;
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 算法任务-通过id查询
+   * @summary 算法任务-通过id查询
+   * @param params ParamskmsJobServerAlgorithmQueryByIdGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmQueryByIdGet = (
+    params: ParamskmsJobServerAlgorithmQueryByIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/queryById`;
+    const p: any = {};
+    p.query = {};
+    if ('id' in params) p.query.id = params.id;
+    ajax.check(params.id, 'id');
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 算法任务-通过算法id查询历史
+   * @summary 算法任务-通过算法id查询历史
+   * @param params ParamskmsJobServerAlgorithmQueryVersionByIdGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmQueryVersionByIdGet = (
+    params: ParamskmsJobServerAlgorithmQueryVersionByIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/algorithm/queryVersionById`;
+    const p: any = {};
+    p.query = {};
+    if ('algoId' in params) p.query.algoId = params.algoId;
+    ajax.check(params.algoId, 'algoId');
+    if ('pageNum' in params) p.query.pageNum = params.pageNum;
+    if ('pageSize' in params) p.query.pageSize = params.pageSize;
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 操作日志
+   * @param params ParamskmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost
+   * @param data: ParamsBodykmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost
+   * @param opt ajax config
+   * @returns models.BaseResponseIPageCommonTaskAuditLog
+   */
+  public kmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost = (
+    params: ParamskmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost,
+    data: ParamsBodykmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponseIPageCommonTaskAuditLog>  => {
+    const {
+    taskId,
+    pageNum,
+    pageSize,
+} = params;
+    const url = this.$basePath + `/kms-job-server/commonTask/audit/pageList/${taskId}/${pageNum}/${pageSize}`;
+    const p: any = {};
+    ajax.check(params.taskId, 'taskId');
+    ajax.check(params.pageNum, 'pageNum');
+    ajax.check(params.pageSize, 'pageSize');
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 任务流程编辑
+   * @param params ParamskmsJobServerCommonTaskFlowTaskIdPut
+   * @param data: ParamsBodykmsJobServerCommonTaskFlowTaskIdPut// 公共任务
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerCommonTaskFlowTaskIdPut = (
+    params: ParamskmsJobServerCommonTaskFlowTaskIdPut,
+    data: ParamsBodykmsJobServerCommonTaskFlowTaskIdPut,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const {
+    taskId,
+} = params;
+    const url = this.$basePath + `/kms-job-server/commonTask/flow/${taskId}`;
+    const p: any = {};
+    ajax.check(params.taskId, 'taskId');
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'PUT',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 历史
+   * @param params ParamskmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost
+   * @param data: ParamsBodykmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost
+   * @param opt ajax config
+   * @returns models.BaseResponseIPageCommonTaskVersion
+   */
+  public kmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost = (
+    params: ParamskmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost,
+    data: ParamsBodykmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponseIPageCommonTaskVersion>  => {
+    const {
+    taskId,
+    pageNum,
+    pageSize,
+} = params;
+    const url = this.$basePath + `/kms-job-server/commonTask/history/pageList/${taskId}/${pageNum}/${pageSize}`;
+    const p: any = {};
+    ajax.check(params.taskId, 'taskId');
+    ajax.check(params.pageNum, 'pageNum');
+    ajax.check(params.pageSize, 'pageSize');
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 列表查询
+   * @param params ParamskmsJobServerCommonTaskPageListPageNumPageSizePost
+   * @param data: ParamsBodykmsJobServerCommonTaskPageListPageNumPageSizePost// 公共任务表
+   * @param opt ajax config
+   * @returns models.BaseResponseIPageCommonTask
+   */
+  public kmsJobServerCommonTaskPageListPageNumPageSizePost = (
+    params: ParamskmsJobServerCommonTaskPageListPageNumPageSizePost,
+    data: ParamsBodykmsJobServerCommonTaskPageListPageNumPageSizePost,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponseIPageCommonTask>  => {
+    const {
+    pageNum,
+    pageSize,
+} = params;
+    const url = this.$basePath + `/kms-job-server/commonTask/pageList/${pageNum}/${pageSize}`;
+    const p: any = {};
+    ajax.check(params.pageNum, 'pageNum');
+    ajax.check(params.pageSize, 'pageSize');
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 新建
+   
+   * @param data: ParamsBodykmsJobServerCommonTaskPost// 公共任务
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerCommonTaskPost = (
+    
+    data: ParamsBodykmsJobServerCommonTaskPost,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/commonTask`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 批量编辑
+   
+   * @param data: ParamsBodykmsJobServerCommonTaskPut
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerCommonTaskPut = (
+    
+    data: ParamsBodykmsJobServerCommonTaskPut,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const url = this.$basePath + `/kms-job-server/commonTask`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'PUT',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 删除
+   * @param params ParamskmsJobServerCommonTaskTaskIdDelete
+   * @param data: ParamsBodykmsJobServerCommonTaskTaskIdDelete// raw paramter
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerCommonTaskTaskIdDelete = (
+    params: ParamskmsJobServerCommonTaskTaskIdDelete,
+    data: ParamsBodykmsJobServerCommonTaskTaskIdDelete,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const {
+    taskId,
+} = params;
+    const url = this.$basePath + `/kms-job-server/commonTask/${taskId}`;
+    const p: any = {};
+    ajax.check(params.taskId, 'taskId');
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'DELETE',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 查看
+   * @param params ParamskmsJobServerCommonTaskTaskIdGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseCommonTask
+   */
+  public kmsJobServerCommonTaskTaskIdGet = (
+    params: ParamskmsJobServerCommonTaskTaskIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponseCommonTask>  => {
+    const {
+    taskId,
+} = params;
+    const url = this.$basePath + `/kms-job-server/commonTask/${taskId}`;
+    const p: any = {};
+    ajax.check(params.taskId, 'taskId');
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 告警、对象、任务数统计
+   
+   
+   * @param opt ajax config
+   * @returns models.BaseResponse4
+   */
+  public kmsJobServerDashboardIndexCountGet = (
+    
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse4>  => {
+    const url = this.$basePath + `/kms-job-server/dashboard/indexCount`;
+    const p: any = {};
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 对象任务评估
+   * @param params ParamskmsJobServerObjectCommonTaskAssessObjectIdGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerObjectCommonTaskAssessObjectIdGet = (
+    params: ParamskmsJobServerObjectCommonTaskAssessObjectIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const {
+    objectId,
+} = params;
+    const url = this.$basePath + `/kms-job-server/objectCommonTask/assess/${objectId}`;
+    const p: any = {};
+    ajax.check(params.objectId, 'objectId');
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 查看详情
+   * @param params ParamskmsJobServerObjectCommonTaskDagObjectIdTaskIdGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring
+   */
+  public kmsJobServerObjectCommonTaskDagObjectIdTaskIdGet = (
+    params: ParamskmsJobServerObjectCommonTaskDagObjectIdTaskIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponsestring>  => {
+    const {
+    objectId,
+    taskId,
+} = params;
+    const url = this.$basePath + `/kms-job-server/objectCommonTask/dag/${objectId}/${taskId}`;
+    const p: any = {};
+    ajax.check(params.objectId, 'objectId');
+    ajax.check(params.taskId, 'taskId');
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 对象任务列表
+   * @param params ParamskmsJobServerObjectCommonTaskObjectIdGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListObjectCommonTask
+   */
+  public kmsJobServerObjectCommonTaskObjectIdGet = (
+    params: ParamskmsJobServerObjectCommonTaskObjectIdGet,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponseListObjectCommonTask>  => {
+    const {
+    objectId,
+} = params;
+    const url = this.$basePath + `/kms-job-server/objectCommonTask/${objectId}`;
+    const p: any = {};
+    ajax.check(params.objectId, 'objectId');
+    return ajax.ajax({
+      ...opt,
+      method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 对象任务列表编辑
+   * @param params ParamskmsJobServerObjectCommonTaskObjectIdPut
+   * @param data: ParamsBodykmsJobServerObjectCommonTaskObjectIdPut
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerObjectCommonTaskObjectIdPut = (
+    params: ParamskmsJobServerObjectCommonTaskObjectIdPut,
+    data: ParamsBodykmsJobServerObjectCommonTaskObjectIdPut,opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponse>  => {
+    const {
+    objectId,
+} = params;
+    const url = this.$basePath + `/kms-job-server/objectCommonTask/${objectId}`;
+    const p: any = {};
+    ajax.check(params.objectId, 'objectId');
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: 'PUT',
       url,
       ...p
     });
@@ -1537,109 +1640,6 @@ export class DefaultApi {
     return ajax.ajax({
       ...opt,
       method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 对象任务评估
-   * @param params ParamsobjectCommonTaskAssessObjectIdGet
-   
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public objectCommonTaskAssessObjectIdGet = (
-    params: ParamsobjectCommonTaskAssessObjectIdGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const {
-    objectId,
-} = params;
-    const url = this.$basePath + `/objectCommonTask/assess/${objectId}`;
-    const p: any = {};
-    ajax.check(params.objectId, 'objectId');
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 查看详情
-   * @param params ParamsobjectCommonTaskDagObjectIdTaskIdGet
-   
-   * @param opt ajax config
-   * @returns models.BaseResponsestring
-   */
-  public objectCommonTaskDagObjectIdTaskIdGet = (
-    params: ParamsobjectCommonTaskDagObjectIdTaskIdGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponsestring>  => {
-    const {
-    objectId,
-    taskId,
-} = params;
-    const url = this.$basePath + `/objectCommonTask/dag/${objectId}/${taskId}`;
-    const p: any = {};
-    ajax.check(params.objectId, 'objectId');
-    ajax.check(params.taskId, 'taskId');
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 对象任务列表
-   * @param params ParamsobjectCommonTaskObjectIdGet
-   
-   * @param opt ajax config
-   * @returns models.BaseResponseListObjectCommonTask
-   */
-  public objectCommonTaskObjectIdGet = (
-    params: ParamsobjectCommonTaskObjectIdGet,
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponseListObjectCommonTask>  => {
-    const {
-    objectId,
-} = params;
-    const url = this.$basePath + `/objectCommonTask/${objectId}`;
-    const p: any = {};
-    ajax.check(params.objectId, 'objectId');
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
-  /**
-   * 
-   * @summary 对象任务列表编辑
-   * @param params ParamsobjectCommonTaskObjectIdPut
-   * @param data: ParamsBodyobjectCommonTaskObjectIdPut
-   * @param opt ajax config
-   * @returns models.BaseResponse
-   */
-  public objectCommonTaskObjectIdPut = (
-    params: ParamsobjectCommonTaskObjectIdPut,
-    data: ParamsBodyobjectCommonTaskObjectIdPut,opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponse>  => {
-    const {
-    objectId,
-} = params;
-    const url = this.$basePath + `/objectCommonTask/${objectId}`;
-    const p: any = {};
-    ajax.check(params.objectId, 'objectId');
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: 'PUT',
       url,
       ...p
     });

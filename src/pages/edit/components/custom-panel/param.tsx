@@ -10,7 +10,7 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
   const [searchParams] = useSearchParams();
   const [satSid, setSatSid] = React.useState<string>("SAT1");
   const { data = [], loading } = useRequest(
-    () => APIS.DefaultApi.dataQueryQueryTmBySidGet({ satSid }),
+    () => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satSid }),
     {
       refreshDeps: [satSid],
     }

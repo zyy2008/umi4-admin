@@ -4,99 +4,11 @@ import { createToolbarConfig } from "@antv/xflow";
 import { XFlowGraphCommands, IconStore } from "@antv/xflow";
 import { SaveOutlined, CheckOutlined, CodeOutlined } from "@ant-design/icons";
 import type { NsGraphCmd } from "@antv/xflow";
-import { Modal, DatePicker, Form, Input, Button, Space, message } from "antd";
-import { ProCard, ProTable } from "@ant-design/pro-components";
+import { Modal, message } from "antd";
 import { APIS, Knowledge } from "@/services";
 import { useSearchParams } from "@umijs/max";
-
-const { RangePicker } = DatePicker;
-
-const CheckItem = () => {
-  return (
-    <ProCard
-      title={
-        <Form layout="inline">
-          <Form.Item>
-            <RangePicker showTime />
-          </Form.Item>
-          <Form.Item>
-            <Space>
-              <Button type="primary">查询</Button>
-              <Button>修改</Button>
-            </Space>
-          </Form.Item>
-        </Form>
-      }
-      direction="column"
-      gutter={[0, 16]}
-      style={{ marginBlockStart: 8 }}
-      headStyle={{
-        padding: 0,
-      }}
-      bodyStyle={{
-        paddingLeft: 0,
-        paddingRight: 0,
-      }}
-      size="small"
-    >
-      <ProCard bordered headerBordered split="vertical" size="small">
-        <ProCard
-          title="事实列表"
-          headerBordered
-          colSpan="50%"
-          type="inner"
-          headStyle={{
-            paddingLeft: 0,
-            paddingRight: 0,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <div style={{ height: 360 }}>
-            <ProTable
-              search={false}
-              options={false}
-              pagination={false}
-              rowKey="name"
-              dataSource={[
-                {
-                  name: "1",
-                  type: "2",
-                },
-              ]}
-              columns={[
-                {
-                  title: "名称",
-                  dataIndex: "name",
-                },
-                {
-                  title: "类型",
-                  dataIndex: "type",
-                },
-              ]}
-            />
-          </div>
-        </ProCard>
-        <ProCard
-          title="errorMsg"
-          headerBordered
-          type="inner"
-          headStyle={{
-            paddingLeft: 0,
-            paddingRight: 0,
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <div style={{ height: 360 }}>右侧内容</div>
-        </ProCard>
-      </ProCard>
-      <ProCard type="inner" title="输出结果" bordered>
-        <Input.TextArea />
-      </ProCard>
-    </ProCard>
-  );
-};
+import { CheckContext, Context } from "./index";
+import { CheckItem, CheckCode } from "./components";
 
 const ModalItem: React.FC<{
   modalRender?: React.ReactNode;
@@ -104,19 +16,30 @@ const ModalItem: React.FC<{
 }> = (props) => {
   const { tooltip, modalRender, children } = props;
   const [open, setOpen] = React.useState<boolean>(false);
+  const ctx = React.useContext(Context);
+  const disabled = React.useMemo<boolean>(() => {
+    if (ctx?.state) {
+      return !ctx?.state.uuid && !ctx?.state.version;
+    }
+    return true;
+  }, [ctx?.state]);
+
   return (
     <>
-      <span
-        className="x6-toolbar-item xflow-toolbar-item"
-        style={{
-          padding: 0,
-          marginLeft: 0,
-          marginRight: 0,
-        }}
-        onClick={() => setOpen(true)}
-      >
-        {children}
-      </span>
+      {!disabled && (
+        <div
+          className="x6-toolbar-item xflow-toolbar-item"
+          style={{
+            padding: 0,
+            marginLeft: 0,
+            marginRight: 0,
+          }}
+          onClick={() => setOpen(true)}
+        >
+          {children}
+        </div>
+      )}
+
       <Modal
         title={tooltip}
         open={open}
@@ -136,8 +59,9 @@ namespace NsConfig {
   IconStore.set("CodeOutlined", CodeOutlined);
   /** 获取toobar配置项 */
   export const getToolbarItems: (
-    T: any
-  ) => Promise<IToolbarGroupOptions[]> = async (value) => {
+    T: any,
+    S: CheckContext["setState"]
+  ) => Promise<IToolbarGroupOptions[]> = async (value, set) => {
     const toolbarGroup1: IToolbarItemOptions[] = [
       {
         id: "CheckOutlined",
@@ -149,12 +73,8 @@ namespace NsConfig {
         id: "CodeOutlined",
         iconName: "CodeOutlined",
         tooltip: "查看代码",
-        render: (props) => (
-          <ModalItem modalRender={<Input.TextArea />} {...props} />
-        ),
+        render: (props) => <ModalItem modalRender={<CheckCode />} {...props} />,
       },
-    ];
-    const toolbarGroup2: IToolbarItemOptions[] = [
       {
         id: XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         iconName: "SaveOutlined",
@@ -164,7 +84,6 @@ namespace NsConfig {
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {
               saveGraphDataService: async (meta, data) => {
-                console.log(data);
                 if (value) {
                   const object: Knowledge = JSON.parse(value);
                   if (object?.uuid) {
@@ -186,6 +105,10 @@ namespace NsConfig {
                       });
                     if (success) {
                       message.success("新增成功！");
+                      set({
+                        uuid: "566ed986-e3c1-4c9c-af5b-f3353d5bcfe9",
+                        version: "1.0.0",
+                      });
                     } else {
                       message.warning("新增失败！");
                     }
@@ -198,21 +121,31 @@ namespace NsConfig {
       },
     ];
 
-    return [
-      { name: "nodeGroup", items: toolbarGroup1 },
-      { name: "graphGroup", items: toolbarGroup2 },
-    ];
+    return [{ name: "nodeGroup", items: toolbarGroup1 }];
   };
 }
 
 /** wrap出一个hook */
-export const useToolbarConfig = () => {
+export const useToolbarConfig = (set: CheckContext["setState"]) => {
   const [searchParams] = useSearchParams();
   const object = searchParams.get("object");
+  React.useEffect(() => {
+    if (object) {
+      const format = JSON.parse(object) ?? {};
+      if (format?.uuid && format?.version) {
+        const { uuid, version } = format;
+        set({
+          uuid,
+          version,
+        });
+      }
+    }
+  }, []);
+
   return createToolbarConfig((toolbarConfig) => {
     /** 生产 toolbar item */
     toolbarConfig.setToolbarModelService(async (toolbarModel) => {
-      const toolbarItems = await NsConfig.getToolbarItems(object);
+      const toolbarItems = await NsConfig.getToolbarItems(object, set);
       toolbarModel.setValue((toolbar) => {
         toolbar.mainGroups = toolbarItems;
       });

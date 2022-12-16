@@ -1,11 +1,11 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "kms",
+    "title": "unknown",
     "version": "last",
     "description": "unknown"
   },
-  "basePath": "/kms-job-server",
+  "basePath": "",
   "tags": [
     {
       "name": "对象公共任务管理",
@@ -40,12 +40,13 @@
     "http"
   ],
   "paths": {
-    "/objectCommonTask/{objectId}": {
+    "/kms-job-server/objectCommonTask/{objectId}": {
       "get": {
         "tags": [
           "对象公共任务管理"
         ],
         "summary": "对象任务列表",
+        "description": "",
         "consumes": [
           "text/plain"
         ],
@@ -155,6 +156,7 @@
           "对象公共任务管理"
         ],
         "summary": "对象任务列表编辑",
+        "description": "",
         "consumes": [
           "application/json"
         ],
@@ -167,7 +169,7 @@
             "type": "string"
           },
           {
-            "name": "ObjectCommonTaskObjectIdBody",
+            "name": "KmsJobServerObjectCommonTaskObjectIdBody",
             "in": "body",
             "schema": {
               "type": "array",
@@ -251,7 +253,8 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 },
                 "errorMsg": {
                   "type": "string"
@@ -267,12 +270,13 @@
         }
       }
     },
-    "/objectCommonTask/assess/{objectId}": {
+    "/kms-job-server/objectCommonTask/assess/{objectId}": {
       "get": {
         "tags": [
           "对象公共任务管理"
         ],
         "summary": "对象任务评估",
+        "description": "",
         "consumes": [
           "text/plain"
         ],
@@ -292,7 +296,8 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 },
                 "errorMsg": {
                   "type": "string"
@@ -308,12 +313,13 @@
         }
       }
     },
-    "/objectCommonTask/dag/{objectId}/{taskId}": {
+    "/kms-job-server/objectCommonTask/dag/{objectId}/{taskId}": {
       "get": {
         "tags": [
           "对象公共任务管理"
         ],
         "summary": "查看详情",
+        "description": "",
         "consumes": [
           "text/plain"
         ],
@@ -2392,12 +2398,13 @@
         }
       }
     },
-    "/DataQuery/querySatList": {
+    "/base-server/DataQuery/querySatList": {
       "get": {
         "tags": [
           "基础数据查询服务"
         ],
         "summary": "卫星列表查询",
+        "description": "",
         "consumes": [
           "application/json"
         ],
@@ -2456,12 +2463,13 @@
         }
       }
     },
-    "/DataQuery/queryObjectGroupList": {
+    "/base-server/DataQuery/queryObjectGroupList": {
       "get": {
         "tags": [
           "基础数据查询服务"
         ],
         "summary": "对象组列表查询",
+        "description": "",
         "consumes": [
           "application/json"
         ],
@@ -2510,12 +2518,13 @@
         }
       }
     },
-    "/DataQuery/querySatBySid": {
+    "/base-server/DataQuery/querySatBySid": {
       "get": {
         "tags": [
           "基础数据查询服务"
         ],
         "summary": "根据卫星标识查询卫星信息",
+        "description": "",
         "consumes": [
           "application/json"
         ],
@@ -2579,12 +2588,13 @@
         }
       }
     },
-    "/DataQuery/queryTmBySid": {
+    "/base-server/DataQuery/queryTmBySid": {
       "get": {
         "tags": [
           "基础数据查询服务"
         ],
         "summary": "根据卫星标识查询参数信息",
+        "description": "",
         "consumes": [
           "application/json"
         ],
@@ -2661,12 +2671,13 @@
         }
       }
     },
-    "/DataQuery/querySystemCodeList": {
+    "/base-server/DataQuery/querySystemCodeList": {
       "get": {
         "tags": [
           "基础数据查询服务"
         ],
         "summary": "系统标识列表查询",
+        "description": "",
         "consumes": [
           "application/json"
         ],
@@ -2715,12 +2726,13 @@
         }
       }
     },
-    "/algorithm/list": {
+    "/kms-job-server/algorithm/list": {
       "post": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-列表",
+        "description": "算法任务-列表",
         "consumes": [
           "application/json"
         ],
@@ -2740,7 +2752,7 @@
             "type": "string"
           },
           {
-            "name": "AlgorithmListBody",
+            "name": "KmsJobServerAlgorithmListBody",
             "in": "body",
             "description": "算法表",
             "schema": {
@@ -2934,12 +2946,13 @@
         }
       }
     },
-    "/algorithm/import": {
+    "/kms-job-server/algorithm/import": {
       "post": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-导入",
+        "description": "算法任务-导入",
         "consumes": [
           "application/json"
         ],
@@ -2967,12 +2980,13 @@
         }
       }
     },
-    "/algorithm/export": {
+    "/kms-job-server/algorithm/export": {
       "post": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-导出",
+        "description": "算法任务-导出",
         "consumes": [
           "application/json"
         ],
@@ -3000,12 +3014,13 @@
         }
       }
     },
-    "/algorithm/deleteBatch": {
+    "/kms-job-server/algorithm/deleteBatch": {
       "delete": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-批量删除",
+        "description": "算法任务-批量删除",
         "consumes": [
           "text/plain"
         ],
@@ -3023,7 +3038,8 @@
             "description": "raw paramter",
             "schema": {
               "type": "string",
-              "format": "binary"
+              "format": "binary",
+              "default": ""
             }
           }
         ],
@@ -3050,18 +3066,19 @@
         }
       }
     },
-    "/algorithm/add": {
+    "/kms-job-server/algorithm/add": {
       "post": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-新增",
+        "description": "算法任务-新增",
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "AlgorithmAddBody",
+            "name": "KmsJobServerAlgorithmAddBody",
             "in": "body",
             "description": "算法表",
             "schema": {
@@ -3158,18 +3175,19 @@
         }
       }
     },
-    "/algorithm/edit": {
+    "/kms-job-server/algorithm/edit": {
       "post": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-编辑",
+        "description": "算法任务-编辑",
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "AlgorithmEditBody",
+            "name": "KmsJobServerAlgorithmEditBody",
             "in": "body",
             "description": "算法表",
             "schema": {
@@ -3266,12 +3284,13 @@
         }
       }
     },
-    "/algorithm/delete": {
+    "/kms-job-server/algorithm/delete": {
       "delete": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-通过id删除",
+        "description": "upd配置-通过id删除",
         "consumes": [
           "text/plain"
         ],
@@ -3289,7 +3308,8 @@
             "description": "raw paramter",
             "schema": {
               "type": "string",
-              "format": "binary"
+              "format": "binary",
+              "default": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{}}"
             }
           }
         ],
@@ -3316,12 +3336,13 @@
         }
       }
     },
-    "/algorithm/queryById": {
+    "/kms-job-server/algorithm/queryById": {
       "get": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-通过id查询",
+        "description": "算法任务-通过id查询",
         "consumes": [
           "text/plain"
         ],
@@ -3357,12 +3378,13 @@
         }
       }
     },
-    "/algorithm/queryVersionById": {
+    "/kms-job-server/algorithm/queryVersionById": {
       "get": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-通过算法id查询历史",
+        "description": "算法任务-通过算法id查询历史",
         "consumes": [
           "text/plain"
         ],
@@ -3412,12 +3434,13 @@
         }
       }
     },
-    "/algorithm/queryAuditLogById": {
+    "/kms-job-server/algorithm/queryAuditLogById": {
       "get": {
         "tags": [
           "算法任务"
         ],
         "summary": "算法任务-通过算法id查询审计日志",
+        "description": "算法任务-通过算法id查询审计日志",
         "consumes": [
           "text/plain"
         ],
@@ -3451,7 +3474,8 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 },
                 "errorMsg": {
                   "type": "string"
@@ -3467,12 +3491,13 @@
         }
       }
     },
-    "/commonTask/flow/{taskId}": {
+    "/kms-job-server/commonTask/flow/{taskId}": {
       "put": {
         "tags": [
           "公共任务管理"
         ],
         "summary": "任务流程编辑",
+        "description": "",
         "consumes": [
           "application/json"
         ],
@@ -3485,7 +3510,7 @@
             "type": "string"
           },
           {
-            "name": "CommonTaskFlowTaskIdBody",
+            "name": "KmsJobServerCommonTaskFlowTaskIdBody",
             "in": "body",
             "description": "公共任务",
             "schema": {
@@ -3543,12 +3568,13 @@
         }
       }
     },
-    "/commonTask/pageList/{pageNum}/{pageSize}": {
+    "/kms-job-server/commonTask/pageList/{pageNum}/{pageSize}": {
       "post": {
         "tags": [
           "公共任务管理"
         ],
         "summary": "列表查询",
+        "description": "",
         "consumes": [
           "application/json"
         ],
@@ -3568,7 +3594,7 @@
             "type": "string"
           },
           {
-            "name": "CommonTaskPageListPageNumPageSizeBody",
+            "name": "KmsJobServerCommonTaskPageListPageNumPageSizeBody",
             "in": "body",
             "description": "公共任务表",
             "schema": {
@@ -3705,12 +3731,13 @@
         }
       }
     },
-    "/commonTask/{taskId}": {
+    "/kms-job-server/commonTask/{taskId}": {
       "delete": {
         "tags": [
           "公共任务管理"
         ],
         "summary": "删除",
+        "description": "",
         "consumes": [
           "text/plain"
         ],
@@ -3728,7 +3755,8 @@
             "description": "raw paramter",
             "schema": {
               "type": "string",
-              "format": "binary"
+              "format": "binary",
+              "default": ""
             }
           }
         ],
@@ -3739,7 +3767,8 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object"
+                  "type": "object",
+                  "properties": {}
                 },
                 "errorMsg": {
                   "type": "string"
@@ -3759,6 +3788,7 @@
           "公共任务管理"
         ],
         "summary": "查看",
+        "description": "",
         "consumes": [
           "text/plain"
         ],
@@ -3834,16 +3864,24 @@
         }
       }
     },
-    "/commonTask/history/pageList/{taskId}/{pageNum}/{pageSize}": {
+    "/kms-job-server/commonTask/history/pageList/{taskId}/{pageNum}/{pageSize}": {
       "post": {
         "tags": [
           "公共任务管理"
         ],
         "summary": "历史",
+        "description": "",
         "consumes": [
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "taskId",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "pageNum",
             "in": "path",
@@ -3859,14 +3897,7 @@
             "type": "string"
           },
           {
-            "name": "taskId",
-            "in": "path",
-            "description": "taskId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "CommonTaskHistoryPageListTaskIdPageNumPageSizeBody",
+            "name": "KmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizeBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -3976,18 +4007,19 @@
         }
       }
     },
-    "/commonTask": {
+    "/kms-job-server/commonTask": {
       "put": {
         "tags": [
           "公共任务管理"
         ],
         "summary": "批量编辑",
+        "description": "",
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "CommonTaskBody",
+            "name": "KmsJobServerCommonTaskBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -4059,12 +4091,13 @@
           "公共任务管理"
         ],
         "summary": "新建",
+        "description": "",
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "CommonTaskBody",
+            "name": "KmsJobServerCommonTaskBody",
             "in": "body",
             "description": "公共任务",
             "schema": {
@@ -4122,16 +4155,24 @@
         }
       }
     },
-    "/commonTask/audit/pageList/{taskId}/{pageNum}/{pageSize}": {
+    "/kms-job-server/commonTask/audit/pageList/{taskId}/{pageNum}/{pageSize}": {
       "post": {
         "tags": [
           "公共任务管理"
         ],
         "summary": "操作日志",
+        "description": "",
         "consumes": [
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "taskId",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "pageNum",
             "in": "path",
@@ -4147,14 +4188,7 @@
             "type": "string"
           },
           {
-            "name": "taskId",
-            "in": "path",
-            "description": "taskId",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "CommonTaskAuditPageListTaskIdPageNumPageSizeBody",
+            "name": "KmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizeBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -4256,12 +4290,13 @@
         }
       }
     },
-    "/dashboard/indexCount": {
+    "/kms-job-server/dashboard/indexCount": {
       "get": {
         "tags": [
           "仪表盘"
         ],
         "summary": "告警、对象、任务数统计",
+        "description": "",
         "consumes": [
           "text/plain"
         ],

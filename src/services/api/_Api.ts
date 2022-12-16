@@ -1,5 +1,5 @@
 /**
- * kms
+ * unknown
  * unknown
  *
  * OpenAPI spec version: last
@@ -36,7 +36,7 @@ export interface ParamskmsZsbjServerApiCommonFunctionListGet {
 export type ParamsBodykmsZsbjServerApiCommonFunctionUpdatePut = models.KnowledgeFunction;
 
 export class _Api {
-  protected $basePath = '/kms-job-server'.replace(/\/$/, '');
+  protected $basePath = ''.replace(/\/$/, '');
 
   public constructor(basePath?: string) {
     if (basePath !== undefined) {
