@@ -35,7 +35,13 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
 
   React.useEffect(() => {
     const object = searchParams.get("object");
-    const format = JSON.parse(object ?? '{"satSid":"SAT1"}');
+    let format: any;
+    try {
+      format = JSON.parse(object ?? "");
+    } catch (error) {
+      format = { satSid: "SAT1" };
+      console.error("地址传参格式异常，请检查！");
+    }
     format?.satSid && setSatSid(format?.satSid);
   }, []);
 

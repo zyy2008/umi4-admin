@@ -85,7 +85,13 @@ namespace NsConfig {
             {
               saveGraphDataService: async (meta, data) => {
                 if (value) {
-                  const object: Knowledge = JSON.parse(value);
+                  let object: Knowledge;
+                  try {
+                    object = JSON.parse(value);
+                  } catch (error) {
+                    object = {};
+                    console.error("地址传参格式异常，请检查！");
+                  }
                   if (object?.uuid) {
                     const { success } =
                       await APIS.DefaultApi.kmsZsbjServerApiKnowledgeUpdatePut({
@@ -131,7 +137,13 @@ export const useToolbarConfig = (set: CheckContext["setState"]) => {
   const object = searchParams.get("object");
   React.useEffect(() => {
     if (object) {
-      const format = JSON.parse(object) ?? {};
+      let format: any;
+      try {
+        format = JSON.parse(object);
+      } catch (error) {
+        format = {};
+        console.error("地址传参格式异常，请检查！");
+      }
       if (format?.uuid && format?.version) {
         const { uuid, version } = format;
         set({
