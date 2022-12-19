@@ -89,7 +89,7 @@ namespace NsConfig {
                   try {
                     object = JSON.parse(value);
                   } catch (error) {
-                    object = {};
+                    object = null as any;
                     console.error("地址传参格式异常，请检查！");
                   }
                   if (object?.uuid) {

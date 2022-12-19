@@ -30,6 +30,7 @@ namespace NsConfig {
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {
               saveGraphDataService: async (meta, data) => {
+                console.log(value);
                 if (value) {
                   let object: ParamskmsJobServerCommonTaskFlowTaskIdPut &
                     ParamsBodykmsJobServerCommonTaskPost;
