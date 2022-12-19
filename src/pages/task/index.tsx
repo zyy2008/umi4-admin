@@ -1,13 +1,20 @@
+import React from "react";
 import TaskFlow from "@/components/flow";
 import { CustomPanel } from "./components";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { JsonSchemaForm } from "@antv/xflow";
 import { controlMapService } from "@/components/custom-form";
 import { NsJsonForm } from "./form-service";
+import { useToolbarConfig } from "./toolbar-config";
 
 const Task = () => {
+  const toolbarConfig = useToolbarConfig();
   return (
-    <TaskFlow>
+    <TaskFlow
+      toolbarProps={{
+        config: toolbarConfig,
+      }}
+    >
       <>
         <CustomPanel
           position={{ width: 260, top: 0, bottom: 0, left: 0 }}

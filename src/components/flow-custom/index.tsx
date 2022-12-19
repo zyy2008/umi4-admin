@@ -124,7 +124,6 @@ export const CardListDisabled: React.FC<CardListProps> = (props) => {
   const [keyword, setKeyword] = React.useState<string>("");
   const filterData = React.useMemo<IPanelNode[]>(() => {
     const list = dataSource.filter((node) => node.label?.includes(keyword));
-    console.log(nodes);
     if (nodes.length > 0) {
       return list.map((item) => ({
         ...item,

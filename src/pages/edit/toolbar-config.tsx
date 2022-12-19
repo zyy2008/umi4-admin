@@ -95,6 +95,7 @@ namespace NsConfig {
                   if (object?.uuid) {
                     const { success } =
                       await APIS.DefaultApi.kmsZsbjServerApiKnowledgeUpdatePut({
+                        ...object,
                         uuid: object?.uuid,
                         graphInfo: JSON.stringify(data),
                       });
