@@ -475,6 +475,83 @@ export interface ParamskmsZsbjServerApiKnowledgeViewGet {
    */
   version: string;
 }
+/**
+  * @description viewEditorPost参数
+  * @property `[id]` 节点ID
+  * @property `[newName]` 新节点名
+  */
+export interface ParamsviewEditorPost {
+  // queryParams
+  /**
+   * 节点ID
+   */
+  id?: string;
+  /**
+   * 新节点名
+   */
+  newName?: string;
+}
+/**
+  * @description viewExportPost参数
+  * @property `[satelliteCode]` 卫星代号
+  */
+export interface ParamsviewExportPost {
+  // queryParams
+  /**
+   * 卫星代号
+   */
+  satelliteCode?: string;
+}
+/**
+  * @description viewFindCodePost参数
+  * @property `[satelliteCode]` 卫星代号
+  */
+export interface ParamsviewFindCodePost {
+  // queryParams
+  /**
+   * 卫星代号
+   */
+  satelliteCode?: string;
+}
+/**
+  * @description viewFindNamePost参数
+  * @property `[satelliteCode]` 卫星代号
+  * @property `[system_or_parts]` 系统或器部件名
+  */
+export interface ParamsviewFindNamePost {
+  // queryParams
+  /**
+   * 卫星代号
+   */
+  satelliteCode?: string;
+  /**
+   * 系统或器部件名
+   */
+  system_or_parts?: string;
+}
+/**
+  * @property `[file]` 
+  */
+export interface ParamsviewImportPost {
+  // formParams
+  file?: any;
+}
+/**
+  * @description viewYcImportPost参数
+  * @property `[parameterName]` 参数名
+  * @property `[qibId]` 器部件ID
+  */
+export interface ParamsviewYcImportPost {
+  // queryParams
+  /**
+   * 参数名
+   */
+  parameterName?: string;
+  /**
+   * 器部件ID
+   */
+  qibId?: string;
+}
 
 export class DefaultApi {
   protected $basePath = ''.replace(/\/$/, '');
@@ -1640,6 +1717,156 @@ export class DefaultApi {
     return ajax.ajax({
       ...opt,
       method: 'GET',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 图谱节点编辑
+   * @param params ParamsviewEditorPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public viewEditorPost = (
+    params: ParamsviewEditorPost,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponsestring1>  => {
+    const url = this.$basePath + `/view/editor`;
+    const p: any = {};
+    p.query = {};
+    if ('id' in params) p.query.id = params.id;
+    if ('newName' in params) p.query.newName = params.newName;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 导出知识图谱
+   * @param params ParamsviewExportPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public viewExportPost = (
+    params: ParamsviewExportPost,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponsestring1>  => {
+    const url = this.$basePath + `/view/export`;
+    const p: any = {};
+    p.query = {};
+    if ('satelliteCode' in params) p.query.satelliteCode = params.satelliteCode;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 根据代号查询图谱
+   * @param params ParamsviewFindCodePost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListViewRelationship
+   */
+  public viewFindCodePost = (
+    params: ParamsviewFindCodePost,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponseListViewRelationship>  => {
+    const url = this.$basePath + `/view/find/code`;
+    const p: any = {};
+    p.query = {};
+    if ('satelliteCode' in params) p.query.satelliteCode = params.satelliteCode;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 多条件查询
+   * @param params ParamsviewFindNamePost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListViewRelationship
+   */
+  public viewFindNamePost = (
+    params: ParamsviewFindNamePost,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponseListViewRelationship>  => {
+    const url = this.$basePath + `/view/find/name`;
+    const p: any = {};
+    p.query = {};
+    if ('satelliteCode' in params) p.query.satelliteCode = params.satelliteCode;
+    if ('system_or_parts' in params) p.query.system_or_parts = params.system_or_parts;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 导入知识图谱
+   * @param params ParamsviewImportPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public viewImportPost = (
+    params: ParamsviewImportPost,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponsestring1>  => {
+    const url = this.$basePath + `/view/import`;
+    const p: any = {};
+    p.form = new FormData();
+    // 上传文件
+    opt = {
+      ...opt,
+      headers: {
+        ...(opt && opt.headers),
+        'Content-Type': 'multipart/form-data'
+      }
+    };
+    // p.form = new FormData();
+    if ('file' in params) p.form.append('file', params.file);
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
+      url,
+      ...p
+    });
+  }
+  /**
+   * 
+   * @summary 遥测参数导入
+   * @param params ParamsviewYcImportPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public viewYcImportPost = (
+    params: ParamsviewYcImportPost,
+    opt?: ExtraFetchParams
+  ) : AjaxPromise<models.BaseResponsestring1>  => {
+    const url = this.$basePath + `/view/yc/import`;
+    const p: any = {};
+    p.query = {};
+    if ('parameterName' in params) p.query.parameterName = params.parameterName;
+    if ('qibId' in params) p.query.qibId = params.qibId;
+    return ajax.ajax({
+      ...opt,
+      method: 'POST',
       url,
       ...p
     });

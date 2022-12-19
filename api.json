@@ -28,6 +28,10 @@
       "description": "Algorithm Controller"
     },
     {
+      "name": "知识图谱接口",
+      "description": "知识图谱接口"
+    },
+    {
       "name": "公共任务管理",
       "description": "公共任务管理"
     },
@@ -3486,6 +3490,398 @@
               },
               "title": "BaseResponse",
               "$$ref": "#/definitions/BaseResponse"
+            }
+          }
+        }
+      }
+    },
+    "/view/editor": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "图谱节点编辑",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "节点ID",
+            "type": "string"
+          },
+          {
+            "name": "newName",
+            "in": "query",
+            "required": false,
+            "description": "新节点名",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "description": "数据集"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«string»",
+              "$$ref": "#/definitions/BaseResponse«string»"
+            }
+          }
+        }
+      }
+    },
+    "/view/find/name": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "多条件查询",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "satelliteCode",
+            "in": "query",
+            "required": false,
+            "description": "卫星代号",
+            "type": "string"
+          },
+          {
+            "name": "system_or_parts",
+            "in": "query",
+            "required": false,
+            "description": "系统或器部件名",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "description": "数据集",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "child": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "id"
+                          },
+                          "mark": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "节点名"
+                          }
+                        },
+                        "title": "KnowledgeView",
+                        "$$ref": "#/definitions/KnowledgeView"
+                      },
+                      "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "id"
+                      },
+                      "parent": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "id"
+                          },
+                          "mark": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "节点名"
+                          }
+                        },
+                        "title": "KnowledgeView",
+                        "$$ref": "#/definitions/KnowledgeView"
+                      }
+                    },
+                    "title": "ViewRelationship",
+                    "$$ref": "#/definitions/ViewRelationship"
+                  }
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«List«ViewRelationship»»",
+              "$$ref": "#/definitions/BaseResponse«List«ViewRelationship»»"
+            }
+          }
+        }
+      }
+    },
+    "/view/import": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "导入知识图谱",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "description": "数据集"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«string»",
+              "$$ref": "#/definitions/BaseResponse«string»"
+            }
+          }
+        }
+      }
+    },
+    "/view/export": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "导出知识图谱",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "satelliteCode",
+            "in": "query",
+            "required": false,
+            "description": "卫星代号",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "description": "数据集"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«string»",
+              "$$ref": "#/definitions/BaseResponse«string»"
+            }
+          }
+        }
+      }
+    },
+    "/view/find/code": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "根据代号查询图谱",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "satelliteCode",
+            "in": "query",
+            "required": false,
+            "description": "卫星代号",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "description": "数据集",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "child": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "id"
+                          },
+                          "mark": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "节点名"
+                          }
+                        },
+                        "title": "KnowledgeView",
+                        "$$ref": "#/definitions/KnowledgeView"
+                      },
+                      "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "id"
+                      },
+                      "parent": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "id"
+                          },
+                          "mark": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "节点名"
+                          }
+                        },
+                        "title": "KnowledgeView",
+                        "$$ref": "#/definitions/KnowledgeView"
+                      }
+                    },
+                    "title": "ViewRelationship",
+                    "$$ref": "#/definitions/ViewRelationship"
+                  }
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«List«ViewRelationship»»",
+              "$$ref": "#/definitions/BaseResponse«List«ViewRelationship»»"
+            }
+          }
+        }
+      }
+    },
+    "/view/yc/import": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "遥测参数导入",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parameterName",
+            "in": "query",
+            "required": false,
+            "description": "参数名",
+            "type": "string"
+          },
+          {
+            "name": "qibId",
+            "in": "query",
+            "required": false,
+            "description": "器部件ID",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "description": "数据集"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«string»",
+              "$$ref": "#/definitions/BaseResponse«string»"
             }
           }
         }
