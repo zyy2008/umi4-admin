@@ -39,6 +39,7 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
         XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         {
           saveGraphDataService: async (meta, data) => {
+            console.log(data);
             callbackHistory?.(data);
           },
         }

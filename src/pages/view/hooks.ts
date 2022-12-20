@@ -94,20 +94,25 @@ export const useData = (props: DProps) => {
       const find = selectValue.findIndex((val) => val === mark);
       return find > -1;
     });
-    const nodes: NsGraph.INodeConfig[] = filter.map((item) => {
-      return {
-        ...item,
-        id: String(item.id) || uuidv4(),
-        label: item.name,
-        fill: controlShape[item.mark ?? 0],
-        renderKey: "ConnectorNode",
-        width: 70,
-        height: 70,
-      };
-    });
+    const nodes: NsGraph.INodeConfig[] = filter.map((item) => ({
+      ...item,
+      id: String(item.id) || uuidv4(),
+      label: item.name,
+      fill: controlShape[item.mark ?? 0],
+      renderKey: "ConnectorNode",
+      width: 70,
+      height: 70,
+    }));
+
+    const edges: NsGraph.IEdgeConfig[] = data.map((item) => ({
+      id: String(item.id),
+      source: String(item.parent?.id),
+      target: String(item.child?.id),
+      shape: "edge",
+    }));
     return {
       nodes,
-      edges: [],
+      edges,
     };
   }, [data, selectValue]);
   return { selectData };
