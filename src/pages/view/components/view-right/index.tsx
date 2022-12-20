@@ -7,6 +7,8 @@ import { XFlowGraphCommands, JsonSchemaForm } from "@antv/xflow";
 import { NsJsonForm } from "./form-service";
 import styles from "./index.less";
 
+export * from "./components";
+
 type IProps = {
   callbackHistory?: (args: NsGraph.IGraphData) => void;
   callbackDisabled?: (args: boolean) => void;

@@ -1,45 +1,11 @@
 import React from "react";
 import { ProCard } from "@ant-design/pro-components";
-import { Button, Space, Tooltip, TreeSelect } from "antd";
 import type { NsGraph } from "@antv/xflow";
-import {
-  ImportOutlined,
-  ExportOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
-import { useView } from "./hooks";
 import ButtonModal from "@/components/button-modal";
-import {
-  Transfer,
-  CustomView,
-  ViewLeft,
-  ViewRight,
-  CheckList,
-} from "./components";
+import { useView, useFileTreeSelect, useData } from "./hooks";
+import { ViewLeft, ViewRight, CheckList, File, NodeView } from "./components";
 import styles from "./index.less";
-
-const treeData = [
-  {
-    title: "整星",
-    value: "0-1",
-    key: "0-1",
-  },
-  {
-    title: "分系统",
-    value: "0-1-0",
-    key: "0-1-0",
-  },
-  {
-    title: "器部件",
-    value: "0-1-1",
-    key: "0-1-1",
-  },
-  {
-    title: "参数",
-    value: "0-1-2",
-    key: "0-1-2",
-  },
-];
+import { Transfer } from "./components/transfer";
 
 export type CallbackHistory = (args: NsGraph.IGraphData) => void;
 export type CallbackDisabled = (args: boolean) => void;
@@ -48,14 +14,16 @@ const View = () => {
   const [graphData, setGraphData] = React.useState<NsGraph.IGraphData>();
   const [disabled, setDisabled] = React.useState<boolean>(true);
   const { rightRef, onChange, nodesValue, x6Graph } = useView({ graphData });
-  const callbackHistory = React.useCallback<CallbackHistory>(
-    (val) => setGraphData(val),
-    []
-  );
-  const callbackDisabled = React.useCallback<CallbackDisabled>(
-    (val) => setDisabled(val),
-    []
-  );
+  const { value, onSelectChange, onSuccess, data = [] } = useFileTreeSelect();
+  const { selectData } = useData({ data, selectValue: value });
+  const callbackHistory = React.useCallback<CallbackHistory>(setGraphData, []);
+  const callbackDisabled = React.useCallback<CallbackDisabled>(setDisabled, []);
+  // const transferData = React.useMemo<NsGraph.IGraphData>(() => {
+  //   return {
+  //     nodes: [],
+  //     edges: [],
+  //   };
+  // }, [selectData, graphData]);
 
   return (
     <ProCard split="horizontal" bordered className={styles["view-graph"]}>
@@ -85,43 +53,11 @@ const View = () => {
             style={{
               height: "100%",
             }}
-            title={
-              <Space>
-                <Tooltip placement="bottom" title="导入知识图谱">
-                  <Button icon={<ImportOutlined />} />
-                </Tooltip>
-                <Tooltip placement="bottom" title="导出知识图谱">
-                  <Button icon={<ExportOutlined />} />
-                </Tooltip>
-              </Space>
-            }
-            extra={
-              <Space.Compact block>
-                <TreeSelect
-                  placeholder="显示层级"
-                  treeData={treeData}
-                  treeCheckable
-                  style={{
-                    width: 160,
-                  }}
-                  maxTagCount="responsive"
-                />
-                <ButtonModal
-                  buttonProps={{ icon: <SettingOutlined />, type: "default" }}
-                  tooltipProps={{
-                    title: "自定义节点显示",
-                  }}
-                  modalProps={{
-                    title: "自定义显示节点选择页",
-                    width: 800,
-                    children: <CustomView />,
-                  }}
-                />
-              </Space.Compact>
-            }
+            title={<File onSuccess={onSuccess} />}
+            extra={<NodeView value={value} onChange={onSelectChange} />}
             headerBordered={false}
           >
-            <ViewLeft graphData={graphData} />
+            <ViewLeft graphData={selectData} />
           </ProCard>
         </ProCard>
         <ProCard

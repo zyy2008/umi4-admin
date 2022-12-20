@@ -1,11 +1,23 @@
 import React from "react";
-import { MODELS, NsGraph } from "@antv/xflow";
+import { TreeSelectProps } from "antd";
+import { MODELS, NsGraph, uuidv4 } from "@antv/xflow";
 import { Graph } from "@antv/x6";
 import { CheckCardProps } from "@ant-design/pro-components";
-import { ViewHandle, CheckListProps } from "./components";
+import { uniqBy } from "lodash";
+import { ViewHandle, CheckListProps, controlShape } from "./components";
+import {
+  BaseResponseListViewRelationship,
+  KnowledgeView,
+  ViewRelationship,
+} from "@/services";
 
 type IProps = {
   graphData?: NsGraph.IGraphData;
+};
+
+type DProps = {
+  data: ViewRelationship[];
+  selectValue: number[];
 };
 
 export const useView = (props: IProps) => {
@@ -52,4 +64,51 @@ export const useView = (props: IProps) => {
     })();
   }, [rightRef.current]);
   return { rightRef, onChange, nodesValue, x6Graph };
+};
+
+export const useFileTreeSelect = () => {
+  const [value, setValue] = React.useState<number[]>([0, 1, 2, 3]);
+  const [data, setData] = React.useState<
+    BaseResponseListViewRelationship["data"]
+  >([]);
+  const onSelectChange = React.useCallback<
+    Required<Pick<TreeSelectProps, "onChange">>["onChange"]
+  >((val) => {
+    setValue(val);
+  }, []);
+  const onSuccess = React.useCallback<
+    (T: BaseResponseListViewRelationship["data"]) => void
+  >(setData, []);
+  return { value, onSelectChange, data, onSuccess };
+};
+
+export const useData = (props: DProps) => {
+  const { data, selectValue } = props;
+  const selectData = React.useMemo<NsGraph.IGraphData>(() => {
+    const list: KnowledgeView[] = [];
+    data.forEach((item) => {
+      list.push(...[item.child ?? {}, item.parent ?? {}]);
+    });
+    const dataUniqBy = uniqBy(list, "id");
+    const filter = dataUniqBy.filter(({ mark }) => {
+      const find = selectValue.findIndex((val) => val === mark);
+      return find > -1;
+    });
+    const nodes: NsGraph.INodeConfig[] = filter.map((item) => {
+      return {
+        ...item,
+        id: String(item.id) || uuidv4(),
+        label: item.name,
+        fill: controlShape[item.mark ?? 0],
+        renderKey: "ConnectorNode",
+        width: 70,
+        height: 70,
+      };
+    });
+    return {
+      nodes,
+      edges: [],
+    };
+  }, [data, selectValue]);
+  return { selectData };
 };

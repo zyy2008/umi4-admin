@@ -60,7 +60,7 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         nodeConfig={{
           renderKey: "ConnectorNode",
           label: "卫星",
-          fill: controlShape.satellite,
+          fill: controlShape[0],
           ports: [
             {
               type: NsGraph.AnchorType.OUTPUT,
@@ -76,7 +76,7 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         nodeConfig={{
           renderKey: "ConnectorNode",
           label: "分系统",
-          fill: controlShape.subsystem,
+          fill: controlShape[1],
         }}
         node={ConnectorNode}
       />
@@ -85,7 +85,7 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         nodeConfig={{
           renderKey: "ConnectorNode",
           label: "器部件",
-          fill: controlShape.components,
+          fill: controlShape[2],
         }}
         node={ConnectorNode}
       />
@@ -94,7 +94,7 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
         nodeConfig={{
           renderKey: "ConnectorNode",
           label: "参数",
-          fill: controlShape.parameter,
+          fill: controlShape[3],
           ports: [
             {
               type: NsGraph.AnchorType.INPUT,

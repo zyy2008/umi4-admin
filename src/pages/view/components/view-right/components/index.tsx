@@ -1,8 +1,8 @@
 export { default as CustomPanel } from "./custom-panel";
 
-export const controlShape = {
-  satellite: "#87e8de",
-  subsystem: "#91caff",
-  components: "#ffe58f",
-  parameter: "#b7eb8f",
+export const controlShape: Record<number, string> = {
+  0: "#87e8de",
+  1: "#91caff",
+  2: "#ffe58f",
+  3: "#b7eb8f",
 };
