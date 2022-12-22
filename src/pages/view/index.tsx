@@ -14,17 +14,17 @@ const View = () => {
   const [graphData, setGraphData] = React.useState<NsGraph.IGraphData>();
   const [disabled, setDisabled] = React.useState<boolean>(true);
   const { rightRef, onChange, nodesValue, x6Graph } = useView({ graphData });
-  const { value, onSelectChange, onSuccess, data = [] } = useFileTreeSelect();
-  const { selectData } = useData({ data, selectValue: value });
+  const {
+    value,
+    onSelectChange,
+    onSuccess,
+    data = [],
+    formatData,
+  } = useFileTreeSelect();
+  const { selectData } = useData({ data, formatData, selectValue: value });
   const callbackHistory = React.useCallback<CallbackHistory>(setGraphData, []);
   const callbackDisabled = React.useCallback<CallbackDisabled>(setDisabled, []);
-  // const transferData = React.useMemo<NsGraph.IGraphData>(() => {
-  //   return {
-  //     nodes: [],
-  //     edges: [],
-  //   };
-  // }, [selectData, graphData]);
-
+  const [count, setCount] = React.useState(1);
   return (
     <ProCard split="horizontal" bordered className={styles["view-graph"]}>
       <ProCard
@@ -117,6 +117,7 @@ const View = () => {
             callbackHistory={callbackHistory}
             callbackDisabled={callbackDisabled}
             ref={rightRef}
+            graphData={selectData}
           />
         </ProCard>
       </ProCard>

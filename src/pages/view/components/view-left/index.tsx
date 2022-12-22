@@ -1,8 +1,7 @@
 import React from "react";
 import ViewFlow from "@/components/flow";
 import type { NsGraph, IAppLoad, NsGraphCmd, IApplication } from "@antv/xflow";
-import { XFlowGraphCommands } from "@antv/xflow";
-import { DagreLayout } from "@antv/layout";
+import { XFlowGraphCommands, CanvasScaleToolbar } from "@antv/xflow";
 
 type IProps = {
   graphData?: NsGraph.IGraphData;
@@ -13,23 +12,16 @@ const ViewLeft: React.FC<IProps> = (props) => {
   const [app, setApp] = React.useState<IApplication>();
   const onLoad: IAppLoad = async (app) => {
     const graph = await app.getGraphInstance();
-    // graph.off("node:mouseenter");
+    graph.off("node:mouseenter");
     setApp(app);
   };
   React.useEffect(() => {
     if (app && graphData) {
       (async () => {
-        // const graph = await app.getGraphInstance();
-        // const dagreLayout = new DagreLayout({
-        //   type: "dagre",
-        //   rankdir: "TB",
-        //   ranksep: 30,
-        //   nodesep: 60,
-        //   controlPoints: true,
-        // });
-        // const model = dagreLayout.layout(graphData);
-        // graph.fromJSON(model);
-        const res = await app.executeCommand<
+        const graph = await app.getGraphInstance();
+        const config = await app.getGraphConfig();
+        graph.clearCells();
+        await app.executeCommand<
           NsGraphCmd.GraphLayout.IArgs,
           NsGraphCmd.GraphLayout.IResult
         >(XFlowGraphCommands.GRAPH_LAYOUT.id, {
@@ -42,26 +34,19 @@ const ViewLeft: React.FC<IProps> = (props) => {
             nodesep: 60,
             /** 层间距 */
             ranksep: 30,
-            controlPoints: true,
           },
           graphData,
         });
-        const graph = await res.contextProvider().getX6Graph();
-        // console.log(a);
-        // render
-        // await app.executeCommand<NsGraphCmd.GraphRender.IArgs>(
-        //   XFlowGraphCommands.GRAPH_RENDER.id,
-        //   {
-        //     graphData: data,
-        //   }
-        // );
-        // 居中
-        await app.executeCommand<NsGraphCmd.GraphZoom.IArgs>(
-          XFlowGraphCommands.GRAPH_ZOOM.id,
-          {
-            factor: "real",
-          }
-        );
+        const format = graphData.nodes.map((item) => ({
+          ...item,
+          view: config.graphId,
+        }));
+        await app.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, {
+          graphData: {
+            ...graphData,
+            nodes: format,
+          },
+        } as NsGraphCmd.GraphRender.IArgs);
       })();
     }
   }, [app, graphData]);
@@ -71,7 +56,9 @@ const ViewLeft: React.FC<IProps> = (props) => {
       nodeMovable={false}
       onLoad={onLoad}
       contextMenu={false}
-    />
+    >
+      <CanvasScaleToolbar position={{ top: 12, left: 12 }} />
+    </ViewFlow>
   );
 };
 

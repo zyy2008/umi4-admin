@@ -12,6 +12,7 @@ export * from "./components";
 type IProps = {
   callbackHistory?: (args: NsGraph.IGraphData) => void;
   callbackDisabled?: (args: boolean) => void;
+  graphData?: NsGraph.IGraphData;
 };
 
 export type ViewHandle = {
@@ -23,15 +24,14 @@ type Visibility = "hidden" | "visible";
 export type CallbackVisibility = (args: Visibility) => void;
 
 const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
-  const { callbackHistory, callbackDisabled } = props;
+  const { callbackHistory, callbackDisabled, graphData } = props;
+  const [app, setApp] = React.useState<IApplication>();
   const [visibility, setVisibility] = React.useState<Visibility>("hidden");
   const callbackVisibility = React.useCallback<CallbackVisibility>(
     (val) => setVisibility(val),
     []
   );
-  const app = React.useRef<IApplication>();
   const onLoad: IAppLoad = async (val) => {
-    app.current = val;
     const graph = await val.getGraphInstance();
     graph.enableHistory();
     graph.history.on("change", () => {
@@ -39,21 +39,57 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
         XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         {
           saveGraphDataService: async (meta, data) => {
-            console.log(data);
-            callbackHistory?.(data);
+            // console.log(data);
+            // callbackHistory?.(data);
           },
         }
       );
     });
+    setApp(val);
   };
+  React.useEffect(() => {
+    if (app && graphData) {
+      (async () => {
+        const graph = await app.getGraphInstance();
+        const config = await app.getGraphConfig();
+        graph.clearCells();
+        await app.executeCommand<
+          NsGraphCmd.GraphLayout.IArgs,
+          NsGraphCmd.GraphLayout.IResult
+        >(XFlowGraphCommands.GRAPH_LAYOUT.id, {
+          layoutType: "dagre",
+          layoutOptions: {
+            type: "dagre",
+            /** 布局方向 */
+            rankdir: "TB",
+            /** 节点间距 */
+            nodesep: 60,
+            /** 层间距 */
+            ranksep: 30,
+          },
+          graphData,
+        });
+        const format = graphData.nodes.map((item) => ({
+          ...item,
+          view: config.graphId,
+        }));
+        await app.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, {
+          graphData: {
+            ...graphData,
+            nodes: format,
+          },
+        } as NsGraphCmd.GraphRender.IArgs);
+      })();
+    }
+  }, [app, graphData]);
   React.useImperativeHandle(
     ref,
     () => {
       return {
-        app: app.current,
+        app,
       };
     },
-    [app.current]
+    [app]
   );
   return (
     <ViewFlow

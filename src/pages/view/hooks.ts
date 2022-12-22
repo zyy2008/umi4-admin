@@ -18,7 +18,10 @@ type IProps = {
 type DProps = {
   data: ViewRelationship[];
   selectValue: number[];
+  formatData: NsGraph.INodeConfig[];
 };
+
+const worker = new Worker("./edges.worker.js");
 
 export const useView = (props: IProps) => {
   const { graphData } = props;
@@ -79,41 +82,86 @@ export const useFileTreeSelect = () => {
   const onSuccess = React.useCallback<
     (T: BaseResponseListViewRelationship["data"]) => void
   >(setData, []);
-  return { value, onSelectChange, data, onSuccess };
-};
-
-export const useData = (props: DProps) => {
-  const { data, selectValue } = props;
-  const selectData = React.useMemo<NsGraph.IGraphData>(() => {
+  const formatData = React.useMemo<NsGraph.INodeConfig[]>(() => {
     const list: KnowledgeView[] = [];
-    data.forEach((item) => {
+    data?.forEach((item) => {
       list.push(...[item.child ?? {}, item.parent ?? {}]);
     });
     const dataUniqBy = uniqBy(list, "id");
-    const filter = dataUniqBy.filter(({ mark }) => {
-      const find = selectValue.findIndex((val) => val === mark);
-      return find > -1;
-    });
-    const nodes: NsGraph.INodeConfig[] = filter.map((item) => ({
+    return dataUniqBy.map((item) => ({
       ...item,
-      id: String(item.id) || uuidv4(),
+      id: `${item.id}` || uuidv4(),
       label: item.name,
       fill: controlShape[item.mark ?? 0],
       renderKey: "ConnectorNode",
       width: 70,
       height: 70,
+      ports: ports(item.mark),
     }));
+  }, [data]);
+  return { value, onSelectChange, data, onSuccess, formatData };
+};
 
-    const edges: NsGraph.IEdgeConfig[] = data.map((item) => ({
-      id: String(item.id),
-      source: String(item.parent?.id),
-      target: String(item.child?.id),
-      shape: "edge",
-    }));
-    return {
-      nodes,
-      edges,
+const ports: (T: KnowledgeView["mark"]) => NsGraph.INodeAnchor[] = (mark) => {
+  switch (mark) {
+    case 0:
+      return [
+        {
+          id: uuidv4(),
+          type: NsGraph.AnchorType.OUTPUT,
+          group: NsGraph.AnchorGroup.BOTTOM,
+          tooltip: "输出桩",
+        },
+      ];
+    case 1:
+    case 2:
+      return [
+        {
+          id: uuidv4(),
+          type: NsGraph.AnchorType.OUTPUT,
+          group: NsGraph.AnchorGroup.BOTTOM,
+          tooltip: "输出桩",
+        },
+        {
+          id: uuidv4(),
+          type: NsGraph.AnchorType.INPUT,
+          group: NsGraph.AnchorGroup.TOP,
+          tooltip: "输入桩",
+        },
+      ];
+    case 3:
+      return [
+        {
+          id: uuidv4(),
+          type: NsGraph.AnchorType.INPUT,
+          group: NsGraph.AnchorGroup.TOP,
+          tooltip: "输入桩",
+        },
+      ];
+    default:
+      return [];
+  }
+};
+
+export const useData = (props: DProps) => {
+  const { data, selectValue, formatData } = props;
+  const [selectData, setSelectData] = React.useState<NsGraph.IGraphData>();
+  React.useEffect(() => {
+    worker.onmessage = (res) => {
+      setSelectData(res.data ?? null);
     };
-  }, [data, selectValue]);
+    return () => {
+      worker.terminate();
+    };
+  }, []);
+  React.useEffect(() => {
+    if (worker && data && selectValue && formatData) {
+      worker.postMessage({
+        data,
+        selectValue,
+        formatData,
+      });
+    }
+  }, [data, selectValue, formatData]);
   return { selectData };
 };
