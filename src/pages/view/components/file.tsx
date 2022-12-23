@@ -1,11 +1,11 @@
 import { useState, FC } from "react";
 import { Button, Space, Tooltip, Upload, message } from "antd";
 import { ImportOutlined, ExportOutlined } from "@ant-design/icons";
-import { APIS, BaseResponseListViewRelationship } from "@/services";
+import { APIS, ViewRelationship } from "@/services";
 import { data } from "./mock";
 
 type FileProps = {
-  onSuccess?: (T: BaseResponseListViewRelationship["data"]) => void;
+  onSuccess?: (T: ViewRelationship[]) => void;
 };
 
 const File: FC<FileProps> = (props) => {

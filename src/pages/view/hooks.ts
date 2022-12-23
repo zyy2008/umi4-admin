@@ -5,23 +5,20 @@ import { Graph } from "@antv/x6";
 import { CheckCardProps } from "@ant-design/pro-components";
 import { uniqBy } from "lodash";
 import { ViewHandle, CheckListProps, controlShape } from "./components";
-import {
-  BaseResponseListViewRelationship,
-  KnowledgeView,
-  ViewRelationship,
-} from "@/services";
+import { KnowledgeView, ViewRelationship } from "@/services";
+import { formatGraphData } from "@/utils";
 
 type IProps = {
   graphData?: NsGraph.IGraphData;
 };
 
-type DProps = {
+export type DProps = {
   data: ViewRelationship[];
   selectValue: number[];
   formatData: NsGraph.INodeConfig[];
 };
 
-const worker = new Worker("./edges.worker.js");
+// const worker = new Worker("./edges.worker.js");
 
 export const useView = (props: IProps) => {
   const { graphData } = props;
@@ -71,17 +68,16 @@ export const useView = (props: IProps) => {
 
 export const useFileTreeSelect = () => {
   const [value, setValue] = React.useState<number[]>([0, 1, 2, 3]);
-  const [data, setData] = React.useState<
-    BaseResponseListViewRelationship["data"]
-  >([]);
+  const [data, setData] = React.useState<ViewRelationship[]>([]);
   const onSelectChange = React.useCallback<
     Required<Pick<TreeSelectProps, "onChange">>["onChange"]
   >((val) => {
     setValue(val);
   }, []);
-  const onSuccess = React.useCallback<
-    (T: BaseResponseListViewRelationship["data"]) => void
-  >(setData, []);
+  const onSuccess = React.useCallback<(T: ViewRelationship[]) => void>(
+    setData,
+    []
+  );
   const formatData = React.useMemo<NsGraph.INodeConfig[]>(() => {
     const list: KnowledgeView[] = [];
     data?.forEach((item) => {
@@ -146,21 +142,22 @@ const ports: (T: KnowledgeView["mark"]) => NsGraph.INodeAnchor[] = (mark) => {
 export const useData = (props: DProps) => {
   const { data, selectValue, formatData } = props;
   const [selectData, setSelectData] = React.useState<NsGraph.IGraphData>();
+  // React.useEffect(() => {
+  //   worker.onmessage = (res) => {
+  //     setSelectData(res.data ?? { nodes: [], edges: [] });
+  //   };
+  //   return () => {
+  //     worker.terminate();
+  //   };
+  // }, []);
   React.useEffect(() => {
-    worker.onmessage = (res) => {
-      setSelectData(res.data ?? null);
-    };
-    return () => {
-      worker.terminate();
-    };
-  }, []);
-  React.useEffect(() => {
-    if (worker && data && selectValue && formatData) {
-      worker.postMessage({
-        data,
-        selectValue,
-        formatData,
-      });
+    if (selectValue && formatData && data) {
+      setSelectData(formatGraphData({ data, formatData, selectValue }));
+      // worker.postMessage({
+      //   data,
+      //   selectValue,
+      //   formatData,
+      // });
     }
   }, [data, selectValue, formatData]);
   return { selectData };

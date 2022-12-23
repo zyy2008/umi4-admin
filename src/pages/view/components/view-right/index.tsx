@@ -4,6 +4,7 @@ import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { CustomPanel } from "./components";
 import type { IAppLoad, NsGraphCmd, NsGraph, IApplication } from "@antv/xflow";
 import { XFlowGraphCommands, JsonSchemaForm } from "@antv/xflow";
+import { useReader } from "../hooks";
 import { NsJsonForm } from "./form-service";
 import styles from "./index.less";
 
@@ -47,41 +48,7 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
     });
     setApp(val);
   };
-  React.useEffect(() => {
-    if (app && graphData) {
-      (async () => {
-        const graph = await app.getGraphInstance();
-        const config = await app.getGraphConfig();
-        graph.clearCells();
-        await app.executeCommand<
-          NsGraphCmd.GraphLayout.IArgs,
-          NsGraphCmd.GraphLayout.IResult
-        >(XFlowGraphCommands.GRAPH_LAYOUT.id, {
-          layoutType: "dagre",
-          layoutOptions: {
-            type: "dagre",
-            /** 布局方向 */
-            rankdir: "TB",
-            /** 节点间距 */
-            nodesep: 60,
-            /** 层间距 */
-            ranksep: 30,
-          },
-          graphData,
-        });
-        const format = graphData.nodes.map((item) => ({
-          ...item,
-          view: config.graphId,
-        }));
-        await app.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, {
-          graphData: {
-            ...graphData,
-            nodes: format,
-          },
-        } as NsGraphCmd.GraphRender.IArgs);
-      })();
-    }
-  }, [app, graphData]);
+  useReader({ app, graphData });
   React.useImperativeHandle(
     ref,
     () => {

@@ -18,6 +18,7 @@ export default defineConfig({
     // 设置 alias
     memo.resolve.alias.set("@ajax", resolve("src/utils/ajax"));
   },
+  mfsu: false,
   request: {},
   qiankun: {
     master: {

@@ -45,7 +45,6 @@ export const useGraphHookConfig = createHookConfig<IProps>(
               ...graphOptions.connecting,
             };
             options.grid = true;
-            options.async = true;
             options.interacting = {
               nodeMovable,
               edgeLabelMovable: false,
