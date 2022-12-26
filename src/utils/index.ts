@@ -4,20 +4,14 @@ import type { DataNode } from "antd/es/tree";
 import { groupBy, uniqBy, mergeWith, find } from "lodash";
 
 type IProps = {
-  formatData: NsGraph.INodeConfig[];
+  nodes: NsGraph.INodeConfig[];
   data: ViewRelationship[];
-  selectValue: number[];
 };
 
 export const formatGraphData: (T: IProps) => NsGraph.IGraphData = ({
-  formatData,
-  selectValue,
+  nodes,
   data,
 }) => {
-  const nodes = formatData.filter(({ mark }) => {
-    const find = selectValue.findIndex((val) => val === mark);
-    return find > -1;
-  });
   const edges = () => {
     const find = data.filter(({ parent, child }) => {
       const parentIndex = nodes.findIndex(({ id }) => id === `${parent?.id}`);

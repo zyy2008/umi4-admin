@@ -131,12 +131,7 @@ const View = () => {
               padding: 0,
             }}
           >
-            {/* <ViewRight
-              callbackHistory={callbackHistory}
-              callbackDisabled={callbackDisabled}
-              ref={rightRef}
-              graphData={selectData}
-            /> */}
+            <ViewRight ref={rightRef} graphData={selectData} />
           </ProCard>
         </ProCard>
 

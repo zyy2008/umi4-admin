@@ -155,8 +155,12 @@ export const useData = (props: DProps) => {
   //   };
   // }, []);
   React.useEffect(() => {
-    if (selectValue && formatData && data) {
-      setSelectData(formatGraphData({ data, formatData, selectValue }));
+    if (selectValue.length > 0 && formatData.length > 0 && data.length > 0) {
+      const nodes = formatData.filter(({ mark }) => {
+        const find = selectValue.findIndex((val) => val === mark);
+        return find > -1;
+      });
+      setSelectData(formatGraphData({ data, nodes }));
       // worker.postMessage({
       //   data,
       //   selectValue,
@@ -165,7 +169,13 @@ export const useData = (props: DProps) => {
     }
   }, [data, selectValue, formatData]);
   React.useEffect(() => {
-    console.log(custom);
-  }, [custom]);
+    if (custom.length > 0) {
+      const nodes = formatData.filter(({ id }) => {
+        const find = custom.findIndex((val) => val === id);
+        return find > -1;
+      });
+      setSelectData(formatGraphData({ data, nodes }));
+    }
+  }, [custom, formatData, data]);
   return { selectData, onOk: setCustom };
 };
