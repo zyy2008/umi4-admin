@@ -33,7 +33,11 @@ const View = () => {
     formatData,
     formatTreeData,
   } = useFileTreeSelect();
-  const { selectData } = useData({ data, formatData, selectValue: value });
+  const { selectData, onOk } = useData({
+    data,
+    formatData,
+    selectValue: value,
+  });
   // const callbackHistory = React.useCallback<CallbackHistory>(setGraphData, []);
   // const callbackDisabled = React.useCallback<CallbackDisabled>(setDisabled, []);
   return (
@@ -66,7 +70,9 @@ const View = () => {
                 height: "100%",
               }}
               title={<File onSuccess={onSuccess} />}
-              extra={<NodeView value={value} onChange={onSelectChange} />}
+              extra={
+                <NodeView value={value} onChange={onSelectChange} onOk={onOk} />
+              }
               headerBordered={false}
             >
               <ViewLeft graphData={selectData} />

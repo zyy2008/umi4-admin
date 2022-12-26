@@ -1,10 +1,12 @@
 import React from "react";
-import { Space, TreeSelect, TreeSelectProps } from "antd";
+import { Space, TreeSelect, TreeSelectProps, TransferProps } from "antd";
 import ButtonModal from "@/components/button-modal";
 import { SettingOutlined } from "@ant-design/icons";
 import { CustomView } from "./index";
 
-type NodeViewProps = Pick<TreeSelectProps, "value" | "onChange">;
+type NodeViewProps = Pick<TreeSelectProps, "value" | "onChange"> & {
+  onOk: (T: string[]) => void;
+};
 
 const treeData: TreeSelectProps["treeData"] = [
   {
@@ -30,8 +32,10 @@ const treeData: TreeSelectProps["treeData"] = [
 ];
 
 const NodeView: React.FC<NodeViewProps> = (props) => {
-  const { value, onChange } = props;
-
+  const { value, onChange, onOk } = props;
+  const [targetKeys, setTargetKeys] = React.useState<string[]>([]);
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [status, setStatus] = React.useState<TransferProps<any>["status"]>("");
   return (
     <Space.Compact block>
       <TreeSelect
@@ -46,14 +50,39 @@ const NodeView: React.FC<NodeViewProps> = (props) => {
         onChange={onChange}
       />
       <ButtonModal
-        buttonProps={{ icon: <SettingOutlined />, type: "default" }}
+        buttonProps={{
+          icon: <SettingOutlined />,
+          type: "default",
+          onClick: () => {
+            setOpen(true);
+          },
+        }}
         tooltipProps={{
           title: "自定义节点显示",
         }}
         modalProps={{
           title: "自定义显示节点选择页",
           width: 800,
-          children: <CustomView />,
+          children: (
+            <CustomView
+              targetKeys={targetKeys}
+              onChange={setTargetKeys}
+              status={status}
+            />
+          ),
+          open,
+          onCancel: () => {
+            setOpen(false);
+          },
+          onOk: () => {
+            if (targetKeys.length === 0) {
+              setStatus("error");
+            } else {
+              setStatus("");
+              setOpen(false);
+              onOk?.(targetKeys);
+            }
+          },
         }}
       />
     </Space.Compact>

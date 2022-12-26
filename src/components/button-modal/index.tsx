@@ -16,7 +16,7 @@ export type ButtonModalProps = {
 
 const ButtonModal: React.FC<ButtonModalProps> = (props) => {
   const { modalProps, buttonProps, tooltipProps } = props;
-  const [open, setOpen] = React.useState<boolean>(false);
+
   const isOpenProps = React.useMemo<TooltipProps>(() => {
     if (tooltipProps) {
       return tooltipProps;
@@ -28,9 +28,9 @@ const ButtonModal: React.FC<ButtonModalProps> = (props) => {
   return (
     <>
       <Tooltip placement="bottom" {...isOpenProps}>
-        <Button type="primary" {...buttonProps} onClick={() => setOpen(true)} />
+        <Button type="primary" {...buttonProps} />
       </Tooltip>
-      <Modal {...modalProps} open={open} onCancel={() => setOpen(false)} />
+      <Modal {...modalProps} maskClosable={false} />
     </>
   );
 };

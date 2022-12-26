@@ -4,12 +4,11 @@ import {
   CheckCard,
   CheckCardGroupProps,
 } from "@ant-design/pro-components";
-import { List, Input, Empty } from "antd";
+import { List, Input, Empty, Form } from "antd";
 import VirtualList from "rc-virtual-list";
 import { NsGraph } from "@antv/xflow";
-import TreeTransfer from "@/components/tree-transfer";
+import TreeTransfer, { TreeTransferProps } from "@/components/tree-transfer";
 import type { DataNode } from "antd/es/tree";
-import type { DProps } from "../hooks";
 import { Context } from "@/pages/view";
 import { treeDeep } from "@/utils";
 
@@ -19,7 +18,8 @@ type ListVirtualProps = {
   header?: React.ReactNode;
 } & Pick<CheckCardGroupProps, "value" | "onChange">;
 
-type TransferProps = Pick<CheckCardGroupProps, "value">;
+type TransferProps = Pick<CheckCardGroupProps, "value"> &
+  Pick<TreeTransferProps, "onChange" | "targetKeys" | "status">;
 
 const { Search } = Input;
 
@@ -78,34 +78,32 @@ const ListVirtual: React.FC<ListVirtualProps> = (props) => {
   );
 };
 
-type TProps = {
-  data: DProps["data"];
-  value: string;
-};
-
 const Transfer: React.FC<TransferProps> = (props) => {
-  const { value } = props;
+  const { value, onChange, status, targetKeys } = props;
   const { formatTreeData } = React.useContext(Context);
-  const [targetKeys, setTargetKeys] = React.useState<string[]>([]);
   const dataSource = React.useMemo<DataNode[]>(() => {
     const res = treeDeep({ key: value as string, formatTreeData });
-    console.log(res);
     return res;
   }, [formatTreeData, value]);
   return (
     <TreeTransfer
       style={{
-        height: "100%",
+        height: "420px",
       }}
+      height={370}
       dataSource={dataSource}
       targetKeys={targetKeys}
-      onChange={setTargetKeys}
+      onChange={onChange}
       titles={["选中节点及子节点", "编辑节点"]}
+      status={status}
     />
   );
 };
 
-const CustomView: React.FC<{}> = () => {
+const CustomView: React.FC<
+  Pick<TreeTransferProps, "onChange" | "targetKeys" | "status">
+> = (props) => {
+  const { targetKeys, onChange, status } = props;
   const [value, setValue] = React.useState<CheckCardGroupProps["value"]>();
   return (
     <ProCard split="vertical" headerBordered>
@@ -127,7 +125,12 @@ const CustomView: React.FC<{}> = () => {
         }}
         bordered={false}
       >
-        <Transfer value={value} />
+        <Transfer
+          value={value}
+          targetKeys={targetKeys}
+          onChange={onChange}
+          status={status}
+        />
       </ProCard>
     </ProCard>
   );

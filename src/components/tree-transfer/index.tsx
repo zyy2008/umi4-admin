@@ -1,9 +1,9 @@
 import React from "react";
-import { Transfer, Tree } from "antd";
+import { Transfer, Tree, TransferProps } from "antd";
 import type { TransferDirection, TransferItem } from "antd/es/transfer";
 import type { DataNode } from "antd/es/tree";
 
-interface TreeTransferProps {
+export interface TreeTransferProps {
   dataSource: DataNode[];
   targetKeys: string[];
   onChange: (
@@ -13,6 +13,8 @@ interface TreeTransferProps {
   ) => void;
   titles?: React.ReactNode[];
   style?: React.CSSProperties;
+  height?: number;
+  status?: TransferProps<any>["status"];
 }
 
 // Customize Table Transfer
@@ -34,6 +36,8 @@ const generateTree = (
 const TreeTransfer: React.FC<TreeTransferProps> = ({
   dataSource,
   targetKeys,
+  height,
+  status,
   ...restProps
 }: TreeTransferProps) => {
   const transferDataSource: TransferItem[] = [];
@@ -52,6 +56,7 @@ const TreeTransfer: React.FC<TreeTransferProps> = ({
       dataSource={transferDataSource}
       render={(item) => item.title!}
       showSelectAll={false}
+      status={status}
     >
       {({ direction, onItemSelect, selectedKeys }) => {
         if (direction === "left") {
@@ -62,6 +67,7 @@ const TreeTransfer: React.FC<TreeTransferProps> = ({
           }
           return (
             <Tree
+              height={height}
               blockNode
               checkable
               checkStrictly

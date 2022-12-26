@@ -145,6 +145,7 @@ const ports: (T: KnowledgeView["mark"]) => NsGraph.INodeAnchor[] = (mark) => {
 export const useData = (props: DProps) => {
   const { data, selectValue, formatData } = props;
   const [selectData, setSelectData] = React.useState<NsGraph.IGraphData>();
+  const [custom, setCustom] = React.useState<string[]>([]);
   // React.useEffect(() => {
   //   worker.onmessage = (res) => {
   //     setSelectData(res.data ?? { nodes: [], edges: [] });
@@ -163,5 +164,8 @@ export const useData = (props: DProps) => {
       // });
     }
   }, [data, selectValue, formatData]);
-  return { selectData };
+  React.useEffect(() => {
+    console.log(custom);
+  }, [custom]);
+  return { selectData, onOk: setCustom };
 };
