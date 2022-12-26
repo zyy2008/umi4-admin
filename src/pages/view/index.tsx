@@ -6,15 +6,19 @@ import { useView, useFileTreeSelect, useData, DProps } from "./hooks";
 import { ViewLeft, ViewRight, CheckList, File, NodeView } from "./components";
 import styles from "./index.less";
 import { Transfer } from "./components/transfer";
+import type { DataNode } from "antd/es/tree";
 
 export type CallbackHistory = (args: NsGraph.IGraphData) => void;
 export type CallbackDisabled = (args: boolean) => void;
 
-export type ViewContext = Omit<DProps, "selectValue">;
+export type ViewContext = Omit<DProps, "selectValue"> & {
+  formatTreeData: DataNode[];
+};
 
 export const Context = React.createContext<ViewContext>({
   data: [],
   formatData: [],
+  formatTreeData: [],
 });
 
 const View = () => {
@@ -27,12 +31,13 @@ const View = () => {
     onSuccess,
     data = [],
     formatData,
+    formatTreeData,
   } = useFileTreeSelect();
   const { selectData } = useData({ data, formatData, selectValue: value });
   // const callbackHistory = React.useCallback<CallbackHistory>(setGraphData, []);
   // const callbackDisabled = React.useCallback<CallbackDisabled>(setDisabled, []);
   return (
-    <Context.Provider value={{ data, formatData }}>
+    <Context.Provider value={{ data, formatData, formatTreeData }}>
       <ProCard split="horizontal" bordered className={styles["view-graph"]}>
         <ProCard
           split="vertical"

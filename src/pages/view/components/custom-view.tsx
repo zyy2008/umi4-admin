@@ -11,6 +11,7 @@ import TreeTransfer from "@/components/tree-transfer";
 import type { DataNode } from "antd/es/tree";
 import type { DProps } from "../hooks";
 import { Context } from "@/pages/view";
+import { treeDeep } from "@/utils";
 
 type ListVirtualProps = {
   title?: string;
@@ -82,18 +83,15 @@ type TProps = {
   value: string;
 };
 
-// const formatTreeData: (T: TProps) => DataNode[] = ({ data,value}) => {
-
-// }
-
 const Transfer: React.FC<TransferProps> = (props) => {
   const { value } = props;
-  const { data } = React.useContext(Context);
+  const { formatTreeData } = React.useContext(Context);
   const [targetKeys, setTargetKeys] = React.useState<string[]>([]);
   const dataSource = React.useMemo<DataNode[]>(() => {
-    console.log(value);
-    return [];
-  }, [data, value]);
+    const res = treeDeep({ key: value as string, formatTreeData });
+    console.log(res);
+    return res;
+  }, [formatTreeData, value]);
   return (
     <TreeTransfer
       style={{

@@ -1,5 +1,7 @@
 import { NsGraph, uuidv4 } from "@antv/xflow";
-import { ViewRelationship } from "@/services";
+import { ViewRelationship, KnowledgeView } from "@/services";
+import type { DataNode } from "antd/es/tree";
+import { groupBy, uniqBy, mergeWith, find } from "lodash";
 
 type IProps = {
   formatData: NsGraph.INodeConfig[];
@@ -59,4 +61,60 @@ export const formatGraphData: (T: IProps) => NsGraph.IGraphData = ({
     nodes,
     edges: edges(),
   };
+};
+
+export const formatTree: (T: { data: ViewRelationship[] }) => DataNode[] = ({
+  data,
+}) => {
+  const first = groupBy(data, "parent.id");
+  const tree: DataNode[] = Object.keys(first).map((key) => {
+    const item = first[key];
+    const [val] = item;
+    if (item.length === 1) {
+      return {
+        title: val.parent?.name,
+        key: `${val.parent?.id}`,
+        children: [
+          {
+            title: val.child?.name,
+            key: `${val.child?.id}`,
+            children: [],
+          },
+        ],
+      };
+    }
+    return {
+      title: val.parent?.name,
+      key: `${val.parent?.id}`,
+      children: item.map((item) => ({
+        title: item?.child?.name,
+        key: `${item?.child?.id}`,
+        children: [],
+      })),
+    };
+  });
+  return tree;
+};
+
+export const treeDeep: (T: {
+  key: string;
+  formatTreeData: DataNode[];
+}) => DataNode[] = ({ key, formatTreeData }) => {
+  const find = formatTreeData.filter((item) => item.key === key);
+  return find.map((item) => {
+    return {
+      ...item,
+      children: item.children?.map((lts) => {
+        const res = treeDeep({
+          key: lts.key as string,
+          formatTreeData,
+        });
+        if (res.length > 0) {
+          const [val] = res;
+          return val;
+        }
+        return lts;
+      }),
+    };
+  });
 };

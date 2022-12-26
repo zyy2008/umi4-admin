@@ -6,7 +6,8 @@ import { CheckCardProps } from "@ant-design/pro-components";
 import { uniqBy } from "lodash";
 import { ViewHandle, CheckListProps, controlShape } from "./components";
 import { KnowledgeView, ViewRelationship } from "@/services";
-import { formatGraphData } from "@/utils";
+import { formatGraphData, formatTree } from "@/utils";
+import type { DataNode } from "antd/es/tree";
 
 type IProps = {
   graphData?: NsGraph.IGraphData;
@@ -71,9 +72,7 @@ export const useFileTreeSelect = () => {
   const [data, setData] = React.useState<ViewRelationship[]>([]);
   const onSelectChange = React.useCallback<
     Required<Pick<TreeSelectProps, "onChange">>["onChange"]
-  >((val) => {
-    setValue(val);
-  }, []);
+  >(setValue, []);
   const onSuccess = React.useCallback<(T: ViewRelationship[]) => void>(
     setData,
     []
@@ -95,7 +94,11 @@ export const useFileTreeSelect = () => {
       ports: ports(item.mark),
     }));
   }, [data]);
-  return { value, onSelectChange, data, onSuccess, formatData };
+
+  const formatTreeData = React.useMemo<DataNode[]>(() => {
+    return formatTree({ data });
+  }, [data]);
+  return { value, onSelectChange, data, onSuccess, formatData, formatTreeData };
 };
 
 const ports: (T: KnowledgeView["mark"]) => NsGraph.INodeAnchor[] = (mark) => {
