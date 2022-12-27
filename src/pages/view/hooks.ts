@@ -6,7 +6,7 @@ import { CheckCardProps } from "@ant-design/pro-components";
 import { uniqBy } from "lodash";
 import { ViewHandle, CheckListProps, controlShape } from "./components";
 import { KnowledgeView, ViewRelationship } from "@/services";
-import { formatGraphData, formatTree } from "@/utils";
+import { formatGraphData, formatTree, graphReader } from "@/utils";
 import type { DataNode } from "antd/es/tree";
 
 type IProps = {
@@ -26,6 +26,7 @@ export const useView = (props: IProps) => {
   const [x6Graph, setX6Graph] = React.useState<Graph>();
   const [nodesValue, setNodesValue] = React.useState<CheckCardProps["value"]>();
   const rightRef = React.useRef<ViewHandle>(null);
+  const [disabled, setDisabled] = React.useState<boolean>(true);
   const onChange = React.useCallback<CheckListProps["onChange"]>(
     async (val, item) => {
       const app = rightRef.current?.app;
@@ -57,6 +58,7 @@ export const useView = (props: IProps) => {
     (async () => {
       if (rightRef.current) {
         const { app } = rightRef.current;
+        console.log(app);
         if (app) {
           const x6Graph = await app?.getGraphInstance();
           setX6Graph(x6Graph);
@@ -64,7 +66,7 @@ export const useView = (props: IProps) => {
       }
     })();
   }, [rightRef]);
-  return { rightRef, onChange, nodesValue, x6Graph };
+  return { rightRef, onChange, nodesValue, x6Graph, disabled, setDisabled };
 };
 
 export const useFileTreeSelect = () => {
@@ -145,15 +147,10 @@ const ports: (T: KnowledgeView["mark"]) => NsGraph.INodeAnchor[] = (mark) => {
 export const useData = (props: DProps) => {
   const { data, selectValue, formatData } = props;
   const [selectData, setSelectData] = React.useState<NsGraph.IGraphData>();
+  const [graphData, setGraphData] = React.useState<NsGraph.IGraphData>();
   const [custom, setCustom] = React.useState<string[]>([]);
-  // React.useEffect(() => {
-  //   worker.onmessage = (res) => {
-  //     setSelectData(res.data ?? { nodes: [], edges: [] });
-  //   };
-  //   return () => {
-  //     worker.terminate();
-  //   };
-  // }, []);
+  const leftRef = React.useRef<ViewHandle>(null);
+  const rightRef = React.useRef<ViewHandle>(null);
   React.useEffect(() => {
     if (selectValue.length > 0 && formatData.length > 0 && data.length > 0) {
       const nodes = formatData.filter(({ mark }) => {
@@ -161,11 +158,6 @@ export const useData = (props: DProps) => {
         return find > -1;
       });
       setSelectData(formatGraphData({ data, nodes }));
-      // worker.postMessage({
-      //   data,
-      //   selectValue,
-      //   formatData,
-      // });
     }
   }, [data, selectValue, formatData]);
   React.useEffect(() => {
@@ -177,5 +169,24 @@ export const useData = (props: DProps) => {
       setSelectData(formatGraphData({ data, nodes }));
     }
   }, [custom, formatData, data]);
-  return { selectData, onOk: setCustom };
+  React.useEffect(() => {
+    if (selectData && rightRef.current) {
+      graphReader(selectData, rightRef.current.app);
+    }
+  }, [selectData, rightRef]);
+
+  React.useEffect(() => {
+    if (selectData && leftRef.current) {
+      graphReader(selectData, leftRef.current.app);
+    }
+  }, [selectData, leftRef]);
+
+  return {
+    selectData,
+    onOk: setCustom,
+    graphData,
+    setGraphData,
+    leftRef,
+    rightRef,
+  };
 };

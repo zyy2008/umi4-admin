@@ -1,15 +1,11 @@
 import React from "react";
 import { ProCard } from "@ant-design/pro-components";
-import type { NsGraph } from "@antv/xflow";
 import ButtonModal from "@/components/button-modal";
 import { useView, useFileTreeSelect, useData, DProps } from "./hooks";
 import { ViewLeft, ViewRight, CheckList, File, NodeView } from "./components";
 import styles from "./index.less";
 import { Transfer } from "./components/transfer";
 import type { DataNode } from "antd/es/tree";
-
-export type CallbackHistory = (args: NsGraph.IGraphData) => void;
-export type CallbackDisabled = (args: boolean) => void;
 
 export type ViewContext = Omit<DProps, "selectValue"> & {
   formatTreeData: DataNode[];
@@ -22,9 +18,6 @@ export const Context = React.createContext<ViewContext>({
 });
 
 const View = () => {
-  const [graphData, setGraphData] = React.useState<NsGraph.IGraphData>();
-  const [disabled, setDisabled] = React.useState<boolean>(true);
-  const { rightRef, onChange, nodesValue, x6Graph } = useView({ graphData });
   const {
     value,
     onSelectChange,
@@ -33,13 +26,14 @@ const View = () => {
     formatData,
     formatTreeData,
   } = useFileTreeSelect();
-  const { selectData, onOk } = useData({
+  const { selectData, onOk, graphData, leftRef, rightRef } = useData({
     data,
     formatData,
     selectValue: value,
   });
-  // const callbackHistory = React.useCallback<CallbackHistory>(setGraphData, []);
-  // const callbackDisabled = React.useCallback<CallbackDisabled>(setDisabled, []);
+  const { onChange, nodesValue, x6Graph, disabled, setDisabled } = useView({
+    graphData: selectData,
+  });
   return (
     <Context.Provider value={{ data, formatData, formatTreeData }}>
       <ProCard split="horizontal" bordered className={styles["view-graph"]}>
@@ -75,7 +69,7 @@ const View = () => {
               }
               headerBordered={false}
             >
-              <ViewLeft graphData={selectData} />
+              <ViewLeft ref={leftRef} graphData={graphData} />
             </ProCard>
           </ProCard>
           <ProCard
@@ -131,7 +125,7 @@ const View = () => {
               padding: 0,
             }}
           >
-            <ViewRight ref={rightRef} graphData={selectData} />
+            <ViewRight ref={rightRef} setDisabled={setDisabled} />
           </ProCard>
         </ProCard>
 

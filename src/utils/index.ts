@@ -1,4 +1,10 @@
-import { NsGraph, uuidv4 } from "@antv/xflow";
+import {
+  NsGraph,
+  uuidv4,
+  IApplication,
+  NsGraphCmd,
+  XFlowGraphCommands,
+} from "@antv/xflow";
 import { ViewRelationship, KnowledgeView } from "@/services";
 import type { DataNode } from "antd/es/tree";
 import { groupBy, uniqBy, mergeWith, find } from "lodash";
@@ -112,3 +118,47 @@ export const treeDeep: (T: {
     };
   });
 };
+
+export async function graphReader(
+  graphData: NsGraph.IGraphData,
+  app?: IApplication
+) {
+  const graph = await app?.getGraphInstance();
+  const config = await app?.getGraphConfig();
+  graph?.disableHistory();
+  graph?.clearCells();
+  await app?.executeCommand<
+    NsGraphCmd.GraphLayout.IArgs,
+    NsGraphCmd.GraphLayout.IResult
+  >(XFlowGraphCommands.GRAPH_LAYOUT.id, {
+    layoutType: "dagre",
+    layoutOptions: {
+      type: "dagre",
+      /** 布局方向 */
+      rankdir: "TB",
+      /** 节点间距 */
+      nodesep: 60,
+      /** 层间距 */
+      ranksep: 30,
+    },
+    graphData,
+  });
+  const format = graphData?.nodes?.map((item) => ({
+    ...item,
+    view: config?.graphId,
+  }));
+  await app?.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, {
+    graphData: {
+      ...graphData,
+      nodes: format,
+    },
+  } as NsGraphCmd.GraphRender.IArgs);
+  // 居中
+  await app?.executeCommand<NsGraphCmd.GraphZoom.IArgs>(
+    XFlowGraphCommands.GRAPH_ZOOM.id,
+    {
+      factor: "real",
+    }
+  );
+  graph?.enableHistory();
+}

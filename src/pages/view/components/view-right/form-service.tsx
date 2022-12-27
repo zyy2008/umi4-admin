@@ -8,8 +8,6 @@ import type {
 } from "@antv/xflow";
 import { controlShape } from "./components";
 import type { Cell, Graph as X6Graph } from "@antv/x6";
-import { CallbackVisibility } from "./index";
-import { CallbackDisabled } from "@/pages/view";
 import Form from "./form";
 
 export interface IFormSchemaService {
@@ -22,8 +20,8 @@ export interface IFormSchemaService {
       commandService: IGraphCommandService;
       graph: X6Graph;
     },
-    callbackVisibility?: CallbackVisibility,
-    callbackDisabled?: CallbackDisabled
+    setVisibility?: (T: "hidden" | "visible") => void,
+    setDisabled?: (T: boolean) => void
   ): Promise<NsJsonSchemaForm.ISchema>;
 }
 
@@ -56,13 +54,13 @@ export namespace NsJsonForm {
   /** 根据选中的节点更新formSchema */
   export const formSchemaService: IFormSchemaService = async (
     args,
-    callbackVisibility,
-    callbackDisabled
+    setVisibility,
+    setDisabled
   ) => {
     const { targetData, targetType } = args;
     if (!targetData || targetType === "edge") {
-      callbackVisibility?.("hidden");
-      callbackDisabled?.(true);
+      // setVisibility?.("hidden");
+      // setDisabled?.(true);
       return {
         tabs: [
           {
@@ -77,8 +75,8 @@ export namespace NsJsonForm {
       let controls: NsJsonSchemaForm.IControlSchema[];
       const { fill } = targetData;
       if (controlShapeInvert[fill] === "3") {
-        callbackVisibility?.("visible");
-        callbackDisabled?.(false);
+        // setVisibility?.("visible");
+        // setDisabled?.(false);
         controls = [
           {
             name: "value",
@@ -96,8 +94,8 @@ export namespace NsJsonForm {
           },
         ];
       }
-      callbackVisibility?.("hidden");
-      callbackDisabled?.(true);
+      // setVisibility?.("hidden");
+      // setDisabled?.(true);
       return [];
     };
 

@@ -36,7 +36,6 @@ const File: FC<FileProps> = (props) => {
               setLoading(false);
             } catch (error) {
               onSuccess?.(data);
-              // onError?.(error as any);
               hide();
               setLoading(false);
             }

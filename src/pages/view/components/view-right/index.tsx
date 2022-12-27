@@ -4,15 +4,14 @@ import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { CustomPanel } from "./components";
 import type { IAppLoad, NsGraphCmd, NsGraph, IApplication } from "@antv/xflow";
 import { XFlowGraphCommands, JsonSchemaForm } from "@antv/xflow";
-import { useReader } from "../hooks";
 import { NsJsonForm } from "./form-service";
 import styles from "./index.less";
 
 export * from "./components";
 
 type IProps = {
-  callbackHistory?: (args: NsGraph.IGraphData) => void;
-  callbackDisabled?: (args: boolean) => void;
+  setSelectData?: (args: NsGraph.IGraphData) => void;
+  setDisabled?: (args: boolean) => void;
   graphData?: NsGraph.IGraphData;
   children?: React.ReactNode;
 };
@@ -23,21 +22,16 @@ export type ViewHandle = {
 
 type Visibility = "hidden" | "visible";
 
-export type CallbackVisibility = (args: Visibility) => void;
-
 const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
-  const { callbackHistory, callbackDisabled, graphData } = props;
+  const { setSelectData, setDisabled, graphData } = props;
   const [app, setApp] = React.useState<IApplication>();
   const [visibility, setVisibility] = React.useState<Visibility>("hidden");
-  const callbackVisibility = React.useCallback<CallbackVisibility>(
-    (val) => setVisibility(val),
-    []
-  );
-  const onLoad: IAppLoad = async (val) => {
-    const graph = await val.getGraphInstance();
+
+  const onLoad: IAppLoad = async (app) => {
+    const graph = await app.getGraphInstance();
     graph.enableHistory();
     graph.history.on("change", () => {
-      val.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
+      app.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
         XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         {
           saveGraphDataService: async (meta, data) => {
@@ -47,14 +41,13 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
         }
       );
     });
-    setApp(val);
+    setApp(app);
   };
-  useReader({ app, graphData });
   React.useImperativeHandle(
     ref,
     () => {
       return {
-        app,
+        app: app,
       };
     },
     [app]
@@ -86,11 +79,7 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
               height: 0,
             }}
             formSchemaService={(val) =>
-              NsJsonForm.formSchemaService(
-                val,
-                callbackVisibility,
-                callbackDisabled
-              )
+              NsJsonForm.formSchemaService(val, setVisibility, setDisabled)
             }
             formValueUpdateService={NsJsonForm.formValueUpdateService}
           />
