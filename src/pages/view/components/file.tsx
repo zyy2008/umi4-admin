@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import React, { useState, FC } from "react";
 import { Button, Space, Tooltip, Upload, message } from "antd";
 import { ImportOutlined, ExportOutlined } from "@ant-design/icons";
 import { APIS, ViewRelationship } from "@/services";
@@ -9,6 +9,7 @@ type FileProps = {
 };
 
 const File: FC<FileProps> = (props) => {
+  console.log("4444444");
   const { onSuccess } = props;
   const [loading, setLoading] = useState<boolean>(false);
   return (
@@ -52,4 +53,4 @@ const File: FC<FileProps> = (props) => {
   );
 };
 
-export default File;
+export default React.memo(File);

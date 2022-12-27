@@ -41,6 +41,13 @@ export const useReader = (props: IProps) => {
             nodes: format,
           },
         } as NsGraphCmd.GraphRender.IArgs);
+        // 居中
+        await app.executeCommand<NsGraphCmd.GraphZoom.IArgs>(
+          XFlowGraphCommands.GRAPH_ZOOM.id,
+          {
+            factor: "real",
+          }
+        );
       })();
     }
   }, [app, graphData]);

@@ -14,6 +14,7 @@ type IProps = {
   callbackHistory?: (args: NsGraph.IGraphData) => void;
   callbackDisabled?: (args: boolean) => void;
   graphData?: NsGraph.IGraphData;
+  children?: React.ReactNode;
 };
 
 export type ViewHandle = {
@@ -99,4 +100,4 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
   );
 });
 
-export default ViewRight;
+export default React.memo(ViewRight);

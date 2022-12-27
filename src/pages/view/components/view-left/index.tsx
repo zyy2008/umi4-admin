@@ -29,4 +29,4 @@ const ViewLeft: React.FC<IProps> = (props) => {
   );
 };
 
-export default ViewLeft;
+export default React.memo(ViewLeft);
