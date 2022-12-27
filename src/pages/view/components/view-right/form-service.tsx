@@ -76,7 +76,7 @@ export namespace NsJsonForm {
     const groups: () => NsJsonSchemaForm.IGroup[] = () => {
       let controls: NsJsonSchemaForm.IControlSchema[];
       const { fill } = targetData;
-      if (controlShapeInvert[fill] === "parameter") {
+      if (controlShapeInvert[fill] === "3") {
         callbackVisibility?.("visible");
         callbackDisabled?.(false);
         controls = [

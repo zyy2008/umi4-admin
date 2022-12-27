@@ -63,7 +63,7 @@ export const useView = (props: IProps) => {
         }
       }
     })();
-  }, [rightRef.current]);
+  }, [rightRef]);
   return { rightRef, onChange, nodesValue, x6Graph };
 };
 

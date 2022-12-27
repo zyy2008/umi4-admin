@@ -45,6 +45,7 @@ const CheckCard: React.FC<CheckCardProps & { nodesValue: number[] }> = (
 };
 
 const CheckList: React.FC<CheckListProps> = (props) => {
+  console.log("222288888888");
   const { disabled, onChange, nodesValue, x6Graph } = props;
   const [selectValue, setSelectValue] =
     React.useState<CheckCardGroupProps["value"]>();
@@ -100,4 +101,4 @@ const CheckList: React.FC<CheckListProps> = (props) => {
   );
 };
 
-export default CheckList;
+export default React.memo(CheckList);
