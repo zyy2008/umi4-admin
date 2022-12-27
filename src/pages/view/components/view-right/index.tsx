@@ -10,7 +10,7 @@ import styles from "./index.less";
 export * from "./components";
 
 type IProps = {
-  setSelectData?: (args: NsGraph.IGraphData) => void;
+  setGraphData?: (args: NsGraph.IGraphData) => void;
   setDisabled?: (args: boolean) => void;
   graphData?: NsGraph.IGraphData;
   children?: React.ReactNode;
@@ -23,7 +23,7 @@ export type ViewHandle = {
 type Visibility = "hidden" | "visible";
 
 const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
-  const { setSelectData, setDisabled, graphData } = props;
+  const { setGraphData, setDisabled, graphData } = props;
   const [app, setApp] = React.useState<IApplication>();
   const [visibility, setVisibility] = React.useState<Visibility>("hidden");
 
@@ -35,8 +35,7 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
         XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         {
           saveGraphDataService: async (meta, data) => {
-            // console.log(data);
-            // callbackHistory?.(data);
+            setGraphData?.(data);
           },
         }
       );

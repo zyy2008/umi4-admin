@@ -59,8 +59,8 @@ export namespace NsJsonForm {
   ) => {
     const { targetData, targetType } = args;
     if (!targetData || targetType === "edge") {
-      // setVisibility?.("hidden");
-      // setDisabled?.(true);
+      setVisibility?.("hidden");
+      setDisabled?.(true);
       return {
         tabs: [
           {
@@ -75,8 +75,8 @@ export namespace NsJsonForm {
       let controls: NsJsonSchemaForm.IControlSchema[];
       const { fill } = targetData;
       if (controlShapeInvert[fill] === "3") {
-        // setVisibility?.("visible");
-        // setDisabled?.(false);
+        setVisibility?.("visible");
+        setDisabled?.(false);
         controls = [
           {
             name: "value",
@@ -94,8 +94,8 @@ export namespace NsJsonForm {
           },
         ];
       }
-      // setVisibility?.("hidden");
-      // setDisabled?.(true);
+      setVisibility?.("hidden");
+      setDisabled?.(true);
       return [];
     };
 
