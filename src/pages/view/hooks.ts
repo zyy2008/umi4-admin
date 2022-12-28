@@ -1,7 +1,6 @@
 import React from "react";
 import { TreeSelectProps } from "antd";
 import { MODELS, NsGraph, uuidv4 } from "@antv/xflow";
-import { Graph } from "@antv/x6";
 import { CheckCardProps } from "@ant-design/pro-components";
 import { uniqBy } from "lodash";
 import { ViewHandle, CheckListProps, controlShape } from "./components";
@@ -11,6 +10,7 @@ import type { DataNode } from "antd/es/tree";
 
 type IProps = {
   graphData?: NsGraph.IGraphData;
+  rightRef: React.RefObject<ViewHandle>;
 };
 
 export type DProps = {
@@ -22,10 +22,8 @@ export type DProps = {
 // const worker = new Worker("./edges.worker.js");
 
 export const useView = (props: IProps) => {
-  const { graphData } = props;
-  const [x6Graph, setX6Graph] = React.useState<Graph>();
+  const { graphData, rightRef } = props;
   const [nodesValue, setNodesValue] = React.useState<CheckCardProps["value"]>();
-  const rightRef = React.useRef<ViewHandle>(null);
   const [disabled, setDisabled] = React.useState<boolean>(true);
   const onChange = React.useCallback<CheckListProps["onChange"]>(
     async (val, item) => {
@@ -45,7 +43,7 @@ export const useView = (props: IProps) => {
         }, 20);
       }
     },
-    [rightRef.current]
+    [rightRef]
   );
   React.useEffect(() => {
     if (graphData) {
@@ -54,19 +52,7 @@ export const useView = (props: IProps) => {
       setNodesValue(val);
     }
   }, [graphData]);
-  React.useEffect(() => {
-    (async () => {
-      if (rightRef.current) {
-        const { app } = rightRef.current;
-        console.log(app);
-        if (app) {
-          const x6Graph = await app?.getGraphInstance();
-          setX6Graph(x6Graph);
-        }
-      }
-    })();
-  }, [rightRef]);
-  return { rightRef, onChange, nodesValue, x6Graph, disabled, setDisabled };
+  return { rightRef, onChange, nodesValue, disabled, setDisabled };
 };
 
 export const useFileTreeSelect = () => {

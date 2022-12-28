@@ -6,6 +6,7 @@ import {
 } from "@ant-design/pro-components";
 import { Empty } from "antd";
 import { Graph } from "@antv/x6";
+import { ViewHandle } from "../index";
 import styles from "./index.less";
 
 const list: Item[] = [...Array(100).keys()].map((item) => ({
@@ -22,7 +23,7 @@ export type CheckListProps = {
   disabled?: boolean;
   onChange: (value?: CheckCardProps["value"], item?: Item) => void;
   nodesValue: CheckCardProps["value"];
-  x6Graph?: Graph;
+  rightRef: React.RefObject<ViewHandle>;
 };
 
 const findItem: (args: CheckCardProps["value"]) => Item = (val) => {
@@ -45,29 +46,32 @@ const CheckCard: React.FC<CheckCardProps & { nodesValue: number[] }> = (
 };
 
 const CheckList: React.FC<CheckListProps> = (props) => {
-  const { disabled, onChange, nodesValue, x6Graph } = props;
+  const { disabled, onChange, nodesValue, rightRef } = props;
   const [selectValue, setSelectValue] =
     React.useState<CheckCardGroupProps["value"]>();
   const value = React.useMemo<CheckCardGroupProps["value"]>(() => {
     if (disabled) {
-      console.log(nodesValue);
-      return [];
+      return nodesValue;
     }
     return selectValue;
   }, [disabled, selectValue, nodesValue]);
 
   React.useEffect(() => {
-    if (x6Graph) {
-      x6Graph.on("node:selected", ({ node }) => {
-        const data = node.getData();
-        if (data?.value) {
-          setSelectValue(data.value);
-        } else {
-          setSelectValue(undefined);
-        }
-      });
+    const app = rightRef.current?.app;
+    if (app) {
+      (async () => {
+        const x6Graph = await app.getGraphInstance();
+        x6Graph.on("node:selected", ({ node }) => {
+          const data = node.getData();
+          if (data?.value) {
+            setSelectValue(data.value);
+          } else {
+            setSelectValue(undefined);
+          }
+        });
+      })();
     }
-  }, [x6Graph]);
+  }, [rightRef]);
   return (
     <BaseCheckCard.Group
       multiple={disabled}

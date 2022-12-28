@@ -26,14 +26,14 @@ const View = () => {
     formatData,
     formatTreeData,
   } = useFileTreeSelect();
-  const { selectData, onOk, graphData, setGraphData, leftRef, rightRef } =
-    useData({
-      data,
-      formatData,
-      selectValue: value,
-    });
-  const { onChange, nodesValue, x6Graph, disabled, setDisabled } = useView({
-    graphData: selectData,
+  const { onOk, graphData, setGraphData, leftRef, rightRef } = useData({
+    data,
+    formatData,
+    selectValue: value,
+  });
+  const { onChange, nodesValue, disabled, setDisabled } = useView({
+    graphData,
+    rightRef,
   });
   return (
     <Context.Provider value={{ data, formatData, formatTreeData }}>
@@ -111,7 +111,7 @@ const View = () => {
                 disabled={disabled}
                 onChange={onChange}
                 nodesValue={nodesValue}
-                x6Graph={x6Graph}
+                rightRef={rightRef}
               />
             </ProCard>
           </ProCard>
