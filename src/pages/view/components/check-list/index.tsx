@@ -5,7 +5,6 @@ import {
   CheckCardGroupProps,
 } from "@ant-design/pro-components";
 import { Empty } from "antd";
-import { Graph } from "@antv/x6";
 import { ViewHandle } from "../index";
 import styles from "./index.less";
 
@@ -71,7 +70,7 @@ const CheckList: React.FC<CheckListProps> = (props) => {
         });
       })();
     }
-  }, [rightRef]);
+  }, [rightRef.current]);
   return (
     <BaseCheckCard.Group
       multiple={disabled}

@@ -5,9 +5,9 @@ import {
   NsGraphCmd,
   XFlowGraphCommands,
 } from "@antv/xflow";
-import { ViewRelationship, KnowledgeView } from "@/services";
+import { ViewRelationship } from "@/services";
 import type { DataNode } from "antd/es/tree";
-import { groupBy, uniqBy, mergeWith, find } from "lodash";
+import { groupBy } from "lodash";
 
 type IProps = {
   nodes: NsGraph.INodeConfig[];
@@ -162,3 +162,19 @@ export async function graphReader(
   );
   graph?.enableHistory();
 }
+
+export const formatChildren: (
+  id: string,
+  edges: NsGraph.IEdgeConfig[]
+) => NsGraph.IEdgeConfig[] = (id, edges) => {
+  const find = edges.filter(({ source }) => source === id);
+  if (find.length > 0) {
+    const children: NsGraph.IEdgeConfig[] = [];
+    find.forEach(({ target }) => {
+      const child = formatChildren(target, edges);
+      children.push(...child);
+    });
+    return [...find, ...children];
+  }
+  return find;
+};

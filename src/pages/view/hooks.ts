@@ -43,7 +43,7 @@ export const useView = (props: IProps) => {
         }, 20);
       }
     },
-    [rightRef]
+    [rightRef.current]
   );
   React.useEffect(() => {
     if (graphData) {
@@ -159,13 +159,13 @@ export const useData = (props: DProps) => {
     if (selectData && rightRef.current) {
       graphReader(selectData, rightRef.current.app);
     }
-  }, [selectData, rightRef]);
+  }, [selectData, rightRef.current]);
 
   React.useEffect(() => {
     if (selectData && leftRef.current) {
       graphReader(selectData, leftRef.current.app);
     }
-  }, [selectData, leftRef]);
+  }, [selectData, leftRef.current]);
 
   return {
     selectData,
