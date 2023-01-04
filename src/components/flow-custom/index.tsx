@@ -46,7 +46,7 @@ export const CardList: React.FC<CardListProps> = (props) => {
       }
     >
       {data?.length > 0 ? (
-        <VirtualList data={data} height={200} itemHeight={36} itemKey="id">
+        <VirtualList data={data} height={200} itemHeight={20} itemKey="id">
           {(item) => (
             <List.Item
               onMouseDown={onMouseDown({

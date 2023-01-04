@@ -6,6 +6,7 @@ import { ViewLeft, ViewRight, CheckList, File, NodeView } from "./components";
 import styles from "./index.less";
 import { Transfer } from "./components/transfer";
 import type { DataNode } from "antd/es/tree";
+import TestExport from "./test-export";
 
 export type ViewContext = Omit<DProps, "selectValue"> & {
   formatTreeData: DataNode[];
@@ -37,7 +38,12 @@ const View = () => {
   });
   return (
     <Context.Provider value={{ data, formatData, formatTreeData }}>
-      <ProCard split="horizontal" bordered className={styles["view-graph"]}>
+      <ProCard
+        split="horizontal"
+        bordered
+        className={styles["view-graph"]}
+        title={<TestExport />}
+      >
         <ProCard
           split="vertical"
           style={{

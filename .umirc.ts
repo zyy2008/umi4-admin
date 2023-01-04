@@ -50,6 +50,7 @@ export default defineConfig({
       name: "知识编辑",
       path: "/edit",
       component: "./edit",
+      // hideInMenu: true,
     },
     {
       path: "/view",

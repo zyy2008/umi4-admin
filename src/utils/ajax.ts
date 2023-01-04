@@ -10,11 +10,9 @@ export declare type NonStandardAjaxPromise<R> = Promise<{
   result: R;
 }>;
 
-export interface ExtraFetchParams {
+export interface ExtraFetchParams extends RequestOptionsInit {
   /** extra data for extends */
   extra?: any;
-  /** 扩展请求头 */
-  headers?: any;
   /** cancel request */
   cancel?: Promise<string | undefined>;
 }

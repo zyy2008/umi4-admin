@@ -20,7 +20,7 @@ const TaskList: React.FC<IConfigRenderOptions> = (props) => {
       label: item.taskName,
       renderKey: "ProcessNode",
       width: 110,
-      height: 40,
+      height: 45,
     }));
   }, [data]);
   return (
