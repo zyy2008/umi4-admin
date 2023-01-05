@@ -14,12 +14,18 @@ import * as models from './models';
 
 /**
   * @property `[data]` 
-  * @property `[errorMsg]` 
-  * @property `[success]` 
+  * @property `[errorMsg]` 错误信息
+  * @property `[success]` 返回状态
   */
-export interface BaseResponse1 {
-  "data"?: ;
+export interface BaseResponseParameterOutPo {
+  "data"?: models.ParameterOutPo;
+  /**
+   * 错误信息
+   */
   "errorMsg"?: string;
+  /**
+   * 返回状态
+   */
   "success"?: boolean;
 }
 

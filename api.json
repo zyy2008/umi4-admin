@@ -3675,8 +3675,62 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "string",
-                  "description": "数据集"
+                  "type": "array",
+                  "description": "数据集",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "child": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "id"
+                          },
+                          "mark": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "节点名"
+                          }
+                        },
+                        "title": "KnowledgeView",
+                        "$$ref": "#/definitions/KnowledgeView"
+                      },
+                      "id": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "id"
+                      },
+                      "parent": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "id"
+                          },
+                          "mark": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "节点名"
+                          }
+                        },
+                        "title": "KnowledgeView",
+                        "$$ref": "#/definitions/KnowledgeView"
+                      }
+                    },
+                    "title": "ViewRelationship",
+                    "$$ref": "#/definitions/ViewRelationship"
+                  }
                 },
                 "errorMsg": {
                   "type": "string",
@@ -3687,8 +3741,8 @@
                   "description": "返回状态"
                 }
               },
-              "title": "BaseResponse«string»",
-              "$$ref": "#/definitions/BaseResponse«string»"
+              "title": "BaseResponse«List«ViewRelationship»»",
+              "$$ref": "#/definitions/BaseResponse«List«ViewRelationship»»"
             }
           }
         }
@@ -3709,6 +3763,50 @@
             "in": "query",
             "required": false,
             "description": "卫星代号",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "description": "数据集"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«string»",
+              "$$ref": "#/definitions/BaseResponse«string»"
+            }
+          }
+        }
+      }
+    },
+    "/view/delete": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "根据ID删除",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "节点ID",
             "type": "string"
           }
         ],
@@ -3836,12 +3934,12 @@
         }
       }
     },
-    "/view/yc/import": {
+    "/view/yc/add": {
       "post": {
         "tags": [
           "知识图谱接口"
         ],
-        "summary": "遥测参数导入",
+        "summary": "遥测参数增加",
         "consumes": [
           "application/json"
         ],
@@ -3882,6 +3980,78 @@
               },
               "title": "BaseResponse«string»",
               "$$ref": "#/definitions/BaseResponse«string»"
+            }
+          }
+        }
+      }
+    },
+    "/view/yc/import": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "遥测参数导入",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "parameters",
+            "in": "query",
+            "required": false,
+            "description": "遥测参数集",
+            "type": "string"
+          },
+          {
+            "name": "satelliteCode",
+            "in": "query",
+            "required": false,
+            "description": "卫星代号",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "satelliteCode": {
+                      "type": "string",
+                      "description": "卫星代号"
+                    },
+                    "ycExist": {
+                      "type": "array",
+                      "description": "图谱中存在的遥测参数集",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "ycNoExist": {
+                      "type": "array",
+                      "description": "图谱中不存在的遥测参数集",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "title": "ParameterOutPo",
+                  "$$ref": "#/definitions/ParameterOutPo"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«ParameterOutPo»",
+              "$$ref": "#/definitions/BaseResponse«ParameterOutPo»"
             }
           }
         }

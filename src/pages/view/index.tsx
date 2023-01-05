@@ -1,10 +1,15 @@
 import React from "react";
 import { ProCard } from "@ant-design/pro-components";
-import ButtonModal from "@/components/button-modal";
 import { useView, useFileTreeSelect, useData, DProps } from "./hooks";
-import { ViewLeft, ViewRight, CheckList, File, NodeView } from "./components";
+import {
+  ViewLeft,
+  ViewRight,
+  CheckList,
+  File,
+  NodeView,
+  ParamsExport,
+} from "./components";
 import styles from "./index.less";
-import { Transfer } from "./components/transfer";
 import type { DataNode } from "antd/es/tree";
 import TestExport from "./test-export";
 
@@ -42,7 +47,7 @@ const View = () => {
         split="horizontal"
         bordered
         className={styles["view-graph"]}
-        title={<TestExport />}
+        // title={<TestExport />}
       >
         <ProCard
           split="vertical"
@@ -102,16 +107,7 @@ const View = () => {
               style={{
                 height: "100%",
               }}
-              extra={
-                <ButtonModal
-                  buttonProps={{ children: "导入" }}
-                  modalProps={{
-                    title: "参数导入",
-                    children: <Transfer />,
-                    width: 600,
-                  }}
-                />
-              }
+              extra={<ParamsExport />}
             >
               <CheckList
                 disabled={disabled}

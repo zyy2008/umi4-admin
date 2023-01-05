@@ -3,6 +3,7 @@ import { Button, Space, Tooltip, Upload, message } from "antd";
 import { ImportOutlined, ExportOutlined } from "@ant-design/icons";
 import { APIS, ViewRelationship } from "@/services";
 import { NsGraphCmd, XFlowGraphCommands } from "@antv/xflow";
+import { BetaSchemaForm } from "@ant-design/pro-components";
 import { formatChildren } from "@/utils";
 import { ViewHandle } from "./index";
 import { data } from "./mock";
@@ -12,83 +13,150 @@ type FileProps = {
   leftRef: React.RefObject<ViewHandle>;
 };
 
+type DataItem = {
+  satelliteCode: string;
+};
+
 const File: FC<FileProps> = (props) => {
   const { onSuccess, leftRef } = props;
-  const [loading, setLoading] = useState<boolean>(false);
-  const [disabled, setDisabled] = useState<boolean>(true);
-  React.useEffect(() => {
-    const app = leftRef.current?.app;
-    if (app) {
-      (async () => {
-        const graph = await app.getGraphInstance();
-        // graph.toggleMultipleSelection(false);
-        graph.on("node:selected", ({ node: { id } }) => {
-          app.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
-            XFlowGraphCommands.SAVE_GRAPH_DATA.id,
-            {
-              saveGraphDataService: async (meta, data) => {
-                const { edges } = data;
-                const find = formatChildren(id, edges);
-                const targets = find.map(({ target }) => target);
-                graph.select(targets);
-                setDisabled(false);
-              },
-            }
-          );
-        });
-        graph.on("node:unselected", () => {
-          setDisabled(true);
-        });
-      })();
-    }
-  }, [leftRef.current]);
+  const [importLoading, setImportLoading] = useState<boolean>(false);
+  // React.useEffect(() => {
+  //   const app = leftRef.current?.app;
+  //   if (app) {
+  //     (async () => {
+  //       const graph = await app.getGraphInstance();
+  //       // graph.toggleMultipleSelection(false);
+  //       graph.on("node:selected", ({ node: { id } }) => {
+  //         app.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
+  //           XFlowGraphCommands.SAVE_GRAPH_DATA.id,
+  //           {
+  //             saveGraphDataService: async (meta, data) => {
+  //               const { edges } = data;
+  //               const find = formatChildren(id, edges);
+  //               const targets = find.map(({ target }) => target);
+  //               graph.select(targets);
+  //               setDisabled(false);
+  //             },
+  //           }
+  //         );
+  //       });
+  //       graph.on("node:unselected", () => {
+  //         setDisabled(true);
+  //       });
+  //     })();
+  //   }
+  // }, [leftRef.current]);
   return (
     <Space>
       <Tooltip placement="bottom" title="导入知识图谱">
         <Upload
-          onChange={(val) => {
-            console.log(val);
-          }}
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           customRequest={async ({ onError, file }) => {
             const hide = message.loading("正在导入...");
-            setLoading(true);
+            setImportLoading(true);
             try {
               const { success } = await APIS.DefaultApi.viewImportPost({
                 file,
               });
               if (success) {
-                onSuccess?.(data);
+                setTimeout(() => {
+                  message.success("导入成功！");
+                  onSuccess?.(data);
+                }, 100);
               } else {
                 onError?.("导入失败！" as any);
+                setTimeout(() => {
+                  message.warning("导入失败！");
+                }, 1000);
               }
               hide();
-              setLoading(false);
+              setImportLoading(false);
             } catch (error) {
-              onSuccess?.(data);
               hide();
-              setLoading(false);
+              setImportLoading(false);
+              message.warning("导入失败！");
             }
           }}
           showUploadList={false}
         >
-          <Button icon={<ImportOutlined />} loading={loading} />
+          <Button icon={<ImportOutlined />} loading={importLoading} />
         </Upload>
       </Tooltip>
-      <Tooltip placement="bottom" title="导出知识图谱">
-        <Button
-          icon={<ExportOutlined />}
-          disabled={disabled}
-          onClick={async () => {
-            const app = leftRef.current?.app;
-            if (app) {
-              const graph = await app.getGraphInstance();
-              const cells = graph.getSelectedCells();
-              console.log(cells);
+      <BetaSchemaForm<DataItem>
+        onFinish={async ({ satelliteCode }) => {
+          const hide = message.loading("正在导出...");
+          try {
+            const res = await APIS.DefaultApi.viewExportPost(
+              {
+                satelliteCode,
+              },
+              {
+                responseType: "blob",
+                // prefix: "/api",
+              }
+            );
+            hide();
+            if (res) {
+              return true;
             }
-          }}
-        />
-      </Tooltip>
+            return false;
+          } catch (error) {
+            hide();
+            return false;
+          }
+        }}
+        trigger={
+          <Tooltip placement="bottom" title="导出知识图谱">
+            <Button icon={<ExportOutlined />} />
+          </Tooltip>
+        }
+        layoutType="ModalForm"
+        title="卫星选择"
+        layout="horizontal"
+        width="600px"
+        columns={[
+          {
+            title: "卫星",
+            dataIndex: "satelliteCode",
+            valueType: "select",
+            request: async () => {
+              try {
+                const { success, data = [] } =
+                  await APIS.DefaultApi.baseServerDataQueryQuerySatListGet();
+
+                return success ?? false
+                  ? data.map(({ satCode, satName }) => ({
+                      label: satName,
+                      value: satCode,
+                    }))
+                  : [
+                      {
+                        label: "xx_55",
+                        value: "xx_55",
+                      },
+                    ];
+              } catch (error) {
+                return [
+                  {
+                    label: "xx_55",
+                    value: "xx_55",
+                  },
+                ];
+              }
+            },
+            formItemProps: {
+              style: {
+                width: "100%",
+              },
+              rules: [
+                {
+                  required: true,
+                },
+              ],
+            },
+          },
+        ]}
+      />
     </Space>
   );
 };

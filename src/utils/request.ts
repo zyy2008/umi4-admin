@@ -51,6 +51,7 @@ const errorHandler = (error: ResponseError) => {
  */
 export const request: RequestMethod = extend({
   errorHandler,
+  // prefix: "http://192.169.7.12:8079",
   prefix: "http://192.169.7.200:8070",
 });
 

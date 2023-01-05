@@ -34,6 +34,13 @@ export default defineConfig({
       ],
     },
   },
+  proxy: {
+    "/api": {
+      target: "http://192.169.7.12:8079/",
+      changeOrigin: true,
+      pathRewrite: { "^/api": "" },
+    },
+  },
   clickToComponent: {},
   layout: {},
   routes: [

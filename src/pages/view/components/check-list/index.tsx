@@ -7,6 +7,7 @@ import {
 import { Empty } from "antd";
 import { ViewHandle } from "../index";
 import styles from "./index.less";
+import { APIS } from "@/services";
 
 const list: Item[] = [...Array(100).keys()].map((item) => ({
   label: `label-${item}`,
@@ -71,6 +72,15 @@ const CheckList: React.FC<CheckListProps> = (props) => {
       })();
     }
   }, [rightRef.current]);
+
+  React.useEffect(() => {
+    APIS.DefaultApi.viewYcImportPost({
+      parameters: "2",
+      satelliteCode: "1",
+    }).then((res) => {
+      console.log(res);
+    });
+  }, []);
   return (
     <BaseCheckCard.Group
       multiple={disabled}

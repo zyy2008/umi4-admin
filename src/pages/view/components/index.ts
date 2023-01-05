@@ -5,6 +5,7 @@ export { default as ViewRight } from "./view-right";
 export { default as CheckList } from "./check-list";
 export { default as File } from "./file";
 export { default as NodeView } from "./node-view";
+export { default as ParamsExport } from "./params-export";
 
 export * from "./view-right";
 
