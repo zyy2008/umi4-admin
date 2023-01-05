@@ -32,13 +32,62 @@ export namespace NsJsonForm {
     args
   ) => {
     const { targetData, targetType } = args;
+    console.log(args);
     if (!targetData || targetType === "edge") {
       return {
         tabs: [
           {
             /** Tab的title */
             name: "属性",
-            groups: [],
+            groups: [
+              {
+                name: "dag",
+                controls: [
+                  {
+                    name: "dagId",
+                    label: "dagId",
+                    shape: ControlShape.INPUT,
+                    defaultValue: "pyfuntion_operator",
+                  },
+                  {
+                    name: "cron",
+                    label: "cron",
+                    shape: ControlShape.INPUT,
+                    defaultValue: " 0***",
+                  },
+                  {
+                    name: "startDate",
+                    label: "startDate",
+                    shape: ControlShape.DATETIME,
+                    defaultValue: "2022-10-11",
+                  },
+                  {
+                    name: "timeZone",
+                    label: "timeZone",
+                    shape: ControlShape.SELECT,
+                    defaultValue: "UTC",
+                    options: [
+                      {
+                        title: "UTC",
+                        value: "UTC",
+                      },
+                    ],
+                  },
+                  {
+                    name: "tags",
+                    label: "timeZone",
+                    shape: ControlShape.SELECT,
+                    defaultValue: "python",
+                    options: [
+                      {
+                        title: "python",
+                        value: "python",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
           },
         ],
       };

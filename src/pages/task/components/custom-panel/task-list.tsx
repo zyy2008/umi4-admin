@@ -25,7 +25,7 @@ const TaskList: React.FC<IConfigRenderOptions> = (props) => {
   }, [data]);
   return (
     <CardListDisabled
-      title="参数"
+      title="任务"
       dataSource={filterData}
       onMouseDown={onMouseDown}
       loading={loading}

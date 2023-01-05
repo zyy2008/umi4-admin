@@ -72,11 +72,30 @@ interceptors.request.use(
  * response-对请求返回后的处理
  */
 
-interceptors.response.use(async (response: Response) => {
+interceptors.response.use(async (response: Response, opt) => {
   let res: any;
   try {
     res = await response.clone().json();
   } catch (error) {
+    const { responseType } = opt;
+    switch (responseType) {
+      case "blob":
+        const disposition = response.headers.get("content-disposition");
+        const filename = disposition
+          ? decodeURI(disposition.split(";")[1].split("filename=")[1])
+          : "";
+        const blob = await response.clone().blob();
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a); // append the element to the dom
+        a.click();
+        a.remove(); // afterwards, remove the element
+        break;
+      default:
+        break;
+    }
     return response;
   }
   if (!res) {

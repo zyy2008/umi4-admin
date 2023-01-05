@@ -25,6 +25,12 @@ export interface WrappedFetchParams extends RequestOptionsInit {
 
 const ajax = {
   ajax: ({ url, query, form, ...opt }: WrappedFetchParams) => {
+    if (
+      (opt.headers as Record<string, string>)?.["Content-Type"] ===
+      "multipart/form-data"
+    ) {
+      opt.headers = {};
+    }
     return request(url, {
       data: form,
       ...opt,
