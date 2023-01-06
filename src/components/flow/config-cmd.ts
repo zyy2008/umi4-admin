@@ -12,7 +12,7 @@ import type { IProps } from "./index";
 
 export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
   // 设置hook
-  const { connectionType = "one-to-one" } = proxy.getValue();
+  const { connectionType = "one-to-one", commandConfig } = proxy.getValue();
   config.setRegisterHookFn((hooks) => {
     const list = [
       hooks.graphMeta.registerHook({
@@ -88,7 +88,6 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
           args.cellFactory = cellFactory;
         },
       }),
-
       hooks.addEdge.registerHook({
         name: "get edge config from backend api",
         handler: async (args) => {
@@ -151,6 +150,7 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
           return newHandler;
         },
       }),
+      ...(commandConfig?.(hooks) ?? []),
     ];
     if (connectionType === "one-to-one") {
       list.push(

@@ -49,6 +49,7 @@ export const useView = (props: IProps) => {
     if (graphData) {
       const { nodes } = graphData;
       const val = nodes.filter((item) => item.value).map((item) => item.value);
+      console.log(val);
       setNodesValue(val);
     }
   }, [graphData]);

@@ -11,6 +11,8 @@ import {
   IAppLoad,
   NsGraph,
   ICanvasContextMenuProps,
+  Disposable,
+  ICmdHooks,
 } from "@antv/xflow";
 import { useGraphConfig } from "./graph-config";
 import { useGraphHookConfig } from "./config-graph";
@@ -33,6 +35,7 @@ export interface IProps {
   nodeMovable?: boolean;
   contextMenu?: boolean | ICanvasContextMenuProps;
   menuDisabled?: Array<"node" | "edge" | "blank" | "null">;
+  commandConfig?: (T: ICmdHooks) => Disposable[];
 }
 
 const toolbarConfig = createToolbarConfig(() => {});

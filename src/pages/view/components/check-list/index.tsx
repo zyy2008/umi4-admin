@@ -119,6 +119,7 @@ const CheckList: React.FC<CheckListProps> = (props) => {
             {...item}
             nodesValue={nodesValue}
             key={item.tmCode}
+            value={item.tmCode}
             title={item.tmName}
           />
         ))

@@ -92,7 +92,6 @@ export namespace MockApi {
   ) => {
     console.info("addEdge service running, add edge:", args);
     const { edgeConfig } = args;
-    console;
     return {
       ...edgeConfig,
       id: uuidv4(),

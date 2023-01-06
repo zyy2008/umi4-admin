@@ -5,6 +5,7 @@ import { CustomPanel } from "./components";
 import type { IAppLoad, NsGraphCmd, NsGraph, IApplication } from "@antv/xflow";
 import { XFlowGraphCommands, JsonSchemaForm } from "@antv/xflow";
 import { NsJsonForm } from "./form-service";
+import { commandConfig } from "./command-config";
 import styles from "./index.less";
 
 export * from "./components";
@@ -57,6 +58,7 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
       connectionType="one-to-many"
       onLoad={onLoad}
       menuDisabled={["edge"]}
+      commandConfig={commandConfig}
     >
       <>
         <CustomPanel
