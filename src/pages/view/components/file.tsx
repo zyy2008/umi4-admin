@@ -55,12 +55,13 @@ const File: FC<FileProps> = (props) => {
             const hide = message.loading("正在导入...");
             setImportLoading(true);
             try {
-              const { success } = await APIS.DefaultApi.viewImportPost(
-                {
-                  file,
-                },
-                { prefix: "/atlas" }
-              );
+              const { success, data = [] } =
+                await APIS.DefaultApi.viewImportPost(
+                  {
+                    file,
+                  },
+                  { prefix: "/atlas" }
+                );
               if (success) {
                 setTimeout(() => {
                   message.success("导入成功！");

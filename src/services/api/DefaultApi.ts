@@ -497,7 +497,7 @@ export interface ParamsviewDeletePost {
   /**
    * 节点ID
    */
-  id?: string;
+  id?: number;
 }
 /**
  * @description viewEditorPost参数
@@ -574,7 +574,7 @@ export interface ParamsviewNodeAddPost {
   /**
    * 节点ID
    */
-  nodeId?: string;
+  nodeId?: number;
 }
 /**
  * @description viewYcAddPost参数
