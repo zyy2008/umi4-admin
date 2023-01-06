@@ -29,8 +29,8 @@ namespace NsConfig {
           commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {
-              saveGraphDataService: async (meta, data) => {
-                console.log(meta);
+              saveGraphDataService: async (graphMeta, data) => {
+                const { meta } = graphMeta;
                 if (value) {
                   let object: ParamskmsJobServerCommonTaskFlowTaskIdPut &
                     ParamsBodykmsJobServerCommonTaskPost;
@@ -48,6 +48,7 @@ namespace NsConfig {
                           ...object,
                           dagJson: JSON.stringify({
                             ...data,
+                            dag: meta,
                           }),
                         }
                       );
