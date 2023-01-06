@@ -74,10 +74,13 @@ const CheckList: React.FC<CheckListProps> = (props) => {
   }, [rightRef.current]);
 
   React.useEffect(() => {
-    APIS.DefaultApi.viewYcImportPost({
-      parameters: "2",
-      satelliteCode: "1",
-    }).then((res) => {
+    APIS.DefaultApi.viewYcImportPost(
+      {
+        parameters: ["参数1-4", "参数2-4", "参数100-111"],
+        satelliteCode: "xx_55",
+      },
+      { prefix: "/atlas" }
+    ).then((res) => {
       console.log(res);
     });
   }, []);

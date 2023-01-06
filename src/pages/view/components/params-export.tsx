@@ -7,7 +7,7 @@ const ParamsExport = () => {
   const [open, setOpen] = React.useState<boolean>(false);
   React.useEffect(() => {
     APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({
-      satSid: "",
+      satId: "10",
     }).then((res) => {
       console.log(res);
     });

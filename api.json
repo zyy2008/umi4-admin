@@ -3495,6 +3495,57 @@
         }
       }
     },
+    "/view/node/add": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "图谱节点增加",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "newNodeName",
+            "in": "query",
+            "required": false,
+            "description": "新增节点名",
+            "type": "string"
+          },
+          {
+            "name": "nodeId",
+            "in": "query",
+            "required": false,
+            "description": "节点ID",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "description": "数据集"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«string»",
+              "$$ref": "#/definitions/BaseResponse«string»"
+            }
+          }
+        }
+      }
+    },
     "/view/editor": {
       "post": {
         "tags": [
@@ -3589,16 +3640,19 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id"
+                            "description": "id",
+                            "refType": null
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
+                            "refType": null
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名"
+                            "description": "节点名",
+                            "refType": null
                           }
                         },
                         "title": "KnowledgeView",
@@ -3607,7 +3661,8 @@
                       "id": {
                         "type": "integer",
                         "format": "int64",
-                        "description": "id"
+                        "description": "id",
+                        "refType": null
                       },
                       "parent": {
                         "type": "object",
@@ -3615,16 +3670,19 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id"
+                            "description": "id",
+                            "refType": null
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
+                            "refType": null
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名"
+                            "description": "节点名",
+                            "refType": null
                           }
                         },
                         "title": "KnowledgeView",
@@ -3686,16 +3744,19 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id"
+                            "description": "id",
+                            "refType": null
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
+                            "refType": null
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名"
+                            "description": "节点名",
+                            "refType": null
                           }
                         },
                         "title": "KnowledgeView",
@@ -3704,7 +3765,8 @@
                       "id": {
                         "type": "integer",
                         "format": "int64",
-                        "description": "id"
+                        "description": "id",
+                        "refType": null
                       },
                       "parent": {
                         "type": "object",
@@ -3712,16 +3774,19 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id"
+                            "description": "id",
+                            "refType": null
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
+                            "refType": null
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名"
+                            "description": "节点名",
+                            "refType": null
                           }
                         },
                         "title": "KnowledgeView",
@@ -3872,16 +3937,19 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id"
+                            "description": "id",
+                            "refType": null
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
+                            "refType": null
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名"
+                            "description": "节点名",
+                            "refType": null
                           }
                         },
                         "title": "KnowledgeView",
@@ -3890,7 +3958,8 @@
                       "id": {
                         "type": "integer",
                         "format": "int64",
-                        "description": "id"
+                        "description": "id",
+                        "refType": null
                       },
                       "parent": {
                         "type": "object",
@@ -3898,16 +3967,19 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id"
+                            "description": "id",
+                            "refType": null
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
+                            "refType": null
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名"
+                            "description": "节点名",
+                            "refType": null
                           }
                         },
                         "title": "KnowledgeView",
@@ -4021,21 +4093,24 @@
                   "properties": {
                     "satelliteCode": {
                       "type": "string",
-                      "description": "卫星代号"
+                      "description": "卫星代号",
+                      "refType": null
                     },
                     "ycExist": {
                       "type": "array",
                       "description": "图谱中存在的遥测参数集",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "refType": "string"
                     },
                     "ycNoExist": {
                       "type": "array",
                       "description": "图谱中不存在的遥测参数集",
                       "items": {
                         "type": "string"
-                      }
+                      },
+                      "refType": "string"
                     }
                   },
                   "title": "ParameterOutPo",

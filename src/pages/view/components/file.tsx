@@ -55,9 +55,12 @@ const File: FC<FileProps> = (props) => {
             const hide = message.loading("正在导入...");
             setImportLoading(true);
             try {
-              const { success } = await APIS.DefaultApi.viewImportPost({
-                file,
-              });
+              const { success } = await APIS.DefaultApi.viewImportPost(
+                {
+                  file,
+                },
+                { prefix: "/atlas" }
+              );
               if (success) {
                 setTimeout(() => {
                   message.success("导入成功！");
@@ -92,7 +95,7 @@ const File: FC<FileProps> = (props) => {
               },
               {
                 responseType: "blob",
-                // prefix: "/api",
+                prefix: "/atlas",
               }
             );
             hide();
