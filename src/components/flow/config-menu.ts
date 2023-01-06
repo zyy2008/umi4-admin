@@ -5,6 +5,7 @@ import { createCtxMenuConfig } from "@antv/xflow";
 import { MenuItemType } from "@antv/xflow";
 import { IconStore, XFlowNodeCommands, XFlowEdgeCommands } from "@antv/xflow";
 import { DeleteOutlined, EditOutlined, StopOutlined } from "@ant-design/icons";
+import type { IProps } from "./index";
 
 /** menuitem 配置 */
 export namespace NsCustomMenuItems {
@@ -64,9 +65,14 @@ export namespace NsCustomMenuItems {
   };
 }
 
-export const useMenuConfig = createCtxMenuConfig((config) => {
+export const useMenuConfig = createCtxMenuConfig<IProps>((config, proxy) => {
+  const { menuDisabled = [] } = proxy.getValue();
   config.setMenuModelService(async (data, model) => {
-    const { type } = data ?? {};
+    let { type } = data ?? {};
+    const findIndex = menuDisabled.findIndex((item) => item === type);
+    if (findIndex > -1) {
+      type = "blank";
+    }
     switch (type) {
       case "node":
         model.setValue({

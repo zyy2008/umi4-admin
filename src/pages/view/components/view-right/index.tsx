@@ -56,6 +56,7 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
       position={{ left: 160, right: 0 }}
       connectionType="one-to-many"
       onLoad={onLoad}
+      menuDisabled={["edge"]}
     >
       <>
         <CustomPanel

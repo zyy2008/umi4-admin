@@ -32,6 +32,7 @@ export interface IProps {
   graphData?: NsGraph.IGraphData;
   nodeMovable?: boolean;
   contextMenu?: boolean | ICanvasContextMenuProps;
+  menuDisabled?: Array<"node" | "edge" | "blank" | "null">;
 }
 
 const toolbarConfig = createToolbarConfig(() => {});
@@ -50,7 +51,7 @@ const XFlowView: React.FC<IProps> = (props) => {
   const graphConfig = useGraphConfig(props);
   const graphHooksConfig = useGraphHookConfig(props);
   const cmdConfig = useCmdConfig(props);
-  const menuConfig = useMenuConfig();
+  const menuConfig = useMenuConfig(props);
 
   return (
     <Card
