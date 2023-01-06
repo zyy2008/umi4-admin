@@ -7,31 +7,14 @@ import {
 import { Empty } from "antd";
 import { ViewHandle } from "../index";
 import styles from "./index.less";
-import { APIS } from "@/services";
-
-const list: Item[] = [...Array(100).keys()].map((item) => ({
-  label: `label-${item}`,
-  value: item + 1,
-}));
-
-type Item = {
-  label?: string;
-  value?: CheckCardProps["value"];
-};
+import { APIS, ParamBean } from "@/services";
 
 export type CheckListProps = {
   disabled?: boolean;
-  onChange: (value?: CheckCardProps["value"], item?: Item) => void;
+  onChange: (value?: CheckCardProps["value"], item?: ParamBean) => void;
   nodesValue: CheckCardProps["value"];
   rightRef: React.RefObject<ViewHandle>;
-};
-
-const findItem: (args: CheckCardProps["value"]) => Item = (val) => {
-  if (val) {
-    const [item] = list.filter(({ value }) => value === val);
-    return item;
-  }
-  return {};
+  params?: ParamBean[];
 };
 
 const CheckCard: React.FC<CheckCardProps & { nodesValue: number[] }> = (
@@ -46,7 +29,8 @@ const CheckCard: React.FC<CheckCardProps & { nodesValue: number[] }> = (
 };
 
 const CheckList: React.FC<CheckListProps> = (props) => {
-  const { disabled, onChange, nodesValue, rightRef } = props;
+  const { disabled, onChange, nodesValue, rightRef, params = [] } = props;
+  const [ycExist, seYcExist] = React.useState<ParamBean[]>([]);
   const [selectValue, setSelectValue] =
     React.useState<CheckCardGroupProps["value"]>();
   const value = React.useMemo<CheckCardGroupProps["value"]>(() => {
@@ -55,6 +39,10 @@ const CheckList: React.FC<CheckListProps> = (props) => {
     }
     return selectValue;
   }, [disabled, selectValue, nodesValue]);
+
+  const list = React.useMemo<ParamBean[]>(() => {
+    return [...params, ...ycExist];
+  }, [ycExist, params]);
 
   React.useEffect(() => {
     const app = rightRef.current?.app;
@@ -74,16 +62,45 @@ const CheckList: React.FC<CheckListProps> = (props) => {
   }, [rightRef.current]);
 
   React.useEffect(() => {
-    APIS.DefaultApi.viewYcImportPost(
-      {
-        parameters: ["参数1-4", "参数2-4", "参数100-111"],
-        satelliteCode: "xx_55",
-      },
-      { prefix: "/atlas" }
-    ).then((res) => {
-      console.log(res);
-    });
+    (async () => {
+      const { success, data } =
+        await APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({
+          satId: "10",
+        });
+      if (success) {
+        const { success, data: val } = await APIS.DefaultApi.viewYcImportPost(
+          {
+            // parameters: ["参数1-4", "参数2-4", "参数100-111"],
+            // satelliteCode: "xx_55",
+            parameters: data?.map(({ tmName }) => tmName),
+            satelliteCode: "YK-2",
+          },
+          { prefix: "/atlas" }
+        );
+        if (success) {
+          const { ycExist = [] } = val ?? {};
+          const find =
+            data?.filter((item) => {
+              const findIndex = ycExist?.findIndex(
+                (tmCode) => tmCode === item.tmCode
+              );
+              return findIndex > -1;
+            }) ?? [];
+          seYcExist(find);
+        }
+      }
+    })();
   }, []);
+
+  const findItem = React.useCallback<
+    (args: CheckCardProps["value"]) => ParamBean
+  >(
+    (val) => {
+      const [item] = list.filter(({ tmCode }) => tmCode === val);
+      return item;
+    },
+    [list]
+  );
   return (
     <BaseCheckCard.Group
       multiple={disabled}
@@ -101,17 +118,12 @@ const CheckList: React.FC<CheckListProps> = (props) => {
           <CheckCard
             {...item}
             nodesValue={nodesValue}
-            key={item.value}
-            title={item.label}
+            key={item.tmCode}
+            title={item.tmName}
           />
         ))
       ) : (
-        <Empty
-          style={{
-            height: 200,
-          }}
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-        />
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       )}
     </BaseCheckCard.Group>
   );

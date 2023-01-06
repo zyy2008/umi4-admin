@@ -1971,14 +1971,12 @@ export class DefaultApi {
    * @returns models.BaseResponseParameterOutPo
    */
   public viewYcImportPost = (
-    params: ParamsviewYcImportPost,
+    data: ParamsviewYcImportPost,
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseParameterOutPo> => {
     const url = this.$basePath + `/view/yc/import`;
     const p: any = {};
-    p.query = {};
-    if ("parameters" in params) p.query.parameters = params.parameters;
-    if ("satelliteCode" in params) p.query.satelliteCode = params.satelliteCode;
+    p.data = data;
     return ajax.ajax({
       ...opt,
       method: "POST",

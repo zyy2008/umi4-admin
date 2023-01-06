@@ -4,7 +4,7 @@ import { MODELS, NsGraph, uuidv4 } from "@antv/xflow";
 import { CheckCardProps } from "@ant-design/pro-components";
 import { uniqBy } from "lodash";
 import { ViewHandle, CheckListProps, controlShape } from "./components";
-import { KnowledgeView, ViewRelationship } from "@/services";
+import { KnowledgeView, ViewRelationship, ParamBean } from "@/services";
 import { formatGraphData, formatTree, graphReader } from "@/utils";
 import type { DataNode } from "antd/es/tree";
 
@@ -174,5 +174,13 @@ export const useData = (props: DProps) => {
     setGraphData,
     leftRef,
     rightRef,
+  };
+};
+
+export const useParams = () => {
+  const [params, setParams] = React.useState<ParamBean[]>([]);
+  return {
+    params,
+    setParams,
   };
 };

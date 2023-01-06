@@ -1,6 +1,12 @@
 import React from "react";
 import { ProCard } from "@ant-design/pro-components";
-import { useView, useFileTreeSelect, useData, DProps } from "./hooks";
+import {
+  useView,
+  useFileTreeSelect,
+  useData,
+  DProps,
+  useParams,
+} from "./hooks";
 import {
   ViewLeft,
   ViewRight,
@@ -41,6 +47,7 @@ const View = () => {
     graphData,
     rightRef,
   });
+  const { setParams, params } = useParams();
   return (
     <Context.Provider value={{ data, formatData, formatTreeData }}>
       <ProCard
@@ -107,13 +114,14 @@ const View = () => {
               style={{
                 height: "100%",
               }}
-              extra={<ParamsExport />}
+              extra={<ParamsExport onOk={setParams} />}
             >
               <CheckList
                 disabled={disabled}
                 onChange={onChange}
                 nodesValue={nodesValue}
                 rightRef={rightRef}
+                params={params}
               />
             </ProCard>
           </ProCard>
