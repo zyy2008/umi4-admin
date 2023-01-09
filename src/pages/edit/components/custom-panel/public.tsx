@@ -16,7 +16,7 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
     loading,
     run,
   } = useRequest(() => {
-    return APIS._Api.kmsZsbjServerApiCommonFunctionListGet({ name: "1" });
+    return APIS._Api.kmsZsbjServerApiCommonFunctionListGet({});
   });
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     return data?.map((item) => ({
@@ -37,17 +37,16 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
     (T: KnowledgeFunDto | KnowledgeFunction) => Promise<any>
   >(
     async (val) => {
-      const { success, errorMsg } = add
+      const { success } = add
         ? await APIS._Api.kmsZsbjServerApiCommonFunctionAddPost(val)
         : await APIS._Api.kmsZsbjServerApiCommonFunctionUpdatePut(
             val as KnowledgeFunction
           );
-      if (success && !errorMsg) {
+      if (success) {
         run();
         setOpen(false);
-        return true;
       }
-      return false;
+      return success;
     },
     [add]
   );
@@ -58,10 +57,6 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
       header={
         <BetaSchemaForm<KnowledgeFunDto>
           formRef={formRef}
-          initialValues={{
-            funContent: "函数内容1",
-            funName: "函数1",
-          }}
           title={add ? "新增函数" : "修改函数"}
           open={open}
           modalProps={{

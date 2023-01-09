@@ -8,18 +8,18 @@ import { useRequest, useSearchParams } from "@umijs/max";
 const Param: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const [searchParams] = useSearchParams();
-  const [satSid, setSatSid] = React.useState<string>("SAT1");
+  const [satId, setSatId] = React.useState<string>("SAT1");
   const { data = [], loading } = useRequest(
-    () => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satSid }),
+    () => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
     {
-      refreshDeps: [satSid],
+      refreshDeps: [satId],
     }
   );
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     return data?.map((item) => ({
       ...item,
-      id: item.paramCode,
-      label: item.paramName,
+      id: item.tmCode,
+      label: item.tmName,
       renderKey: "ConnectorNode",
       width: 70,
       height: 70,
@@ -39,10 +39,10 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
     try {
       format = JSON.parse(object ?? "");
     } catch (error) {
-      format = { satSid: "SAT1" };
+      format = { satId: "10" };
       console.error("地址传参格式异常，请检查！");
     }
-    format?.satSid && setSatSid(format?.satSid);
+    format?.satId && setSatId(format?.satId);
   }, []);
 
   return (

@@ -32,6 +32,7 @@ export const CardList: React.FC<CardListProps> = (props) => {
     <List
       loading={loading}
       dataSource={[]}
+      split={false}
       header={
         <div className="node-title">
           <span>{title}</span>
@@ -46,26 +47,28 @@ export const CardList: React.FC<CardListProps> = (props) => {
       }
     >
       {data?.length > 0 ? (
-        <VirtualList data={data} height={200} itemHeight={20} itemKey="id">
+        <VirtualList data={data} height={200} itemHeight={36} itemKey="id">
           {(item) => (
-            <List.Item
-              onMouseDown={onMouseDown({
-                ...item,
-                fontSize: 15,
-                itemId: item.id,
-              })}
-              className={`node-list ${item.isDisabled ? "disabled" : ""}`}
-            >
-              {item.label}
-              {item?.onEditClick && (
-                <Button
-                  type="link"
-                  size="small"
-                  icon={<EditOutlined />}
-                  onClick={item?.onEditClick}
-                  onMouseDown={(e) => e.stopPropagation()}
-                />
-              )}
+            <List.Item className="node-item">
+              <div
+                className={`node-list ${item.isDisabled ? "disabled" : ""}`}
+                onMouseDown={onMouseDown({
+                  ...item,
+                  fontSize: 15,
+                  itemId: item.id,
+                })}
+              >
+                {item.label}
+                {item?.onEditClick && (
+                  <Button
+                    type="link"
+                    size="small"
+                    icon={<EditOutlined />}
+                    onClick={item?.onEditClick}
+                    onMouseDown={(e) => e.stopPropagation()}
+                  />
+                )}
+              </div>
             </List.Item>
           )}
         </VirtualList>
