@@ -48,7 +48,10 @@ namespace NsConfig {
                           ...object,
                           dagJson: JSON.stringify({
                             ...data,
-                            dag: meta,
+                            dag: {
+                              ...meta,
+                              tags: [meta.tags],
+                            },
                           }),
                         }
                       );
@@ -61,10 +64,23 @@ namespace NsConfig {
                     const { success } =
                       await APIS.DefaultApi.kmsJobServerCommonTaskPost({
                         ...object,
-                        dagJson: JSON.stringify(data),
+                        dagJson: JSON.stringify({
+                          ...data,
+                          dag: {
+                            ...meta,
+                            tags: [meta.tags],
+                          },
+                        }),
                       });
                     if (success) {
                       message.success("新增成功！");
+                      window.parent.postMessage(
+                        {
+                          type: "success",
+                          message: true,
+                        },
+                        "*"
+                      );
                     } else {
                       message.warning("新增失败！");
                     }
