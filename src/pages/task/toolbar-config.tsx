@@ -31,6 +31,7 @@ namespace NsConfig {
             {
               saveGraphDataService: async (graphMeta, data) => {
                 const { meta } = graphMeta;
+                console.log(meta);
                 if (value) {
                   let object: ParamskmsJobServerCommonTaskFlowTaskIdPut &
                     ParamsBodykmsJobServerCommonTaskPost;
@@ -48,10 +49,7 @@ namespace NsConfig {
                           ...object,
                           dagJson: JSON.stringify({
                             ...data,
-                            dag: {
-                              ...meta,
-                              tags: [meta.tags],
-                            },
+                            dag: meta,
                           }),
                         }
                       );
@@ -66,10 +64,7 @@ namespace NsConfig {
                         ...object,
                         dagJson: JSON.stringify({
                           ...data,
-                          dag: {
-                            ...meta,
-                            tags: [meta.tags],
-                          },
+                          dag: meta,
                         }),
                       });
                     if (success) {
