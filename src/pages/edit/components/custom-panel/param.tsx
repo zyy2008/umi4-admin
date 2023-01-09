@@ -8,7 +8,7 @@ import { useRequest, useSearchParams } from "@umijs/max";
 const Param: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const [searchParams] = useSearchParams();
-  const [satId, setSatId] = React.useState<string>("SAT1");
+  const [satId, setSatId] = React.useState<string>("10");
   const { data = [], loading } = useRequest(
     () => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
     {
