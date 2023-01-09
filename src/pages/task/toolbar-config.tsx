@@ -53,11 +53,13 @@ namespace NsConfig {
                           }),
                         }
                       );
-                    if (success) {
-                      message.success("修改成功！");
-                    } else {
-                      message.warning("修改失败！");
-                    }
+                    window.parent.postMessage(
+                      {
+                        type: "update",
+                        message: success,
+                      },
+                      "*"
+                    );
                   } else {
                     const { success } =
                       await APIS.DefaultApi.kmsJobServerCommonTaskPost({
@@ -67,18 +69,13 @@ namespace NsConfig {
                           dag: meta,
                         }),
                       });
-                    if (success) {
-                      message.success("新增成功！");
-                      window.parent.postMessage(
-                        {
-                          type: "success",
-                          message: true,
-                        },
-                        "*"
-                      );
-                    } else {
-                      message.warning("新增失败！");
-                    }
+                    window.parent.postMessage(
+                      {
+                        type: "add",
+                        message: success,
+                      },
+                      "*"
+                    );
                   }
                 }
               },

@@ -99,11 +99,14 @@ namespace NsConfig {
                         uuid: object?.uuid,
                         graphInfo: JSON.stringify(data),
                       });
-                    if (success) {
-                      message.success("修改成功！");
-                    } else {
-                      message.warning("修改失败！");
-                    }
+
+                    window.parent.postMessage(
+                      {
+                        type: "update",
+                        message: success,
+                      },
+                      "*"
+                    );
                   } else {
                     const { success } =
                       await APIS.DefaultApi.kmsZsbjServerApiKnowledgeAddPost({
@@ -111,14 +114,18 @@ namespace NsConfig {
                         graphInfo: JSON.stringify(data),
                       });
                     if (success) {
-                      message.success("新增成功！");
                       set({
                         uuid: "566ed986-e3c1-4c9c-af5b-f3353d5bcfe9",
                         version: "1.0.0",
                       });
-                    } else {
-                      message.warning("新增失败！");
                     }
+                    window.parent.postMessage(
+                      {
+                        type: "add",
+                        message: success,
+                      },
+                      "*"
+                    );
                   }
                 }
               },
