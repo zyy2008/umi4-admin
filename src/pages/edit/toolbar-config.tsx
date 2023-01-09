@@ -4,7 +4,7 @@ import { createToolbarConfig } from "@antv/xflow";
 import { XFlowGraphCommands, IconStore } from "@antv/xflow";
 import { SaveOutlined, CheckOutlined, CodeOutlined } from "@ant-design/icons";
 import type { NsGraphCmd } from "@antv/xflow";
-import { Modal, message } from "antd";
+import { Modal } from "antd";
 import { APIS, Knowledge } from "@/services";
 import { useSearchParams } from "@umijs/max";
 import { CheckContext, Context } from "./index";
