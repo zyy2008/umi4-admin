@@ -90,7 +90,6 @@ namespace NsConfig {
 /** wrap出一个hook */
 export const useToolbarConfig = createToolbarConfig((toolbarConfig, proxy) => {
   const object = proxy.getValue();
-  console.log(object);
   /** 生产 toolbar item */
   toolbarConfig.setToolbarModelService(async (toolbarModel) => {
     const toolbarItems = await NsConfig.getToolbarItems(object);

@@ -18,8 +18,10 @@ const Task = () => {
     { manual: true }
   );
   React.useEffect(() => {
-    const { taskId }: { taskId: string } = JSON.parse(object ?? "");
-    taskId && run(taskId);
+    if (object) {
+      const { taskId }: { taskId: string } = JSON.parse(object ?? "");
+      taskId && run(taskId);
+    }
   }, [object]);
 
   const graphData = React.useMemo<NsGraph.IGraphData>(() => {
