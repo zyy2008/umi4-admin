@@ -161,7 +161,6 @@ export const useToolbarConfig = (set: CheckContext["setState"]) => {
       }
     }
   }, []);
-
   return createToolbarConfig((toolbarConfig) => {
     /** 生产 toolbar item */
     toolbarConfig.setToolbarModelService(async (toolbarModel) => {

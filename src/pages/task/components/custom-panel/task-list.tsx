@@ -9,7 +9,7 @@ const TaskList: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const { data = {}, loading } = useRequest(() =>
     APIS.DefaultApi.kmsJobServerCommonTaskPageListPageNumPageSizePost(
-      { pageNum: "1", pageSize: "10" },
+      { pageNum: "1", pageSize: "100" },
       { taskName: "", createType: "", taskIdentify: "" }
     )
   );

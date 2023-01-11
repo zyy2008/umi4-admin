@@ -2,18 +2,38 @@ import React from "react";
 import TaskFlow from "@/components/flow";
 import { CustomPanel } from "./components";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
-import { JsonSchemaForm } from "@antv/xflow";
+import { JsonSchemaForm, NsGraph } from "@antv/xflow";
 import { controlMapService } from "@/components/custom-form";
 import { NsJsonForm } from "./form-service";
 import { useToolbarConfig } from "./toolbar-config";
+import { useSearchParams, useRequest } from "@umijs/max";
+import { APIS } from "@/services";
 
 const Task = () => {
-  const toolbarConfig = useToolbarConfig();
+  const [searchParams] = useSearchParams();
+  const object = searchParams.get("object");
+  const toolbarConfig = useToolbarConfig(object);
+  const { data, loading, run } = useRequest(
+    (taskId) => APIS.DefaultApi.kmsJobServerCommonTaskTaskIdGet({ taskId }),
+    { manual: true }
+  );
+  React.useEffect(() => {
+    const { taskId }: { taskId: string } = JSON.parse(object ?? "");
+    taskId && run(taskId);
+  }, [object]);
+
+  const graphData = React.useMemo<NsGraph.IGraphData>(() => {
+    return {
+      nodes: [],
+      edges: [],
+    };
+  }, [data]);
   return (
     <TaskFlow
       toolbarProps={{
         config: toolbarConfig,
       }}
+      graphData={graphData}
     >
       <>
         <CustomPanel

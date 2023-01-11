@@ -1,11 +1,13 @@
 import React from "react";
-import { JsonSchemaForm } from "@antv/xflow";
+import { JsonSchemaForm, NsGraph } from "@antv/xflow";
 import KnowledgeFlow from "@/components/flow";
 import { NsJsonForm } from "./form-service";
 import { CustomPanel } from "./components";
 import { controlMapService } from "@/components/custom-form";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
+import { useRequest } from "@umijs/max";
+import { APIS } from "@/services";
 
 export type Check = { uuid: string; version: string } | null;
 
@@ -21,6 +23,29 @@ const Edit = () => {
     version: "",
   });
   const toolbarConfig = useToolbarConfig(setState);
+  const { data, loading, run } = useRequest(
+    () =>
+      APIS.DefaultApi.kmsZsbjServerApiKnowledgeViewGet({
+        uuid: "",
+        version: "",
+        ...state,
+      }),
+    {
+      manual: true,
+    }
+  );
+  React.useEffect(() => {
+    if (state?.uuid) {
+      run();
+    }
+  }, [state]);
+  const graphData = React.useMemo<NsGraph.IGraphData>(() => {
+    return {
+      nodes: [],
+      edges: [],
+    };
+  }, [data]);
+
   return (
     <Context.Provider value={{ state, setState }}>
       <KnowledgeFlow
@@ -30,6 +55,7 @@ const Edit = () => {
         cardProps={{
           title: "知识编辑器",
         }}
+        graphData={graphData}
       >
         <>
           <CustomPanel
