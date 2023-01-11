@@ -97,6 +97,7 @@ namespace NsConfig {
                       await APIS.DefaultApi.kmsZsbjServerApiKnowledgeUpdatePut({
                         ...object,
                         uuid: object?.uuid,
+                        createType: object?.type,
                         graphInfo: JSON.stringify(data),
                       });
 
@@ -111,6 +112,7 @@ namespace NsConfig {
                     const { success } =
                       await APIS.DefaultApi.kmsZsbjServerApiKnowledgeAddPost({
                         ...object,
+                        createType: object?.type,
                         graphInfo: JSON.stringify(data),
                       });
                     if (success) {
