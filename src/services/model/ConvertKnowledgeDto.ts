@@ -13,12 +13,18 @@
 import * as models from './models';
 
 /**
-  * @property `[idList]` 待转换旧知识id列表
+  * @description 转换知识
+  * @property `content` 待转换知识内容
+  * @property `id` 待转换知识id
   */
-export interface KmsZsbjServerApiKnowledgeConvertMultiBody {
+export interface ConvertKnowledgeDto {
   /**
-   * 待转换旧知识id列表
+   * 待转换知识内容
    */
-  "idList"?: Array<number>;
+  "content": string;
+  /**
+   * 待转换知识id
+   */
+  "id": number;
 }
 

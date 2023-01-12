@@ -13,13 +13,15 @@
 import * as models from './models';
 
 /**
-  * @property `[data]` 
-  * @property `[errorMsg]` 
-  * @property `[success]` 
+  * @description 遥测参数
+  * @property `tmParam` 
+  * @property `[value]` 参数值
   */
-export interface BaseResponseListstring {
-  "data"?: Array<string>;
-  "errorMsg"?: string;
-  "success"?: boolean;
+export interface TelemetryParam0 {
+  "tmParam": models.TelemetryParam;
+  /**
+   * 参数值
+   */
+  "value"?: string;
 }
 

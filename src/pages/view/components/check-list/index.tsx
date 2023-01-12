@@ -68,15 +68,16 @@ const CheckList: React.FC<CheckListProps> = (props) => {
           satId: "10",
         });
       if (success) {
-        const { success, data: val } = await APIS.DefaultApi.viewYcImportPost(
-          {
-            // parameters: ["参数1-4", "参数2-4", "参数100-111"],
-            // satelliteCode: "xx_55",
-            parameters: data?.map(({ tmName }) => tmName),
-            satelliteCode: "YK-2",
-          },
-          { prefix: "/atlas" }
-        );
+        const { success, data: val } =
+          await APIS.DefaultApi.kmsViewServerViewYcImportPost(
+            {
+              // parameters: ["参数1-4", "参数2-4", "参数100-111"],
+              // satelliteCode: "xx_55",
+              parameters: data?.map(({ tmName }) => tmName),
+              satelliteCode: "YK-2",
+            }
+            // { prefix: "/atlas" }
+          );
         if (success) {
           const { ycExist = [] } = val ?? {};
           const find =

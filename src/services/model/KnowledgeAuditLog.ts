@@ -24,7 +24,7 @@ import * as models from './models';
   * @property `[optResult]` 
   */
 export interface KnowledgeAuditLog {
-  "createTime"?: models.Timestamp;
+  "createTime"?: Date;
   "id"?: number;
   "logMessage"?: string;
   "logType"?: string;

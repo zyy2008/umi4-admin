@@ -20,14 +20,26 @@ import * as models from "./models";
  * @property `satSid` 卫星标识
  */
 export interface ParamBean {
-  createTime: string;
-  createUser: string;
-  pkId: number;
-  satId: number;
+  /**
+   * 参数代号
+   */
+  paramCode: string;
+  /**
+   * 参数名称
+   */
+  paramName: string;
+  /**
+   * 参数序号
+   */
+  paramNum: number;
+  /**
+   * 参数类型
+   */
+  paramType: number;
+  /**
+   * 卫星标识
+   */
+  satSid: string;
   tmCode: string;
-  tmDataType: number;
   tmName: string;
-  tmNum: number;
-  tmSid: string;
-  tmValueUnit: string;
 }

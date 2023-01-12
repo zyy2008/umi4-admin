@@ -14,6 +14,7 @@ import * as models from './models';
 
 /**
   * @description 知识信息表
+  * @property `[createType]` 创建类型
   * @property `[diagnosis]` 参与诊断(0_否, 1_是)
   * @property `[faultDelay]` 故障延迟
   * @property `[faultLevel]` 故障等级(1_一般, 2_严重，3_警告)
@@ -29,6 +30,10 @@ import * as models from './models';
   * @property `[version]` 版本号
   */
 export interface KnowledgeInfo1 {
+  /**
+   * 创建类型
+   */
+  "createType"?: string;
   /**
    * 参与诊断(0_否, 1_是)
    */

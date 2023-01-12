@@ -29,7 +29,7 @@
     },
     {
       "name": "知识图谱接口",
-      "description": "知识图谱接口"
+      "description": "View Import Controller"
     },
     {
       "name": "公共任务管理",
@@ -419,6 +419,74 @@
                   "type": "string",
                   "description": "故障部件"
                 },
+                "globalParams": {
+                  "type": "array",
+                  "description": "全局参数",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "satId",
+                      "tmCode",
+                      "tmDataType",
+                      "tmName",
+                      "tmNum",
+                      "tmSid",
+                      "tmValueUnit"
+                    ],
+                    "properties": {
+                      "createTime": {
+                        "type": "string",
+                        "example": "创建时间",
+                        "description": "创建时间"
+                      },
+                      "createUser": {
+                        "type": "string",
+                        "example": "创建人",
+                        "description": "创建人"
+                      },
+                      "satId": {
+                        "type": "string",
+                        "example": "SAT1",
+                        "description": "卫星标识"
+                      },
+                      "tmCode": {
+                        "type": "string",
+                        "example": "TM01",
+                        "description": "参数代号"
+                      },
+                      "tmDataType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1,
+                        "description": "参数类型1：整数型 2：浮点型 3：字符型"
+                      },
+                      "tmName": {
+                        "type": "string",
+                        "example": "参数01",
+                        "description": "参数名称"
+                      },
+                      "tmNum": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1,
+                        "description": "参数序号"
+                      },
+                      "tmSid": {
+                        "type": "string",
+                        "example": "参数01",
+                        "description": "参数标识"
+                      },
+                      "tmValueUnit": {
+                        "type": "string",
+                        "example": "米",
+                        "description": "参数值单位"
+                      }
+                    },
+                    "title": "TelemetryParam对象",
+                    "description": "遥测参数",
+                    "$$ref": "#/definitions/TelemetryParam对象"
+                  }
+                },
                 "graphInfo": {
                   "type": "string",
                   "description": "图形信息"
@@ -474,10 +542,6 @@
                       "format": "date-time",
                       "description": "创建时间"
                     },
-                    "createType": {
-                      "type": "string",
-                      "description": "创建类型"
-                    },
                     "editUser": {
                       "type": "string",
                       "description": "编辑用户"
@@ -485,6 +549,10 @@
                     "filePath": {
                       "type": "string",
                       "description": "版本文件路径"
+                    },
+                    "globalParams": {
+                      "type": "string",
+                      "description": "全局参数"
                     },
                     "graphInfo": {
                       "type": "string",
@@ -555,20 +623,19 @@
             "name": "KmsZsbjServerApiKnowledgeDownloadMultiBody",
             "in": "body",
             "schema": {
-              "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
               "properties": {
                 "uuidList": {
                   "type": "array",
+                  "description": "待操作的知识标识uuid列表",
                   "items": {
                     "type": "string"
                   },
-                  "description": "待下载的知识uuid列表"
+                  "refType": "string"
                 }
               },
-              "required": [
-                "uuidList"
-              ]
+              "title": "MultiQo",
+              "$$ref": "#/definitions/MultiQo"
             }
           }
         ],
@@ -579,8 +646,7 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object",
-                  "properties": {}
+                  "type": "object"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -611,20 +677,19 @@
             "name": "KmsZsbjServerApiKnowledgeDeleteBody",
             "in": "body",
             "schema": {
-              "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
               "properties": {
                 "uuidList": {
                   "type": "array",
+                  "description": "待操作的知识标识uuid列表",
                   "items": {
                     "type": "string"
                   },
-                  "description": "待删除的知识uuid列表"
+                  "refType": "string"
                 }
               },
-              "required": [
-                "uuidList"
-              ]
+              "title": "MultiQo",
+              "$$ref": "#/definitions/MultiQo"
             }
           }
         ],
@@ -635,8 +700,7 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object",
-                  "properties": {}
+                  "type": "object"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -667,20 +731,19 @@
             "name": "KmsZsbjServerApiKnowledgeLoadingAllBody",
             "in": "body",
             "schema": {
-              "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
               "properties": {
                 "uuidList": {
                   "type": "array",
+                  "description": "待操作的知识标识uuid列表",
                   "items": {
                     "type": "string"
                   },
-                  "description": "待加载的知识uuid列表"
+                  "refType": "string"
                 }
               },
-              "required": [
-                "uuidList"
-              ]
+              "title": "MultiQo",
+              "$$ref": "#/definitions/MultiQo"
             }
           }
         ],
@@ -691,8 +754,7 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object",
-                  "properties": {}
+                  "type": "object"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -722,15 +784,27 @@
           {
             "name": "KmsZsbjServerApiKnowledgeConvertBody",
             "in": "body",
+            "description": "转换知识",
             "schema": {
-              "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
+              "required": [
+                "content",
+                "id"
+              ],
               "properties": {
                 "content": {
                   "type": "string",
-                  "description": "旧知识的内容"
+                  "description": "待转换知识内容"
+                },
+                "id": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "待转换知识id"
                 }
-              }
+              },
+              "title": "ConvertKnowledgeDto对象",
+              "description": "转换知识",
+              "$$ref": "#/definitions/ConvertKnowledgeDto对象"
             }
           }
         ],
@@ -745,8 +819,7 @@
                   "properties": {
                     "expression": {
                       "type": "string",
-                      "description": "知识表达式内容",
-                      "refType": null
+                      "description": "知识表达式内容"
                     }
                   },
                   "title": "KnowledgeContentBo",
@@ -829,20 +902,19 @@
             "name": "KmsZsbjServerApiKnowledgeCheckBatchBody",
             "in": "body",
             "schema": {
-              "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
               "properties": {
                 "uuidList": {
                   "type": "array",
+                  "description": "待操作的知识标识uuid列表",
                   "items": {
                     "type": "string"
                   },
-                  "description": "待校验的知识uuid列表"
+                  "refType": "string"
                 }
               },
-              "required": [
-                "uuidList"
-              ]
+              "title": "MultiQo",
+              "$$ref": "#/definitions/MultiQo"
             }
           }
         ],
@@ -860,8 +932,7 @@
                       "description": "多条知识校验结果<uuid, result>",
                       "additionalProperties": {
                         "type": "boolean"
-                      },
-                      "properties": {}
+                      }
                     }
                   },
                   "title": "多条校验结果",
@@ -895,18 +966,25 @@
           {
             "name": "KmsZsbjServerApiKnowledgeConvertMultiBody",
             "in": "body",
+            "description": "转换多条知识",
             "schema": {
-              "$schema": "http://json-schema.org/draft-04/schema#",
               "type": "object",
+              "required": [
+                "idList"
+              ],
               "properties": {
                 "idList": {
                   "type": "array",
+                  "description": "待转换知识id列表",
                   "items": {
-                    "type": "integer"
-                  },
-                  "description": "待转换旧知识id列表"
+                    "type": "integer",
+                    "format": "int32"
+                  }
                 }
-              }
+              },
+              "title": "ConvertMultiDto对象",
+              "description": "转换多条知识",
+              "$$ref": "#/definitions/ConvertMultiDto对象"
             }
           }
         ],
@@ -925,16 +1003,14 @@
                       "items": {
                         "type": "integer",
                         "format": "int32"
-                      },
-                      "refType": "integer"
+                      }
                     },
                     "successUuidList": {
                       "type": "array",
                       "description": "转换成功后的新知识的uuid列表",
                       "items": {
                         "type": "string"
-                      },
-                      "refType": "string"
+                      }
                     }
                   },
                   "title": "知识转换结果",
@@ -1040,11 +1116,7 @@
                 }
               },
               "title": "ExportQo",
-              "$$ref": "#/definitions/ExportQo",
-              "required": [
-                "targetCode",
-                "uuidList"
-              ]
+              "$$ref": "#/definitions/ExportQo"
             }
           }
         ],
@@ -1055,8 +1127,7 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object",
-                  "properties": {}
+                  "type": "object"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -1161,6 +1232,74 @@
                 "faultPart": {
                   "type": "string",
                   "description": "故障部件"
+                },
+                "globalParams": {
+                  "type": "array",
+                  "description": "全局参数",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "satId",
+                      "tmCode",
+                      "tmDataType",
+                      "tmName",
+                      "tmNum",
+                      "tmSid",
+                      "tmValueUnit"
+                    ],
+                    "properties": {
+                      "createTime": {
+                        "type": "string",
+                        "example": "创建时间",
+                        "description": "创建时间"
+                      },
+                      "createUser": {
+                        "type": "string",
+                        "example": "创建人",
+                        "description": "创建人"
+                      },
+                      "satId": {
+                        "type": "string",
+                        "example": "SAT1",
+                        "description": "卫星标识"
+                      },
+                      "tmCode": {
+                        "type": "string",
+                        "example": "TM01",
+                        "description": "参数代号"
+                      },
+                      "tmDataType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1,
+                        "description": "参数类型1：整数型 2：浮点型 3：字符型"
+                      },
+                      "tmName": {
+                        "type": "string",
+                        "example": "参数01",
+                        "description": "参数名称"
+                      },
+                      "tmNum": {
+                        "type": "integer",
+                        "format": "int32",
+                        "example": 1,
+                        "description": "参数序号"
+                      },
+                      "tmSid": {
+                        "type": "string",
+                        "example": "参数01",
+                        "description": "参数标识"
+                      },
+                      "tmValueUnit": {
+                        "type": "string",
+                        "example": "米",
+                        "description": "参数值单位"
+                      }
+                    },
+                    "title": "TelemetryParam对象",
+                    "description": "遥测参数",
+                    "$$ref": "#/definitions/TelemetryParam对象"
+                  }
                 },
                 "graphInfo": {
                   "type": "string",
@@ -1343,8 +1482,7 @@
                   "properties": {
                     "expression": {
                       "type": "string",
-                      "description": "知识表达式内容",
-                      "refType": null
+                      "description": "知识表达式内容"
                     }
                   },
                   "title": "KnowledgeContentBo",
@@ -1431,40 +1569,82 @@
                   "description": "遥测参数列表",
                   "items": {
                     "type": "object",
+                    "required": [
+                      "tmParam"
+                    ],
                     "properties": {
-                      "code": {
+                      "tmParam": {
+                        "type": "object",
+                        "required": [
+                          "satId",
+                          "tmCode",
+                          "tmDataType",
+                          "tmName",
+                          "tmNum",
+                          "tmSid",
+                          "tmValueUnit"
+                        ],
+                        "properties": {
+                          "createTime": {
+                            "type": "string",
+                            "example": "创建时间",
+                            "description": "创建时间"
+                          },
+                          "createUser": {
+                            "type": "string",
+                            "example": "创建人",
+                            "description": "创建人"
+                          },
+                          "satId": {
+                            "type": "string",
+                            "example": "SAT1",
+                            "description": "卫星标识"
+                          },
+                          "tmCode": {
+                            "type": "string",
+                            "example": "TM01",
+                            "description": "参数代号"
+                          },
+                          "tmDataType": {
+                            "type": "integer",
+                            "format": "int32",
+                            "example": 1,
+                            "description": "参数类型1：整数型 2：浮点型 3：字符型"
+                          },
+                          "tmName": {
+                            "type": "string",
+                            "example": "参数01",
+                            "description": "参数名称"
+                          },
+                          "tmNum": {
+                            "type": "integer",
+                            "format": "int32",
+                            "example": 1,
+                            "description": "参数序号"
+                          },
+                          "tmSid": {
+                            "type": "string",
+                            "example": "参数01",
+                            "description": "参数标识"
+                          },
+                          "tmValueUnit": {
+                            "type": "string",
+                            "example": "米",
+                            "description": "参数值单位"
+                          }
+                        },
+                        "title": "TelemetryParam对象",
+                        "description": "遥测参数",
+                        "$$ref": "#/definitions/TelemetryParam对象"
+                      },
+                      "value": {
                         "type": "string",
-                        "description": "参数代号"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "参数名称"
-                      },
-                      "num": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "参数序号"
-                      },
-                      "staSid": {
-                        "type": "string",
-                        "description": "对象标识"
-                      },
-                      "type": {
-                        "type": "integer",
-                        "format": "int32",
-                        "description": "参数类型"
-                      },
-                      "values": {
-                        "type": "array",
-                        "description": "参数值",
-                        "items": {
-                          "type": "object"
-                        }
+                        "description": "参数值"
                       }
                     },
-                    "title": "TelemetryParam对象",
+                    "title": "TelemetryParam对象0",
                     "description": "遥测参数",
-                    "$$ref": "#/definitions/TelemetryParam对象"
+                    "$$ref": "#/definitions/TelemetryParam对象0"
                   }
                 },
                 "startTime": {
@@ -1604,51 +1784,8 @@
                         "type": "object",
                         "properties": {
                           "createTime": {
-                            "type": "object",
-                            "properties": {
-                              "date": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "day": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "hours": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "minutes": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "month": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "nanos": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "seconds": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "time": {
-                                "type": "integer",
-                                "format": "int64"
-                              },
-                              "timezoneOffset": {
-                                "type": "integer",
-                                "format": "int32"
-                              },
-                              "year": {
-                                "type": "integer",
-                                "format": "int32"
-                              }
-                            },
-                            "title": "Timestamp",
-                            "$$ref": "#/definitions/Timestamp"
+                            "type": "string",
+                            "format": "date-time"
                           },
                           "id": {
                             "type": "integer",
@@ -1743,10 +1880,6 @@
                         "format": "date-time",
                         "description": "创建时间"
                       },
-                      "createType": {
-                        "type": "string",
-                        "description": "创建类型"
-                      },
                       "editUser": {
                         "type": "string",
                         "description": "编辑用户"
@@ -1754,6 +1887,10 @@
                       "filePath": {
                         "type": "string",
                         "description": "版本文件路径"
+                      },
+                      "globalParams": {
+                        "type": "string",
+                        "description": "全局参数"
                       },
                       "graphInfo": {
                         "type": "string",
@@ -1845,6 +1982,10 @@
                 "uuid"
               ],
               "properties": {
+                "createType": {
+                  "type": "string",
+                  "description": "创建类型"
+                },
                 "diagnosis": {
                   "type": "integer",
                   "format": "int32",
@@ -1939,7 +2080,6 @@
                         "properties": {
                           "createTime": {
                             "type": "string",
-                            "format": "date-time",
                             "description": "创建时间"
                           },
                           "createType": {
@@ -1972,6 +2112,10 @@
                           "filePath": {
                             "type": "string",
                             "description": "版本文件路径"
+                          },
+                          "globalParams": {
+                            "type": "string",
+                            "description": "全局参数"
                           },
                           "graphInfo": {
                             "type": "string",
@@ -2016,7 +2160,6 @@
                           },
                           "uploadTime": {
                             "type": "string",
-                            "format": "date-time",
                             "description": "加载时间"
                           },
                           "uuid": {
@@ -2088,6 +2231,10 @@
                       "uuid"
                     ],
                     "properties": {
+                      "createType": {
+                        "type": "string",
+                        "description": "创建类型"
+                      },
                       "diagnosis": {
                         "type": "integer",
                         "format": "int32",
@@ -2361,42 +2508,6 @@
               },
               "title": "BaseResponse«List«KnowledgeFunction对象»»",
               "$$ref": "#/definitions/BaseResponse«List«KnowledgeFunction对象»»"
-            }
-          }
-        }
-      }
-    },
-    "/kms-zsbj-server/api/common/subsystems": {
-      "get": {
-        "tags": [
-          "知识管理-公共接口"
-        ],
-        "summary": "获取分系统列表",
-        "consumes": [
-          "text/plain"
-        ],
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
-                "errorMsg": {
-                  "type": "string"
-                },
-                "success": {
-                  "type": "boolean"
-                }
-              },
-              "title": "BaseResponse«List«string»»",
-              "$$ref": "#/definitions/BaseResponse«List«string»»"
             }
           }
         }
@@ -3495,7 +3606,7 @@
         }
       }
     },
-    "/view/node/add": {
+    "/kms-view-server/view/node/add": {
       "post": {
         "tags": [
           "知识图谱接口"
@@ -3546,7 +3657,7 @@
         }
       }
     },
-    "/view/editor": {
+    "/kms-view-server/view/editor": {
       "post": {
         "tags": [
           "知识图谱接口"
@@ -3597,7 +3708,7 @@
         }
       }
     },
-    "/view/find/name": {
+    "/kms-view-server/view/find/name": {
       "post": {
         "tags": [
           "知识图谱接口"
@@ -3640,19 +3751,16 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id",
-                            "refType": null
+                            "description": "id"
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
-                            "refType": null
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名",
-                            "refType": null
+                            "description": "节点名"
                           }
                         },
                         "title": "KnowledgeView",
@@ -3661,8 +3769,7 @@
                       "id": {
                         "type": "integer",
                         "format": "int64",
-                        "description": "id",
-                        "refType": null
+                        "description": "id"
                       },
                       "parent": {
                         "type": "object",
@@ -3670,19 +3777,16 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id",
-                            "refType": null
+                            "description": "id"
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
-                            "refType": null
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名",
-                            "refType": null
+                            "description": "节点名"
                           }
                         },
                         "title": "KnowledgeView",
@@ -3709,7 +3813,7 @@
         }
       }
     },
-    "/view/import": {
+    "/kms-view-server/view/import": {
       "post": {
         "tags": [
           "知识图谱接口"
@@ -3744,19 +3848,16 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id",
-                            "refType": null
+                            "description": "id"
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
-                            "refType": null
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名",
-                            "refType": null
+                            "description": "节点名"
                           }
                         },
                         "title": "KnowledgeView",
@@ -3765,8 +3866,7 @@
                       "id": {
                         "type": "integer",
                         "format": "int64",
-                        "description": "id",
-                        "refType": null
+                        "description": "id"
                       },
                       "parent": {
                         "type": "object",
@@ -3774,19 +3874,16 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id",
-                            "refType": null
+                            "description": "id"
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
-                            "refType": null
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名",
-                            "refType": null
+                            "description": "节点名"
                           }
                         },
                         "title": "KnowledgeView",
@@ -3813,7 +3910,7 @@
         }
       }
     },
-    "/view/export": {
+    "/kms-view-server/view/export": {
       "post": {
         "tags": [
           "知识图谱接口"
@@ -3857,7 +3954,7 @@
         }
       }
     },
-    "/view/delete": {
+    "/kms-view-server/view/delete": {
       "post": {
         "tags": [
           "知识图谱接口"
@@ -3901,7 +3998,7 @@
         }
       }
     },
-    "/view/find/code": {
+    "/kms-view-server/view/find/code": {
       "post": {
         "tags": [
           "知识图谱接口"
@@ -3937,19 +4034,16 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id",
-                            "refType": null
+                            "description": "id"
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
-                            "refType": null
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名",
-                            "refType": null
+                            "description": "节点名"
                           }
                         },
                         "title": "KnowledgeView",
@@ -3958,8 +4052,7 @@
                       "id": {
                         "type": "integer",
                         "format": "int64",
-                        "description": "id",
-                        "refType": null
+                        "description": "id"
                       },
                       "parent": {
                         "type": "object",
@@ -3967,19 +4060,16 @@
                           "id": {
                             "type": "integer",
                             "format": "int64",
-                            "description": "id",
-                            "refType": null
+                            "description": "id"
                           },
                           "mark": {
                             "type": "integer",
                             "format": "int32",
-                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)",
-                            "refType": null
+                            "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
                           },
                           "name": {
                             "type": "string",
-                            "description": "节点名",
-                            "refType": null
+                            "description": "节点名"
                           }
                         },
                         "title": "KnowledgeView",
@@ -4006,58 +4096,7 @@
         }
       }
     },
-    "/view/yc/add": {
-      "post": {
-        "tags": [
-          "知识图谱接口"
-        ],
-        "summary": "遥测参数增加",
-        "consumes": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "parameterName",
-            "in": "query",
-            "required": false,
-            "description": "参数名",
-            "type": "string"
-          },
-          {
-            "name": "qibId",
-            "in": "query",
-            "required": false,
-            "description": "器部件ID",
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "string",
-                  "description": "数据集"
-                },
-                "errorMsg": {
-                  "type": "string",
-                  "description": "错误信息"
-                },
-                "success": {
-                  "type": "boolean",
-                  "description": "返回状态"
-                }
-              },
-              "title": "BaseResponse«string»",
-              "$$ref": "#/definitions/BaseResponse«string»"
-            }
-          }
-        }
-      }
-    },
-    "/view/yc/import": {
+    "/kms-view-server/view/yc/import": {
       "post": {
         "tags": [
           "知识图谱接口"
@@ -4068,18 +4107,28 @@
         ],
         "parameters": [
           {
-            "name": "parameters",
-            "in": "query",
-            "required": false,
-            "description": "遥测参数集",
-            "type": "string"
-          },
-          {
-            "name": "satelliteCode",
-            "in": "query",
-            "required": false,
-            "description": "卫星代号",
-            "type": "string"
+            "name": "KmsViewServerViewYcImportBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "parameters": {
+                  "type": "array",
+                  "description": "遥测参数集",
+                  "items": {
+                    "type": "string"
+                  },
+                  "refType": "string"
+                },
+                "satelliteCode": {
+                  "type": "string",
+                  "description": "卫星代号",
+                  "refType": null
+                }
+              },
+              "title": "ParameterInPo",
+              "$$ref": "#/definitions/ParameterInPo"
+            }
           }
         ],
         "responses": {

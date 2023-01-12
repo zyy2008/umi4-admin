@@ -98,6 +98,8 @@ namespace NsConfig {
                         ...object,
                         uuid: object?.uuid,
                         createType: object?.type,
+                        faultLevel: object?.grade,
+                        faultDelay: object?.delay,
                         graphInfo: JSON.stringify(data),
                       });
 
@@ -113,6 +115,8 @@ namespace NsConfig {
                       await APIS.DefaultApi.kmsZsbjServerApiKnowledgeAddPost({
                         ...object,
                         createType: object?.type,
+                        faultLevel: object?.grade,
+                        faultDelay: object?.delay,
                         graphInfo: JSON.stringify(data),
                       });
                     if (success) {

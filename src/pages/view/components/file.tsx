@@ -56,11 +56,11 @@ const File: FC<FileProps> = (props) => {
             setImportLoading(true);
             try {
               const { success, data = [] } =
-                await APIS.DefaultApi.viewImportPost(
+                await APIS.DefaultApi.kmsViewServerViewImportPost(
                   {
                     file,
-                  },
-                  { prefix: "/atlas" }
+                  }
+                  // { prefix: "/atlas" }
                 );
               if (success) {
                 setTimeout(() => {
@@ -90,13 +90,13 @@ const File: FC<FileProps> = (props) => {
         onFinish={async ({ satelliteCode }) => {
           const hide = message.loading("正在导出...");
           try {
-            const res = await APIS.DefaultApi.viewExportPost(
+            const res = await APIS.DefaultApi.kmsViewServerViewExportPost(
               {
                 satelliteCode,
               },
               {
                 responseType: "blob",
-                prefix: "/atlas",
+                // prefix: "/atlas",
               }
             );
             hide();

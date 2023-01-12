@@ -111,27 +111,6 @@ export class _Api {
       ...p
     });
   }
-  /**
-   * 
-   * @summary 获取分系统列表
-   
-   
-   * @param opt ajax config
-   * @returns models.BaseResponseListstring
-   */
-  public kmsZsbjServerApiCommonSubsystemsGet = (
-    
-    opt?: ExtraFetchParams
-  ) : AjaxPromise<models.BaseResponseListstring>  => {
-    const url = this.$basePath + `/kms-zsbj-server/api/common/subsystems`;
-    const p: any = {};
-    return ajax.ajax({
-      ...opt,
-      method: 'GET',
-      url,
-      ...p
-    });
-  }
 }
 
 export default new _Api();

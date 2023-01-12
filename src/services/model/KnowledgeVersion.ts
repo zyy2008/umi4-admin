@@ -15,9 +15,9 @@ import * as models from './models';
 /**
   * @description 知识版本历史表
   * @property `[createTime]` 创建时间
-  * @property `[createType]` 创建类型
   * @property `[editUser]` 编辑用户
   * @property `[filePath]` 版本文件路径
+  * @property `[globalParams]` 全局参数
   * @property `[graphInfo]` 图形信息
   * @property `[id]` 主键id
   * @property `[isChecked]` 是否校验(否_0, 是_1)
@@ -33,10 +33,6 @@ export interface KnowledgeVersion {
    */
   "createTime"?: Date;
   /**
-   * 创建类型
-   */
-  "createType"?: string;
-  /**
    * 编辑用户
    */
   "editUser"?: string;
@@ -44,6 +40,10 @@ export interface KnowledgeVersion {
    * 版本文件路径
    */
   "filePath"?: string;
+  /**
+   * 全局参数
+   */
+  "globalParams"?: string;
   /**
    * 图形信息
    */

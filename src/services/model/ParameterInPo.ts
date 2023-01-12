@@ -13,12 +13,17 @@
 import * as models from './models';
 
 /**
-  * @property `uuidList` 待下载的知识uuid列表
+  * @property `[parameters]` 遥测参数集
+  * @property `[satelliteCode]` 卫星代号
   */
-export interface KmsZsbjServerApiKnowledgeDownloadMultiBody {
+export interface ParameterInPo {
   /**
-   * 待下载的知识uuid列表
+   * 遥测参数集
    */
-  "uuidList": Array<string>;
+  "parameters"?: Array<string>;
+  /**
+   * 卫星代号
+   */
+  "satelliteCode"?: string;
 }
 

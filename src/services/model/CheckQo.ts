@@ -27,7 +27,7 @@ export interface CheckQo {
   /**
    * 遥测参数列表
    */
-  "paramList"?: Array<models.TelemetryParam>;
+  "paramList"?: Array<models.TelemetryParam0>;
   /**
    * 开始时间
    */

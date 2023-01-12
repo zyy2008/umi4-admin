@@ -21,6 +21,7 @@ import * as models from './models';
   * @property `[faultDelay]` 故障延迟
   * @property `[faultLevel]` 故障等级(1_一般, 2_严重，3_警告)
   * @property `[faultPart]` 故障部件
+  * @property `[globalParams]` 全局参数
   * @property `[graphInfo]` 图形信息
   * @property `[returnType]` 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
   * @property `ruleName` 规则名
@@ -58,6 +59,10 @@ export interface Knowledge1 {
    * 故障部件
    */
   "faultPart"?: string;
+  /**
+   * 全局参数
+   */
+  "globalParams"?: Array<models.TelemetryParam>;
   /**
    * 图形信息
    */

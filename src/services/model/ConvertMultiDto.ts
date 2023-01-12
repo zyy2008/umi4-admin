@@ -13,12 +13,13 @@
 import * as models from './models';
 
 /**
-  * @property `uuidList` 待校验的知识uuid列表
+  * @description 转换多条知识
+  * @property `idList` 待转换知识id列表
   */
-export interface KmsZsbjServerApiKnowledgeCheckBatchBody {
+export interface ConvertMultiDto {
   /**
-   * 待校验的知识uuid列表
+   * 待转换知识id列表
    */
-  "uuidList": Array<string>;
+  "idList": Array<number>;
 }
 

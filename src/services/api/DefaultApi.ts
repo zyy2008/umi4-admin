@@ -321,6 +321,97 @@ export interface ParamskmsJobServerObjectCommonTaskObjectIdPut {
 export type ParamsBodykmsJobServerObjectCommonTaskObjectIdPut =
   Array<models.ObjectCommonTask>;
 /**
+ * @description kmsViewServerViewDeletePost参数
+ * @property `[id]` 节点ID
+ */
+export interface ParamskmsViewServerViewDeletePost {
+  // queryParams
+  /**
+   * 节点ID
+   */
+  id?: number;
+}
+/**
+ * @description kmsViewServerViewEditorPost参数
+ * @property `[id]` 节点ID
+ * @property `[newName]` 新节点名
+ */
+export interface ParamskmsViewServerViewEditorPost {
+  // queryParams
+  /**
+   * 节点ID
+   */
+  id?: string;
+  /**
+   * 新节点名
+   */
+  newName?: string;
+}
+/**
+ * @description kmsViewServerViewExportPost参数
+ * @property `[satelliteCode]` 卫星代号
+ */
+export interface ParamskmsViewServerViewExportPost {
+  // queryParams
+  /**
+   * 卫星代号
+   */
+  satelliteCode?: string;
+}
+/**
+ * @description kmsViewServerViewFindCodePost参数
+ * @property `[satelliteCode]` 卫星代号
+ */
+export interface ParamskmsViewServerViewFindCodePost {
+  // queryParams
+  /**
+   * 卫星代号
+   */
+  satelliteCode?: string;
+}
+/**
+ * @description kmsViewServerViewFindNamePost参数
+ * @property `[satelliteCode]` 卫星代号
+ * @property `[system_or_parts]` 系统或器部件名
+ */
+export interface ParamskmsViewServerViewFindNamePost {
+  // queryParams
+  /**
+   * 卫星代号
+   */
+  satelliteCode?: string;
+  /**
+   * 系统或器部件名
+   */
+  system_or_parts?: string;
+}
+/**
+ * @property `[file]`
+ */
+export interface ParamskmsViewServerViewImportPost {
+  // formParams
+  file?: any;
+}
+/**
+ * @description kmsViewServerViewNodeAddPost参数
+ * @property `[newNodeName]` 新增节点名
+ * @property `[nodeId]` 节点ID
+ */
+export interface ParamskmsViewServerViewNodeAddPost {
+  // queryParams
+  /**
+   * 新增节点名
+   */
+  newNodeName?: string;
+  /**
+   * 节点ID
+   */
+  nodeId?: number;
+}
+/**
+ */
+export type ParamsBodykmsViewServerViewYcImportPost = models.ParameterInPo;
+/**
  * 知识
  */
 export type ParamsBodykmsZsbjServerApiKnowledgeAddPost = models.Knowledge;
@@ -351,23 +442,23 @@ export type ParamsBodykmsZsbjServerApiKnowledgeBatchEditPut =
   models.KnowledgeBatchEditDto;
 /**
  */
-export type ParamsBodykmsZsbjServerApiKnowledgeCheckBatchPost =
-  models.KmsZsbjServerApiKnowledgeCheckBatchBody;
+export type ParamsBodykmsZsbjServerApiKnowledgeCheckBatchPost = models.MultiQo3;
 /**
  */
 export type ParamsBodykmsZsbjServerApiKnowledgeCheckPost = models.CheckQo;
 /**
+ * 转换多条知识
  */
 export type ParamsBodykmsZsbjServerApiKnowledgeConvertMultiPost =
-  models.KmsZsbjServerApiKnowledgeConvertMultiBody;
+  models.ConvertMultiDto;
 /**
+ * 转换知识
  */
 export type ParamsBodykmsZsbjServerApiKnowledgeConvertPost =
-  models.KmsZsbjServerApiKnowledgeConvertBody;
+  models.ConvertKnowledgeDto;
 /**
  */
-export type ParamsBodykmsZsbjServerApiKnowledgeDeleteDelete =
-  models.KmsZsbjServerApiKnowledgeDeleteBody;
+export type ParamsBodykmsZsbjServerApiKnowledgeDeleteDelete = models.MultiQo1;
 /**
  * @description kmsZsbjServerApiKnowledgeDownloadGet参数
  * @property `uuid` 待下载的知识标识uuid
@@ -387,7 +478,7 @@ export interface ParamskmsZsbjServerApiKnowledgeDownloadGet {
 /**
  */
 export type ParamsBodykmsZsbjServerApiKnowledgeDownloadMultiPost =
-  models.KmsZsbjServerApiKnowledgeDownloadMultiBody;
+  models.MultiQo;
 /**
  * @description kmsZsbjServerApiKnowledgeExistsGet参数
  * @property `ruleName` 知识名称
@@ -429,8 +520,7 @@ export interface ParamskmsZsbjServerApiKnowledgeImportPost {
 }
 /**
  */
-export type ParamsBodykmsZsbjServerApiKnowledgeLoadingAllPost =
-  models.KmsZsbjServerApiKnowledgeLoadingAllBody;
+export type ParamsBodykmsZsbjServerApiKnowledgeLoadingAllPost = models.MultiQo2;
 /**
  * @description kmsZsbjServerApiKnowledgeLoadingPost参数
  * @property `uuid` 待加载的知识标识uuid
@@ -487,126 +577,6 @@ export interface ParamskmsZsbjServerApiKnowledgeViewGet {
    * 待查看的知识版本号
    */
   version: string;
-}
-/**
- * @description viewDeletePost参数
- * @property `[id]` 节点ID
- */
-export interface ParamsviewDeletePost {
-  // queryParams
-  /**
-   * 节点ID
-   */
-  id?: number;
-}
-/**
- * @description viewEditorPost参数
- * @property `[id]` 节点ID
- * @property `[newName]` 新节点名
- */
-export interface ParamsviewEditorPost {
-  // queryParams
-  /**
-   * 节点ID
-   */
-  id?: string;
-  /**
-   * 新节点名
-   */
-  newName?: string;
-}
-/**
- * @description viewExportPost参数
- * @property `[satelliteCode]` 卫星代号
- */
-export interface ParamsviewExportPost {
-  // queryParams
-  /**
-   * 卫星代号
-   */
-  satelliteCode?: string;
-}
-/**
- * @description viewFindCodePost参数
- * @property `[satelliteCode]` 卫星代号
- */
-export interface ParamsviewFindCodePost {
-  // queryParams
-  /**
-   * 卫星代号
-   */
-  satelliteCode?: string;
-}
-/**
- * @description viewFindNamePost参数
- * @property `[satelliteCode]` 卫星代号
- * @property `[system_or_parts]` 系统或器部件名
- */
-export interface ParamsviewFindNamePost {
-  // queryParams
-  /**
-   * 卫星代号
-   */
-  satelliteCode?: string;
-  /**
-   * 系统或器部件名
-   */
-  system_or_parts?: string;
-}
-/**
- * @property `[file]`
- */
-export interface ParamsviewImportPost {
-  // formParams
-  file?: any;
-}
-/**
- * @description viewNodeAddPost参数
- * @property `[newNodeName]` 新增节点名
- * @property `[nodeId]` 节点ID
- */
-export interface ParamsviewNodeAddPost {
-  // queryParams
-  /**
-   * 新增节点名
-   */
-  newNodeName?: string;
-  /**
-   * 节点ID
-   */
-  nodeId?: number;
-}
-/**
- * @description viewYcAddPost参数
- * @property `[parameterName]` 参数名
- * @property `[qibId]` 器部件ID
- */
-export interface ParamsviewYcAddPost {
-  // queryParams
-  /**
-   * 参数名
-   */
-  parameterName?: string;
-  /**
-   * 器部件ID
-   */
-  qibId?: string;
-}
-/**
- * @description viewYcImportPost参数
- * @property `[parameters]` 遥测参数集
- * @property `[satelliteCode]` 卫星代号
- */
-export interface ParamsviewYcImportPost {
-  // queryParams
-  /**
-   * 遥测参数集
-   */
-  parameters?: string[];
-  /**
-   * 卫星代号
-   */
-  satelliteCode?: string;
 }
 
 export class DefaultApi {
@@ -672,7 +642,7 @@ export class DefaultApi {
   public baseServerDataQueryQuerySatListGet = (
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseListSatBean> => {
-    const url = this.$basePath + `/kmsSysconfigServer/DataQuery/querySatList`;
+    const url = this.$basePath + `/base-server/DataQuery/querySatList`;
     const p: any = {};
     return ajax.ajax({
       ...opt,
@@ -713,7 +683,7 @@ export class DefaultApi {
     params: ParamsbaseServerDataQueryQueryTmBySidGet,
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseListParamBean> => {
-    const url = this.$basePath + `/kmsSysconfigServer/DataQuery/queryTmBySid`;
+    const url = this.$basePath + `/base-server/DataQuery/queryTmBySid`;
     const p: any = {};
     p.query = {};
     if ("satId" in params) p.query.satId = params.satId;
@@ -1284,6 +1254,202 @@ export class DefaultApi {
     });
   };
   /**
+   * 
+   * @summary 根据ID删除
+   * @param params ParamskmsViewServerViewDeletePost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public kmsViewServerViewDeletePost = (
+    params: ParamskmsViewServerViewDeletePost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponsestring1> => {
+    const url = this.$basePath + `/kms-view-server/view/delete`;
+    const p: any = {};
+    p.query = {};
+    if ("id" in params) p.query.id = params.id;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 图谱节点编辑
+   * @param params ParamskmsViewServerViewEditorPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public kmsViewServerViewEditorPost = (
+    params: ParamskmsViewServerViewEditorPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponsestring1> => {
+    const url = this.$basePath + `/kms-view-server/view/editor`;
+    const p: any = {};
+    p.query = {};
+    if ("id" in params) p.query.id = params.id;
+    if ("newName" in params) p.query.newName = params.newName;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 导出知识图谱
+   * @param params ParamskmsViewServerViewExportPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public kmsViewServerViewExportPost = (
+    params: ParamskmsViewServerViewExportPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponsestring1> => {
+    const url = this.$basePath + `/kms-view-server/view/export`;
+    const p: any = {};
+    p.query = {};
+    if ("satelliteCode" in params) p.query.satelliteCode = params.satelliteCode;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 根据代号查询图谱
+   * @param params ParamskmsViewServerViewFindCodePost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListViewRelationship
+   */
+  public kmsViewServerViewFindCodePost = (
+    params: ParamskmsViewServerViewFindCodePost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseListViewRelationship> => {
+    const url = this.$basePath + `/kms-view-server/view/find/code`;
+    const p: any = {};
+    p.query = {};
+    if ("satelliteCode" in params) p.query.satelliteCode = params.satelliteCode;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 多条件查询
+   * @param params ParamskmsViewServerViewFindNamePost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListViewRelationship
+   */
+  public kmsViewServerViewFindNamePost = (
+    params: ParamskmsViewServerViewFindNamePost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseListViewRelationship> => {
+    const url = this.$basePath + `/kms-view-server/view/find/name`;
+    const p: any = {};
+    p.query = {};
+    if ("satelliteCode" in params) p.query.satelliteCode = params.satelliteCode;
+    if ("system_or_parts" in params)
+      p.query.system_or_parts = params.system_or_parts;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 导入知识图谱
+   * @param params ParamskmsViewServerViewImportPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListViewRelationship
+   */
+  public kmsViewServerViewImportPost = (
+    params: ParamskmsViewServerViewImportPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseListViewRelationship> => {
+    const url = this.$basePath + `/kms-view-server/view/import`;
+    const p: any = {};
+    p.form = new FormData();
+    // 上传文件
+    opt = {
+      ...opt,
+      headers: {
+        ...(opt && opt.headers),
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    // p.form = new FormData();
+    if ("file" in params) p.form.append("file", params.file);
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 图谱节点增加
+   * @param params ParamskmsViewServerViewNodeAddPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public kmsViewServerViewNodeAddPost = (
+    params: ParamskmsViewServerViewNodeAddPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponsestring1> => {
+    const url = this.$basePath + `/kms-view-server/view/node/add`;
+    const p: any = {};
+    p.query = {};
+    if ("newNodeName" in params) p.query.newNodeName = params.newNodeName;
+    if ("nodeId" in params) p.query.nodeId = params.nodeId;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 遥测参数导入
+   
+   * @param data: ParamsBodykmsViewServerViewYcImportPost
+   * @param opt ajax config
+   * @returns models.BaseResponseParameterOutPo
+   */
+  public kmsViewServerViewYcImportPost = (
+    data: ParamsBodykmsViewServerViewYcImportPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseParameterOutPo> => {
+    const url = this.$basePath + `/kms-view-server/view/yc/import`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
    * 新增一条知识信息
    * @summary 新增知识
    
@@ -1403,7 +1569,7 @@ export class DefaultApi {
    * 
    * @summary 多条知识转换
    
-   * @param data: ParamsBodykmsZsbjServerApiKnowledgeConvertMultiPost
+   * @param data: ParamsBodykmsZsbjServerApiKnowledgeConvertMultiPost// 转换多条知识
    * @param opt ajax config
    * @returns models.BaseResponse2
    */
@@ -1425,7 +1591,7 @@ export class DefaultApi {
    * 
    * @summary 单条知识转换
    
-   * @param data: ParamsBodykmsZsbjServerApiKnowledgeConvertPost
+   * @param data: ParamsBodykmsZsbjServerApiKnowledgeConvertPost// 转换知识
    * @param opt ajax config
    * @returns models.BaseResponseKnowledgeContentBo
    */
@@ -1760,226 +1926,6 @@ export class DefaultApi {
     return ajax.ajax({
       ...opt,
       method: "GET",
-      url,
-      ...p,
-    });
-  };
-  /**
-   * 
-   * @summary 根据ID删除
-   * @param params ParamsviewDeletePost
-   
-   * @param opt ajax config
-   * @returns models.BaseResponsestring1
-   */
-  public viewDeletePost = (
-    params: ParamsviewDeletePost,
-    opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponsestring1> => {
-    const url = this.$basePath + `/view/delete`;
-    const p: any = {};
-    p.query = {};
-    if ("id" in params) p.query.id = params.id;
-    return ajax.ajax({
-      ...opt,
-      method: "POST",
-      url,
-      ...p,
-    });
-  };
-  /**
-   * 
-   * @summary 图谱节点编辑
-   * @param params ParamsviewEditorPost
-   
-   * @param opt ajax config
-   * @returns models.BaseResponsestring1
-   */
-  public viewEditorPost = (
-    params: ParamsviewEditorPost,
-    opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponsestring1> => {
-    const url = this.$basePath + `/view/editor`;
-    const p: any = {};
-    p.query = {};
-    if ("id" in params) p.query.id = params.id;
-    if ("newName" in params) p.query.newName = params.newName;
-    return ajax.ajax({
-      ...opt,
-      method: "POST",
-      url,
-      ...p,
-    });
-  };
-  /**
-   * 
-   * @summary 导出知识图谱
-   * @param params ParamsviewExportPost
-   
-   * @param opt ajax config
-   * @returns models.BaseResponsestring1
-   */
-  public viewExportPost = (
-    params: ParamsviewExportPost,
-    opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponsestring1> => {
-    const url = this.$basePath + `/view/export`;
-    const p: any = {};
-    p.query = {};
-    if ("satelliteCode" in params) p.query.satelliteCode = params.satelliteCode;
-    return ajax.ajax({
-      ...opt,
-      method: "POST",
-      url,
-      ...p,
-    });
-  };
-  /**
-   * 
-   * @summary 根据代号查询图谱
-   * @param params ParamsviewFindCodePost
-   
-   * @param opt ajax config
-   * @returns models.BaseResponseListViewRelationship
-   */
-  public viewFindCodePost = (
-    params: ParamsviewFindCodePost,
-    opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponseListViewRelationship> => {
-    const url = this.$basePath + `/view/find/code`;
-    const p: any = {};
-    p.query = {};
-    if ("satelliteCode" in params) p.query.satelliteCode = params.satelliteCode;
-    return ajax.ajax({
-      ...opt,
-      method: "POST",
-      url,
-      ...p,
-    });
-  };
-  /**
-   * 
-   * @summary 多条件查询
-   * @param params ParamsviewFindNamePost
-   
-   * @param opt ajax config
-   * @returns models.BaseResponseListViewRelationship
-   */
-  public viewFindNamePost = (
-    params: ParamsviewFindNamePost,
-    opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponseListViewRelationship> => {
-    const url = this.$basePath + `/view/find/name`;
-    const p: any = {};
-    p.query = {};
-    if ("satelliteCode" in params) p.query.satelliteCode = params.satelliteCode;
-    if ("system_or_parts" in params)
-      p.query.system_or_parts = params.system_or_parts;
-    return ajax.ajax({
-      ...opt,
-      method: "POST",
-      url,
-      ...p,
-    });
-  };
-  /**
-   * 
-   * @summary 导入知识图谱
-   * @param params ParamsviewImportPost
-   
-   * @param opt ajax config
-   * @returns models.BaseResponseListViewRelationship
-   */
-  public viewImportPost = (
-    params: ParamsviewImportPost,
-    opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponseListViewRelationship> => {
-    const url = this.$basePath + `/view/import`;
-    const p: any = {};
-    p.form = new FormData();
-    // 上传文件
-    opt = {
-      ...opt,
-      headers: {
-        ...(opt && opt.headers),
-        "Content-Type": "multipart/form-data",
-      },
-    };
-    // p.form = new FormData();
-    if ("file" in params) p.form.append("file", params.file);
-    return ajax.ajax({
-      ...opt,
-      method: "POST",
-      url,
-      ...p,
-    });
-  };
-  /**
-   * 
-   * @summary 图谱节点增加
-   * @param params ParamsviewNodeAddPost
-   
-   * @param opt ajax config
-   * @returns models.BaseResponsestring1
-   */
-  public viewNodeAddPost = (
-    params: ParamsviewNodeAddPost,
-    opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponsestring1> => {
-    const url = this.$basePath + `/view/node/add`;
-    const p: any = {};
-    p.query = {};
-    if ("newNodeName" in params) p.query.newNodeName = params.newNodeName;
-    if ("nodeId" in params) p.query.nodeId = params.nodeId;
-    return ajax.ajax({
-      ...opt,
-      method: "POST",
-      url,
-      ...p,
-    });
-  };
-  /**
-   * 
-   * @summary 遥测参数增加
-   * @param params ParamsviewYcAddPost
-   
-   * @param opt ajax config
-   * @returns models.BaseResponsestring1
-   */
-  public viewYcAddPost = (
-    params: ParamsviewYcAddPost,
-    opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponsestring1> => {
-    const url = this.$basePath + `/view/yc/add`;
-    const p: any = {};
-    p.query = {};
-    if ("parameterName" in params) p.query.parameterName = params.parameterName;
-    if ("qibId" in params) p.query.qibId = params.qibId;
-    return ajax.ajax({
-      ...opt,
-      method: "POST",
-      url,
-      ...p,
-    });
-  };
-  /**
-   * 
-   * @summary 遥测参数导入
-   * @param params ParamsviewYcImportPost
-   
-   * @param opt ajax config
-   * @returns models.BaseResponseParameterOutPo
-   */
-  public viewYcImportPost = (
-    data: ParamsviewYcImportPost,
-    opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponseParameterOutPo> => {
-    const url = this.$basePath + `/view/yc/import`;
-    const p: any = {};
-    p.data = data;
-    return ajax.ajax({
-      ...opt,
-      method: "POST",
       url,
       ...p,
     });

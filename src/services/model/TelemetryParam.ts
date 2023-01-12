@@ -14,37 +14,52 @@ import * as models from './models';
 
 /**
   * @description 遥测参数
-  * @property `[code]` 参数代号
-  * @property `[name]` 参数名称
-  * @property `[num]` 参数序号
-  * @property `[staSid]` 对象标识
-  * @property `[type]` 参数类型
-  * @property `[values]` 参数值
+  * @property `[createTime]` 创建时间
+  * @property `[createUser]` 创建人
+  * @property `satId` 卫星标识
+  * @property `tmCode` 参数代号
+  * @property `tmDataType` 参数类型1：整数型 2：浮点型 3：字符型
+  * @property `tmName` 参数名称
+  * @property `tmNum` 参数序号
+  * @property `tmSid` 参数标识
+  * @property `tmValueUnit` 参数值单位
   */
 export interface TelemetryParam {
   /**
+   * 创建时间
+   */
+  "createTime"?: string;
+  /**
+   * 创建人
+   */
+  "createUser"?: string;
+  /**
+   * 卫星标识
+   */
+  "satId": string;
+  /**
    * 参数代号
    */
-  "code"?: string;
+  "tmCode": string;
+  /**
+   * 参数类型1：整数型 2：浮点型 3：字符型
+   */
+  "tmDataType": number;
   /**
    * 参数名称
    */
-  "name"?: string;
+  "tmName": string;
   /**
    * 参数序号
    */
-  "num"?: number;
+  "tmNum": number;
   /**
-   * 对象标识
+   * 参数标识
    */
-  "staSid"?: string;
+  "tmSid": string;
   /**
-   * 参数类型
+   * 参数值单位
    */
-  "type"?: number;
-  /**
-   * 参数值
-   */
-  "values"?: Array<any>;
+  "tmValueUnit": string;
 }
 

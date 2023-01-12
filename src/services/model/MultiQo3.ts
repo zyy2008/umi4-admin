@@ -13,12 +13,12 @@
 import * as models from './models';
 
 /**
-  * @property `uuidList` 待删除的知识uuid列表
+  * @property `[uuidList]` 待操作的知识标识uuid列表
   */
-export interface KmsZsbjServerApiKnowledgeDeleteBody {
+export interface MultiQo3 {
   /**
-   * 待删除的知识uuid列表
+   * 待操作的知识标识uuid列表
    */
-  "uuidList": Array<string>;
+  "uuidList"?: Array<string>;
 }
 

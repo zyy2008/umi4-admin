@@ -22,6 +22,7 @@ import * as models from './models';
   * @property `[faultLevel]` 故障等级(1_一般, 2_严重，3_警告)
   * @property `[faultPart]` 故障部件
   * @property `[filePath]` 版本文件路径
+  * @property `[globalParams]` 全局参数
   * @property `[graphInfo]` 图形信息
   * @property `[id]` 主键id
   * @property `[isChecked]` 是否校验(0_否, 1_是)
@@ -40,7 +41,7 @@ export interface KnowledgeDetailInfo {
   /**
    * 创建时间
    */
-  "createTime"?: Date;
+  "createTime"?: string;
   /**
    * 创建类型
    */
@@ -69,6 +70,10 @@ export interface KnowledgeDetailInfo {
    * 版本文件路径
    */
   "filePath"?: string;
+  /**
+   * 全局参数
+   */
+  "globalParams"?: string;
   /**
    * 图形信息
    */
@@ -108,7 +113,7 @@ export interface KnowledgeDetailInfo {
   /**
    * 加载时间
    */
-  "uploadTime"?: Date;
+  "uploadTime"?: string;
   /**
    * 知识唯一标识uuid
    */
