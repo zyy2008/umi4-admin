@@ -57,7 +57,7 @@ export default defineConfig({
       name: "知识编辑",
       path: "/edit",
       component: "./edit",
-      // layout: false,
+      layout: false,
     },
     {
       path: "/view",
@@ -68,7 +68,7 @@ export default defineConfig({
       path: "/task",
       name: "任务编辑",
       component: "./task",
-      // layout: false,
+      layout: false,
     },
   ],
   npmClient: "yarn",

@@ -85,7 +85,13 @@ namespace NsConfig {
             {
               saveGraphDataService: async (meta, data) => {
                 if (value) {
-                  let object: Knowledge;
+                  let object: Knowledge & {
+                    type: string;
+                    grade: number;
+                    delay: number;
+                    partSystem: string;
+                    component: string;
+                  };
                   try {
                     object = JSON.parse(value);
                   } catch (error) {
@@ -100,6 +106,8 @@ namespace NsConfig {
                         createType: object?.type,
                         faultLevel: object?.grade,
                         faultDelay: object?.delay,
+                        subsystem: object?.partSystem,
+                        faultPart: object?.component,
                         graphInfo: JSON.stringify(data),
                       });
 
@@ -117,6 +125,8 @@ namespace NsConfig {
                         createType: object?.type,
                         faultLevel: object?.grade,
                         faultDelay: object?.delay,
+                        subsystem: object?.partSystem,
+                        faultPart: object?.component,
                         graphInfo: JSON.stringify(data),
                       });
                     if (success) {

@@ -683,7 +683,7 @@ export class DefaultApi {
     params: ParamsbaseServerDataQueryQueryTmBySidGet,
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseListParamBean> => {
-    const url = this.$basePath + `/base-server/DataQuery/queryTmBySid`;
+    const url = this.$basePath + `/kmsSysconfigServer/DataQuery/queryTmBySid`;
     const p: any = {};
     p.query = {};
     if ("satId" in params) p.query.satId = params.satId;
