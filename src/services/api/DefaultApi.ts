@@ -642,7 +642,7 @@ export class DefaultApi {
   public baseServerDataQueryQuerySatListGet = (
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseListSatBean> => {
-    const url = this.$basePath + `/base-server/DataQuery/querySatList`;
+    const url = this.$basePath + `/kmsSysconfigServer/DataQuery/querySatList`;
     const p: any = {};
     return ajax.ajax({
       ...opt,

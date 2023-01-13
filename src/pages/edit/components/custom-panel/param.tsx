@@ -3,12 +3,13 @@ import { NsGraph } from "@antv/xflow-core";
 import type { IConfigRenderOptions } from "@/components/flow";
 import { CardList, CardListProps } from "@/components/flow-custom";
 import { APIS } from "@/services";
-import { useRequest, useSearchParams } from "@umijs/max";
+import { useRequest, useSearchParams, useModel } from "@umijs/max";
 
 const Param: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
-  const [searchParams] = useSearchParams();
-  const [satId, setSatId] = React.useState<string>("10");
+  const { initialState } = useModel("@@initialState");
+  const { satList = [] } = initialState ?? {};
+  const [satId, setSatId] = React.useState<string>();
   const { data = [], loading } = useRequest(
     () => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
     {
@@ -17,7 +18,6 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
   );
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     return data?.map((item) => ({
-      ...item,
       id: item.tmCode,
       label: item.tmName,
       renderKey: "ConnectorNode",
@@ -34,16 +34,10 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
   }, [data]);
 
   React.useEffect(() => {
-    const object = searchParams.get("object");
-    let format: any;
-    try {
-      format = JSON.parse(object ?? "");
-    } catch (error) {
-      format = { satId: "10" };
-      console.error("地址传参格式异常，请检查！");
+    if (satList?.length > 0) {
+      setSatId(satList?.[0]?.pkId as string);
     }
-    format?.satId && setSatId(format?.satId);
-  }, []);
+  }, [satList]);
 
   return (
     <CardList

@@ -2,8 +2,8 @@ import React, { useState, FC } from "react";
 import { Button, Space, Tooltip, Upload, message } from "antd";
 import { ImportOutlined, ExportOutlined } from "@ant-design/icons";
 import { APIS, ViewRelationship } from "@/services";
-import { NsGraphCmd, XFlowGraphCommands } from "@antv/xflow";
 import { BetaSchemaForm } from "@ant-design/pro-components";
+import { useModel } from "umi";
 import { formatChildren } from "@/utils";
 import { ViewHandle } from "./index";
 import { data } from "./mock";
@@ -18,34 +18,10 @@ type DataItem = {
 };
 
 const File: FC<FileProps> = (props) => {
-  const { onSuccess, leftRef } = props;
+  const { onSuccess } = props;
+  const { initialState, loading } = useModel("@@initialState");
+  const { satList } = initialState ?? {};
   const [importLoading, setImportLoading] = useState<boolean>(false);
-  // React.useEffect(() => {
-  //   const app = leftRef.current?.app;
-  //   if (app) {
-  //     (async () => {
-  //       const graph = await app.getGraphInstance();
-  //       // graph.toggleMultipleSelection(false);
-  //       graph.on("node:selected", ({ node: { id } }) => {
-  //         app.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
-  //           XFlowGraphCommands.SAVE_GRAPH_DATA.id,
-  //           {
-  //             saveGraphDataService: async (meta, data) => {
-  //               const { edges } = data;
-  //               const find = formatChildren(id, edges);
-  //               const targets = find.map(({ target }) => target);
-  //               graph.select(targets);
-  //               setDisabled(false);
-  //             },
-  //           }
-  //         );
-  //       });
-  //       graph.on("node:unselected", () => {
-  //         setDisabled(true);
-  //       });
-  //     })();
-  //   }
-  // }, [leftRef.current]);
   return (
     <Space>
       <Tooltip placement="bottom" title="导入知识图谱">
@@ -114,6 +90,9 @@ const File: FC<FileProps> = (props) => {
             <Button icon={<ExportOutlined />} />
           </Tooltip>
         }
+        modalProps={{
+          maskClosable: false,
+        }}
         layoutType="ModalForm"
         title="卫星选择"
         layout="horizontal"
@@ -123,30 +102,9 @@ const File: FC<FileProps> = (props) => {
             title: "卫星",
             dataIndex: "satelliteCode",
             valueType: "select",
-            request: async () => {
-              try {
-                const { success, data = [] } =
-                  await APIS.DefaultApi.baseServerDataQueryQuerySatListGet();
-
-                return success ?? false
-                  ? data.map(({ satCode, satName }) => ({
-                      label: satName,
-                      value: satCode,
-                    }))
-                  : [
-                      {
-                        label: "xx_55",
-                        value: "xx_55",
-                      },
-                    ];
-              } catch (error) {
-                return [
-                  {
-                    label: "xx_55",
-                    value: "xx_55",
-                  },
-                ];
-              }
+            fieldProps: {
+              options: satList,
+              loading,
             },
             formItemProps: {
               style: {

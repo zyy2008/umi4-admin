@@ -1,6 +1,6 @@
 import React from "react";
 import type { IConfigRenderOptions } from "@/components/flow";
-import { CardListDisabled, CardListProps } from "@/components/flow-custom";
+import { CardListProps, CardList } from "@/components/flow-custom";
 import { useRequest } from "@umijs/max";
 import { APIS } from "@/services";
 import { uuidv4 } from "@antv/xflow";
@@ -24,7 +24,7 @@ const TaskList: React.FC<IConfigRenderOptions> = (props) => {
     }));
   }, [data]);
   return (
-    <CardListDisabled
+    <CardList
       title="任务"
       dataSource={filterData}
       onMouseDown={onMouseDown}

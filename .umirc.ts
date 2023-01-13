@@ -14,6 +14,8 @@ export default defineConfig({
   tabsLayout: {
     hasDropdown: true,
   },
+  model: {},
+  initialState: {},
   chainWebpack(memo, { env, webpack }) {
     // 设置 alias
     memo.resolve.alias.set("@ajax", resolve("src/utils/ajax"));
@@ -57,7 +59,7 @@ export default defineConfig({
       name: "知识编辑",
       path: "/edit",
       component: "./edit",
-      layout: false,
+      // layout: false,
     },
     {
       path: "/view",
@@ -68,7 +70,7 @@ export default defineConfig({
       path: "/task",
       name: "任务编辑",
       component: "./task",
-      layout: false,
+      // layout: false,
     },
   ],
   npmClient: "yarn",
