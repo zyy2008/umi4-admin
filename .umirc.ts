@@ -37,11 +37,11 @@ export default defineConfig({
     },
   },
   proxy: {
-    "/atlas": {
-      target: "http://192.169.7.12:8079/",
-      changeOrigin: true,
-      pathRewrite: { "^/atlas": "" },
-    },
+    // "/atlas": {
+    //   target: "http://192.169.7.12:8079/",
+    //   changeOrigin: true,
+    //   pathRewrite: { "^/atlas": "" },
+    // },
   },
   clickToComponent: {},
   layout: {},

@@ -32,12 +32,9 @@ const File: FC<FileProps> = (props) => {
             setImportLoading(true);
             try {
               const { success, data = [] } =
-                await APIS.DefaultApi.kmsViewServerViewImportPost(
-                  {
-                    file,
-                  }
-                  // { prefix: "/atlas" }
-                );
+                await APIS.DefaultApi.kmsViewServerViewImportPost({
+                  file,
+                });
               if (success) {
                 setTimeout(() => {
                   message.success("导入成功！");
@@ -72,7 +69,6 @@ const File: FC<FileProps> = (props) => {
               },
               {
                 responseType: "blob",
-                // prefix: "/atlas",
               }
             );
             hide();

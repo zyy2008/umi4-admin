@@ -73,6 +73,23 @@ export namespace NsJsonForm {
                 },
               ],
             },
+            {
+              name: "type",
+              label: "参数类型",
+              shape: ControlShape.SELECT,
+              value: targetData.type,
+              placeholder: "请选择",
+              options: [
+                {
+                  title: "int",
+                  value: "int",
+                },
+                {
+                  title: "string",
+                  value: "string",
+                },
+              ],
+            },
           ];
           break;
         case "RectNode":
@@ -354,10 +371,10 @@ export namespace NsJsonForm {
               placeholder: "请输入",
             },
             {
-              name: "content",
+              name: "funContent",
               label: "函数内容",
               shape: ControlShape.TEXTAREA,
-              value: targetData.content,
+              value: targetData.funContent,
             },
           ];
           break;

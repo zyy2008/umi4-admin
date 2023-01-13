@@ -84,6 +84,7 @@ namespace NsConfig {
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {
               saveGraphDataService: async (meta, data) => {
+                console.log(JSON.stringify(data));
                 if (value) {
                   let object: Knowledge & {
                     type: string;

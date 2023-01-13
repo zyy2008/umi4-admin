@@ -11,13 +11,10 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
           const { edgeConfig } = args;
           const { source } = edgeConfig;
           const { success } =
-            await APIS.DefaultApi.kmsViewServerViewNodeAddPost(
-              {
-                nodeId: isNaN(Number(source)) ? 0 : Number(source),
-                newNodeName: "123",
-              }
-              // { prefix: "/atlas" }
-            );
+            await APIS.DefaultApi.kmsViewServerViewNodeAddPost({
+              nodeId: isNaN(Number(source)) ? 0 : Number(source),
+              newNodeName: "123",
+            });
           if (success) {
             return edgeConfig;
           } else {
@@ -33,12 +30,9 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
           const { nodeConfig } = args;
           const { id } = nodeConfig;
           const { success = false } =
-            await APIS.DefaultApi.kmsViewServerViewDeletePost(
-              {
-                id: isNaN(Number(id)) ? 0 : Number(id),
-              }
-              // { prefix: "/atlas" }
-            );
+            await APIS.DefaultApi.kmsViewServerViewDeletePost({
+              id: isNaN(Number(id)) ? 0 : Number(id),
+            });
           return success;
         };
       },

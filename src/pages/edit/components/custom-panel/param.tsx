@@ -18,6 +18,7 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
   );
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     return data?.map((item) => ({
+      ...item,
       id: item.tmCode,
       label: item.tmName,
       renderKey: "ConnectorNode",

@@ -177,10 +177,19 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
                 if (label && label === "if") {
                   const x6Graph = (await args.getX6Graph()) as X6Graph;
                   const edges = x6Graph.getOutgoingEdges(getSourceCell);
+                  console.log(edges);
                   if (edges && edges.length === 1) {
                     res.edgeCell.setLabels("true");
+                    res.edgeCell.setData({
+                      ...res.edgeCell.getData(),
+                      label: "true",
+                    });
                   } else {
                     res.edgeCell.setLabels("false");
+                    res.edgeCell.setData({
+                      ...res.edgeCell.getData(),
+                      label: "false",
+                    });
                   }
                 }
               }
