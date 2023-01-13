@@ -3,17 +3,20 @@ import { NsGraph } from "@antv/xflow-core";
 import type { IConfigRenderOptions } from "@/components/flow";
 import { CardList, CardListProps } from "@/components/flow-custom";
 import { APIS } from "@/services";
-import { useRequest, useSearchParams, useModel } from "@umijs/max";
+import { useRequest, useModel } from "@umijs/max";
 
 const Param: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const { initialState } = useModel("@@initialState");
   const { satList = [] } = initialState ?? {};
-  const [satId, setSatId] = React.useState<string>();
-  const { data = [], loading } = useRequest(
-    () => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
+  const {
+    data = [],
+    loading,
+    run,
+  } = useRequest(
+    (satId) => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
     {
-      refreshDeps: [satId],
+      manual: true,
     }
   );
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
@@ -36,7 +39,7 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
 
   React.useEffect(() => {
     if (satList?.length > 0) {
-      setSatId(satList?.[0]?.pkId as string);
+      run(satList?.[0]?.pkId);
     }
   }, [satList]);
 

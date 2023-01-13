@@ -1,11 +1,16 @@
 import { useKeepOutlets, RunTimeLayoutConfig } from "@umijs/max";
 import { APIS } from "@/services";
-import { SelectProps } from "antd";
 
-export const layout: RunTimeLayoutConfig = ({
-  initialState,
-  setInitialState,
-}) => {
+export declare type AppInitialState = {
+  satList: {
+    pkId?: number;
+    title: string;
+    label: React.ReactNode;
+    value: any;
+  }[];
+};
+
+export const layout: RunTimeLayoutConfig = () => {
   return {
     title: "123",
     layout: "mix",
@@ -16,9 +21,7 @@ export const layout: RunTimeLayoutConfig = ({
   };
 };
 
-export async function getInitialState(): Promise<{
-  satList?: SelectProps["options"] & { pkId?: number };
-}> {
+export async function getInitialState(): Promise<AppInitialState> {
   const { data = [] } =
     await APIS.DefaultApi.baseServerDataQueryQuerySatListGet();
   return {
@@ -26,6 +29,7 @@ export async function getInitialState(): Promise<{
       pkId,
       label: satName,
       value: satCode,
+      title: satName,
     })),
   };
 }

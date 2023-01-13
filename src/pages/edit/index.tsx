@@ -1,12 +1,12 @@
 import React from "react";
-import { JsonSchemaForm, NsGraph } from "@antv/xflow";
+import { JsonSchemaForm, NsGraph, NsJsonSchemaForm } from "@antv/xflow";
 import KnowledgeFlow from "@/components/flow";
 import { NsJsonForm } from "./form-service";
 import { CustomPanel } from "./components";
 import { controlMapService } from "@/components/custom-form";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
-import { useRequest } from "@umijs/max";
+import { useRequest, useModel } from "@umijs/max";
 import { APIS } from "@/services";
 
 export type Check = { uuid: string; version: string } | null;
@@ -18,6 +18,8 @@ export type CheckContext = {
 export const Context = React.createContext<CheckContext | null>(null);
 
 const Edit = () => {
+  const { initialState } = useModel("@@initialState");
+  const { satList = [] } = initialState ?? {};
   const [state, setState] = React.useState<Check>({
     uuid: "",
     version: "",
@@ -46,6 +48,12 @@ const Edit = () => {
     };
   }, [data]);
 
+  const formSchemaService: NsJsonSchemaForm.IFormSchemaService =
+    React.useCallback(
+      (args) => NsJsonForm.formSchemaService(args, satList),
+      [satList]
+    );
+
   return (
     <Context.Provider value={{ state, setState }}>
       <KnowledgeFlow
@@ -66,7 +74,7 @@ const Edit = () => {
           <JsonSchemaForm
             targetType={["node", "edge", "canvas"]}
             controlMapService={controlMapService}
-            formSchemaService={NsJsonForm.formSchemaService}
+            formSchemaService={formSchemaService}
             formValueUpdateService={NsJsonForm.formValueUpdateService}
             position={{ top: 0, bottom: 0, right: 0, width: 290 }}
             footerPosition={{

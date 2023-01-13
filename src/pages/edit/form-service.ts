@@ -2,6 +2,21 @@ import { NsJsonSchemaForm, XFlowNodeCommands } from "@antv/xflow";
 import { set } from "lodash";
 import type { NsNodeCmd, NsGraph } from "@antv/xflow";
 import { ControlShapeEnum } from "@/components/custom-form";
+import type { IModelService, IGraphCommandService } from "@antv/xflow-core";
+import type { Cell, Graph as X6Graph } from "@antv/x6";
+import { AppInitialState } from "@/app";
+
+type IFormSchemaService = (
+  args: {
+    cell: Cell;
+    targetType: NsJsonSchemaForm.TargetType;
+    targetData: NsJsonSchemaForm.TargetData;
+    modelService: IModelService;
+    commandService: IGraphCommandService;
+    graph: X6Graph;
+  },
+  satList: AppInitialState["satList"]
+) => Promise<NsJsonSchemaForm.ISchema>;
 
 export namespace NsJsonForm {
   /** ControlShape的Enum */
@@ -28,8 +43,9 @@ export namespace NsJsonForm {
     };
 
   /** 根据选中的节点更新formSchema */
-  export const formSchemaService: NsJsonSchemaForm.IFormSchemaService = async (
-    args
+  export const formSchemaService: IFormSchemaService = async (
+    args,
+    satList
   ) => {
     const { targetData, targetType } = args;
     if (!targetData || targetType === "edge") {
@@ -74,21 +90,12 @@ export namespace NsJsonForm {
               ],
             },
             {
-              name: "type",
-              label: "参数类型",
+              name: "satCode",
+              label: "卫星名称",
               shape: ControlShape.SELECT,
-              value: targetData.type,
+              value: targetData.satCode,
               placeholder: "请选择",
-              options: [
-                {
-                  title: "int",
-                  value: "int",
-                },
-                {
-                  title: "string",
-                  value: "string",
-                },
-              ],
+              options: satList,
             },
           ];
           break;
@@ -364,10 +371,11 @@ export namespace NsJsonForm {
         case "MultiDocumentNode":
           controls = [
             {
-              name: "name",
+              name: "funName",
               label: "函数名称",
               shape: ControlShape.INPUT,
-              value: targetData.name,
+              value: targetData.funName,
+              disabled: true,
               placeholder: "请输入",
             },
             {
