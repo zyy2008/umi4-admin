@@ -599,7 +599,8 @@ export class DefaultApi {
   public baseServerDataQueryQueryObjectGroupListGet = (
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseListObjectGroupBean> => {
-    const url = this.$basePath + `/base-server/DataQuery/queryObjectGroupList`;
+    const url =
+      this.$basePath + `/kmsSysconfigServer/DataQuery/queryObjectGroupList`;
     const p: any = {};
     return ajax.ajax({
       ...opt,

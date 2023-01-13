@@ -14,6 +14,7 @@ import {
   File,
   NodeView,
   ParamsExport,
+  Object,
 } from "./components";
 import styles from "./index.less";
 import type { DataNode } from "antd/es/tree";
@@ -63,7 +64,7 @@ const View = () => {
           }}
         >
           <ProCard
-            title="整星结构"
+            title="整体结构"
             colSpan="30%"
             type="inner"
             bodyStyle={{
@@ -72,6 +73,7 @@ const View = () => {
             style={{
               height: "100%",
             }}
+            extra={<Object />}
           >
             <ProCard
               type="inner"
