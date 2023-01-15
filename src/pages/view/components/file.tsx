@@ -1,5 +1,13 @@
-import React, { useState, FC } from "react";
-import { Button, Space, Tooltip, Upload, message } from "antd";
+import React, { useState, FC, InputHTMLAttributes } from "react";
+import {
+  Button,
+  Space,
+  Tooltip,
+  Upload,
+  message,
+  Dropdown,
+  MenuProps,
+} from "antd";
 import { ImportOutlined, ExportOutlined } from "@ant-design/icons";
 import { APIS, ViewRelationship } from "@/services";
 import { BetaSchemaForm } from "@ant-design/pro-components";
@@ -22,10 +30,43 @@ const File: FC<FileProps> = (props) => {
   const { initialState, loading } = useModel("@@initialState");
   const { satList } = initialState ?? {};
   const [importLoading, setImportLoading] = useState<boolean>(false);
+  const fileRef = React.useRef<any>(null);
+  const onClick: MenuProps["onClick"] = ({ key }) => {
+    if (fileRef.current) {
+      fileRef.current.upload.uploader.onClick();
+    }
+  };
   return (
     <Space>
-      <Tooltip placement="bottom" title="导入知识图谱">
+      <Tooltip placement="top" title="导入知识图谱">
+        <Dropdown
+          placement="bottom"
+          menu={{
+            items: [
+              {
+                label: "本体内容",
+                key: "1",
+              },
+              {
+                label: "技术文档",
+                key: "2",
+              },
+              {
+                label: "预案",
+                key: "3",
+              },
+              {
+                label: "案例",
+                key: "4",
+              },
+            ],
+            onClick,
+          }}
+        >
+          <Button icon={<ImportOutlined />} loading={importLoading} />
+        </Dropdown>
         <Upload
+          ref={fileRef}
           accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           customRequest={async ({ onError, file }) => {
             const hide = message.loading("正在导入...");
@@ -55,9 +96,7 @@ const File: FC<FileProps> = (props) => {
             }
           }}
           showUploadList={false}
-        >
-          <Button icon={<ImportOutlined />} loading={importLoading} />
-        </Upload>
+        />
       </Tooltip>
       <BetaSchemaForm<DataItem>
         onFinish={async ({ satelliteCode }) => {
@@ -82,7 +121,7 @@ const File: FC<FileProps> = (props) => {
           }
         }}
         trigger={
-          <Tooltip placement="bottom" title="导出知识图谱">
+          <Tooltip placement="top" title="导出知识图谱">
             <Button icon={<ExportOutlined />} />
           </Tooltip>
         }
