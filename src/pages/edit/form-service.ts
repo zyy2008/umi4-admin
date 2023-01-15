@@ -148,6 +148,7 @@ export namespace NsJsonForm {
               label: "表达式编辑",
               shape: ControlShapeEnum.EDITOR_SHAPE,
               value: targetData.expression,
+              required: true,
             },
           ];
           break;
@@ -161,23 +162,26 @@ export namespace NsJsonForm {
             {
               name: "start",
               label: "开始条件",
-              shape: ControlShape.INPUT,
+              shape: ControlShape.FLOAT,
               value: targetData.start,
               placeholder: "请输入",
+              required: true,
             },
             {
               name: "end",
               label: "结束条件",
-              shape: ControlShape.INPUT,
+              shape: ControlShape.FLOAT,
               value: targetData.end,
               placeholder: "请输入",
+              required: true,
             },
             {
               name: "steps",
               label: "步长",
-              shape: ControlShape.INPUT,
+              shape: ControlShape.FLOAT,
               value: targetData.steps,
               placeholder: "请输入",
+              required: true,
             },
             {
               name: "content",
@@ -185,6 +189,7 @@ export namespace NsJsonForm {
               shape: ControlShape.TEXTAREA,
               value: targetData.content,
               placeholder: "请输入",
+              required: true,
             },
           ];
           break;
