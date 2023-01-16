@@ -1,6 +1,7 @@
 import { IProps } from "@/components/flow";
 import { APIS } from "@/services";
-import { message } from "antd";
+import type { Graph } from "@antv/x6";
+import { formatChildren } from "@/utils";
 
 export const commandConfig: IProps["commandConfig"] = (hooks) => {
   return [
@@ -13,7 +14,7 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
           const { success } =
             await APIS.DefaultApi.kmsViewServerViewNodeAddPost({
               nodeId: isNaN(Number(source)) ? 0 : Number(source),
-              newNodeName: "123",
+              newNodeName: "",
             });
           if (success) {
             return edgeConfig;
@@ -26,13 +27,24 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
     hooks.delNode.registerHook({
       name: "get edge config from backend api",
       handler: async (args) => {
-        args.deleteNodeService = async (args) => {
+        args.deleteNodeService = async (args: any) => {
           const { nodeConfig } = args;
           const { id } = nodeConfig;
           const { success = false } =
             await APIS.DefaultApi.kmsViewServerViewDeletePost({
               id: isNaN(Number(id)) ? 0 : Number(id),
             });
+          if (success) {
+            const getX6Graph: Graph = await args.getX6Graph();
+            const edges = getX6Graph.getEdges().map((cell) => {
+              return cell.getData();
+            });
+            const find = formatChildren(id, edges);
+            const targets = find.map(({ target }) => target);
+            targets.forEach((id) => {
+              getX6Graph.removeNode(id);
+            });
+          }
           return success;
         };
       },

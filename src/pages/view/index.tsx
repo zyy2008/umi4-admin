@@ -90,7 +90,7 @@ const View = () => {
               }
               headerBordered={false}
             >
-              <ViewLeft ref={leftRef} graphData={graphData} />
+              {/* <ViewLeft ref={leftRef} graphData={graphData} /> */}
             </ProCard>
           </ProCard>
           <ProCard

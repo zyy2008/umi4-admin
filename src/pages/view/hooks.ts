@@ -49,7 +49,6 @@ export const useView = (props: IProps) => {
     if (graphData) {
       const { nodes } = graphData;
       const val = nodes.filter((item) => item.value).map((item) => item.value);
-      console.log(val);
       setNodesValue(val);
     }
   }, [graphData]);
@@ -158,6 +157,7 @@ export const useData = (props: DProps) => {
   }, [custom, formatData, data]);
   React.useEffect(() => {
     if (selectData && rightRef.current) {
+      console.log(selectData);
       graphReader(selectData, rightRef.current.app);
     }
   }, [selectData, rightRef.current]);
