@@ -7,6 +7,7 @@ import { XFlowGraphCommands, JsonSchemaForm } from "@antv/xflow";
 import { NsJsonForm } from "./form-service";
 import { commandConfig } from "./command-config";
 import styles from "./index.less";
+import { controlMapService } from "@/components/custom-form";
 
 export * from "./components";
 
@@ -72,6 +73,7 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
           }}
         >
           <JsonSchemaForm
+            controlMapService={controlMapService}
             targetType={["node", "edge", "canvas"]}
             position={{ top: 0, left: 0, right: 0, bottom: 0 }}
             footerPosition={{

@@ -3,6 +3,7 @@ import { EditorShape } from "./custom-editor";
 import { LabelShape } from "./custom-label";
 import { FormListShape } from "./custom-list";
 import { TagsShape } from "./custom-tags";
+import { SaveShape } from "./custom-save";
 
 /** 自定义form控件 */
 export enum ControlShapeEnum {
@@ -10,6 +11,7 @@ export enum ControlShapeEnum {
   TEXT_SHAPE = "TEXT",
   LIST_SHAPE = "LIST",
   TAGS_SHAPE = "SELECT-TAGS",
+  SAVE_SHAPE = "SAVE",
 }
 
 export const controlMapService: NsJsonSchemaForm.IControlMapService = (
@@ -19,5 +21,6 @@ export const controlMapService: NsJsonSchemaForm.IControlMapService = (
   controlMap.set(ControlShapeEnum.TEXT_SHAPE, LabelShape);
   controlMap.set(ControlShapeEnum.LIST_SHAPE, FormListShape);
   controlMap.set(ControlShapeEnum.TAGS_SHAPE, TagsShape);
+  controlMap.set(ControlShapeEnum.SAVE_SHAPE, SaveShape);
   return controlMap;
 };

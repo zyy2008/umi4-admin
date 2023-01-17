@@ -73,7 +73,7 @@ const View = () => {
             style={{
               height: "100%",
             }}
-            extra={<Object />}
+            // extra={<Object />}
           >
             <ProCard
               type="inner"
@@ -90,7 +90,7 @@ const View = () => {
               }
               headerBordered={false}
             >
-              {/* <ViewLeft ref={leftRef} graphData={graphData} /> */}
+              <ViewLeft ref={leftRef} graphData={graphData} />
             </ProCard>
           </ProCard>
           <ProCard

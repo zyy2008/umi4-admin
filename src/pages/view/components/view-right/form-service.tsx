@@ -8,7 +8,9 @@ import type {
 } from "@antv/xflow";
 import { controlShape } from "./components";
 import type { Cell, Graph as X6Graph } from "@antv/x6";
+import { ControlShapeEnum } from "@/components/custom-form";
 import Form from "./form";
+import { APIS } from "@/services";
 
 export interface IFormSchemaService {
   (
@@ -72,31 +74,49 @@ export namespace NsJsonForm {
       };
     }
     const groups: () => NsJsonSchemaForm.IGroup[] = () => {
-      let controls: NsJsonSchemaForm.IControlSchema[];
+      let controls: NsJsonSchemaForm.IControlSchema[] & { [key: string]: any };
+      let disabled: boolean = false;
+      let shape: string = ControlShapeEnum.SAVE_SHAPE;
       const { fill } = targetData;
       if (controlShapeInvert[fill] === "3") {
-        setVisibility?.("visible");
         setDisabled?.(false);
-        controls = [
-          {
-            name: "value",
-            label: "节点值",
-            shape: ControlShape.INPUT,
-            value: targetData.value,
-            placeholder: "请输入",
-            disabled: true,
-          },
-        ];
-        return [
-          {
-            name: "more",
-            controls,
-          },
-        ];
+        disabled = true;
+        shape = ControlShape.INPUT;
+      } else {
+        setDisabled?.(true);
       }
-      setVisibility?.("hidden");
-      setDisabled?.(true);
-      return [];
+
+      setVisibility?.("visible");
+      controls = [
+        {
+          name: "label",
+          label: "节点名称",
+          shape,
+          value: targetData.label,
+          placeholder: "请输入",
+          disabled,
+          onClick: async ({ form, value, name }: any) => {
+            const { id } = targetData;
+            const { success } =
+              await APIS.DefaultApi.kmsViewServerViewEditorPost(
+                {
+                  id,
+                  newName: value,
+                },
+                { prefix: "/atlas" }
+              );
+            if (success) {
+              form.setFieldValue(name, value);
+            }
+          },
+        },
+      ];
+      return [
+        {
+          name: "more",
+          controls,
+        },
+      ];
     };
 
     return {

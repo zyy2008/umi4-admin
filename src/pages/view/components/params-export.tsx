@@ -2,7 +2,7 @@ import React from "react";
 import { Transfer, Form } from "antd";
 import ButtonModal from "@/components/button-modal";
 import { APIS, ParamBean } from "@/services";
-import {} from "lodash";
+import { useRequest, useModel } from "@umijs/max";
 
 type IProps = {
   onOk?: (T: ParamBean[]) => void;
@@ -10,18 +10,21 @@ type IProps = {
 
 const ParamsExport: React.FC<IProps> = (props) => {
   const { onOk: ok } = props;
+  const { initialState } = useModel("@@initialState");
+  const { satList = [] } = initialState ?? {};
   const [open, setOpen] = React.useState<boolean>(false);
-  const [dataSource, setDataSource] = React.useState<ParamBean[]>([]);
   const [form] = Form.useForm<{ params: string[] }>();
+  const { data: dataSource = [], run } = useRequest(
+    (satId) => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
+    {
+      manual: true,
+    }
+  );
   React.useEffect(() => {
-    APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({
-      satId: "10",
-    }).then(({ success, data = [] }) => {
-      if (success) {
-        setDataSource(data);
-      }
-    });
-  }, []);
+    if (satList?.length > 0) {
+      run(satList?.[0]?.pkId);
+    }
+  }, [satList]);
   const onOk = () => {
     form.validateFields().then(({ params }) => {
       const find = dataSource?.filter((item) => {
