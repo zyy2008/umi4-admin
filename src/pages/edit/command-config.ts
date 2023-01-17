@@ -13,26 +13,31 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
           const { sourceCell, sourcePortId } = res;
           if (sourceCell && sourceCell.isNode() && sourcePortId) {
             const { label } = sourceCell.getData();
-            if (label && label === "if") {
-              const x6Graph = (await args.getX6Graph()) as X6Graph;
-              const edges = x6Graph.getOutgoingEdges(sourceCell);
-              if (edges && edges.length > 0) {
-                const [edge] = edges;
-                const sourcePortId = edge.getSourcePortId() as string;
-                const targetPortId = edge.getTargetPortId() as string;
-                const targetCell = edge.getTargetCell() as Node;
-                targetCell.setPortProp(targetPortId, "connected", false);
-                sourceCell.setPortProp(sourcePortId, "connected", false);
-                targetCell.setData({
-                  ...targetCell.getData(),
-                  ports: targetCell.getParsedPorts(),
-                });
-                sourceCell.setData({
-                  ...sourceCell.getData(),
-                  ports: sourceCell.getParsedPorts(),
-                });
-                edge.remove();
-              }
+            switch (label) {
+              case "if":
+                const x6Graph = (await args.getX6Graph()) as X6Graph;
+                const edges = x6Graph.getOutgoingEdges(sourceCell);
+                if (edges && edges.length > 0) {
+                  const [edge] = edges;
+                  const sourcePortId = edge.getSourcePortId() as string;
+                  const targetPortId = edge.getTargetPortId() as string;
+                  const targetCell = edge.getTargetCell() as Node;
+                  targetCell.setPortProp(targetPortId, "connected", false);
+                  sourceCell.setPortProp(sourcePortId, "connected", false);
+                  targetCell.setData({
+                    ...targetCell.getData(),
+                    ports: targetCell.getParsedPorts(),
+                  });
+                  sourceCell.setData({
+                    ...sourceCell.getData(),
+                    ports: sourceCell.getParsedPorts(),
+                  });
+                  edge.remove();
+                }
+                break;
+
+              default:
+                break;
             }
           }
 
@@ -50,22 +55,27 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
           if (res && res.edgeCell) {
             const getSourceCell = res.edgeCell.getSourceCell() as Node;
             const { label } = getSourceCell.getData();
-            if (label && label === "if") {
-              const x6Graph = (await args.getX6Graph()) as X6Graph;
-              const edges = x6Graph.getOutgoingEdges(getSourceCell);
-              if (edges && edges.length === 1) {
-                res.edgeCell.setLabels("true");
-                res.edgeCell.setData({
-                  ...res.edgeCell.getData(),
-                  label: "true",
-                });
-              } else {
-                res.edgeCell.setLabels("false");
-                res.edgeCell.setData({
-                  ...res.edgeCell.getData(),
-                  label: "false",
-                });
-              }
+            switch (label) {
+              case "if":
+                const x6Graph = (await args.getX6Graph()) as X6Graph;
+                const edges = x6Graph.getOutgoingEdges(getSourceCell);
+                if (edges && edges.length === 1) {
+                  res.edgeCell.setLabels("true");
+                  res.edgeCell.setData({
+                    ...res.edgeCell.getData(),
+                    label: "true",
+                  });
+                } else {
+                  res.edgeCell.setLabels("false");
+                  res.edgeCell.setData({
+                    ...res.edgeCell.getData(),
+                    label: "false",
+                  });
+                }
+                break;
+
+              default:
+                break;
             }
           }
           return res;
