@@ -8,6 +8,7 @@ import { Empty } from "antd";
 import { ViewHandle } from "../index";
 import styles from "./index.less";
 import { APIS, ParamBean } from "@/services";
+import { useModel, useRequest } from "@umijs/max";
 
 export type CheckListProps = {
   disabled?: boolean;
@@ -30,9 +31,17 @@ const CheckCard: React.FC<CheckCardProps & { nodesValue: number[] }> = (
 
 const CheckList: React.FC<CheckListProps> = (props) => {
   const { disabled, onChange, nodesValue, rightRef, params = [] } = props;
+  const { initialState } = useModel("@@initialState");
+  const { satList = [] } = initialState ?? {};
   const [ycExist, seYcExist] = React.useState<ParamBean[]>([]);
   const [selectValue, setSelectValue] =
     React.useState<CheckCardGroupProps["value"]>();
+  const { data: dataSource = [], run } = useRequest(
+    (satId) => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
+    {
+      manual: true,
+    }
+  );
   const value = React.useMemo<CheckCardGroupProps["value"]>(() => {
     if (disabled) {
       return nodesValue;
@@ -62,19 +71,19 @@ const CheckList: React.FC<CheckListProps> = (props) => {
   }, [rightRef.current]);
 
   React.useEffect(() => {
+    if (satList?.length > 0) {
+      run(satList?.[0]?.pkId);
+    }
+  }, [satList]);
+
+  React.useEffect(() => {
     (async () => {
-      const { success, data } =
-        await APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({
-          satId: "10",
-        });
-      if (success) {
+      if (dataSource.length > 0) {
         const { success, data: val } =
           await APIS.DefaultApi.kmsViewServerViewYcImportPost(
             {
-              // parameters: ["参数1-4", "参数2-4", "参数100-111"],
-              // satelliteCode: "xx_55",
-              parameters: data?.map(({ tmName }) => tmName),
-              satelliteCode: "YK-2",
+              parameters: dataSource?.map(({ tmName }) => tmName),
+              satelliteCode: satList?.[0]?.value,
             },
             {
               prefix: "/atlas",
@@ -83,7 +92,7 @@ const CheckList: React.FC<CheckListProps> = (props) => {
         if (success) {
           const { ycExist = [] } = val ?? {};
           const find =
-            data?.filter((item) => {
+            dataSource?.filter((item) => {
               const findIndex = ycExist?.findIndex(
                 (tmCode) => tmCode === item.tmCode
               );
@@ -93,7 +102,7 @@ const CheckList: React.FC<CheckListProps> = (props) => {
         }
       }
     })();
-  }, []);
+  }, [dataSource, satList]);
 
   const findItem = React.useCallback<
     (args: CheckCardProps["value"]) => ParamBean
