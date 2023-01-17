@@ -6,6 +6,7 @@ import type {
   IModelService,
   IGraphCommandService,
 } from "@antv/xflow";
+import { message } from "antd";
 import { controlShape } from "./components";
 import type { Cell, Graph as X6Graph } from "@antv/x6";
 import { ControlShapeEnum } from "@/components/custom-form";
@@ -95,7 +96,13 @@ export namespace NsJsonForm {
           value: targetData.label,
           placeholder: "请输入",
           disabled,
-          onClick: async ({ form, value, name }: any) => {
+          onClick: async ({
+            value,
+            onChange,
+          }: {
+            value: string;
+            onChange: (T: string) => void;
+          }) => {
             const { id } = targetData;
             const { success } =
               await APIS.DefaultApi.kmsViewServerViewEditorPost(
@@ -106,7 +113,10 @@ export namespace NsJsonForm {
                 { prefix: "/atlas" }
               );
             if (success) {
-              form.setFieldValue(name, value);
+              message.success("修改成功！");
+              onChange?.(value);
+            } else {
+              message.warning("修改失败！");
             }
           },
         },

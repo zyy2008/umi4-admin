@@ -1,17 +1,10 @@
 import React from "react";
-import {
-  Form,
-  Input as AInput,
-  Tooltip,
-  InputProps,
-  Space,
-  Button,
-} from "antd";
+import { Form, Input as AInput, Tooltip, InputProps, Button } from "antd";
 import { FormItemWrapper } from "@antv/xflow";
 import type { NsJsonSchemaForm } from "@antv/xflow";
 
 type IProps = {
-  onClick?: (T: { value?: string; form?: any; name?: any }) => void;
+  onClick?: (T: { value?: string; onChange?: InputProps["onChange"] }) => void;
 };
 
 // 渲染 FormItem 的 extra 项
@@ -25,7 +18,7 @@ export function renderFormItemExtra(title?: string) {
 const InputButton: React.FC<
   Pick<InputProps, "onChange" | "value" | "disabled" | "placeholder"> & IProps
 > = (props) => {
-  const { onClick, value: val, ...others } = props;
+  const { onClick, value: val, onChange, ...others } = props;
   const [value, setValue] = React.useState<any>("");
   React.useEffect(() => {
     setValue(val);
@@ -40,7 +33,7 @@ const InputButton: React.FC<
           setValue(e.target.value);
         }}
       />
-      <Button type="primary" onClick={() => onClick?.({ value })}>
+      <Button type="primary" onClick={() => onClick?.({ value, onChange })}>
         保存
       </Button>
     </div>
@@ -77,7 +70,7 @@ export const SaveShape: React.FC<NsJsonSchemaForm.IControlProps> = (props) => {
             <InputButton
               disabled={disabled}
               placeholder={placeholder}
-              onClick={({ value }) => onClick?.({ value, form, name })}
+              onClick={onClick}
             />
           </Form.Item>
         );
