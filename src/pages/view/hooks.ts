@@ -4,7 +4,7 @@ import { MODELS, NsGraph, uuidv4 } from "@antv/xflow";
 import { CheckCardProps } from "@ant-design/pro-components";
 import { uniqBy } from "lodash";
 import { ViewHandle, CheckListProps, controlShape } from "./components";
-import { KnowledgeView, ViewRelationship, ParamBean } from "@/services";
+import { KnowledgeView, ViewRelationship, ParamBean, APIS } from "@/services";
 import { formatGraphData, formatTree, graphReader } from "@/utils";
 import type { DataNode } from "antd/es/tree";
 
@@ -32,15 +32,24 @@ export const useView = (props: IProps) => {
         const x6Graph = await app.getGraphInstance();
         const node = await MODELS.SELECTED_NODE.useValue(app.modelService);
         const data = node.getData();
-        const value = val ? item : { label: "参数", value: "" };
-        node.setData({
-          ...data,
-          ...value,
-        });
-        x6Graph.cleanSelection();
-        setTimeout(() => {
-          x6Graph.select(node);
-        }, 20);
+        const value = val ? item : { label: "参数", value: "", tmName: "参数" };
+        const { success } = await APIS.DefaultApi.kmsViewServerViewEditorPost(
+          {
+            id: data.id,
+            newName: value?.tmName,
+          },
+          { prefix: "/atlas" }
+        );
+        if (success) {
+          node.setData({
+            ...data,
+            ...value,
+          });
+          x6Graph.cleanSelection();
+          setTimeout(() => {
+            x6Graph.select(node);
+          }, 20);
+        }
       }
     },
     [rightRef.current]
@@ -48,7 +57,9 @@ export const useView = (props: IProps) => {
   React.useEffect(() => {
     if (graphData) {
       const { nodes } = graphData;
-      const val = nodes.filter((item) => item.value).map((item) => item.value);
+      const val = nodes
+        .filter((item) => item.tmCode)
+        .map((item) => item.tmCode);
       setNodesValue(val);
     }
   }, [graphData]);
