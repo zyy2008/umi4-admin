@@ -16,12 +16,11 @@ import * as models from './models';
   * @property `[docInfo]` 文档信息
   * @property `[docName]` 文档文件名
   * @property `[docPath]` 文档路径
-  * @property `[id]` id
-  * @property `[mark]` 节点级别(0:根节点,1:节点二,2:节点三,3:节点四)
-  * @property `[name]` 节点名
   * @property `[nodeCode]` 节点标识符
+  * @property `[nodeId]` 节点ID
+  * @property `[nodeName]` 节点名
   */
-export interface KnowledgeView {
+export interface CorrelationInfo {
   /**
    * 文档信息
    */
@@ -35,20 +34,16 @@ export interface KnowledgeView {
    */
   "docPath"?: string;
   /**
-   * id
-   */
-  "id"?: number;
-  /**
-   * 节点级别(0:根节点,1:节点二,2:节点三,3:节点四)
-   */
-  "mark"?: number;
-  /**
-   * 节点名
-   */
-  "name"?: string;
-  /**
    * 节点标识符
    */
   "nodeCode"?: string;
+  /**
+   * 节点ID
+   */
+  "nodeId"?: number;
+  /**
+   * 节点名
+   */
+  "nodeName"?: string;
 }
 

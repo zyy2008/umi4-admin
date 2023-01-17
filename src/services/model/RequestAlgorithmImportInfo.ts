@@ -13,25 +13,26 @@
 import * as models from './models';
 
 /**
-  * @description 算法表
   * @property `[activateVersion]` 活跃版本号
   * @property `[algorithmIdentify]` 算法标识
   * @property `[algorithmName]` 算法名称
-  * @property `[assessTime]` 评估时长
-  * @property `[createTime]` 创建时间
-  * @property `[createUser]` 添加人
-  * @property `[id]` 主键id
+  * @property `[dependencyList]` 依赖包名称
+  * @property `[dependencyUrl]` 依赖包url
+  * @property `[fileName]` 运行文件名称
+  * @property `[imagesTags]` 镜像文件Tags
+  * @property `[importFrom]` 输入信息来源
+  * @property `[importPath]` 导入路径
+  * @property `[importTo]` 输入信息去向
   * @property `[inputMessage]` 输入信息
-  * @property `[isLoad]` 是否加载
-  * @property `[loadTime]` 加载时间
+  * @property `[kmsTags]` 私服Tags
   * @property `[operatingSystem]` 操作系统
   * @property `[outputMessage]` 输出信息
+  * @property `[savePath]` 保存路径
   * @property `[startupModel]` 启动方式
   * @property `[triggerCondition]` 触发条件
-  * @property `[updateTime]` 编辑时间
-  * @property `[updateUser]` 编辑人
+  * @property `[userName]` 作者
   */
-export interface Algorithm2 {
+export interface RequestAlgorithmImportInfo {
   /**
    * 活跃版本号
    */
@@ -45,33 +46,41 @@ export interface Algorithm2 {
    */
   "algorithmName"?: string;
   /**
-   * 评估时长
+   * 依赖包名称
    */
-  "assessTime"?: number;
+  "dependencyList"?: Array<string>;
   /**
-   * 创建时间
+   * 依赖包url
    */
-  "createTime"?: Date;
+  "dependencyUrl"?: string;
   /**
-   * 添加人
+   * 运行文件名称
    */
-  "createUser"?: string;
+  "fileName"?: string;
   /**
-   * 主键id
+   * 镜像文件Tags
    */
-  "id"?: number;
+  "imagesTags"?: string;
+  /**
+   * 输入信息来源
+   */
+  "importFrom"?: string;
+  /**
+   * 导入路径
+   */
+  "importPath"?: string;
+  /**
+   * 输入信息去向
+   */
+  "importTo"?: string;
   /**
    * 输入信息
    */
   "inputMessage"?: string;
   /**
-   * 是否加载
+   * 私服Tags
    */
-  "isLoad"?: number;
-  /**
-   * 加载时间
-   */
-  "loadTime"?: Date;
+  "kmsTags"?: string;
   /**
    * 操作系统
    */
@@ -81,6 +90,10 @@ export interface Algorithm2 {
    */
   "outputMessage"?: string;
   /**
+   * 保存路径
+   */
+  "savePath"?: string;
+  /**
    * 启动方式
    */
   "startupModel"?: string;
@@ -89,12 +102,8 @@ export interface Algorithm2 {
    */
   "triggerCondition"?: string;
   /**
-   * 编辑时间
+   * 作者
    */
-  "updateTime"?: Date;
-  /**
-   * 编辑人
-   */
-  "updateUser"?: string;
+  "userName"?: string;
 }
 

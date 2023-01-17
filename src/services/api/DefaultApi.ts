@@ -24,7 +24,7 @@ export interface ParamsbaseServerDataQueryQuerySatBySidGet {
   /**
    * 卫星标识
    */
-  satSid?: string;
+  satId?: string;
 }
 /**
  * @description baseServerDataQueryQueryTmBySidGet参数
@@ -40,7 +40,26 @@ export interface ParamsbaseServerDataQueryQueryTmBySidGet {
 /**
  * 算法表
  */
-export type ParamsBodykmsJobServerAlgorithmAddPost = models.Algorithm2;
+export type ParamsBodykmsJobServerAlgorithmAddPost = models.Algorithm;
+/**
+ * @description kmsJobServerAlgorithmAuditLogListPost参数
+ * @property `[pageNum]` pageNum
+ * @property `[pageSize]` pageSize
+ */
+export interface ParamskmsJobServerAlgorithmAuditLogListPost {
+  // queryParams
+  /**
+   * pageNum
+   */
+  pageNum?: string;
+  /**
+   * pageSize
+   */
+  pageSize?: string;
+}
+/**
+ */
+export type ParamsBodykmsJobServerAlgorithmAuditLogListPost = 3;
 /**
  * @description kmsJobServerAlgorithmDeleteBatchDelete参数
  * @property `ids` ids
@@ -76,6 +95,26 @@ export type ParamsBodykmsJobServerAlgorithmDeleteDelete = string;
  */
 export type ParamsBodykmsJobServerAlgorithmEditPost = models.Algorithm3;
 /**
+ * @description kmsJobServerAlgorithmExportPost参数
+ * @property `algoId` algoId
+ * @property `exportPath` exportPath
+ */
+export interface ParamskmsJobServerAlgorithmExportPost {
+  // queryParams
+  /**
+   * algoId
+   */
+  algoId: string;
+  /**
+   * exportPath
+   */
+  exportPath: string;
+}
+/**
+ */
+export type ParamsBodykmsJobServerAlgorithmImportPost =
+  models.RequestAlgorithmImportInfo;
+/**
  * @description kmsJobServerAlgorithmListPost参数
  * @property `[pageNum]` pageNum
  * @property `[pageSize]` pageSize
@@ -94,7 +133,18 @@ export interface ParamskmsJobServerAlgorithmListPost {
 /**
  * 算法表
  */
-export type ParamsBodykmsJobServerAlgorithmListPost = models.Algorithm;
+export type ParamsBodykmsJobServerAlgorithmListPost = models.Algorithm1;
+/**
+ * @description kmsJobServerAlgorithmLoadGet参数
+ * @property `algoId` algoId
+ */
+export interface ParamskmsJobServerAlgorithmLoadGet {
+  // queryParams
+  /**
+   * algoId
+   */
+  algoId: string;
+}
 /**
  * @description kmsJobServerAlgorithmQueryAuditLogByIdGet参数
  * @property `algoId` algoId
@@ -150,16 +200,12 @@ export interface ParamskmsJobServerAlgorithmQueryVersionByIdGet {
 }
 /**
  * @description kmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost参数
- * @property `taskId` taskId
  * @property `pageNum` pageNum
  * @property `pageSize` pageSize
+ * @property `taskId` taskId
  */
 export interface ParamskmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost {
   // pathParams
-  /**
-   * taskId
-   */
-  taskId: string;
   /**
    * pageNum
    */
@@ -168,11 +214,18 @@ export interface ParamskmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizeP
    * pageSize
    */
   pageSize: string;
+  /**
+   * taskId
+   */
+  taskId: string;
 }
 /**
  */
 export type ParamsBodykmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost =
-  5;
+  6;
+/**
+ */
+export type ParamsBodykmsJobServerCommonTaskBatchDelete = Array<number>;
 /**
  * @description kmsJobServerCommonTaskFlowTaskIdPut参数
  * @property `taskId` taskId
@@ -190,16 +243,12 @@ export interface ParamskmsJobServerCommonTaskFlowTaskIdPut {
 export type ParamsBodykmsJobServerCommonTaskFlowTaskIdPut = models.CommonTask0;
 /**
  * @description kmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost参数
- * @property `taskId` taskId
  * @property `pageNum` pageNum
  * @property `pageSize` pageSize
+ * @property `taskId` taskId
  */
 export interface ParamskmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost {
   // pathParams
-  /**
-   * taskId
-   */
-  taskId: string;
   /**
    * pageNum
    */
@@ -208,11 +257,15 @@ export interface ParamskmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSiz
    * pageSize
    */
   pageSize: string;
+  /**
+   * taskId
+   */
+  taskId: string;
 }
 /**
  */
 export type ParamsBodykmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost =
-  3;
+  4;
 /**
  * @description kmsJobServerCommonTaskPageListPageNumPageSizePost参数
  * @property `pageNum` pageNum
@@ -240,7 +293,7 @@ export type ParamsBodykmsJobServerCommonTaskPageListPageNumPageSizePost =
 export type ParamsBodykmsJobServerCommonTaskPost = models.CommonTask01;
 /**
  */
-export type ParamsBodykmsJobServerCommonTaskPut = 4;
+export type ParamsBodykmsJobServerCommonTaskPut = 5;
 /**
  * @description kmsJobServerCommonTaskTaskIdDelete参数
  * @property `taskId` taskId
@@ -319,7 +372,113 @@ export interface ParamskmsJobServerObjectCommonTaskObjectIdPut {
 /**
  */
 export type ParamsBodykmsJobServerObjectCommonTaskObjectIdPut =
-  Array<models.ObjectCommonTask>;
+  Array<models.ObjectCommonTask1>;
+/**
+ */
+export type ParamsBodykmsSysconfigServerObjectGroupAddObjectGroupConfigPost =
+  models.ObjectGroupAddBean;
+/**
+ * @description kmsSysconfigServerObjectGroupIdPkIdDelete参数
+ * @property `pkId` 主键
+ */
+export interface ParamskmsSysconfigServerObjectGroupIdPkIdDelete {
+  // pathParams
+  /**
+   * 主键
+   */
+  pkId: string;
+}
+/**
+ * raw paramter
+ */
+export type ParamsBodykmsSysconfigServerObjectGroupIdPkIdDelete = string;
+/**
+ * @description kmsSysconfigServerObjectGroupObjectGroupConfigByPageGet参数
+ * @property `[objectCode]` 对象组标识
+ * @property `[objectName]` 对象组名称
+ * @property `page` 页数
+ * @property `pageSize` 条数
+ */
+export interface ParamskmsSysconfigServerObjectGroupObjectGroupConfigByPageGet {
+  // queryParams
+  /**
+   * 对象组标识
+   */
+  objectCode?: string;
+  /**
+   * 对象组名称
+   */
+  objectName?: string;
+  /**
+   * 页数
+   */
+  page: string;
+  /**
+   * 条数
+   */
+  pageSize: string;
+}
+/**
+ */
+export type ParamsBodykmsSysconfigServerObjectGroupUpdateObjectGroupConfigPost =
+  models.ObjectGroupUpdateBean;
+/**
+ */
+export type ParamsBodykmsViewServerDocumentCorrelationPost =
+  Array<models.CorrelationInfo>;
+/**
+ * @description kmsViewServerDocumentDeletePost参数
+ * @property `[fileName]` fileName
+ */
+export interface ParamskmsViewServerDocumentDeletePost {
+  // queryParams
+  /**
+   * fileName
+   */
+  fileName?: string;
+}
+/**
+ * @description kmsViewServerDocumentDownloadPost参数
+ * @property `[fileName]` fileName
+ */
+export interface ParamskmsViewServerDocumentDownloadPost {
+  // queryParams
+  /**
+   * fileName
+   */
+  fileName?: string;
+}
+/**
+ * @description kmsViewServerDocumentFindPost参数
+ * @property `[fileType]` fileType
+ */
+export interface ParamskmsViewServerDocumentFindPost {
+  // queryParams
+  /**
+   * fileType
+   */
+  fileType?: string;
+}
+/**
+ * @description kmsViewServerDocumentPreviewPost参数
+ * @property `[fileName]` fileName
+ */
+export interface ParamskmsViewServerDocumentPreviewPost {
+  // queryParams
+  /**
+   * fileName
+   */
+  fileName?: string;
+}
+/**
+ * @property `[file]`
+ * @property `[fileType]`
+ */
+export interface ParamskmsViewServerDocumentUploadPost {
+  // formParams
+  file?: any;
+  fileType?: string;
+}
 /**
  * @description kmsViewServerViewDeletePost参数
  * @property `[id]` 节点ID
@@ -329,12 +488,13 @@ export interface ParamskmsViewServerViewDeletePost {
   /**
    * 节点ID
    */
-  id?: number;
+  id?: string;
 }
 /**
  * @description kmsViewServerViewEditorPost参数
  * @property `[id]` 节点ID
  * @property `[newName]` 新节点名
+ * @property `[nodeCode]` 节点标识符
  */
 export interface ParamskmsViewServerViewEditorPost {
   // queryParams
@@ -346,6 +506,10 @@ export interface ParamskmsViewServerViewEditorPost {
    * 新节点名
    */
   newName?: string;
+  /**
+   * 节点标识符
+   */
+  nodeCode?: string;
 }
 /**
  * @description kmsViewServerViewExportPost参数
@@ -394,11 +558,16 @@ export interface ParamskmsViewServerViewImportPost {
 }
 /**
  * @description kmsViewServerViewNodeAddPost参数
+ * @property `[newNodeCode]` 节点标识符
  * @property `[newNodeName]` 新增节点名
  * @property `[nodeId]` 节点ID
  */
 export interface ParamskmsViewServerViewNodeAddPost {
   // queryParams
+  /**
+   * 节点标识符
+   */
+  newNodeCode?: string;
   /**
    * 新增节点名
    */
@@ -406,7 +575,7 @@ export interface ParamskmsViewServerViewNodeAddPost {
   /**
    * 节点ID
    */
-  nodeId?: number;
+  nodeId?: string;
 }
 /**
  */
@@ -621,10 +790,10 @@ export class DefaultApi {
     params: ParamsbaseServerDataQueryQuerySatBySidGet,
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseSatBean> => {
-    const url = this.$basePath + `/base-server/DataQuery/querySatBySid`;
+    const url = this.$basePath + `/kmsSysconfigServer/DataQuery/querySatById`;
     const p: any = {};
     p.query = {};
-    if ("satSid" in params) p.query.satSid = params.satSid;
+    if ("satId" in params) p.query.satId = params.satId;
     return ajax.ajax({
       ...opt,
       method: "GET",
@@ -718,6 +887,32 @@ export class DefaultApi {
     });
   };
   /**
+   *
+   * @summary 算法任务-审计日志列表
+   * @param params ParamskmsJobServerAlgorithmAuditLogListPost
+   * @param data: ParamsBodykmsJobServerAlgorithmAuditLogListPost
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmAuditLogListPost = (
+    params: ParamskmsJobServerAlgorithmAuditLogListPost,
+    data: ParamsBodykmsJobServerAlgorithmAuditLogListPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponse> => {
+    const url = this.$basePath + `/kms-job-server/algorithm/auditLogList`;
+    const p: any = {};
+    p.query = {};
+    if ("pageNum" in params) p.query.pageNum = params.pageNum;
+    if ("pageSize" in params) p.query.pageSize = params.pageSize;
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
    * 算法任务-批量删除
    * @summary 算法任务-批量删除
    * @param params ParamskmsJobServerAlgorithmDeleteBatchDelete
@@ -794,16 +989,22 @@ export class DefaultApi {
   /**
    * 算法任务-导出
    * @summary 算法任务-导出
-   
+   * @param params ParamskmsJobServerAlgorithmExportPost
    
    * @param opt ajax config
    * @returns models.BaseResponse
    */
   public kmsJobServerAlgorithmExportPost = (
+    params: ParamskmsJobServerAlgorithmExportPost,
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponse> => {
     const url = this.$basePath + `/kms-job-server/algorithm/export`;
     const p: any = {};
+    p.query = {};
+    if ("algoId" in params) p.query.algoId = params.algoId;
+    ajax.check(params.algoId, "algoId");
+    if ("exportPath" in params) p.query.exportPath = params.exportPath;
+    ajax.check(params.exportPath, "exportPath");
     return ajax.ajax({
       ...opt,
       method: "POST",
@@ -815,15 +1016,17 @@ export class DefaultApi {
    * 算法任务-导入
    * @summary 算法任务-导入
    
-   
+   * @param data: ParamsBodykmsJobServerAlgorithmImportPost
    * @param opt ajax config
    * @returns models.BaseResponse
    */
   public kmsJobServerAlgorithmImportPost = (
+    data: ParamsBodykmsJobServerAlgorithmImportPost,
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponse> => {
     const url = this.$basePath + `/kms-job-server/algorithm/import`;
     const p: any = {};
+    p.data = data;
     return ajax.ajax({
       ...opt,
       method: "POST",
@@ -853,6 +1056,30 @@ export class DefaultApi {
     return ajax.ajax({
       ...opt,
       method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 算法任务-加载
+   * @param params ParamskmsJobServerAlgorithmLoadGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerAlgorithmLoadGet = (
+    params: ParamskmsJobServerAlgorithmLoadGet,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponse> => {
+    const url = this.$basePath + `/kms-job-server/algorithm/load`;
+    const p: any = {};
+    p.query = {};
+    if ("algoId" in params) p.query.algoId = params.algoId;
+    ajax.check(params.algoId, "algoId");
+    return ajax.ajax({
+      ...opt,
+      method: "GET",
       url,
       ...p,
     });
@@ -946,18 +1173,40 @@ export class DefaultApi {
     data: ParamsBodykmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost,
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseIPageCommonTaskAuditLog> => {
-    const { taskId, pageNum, pageSize } = params;
+    const { pageNum, pageSize, taskId } = params;
     const url =
       this.$basePath +
       `/kms-job-server/commonTask/audit/pageList/${taskId}/${pageNum}/${pageSize}`;
     const p: any = {};
-    ajax.check(params.taskId, "taskId");
     ajax.check(params.pageNum, "pageNum");
     ajax.check(params.pageSize, "pageSize");
+    ajax.check(params.taskId, "taskId");
     p.data = data;
     return ajax.ajax({
       ...opt,
       method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 批量删除
+   
+   * @param data: ParamsBodykmsJobServerCommonTaskBatchDelete
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsJobServerCommonTaskBatchDelete = (
+    data: ParamsBodykmsJobServerCommonTaskBatchDelete,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponse> => {
+    const url = this.$basePath + `/kms-job-server/commonTask/batch`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: "DELETE",
       url,
       ...p,
     });
@@ -1000,14 +1249,14 @@ export class DefaultApi {
     data: ParamsBodykmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost,
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseIPageCommonTaskVersion> => {
-    const { taskId, pageNum, pageSize } = params;
+    const { pageNum, pageSize, taskId } = params;
     const url =
       this.$basePath +
       `/kms-job-server/commonTask/history/pageList/${taskId}/${pageNum}/${pageSize}`;
     const p: any = {};
-    ajax.check(params.taskId, "taskId");
     ajax.check(params.pageNum, "pageNum");
     ajax.check(params.pageSize, "pageSize");
+    ajax.check(params.taskId, "taskId");
     p.data = data;
     return ajax.ajax({
       ...opt,
@@ -1256,6 +1505,255 @@ export class DefaultApi {
   };
   /**
    * 
+   * @summary 对象组添加信息
+   
+   * @param data: ParamsBodykmsSysconfigServerObjectGroupAddObjectGroupConfigPost
+   * @param opt ajax config
+   * @returns models.BaseResponseObjectGroupAddBean
+   */
+  public kmsSysconfigServerObjectGroupAddObjectGroupConfigPost = (
+    data: ParamsBodykmsSysconfigServerObjectGroupAddObjectGroupConfigPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseObjectGroupAddBean> => {
+    const url =
+      this.$basePath + `/kmsSysconfigServer/objectGroup/addObjectGroupConfig`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   *
+   * @summary 对象组删除信息
+   * @param params ParamskmsSysconfigServerObjectGroupIdPkIdDelete
+   * @param data: ParamsBodykmsSysconfigServerObjectGroupIdPkIdDelete// raw paramter
+   * @param opt ajax config
+   * @returns models.BaseResponseObjectGroupBean
+   */
+  public kmsSysconfigServerObjectGroupIdPkIdDelete = (
+    params: ParamskmsSysconfigServerObjectGroupIdPkIdDelete,
+    data: ParamsBodykmsSysconfigServerObjectGroupIdPkIdDelete,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseObjectGroupBean> => {
+    const { pkId } = params;
+    const url = this.$basePath + `/kmsSysconfigServer/objectGroup/id/${pkId}`;
+    const p: any = {};
+    ajax.check(params.pkId, "pkId");
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: "DELETE",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 对象组分页查询
+   * @param params ParamskmsSysconfigServerObjectGroupObjectGroupConfigByPageGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseIPageObjectGroupBean
+   */
+  public kmsSysconfigServerObjectGroupObjectGroupConfigByPageGet = (
+    params: ParamskmsSysconfigServerObjectGroupObjectGroupConfigByPageGet,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseIPageObjectGroupBean> => {
+    const url =
+      this.$basePath +
+      `/kmsSysconfigServer/objectGroup/objectGroupConfigByPage`;
+    const p: any = {};
+    p.query = {};
+    if ("objectCode" in params) p.query.objectCode = params.objectCode;
+    if ("objectName" in params) p.query.objectName = params.objectName;
+    if ("page" in params) p.query.page = params.page;
+    ajax.check(params.page, "page");
+    if ("pageSize" in params) p.query.pageSize = params.pageSize;
+    ajax.check(params.pageSize, "pageSize");
+    return ajax.ajax({
+      ...opt,
+      method: "GET",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 对象组修改信息
+   
+   * @param data: ParamsBodykmsSysconfigServerObjectGroupUpdateObjectGroupConfigPost
+   * @param opt ajax config
+   * @returns models.BaseResponseObjectGroupBean
+   */
+  public kmsSysconfigServerObjectGroupUpdateObjectGroupConfigPost = (
+    data: ParamsBodykmsSysconfigServerObjectGroupUpdateObjectGroupConfigPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseObjectGroupBean> => {
+    const url =
+      this.$basePath +
+      `/kmsSysconfigServer/objectGroup/updateObjectGroupConfig`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 文档关联
+   
+   * @param data: ParamsBodykmsViewServerDocumentCorrelationPost
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public kmsViewServerDocumentCorrelationPost = (
+    data: ParamsBodykmsViewServerDocumentCorrelationPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponsestring1> => {
+    const url = this.$basePath + `/kms-view-server/document/correlation`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 删除文档
+   * @param params ParamskmsViewServerDocumentDeletePost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public kmsViewServerDocumentDeletePost = (
+    params: ParamskmsViewServerDocumentDeletePost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponsestring1> => {
+    const url = this.$basePath + `/kms-view-server/document/delete`;
+    const p: any = {};
+    p.query = {};
+    if ("fileName" in params) p.query.fileName = params.fileName;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 下载文档
+   * @param params ParamskmsViewServerDocumentDownloadPost
+   
+   * @param opt ajax config
+   * @returns string
+   */
+  public kmsViewServerDocumentDownloadPost = (
+    params: ParamskmsViewServerDocumentDownloadPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<string> => {
+    const url = this.$basePath + `/kms-view-server/document/download`;
+    const p: any = {};
+    p.query = {};
+    if ("fileName" in params) p.query.fileName = params.fileName;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 查询文档
+   * @param params ParamskmsViewServerDocumentFindPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListDocumentItem
+   */
+  public kmsViewServerDocumentFindPost = (
+    params: ParamskmsViewServerDocumentFindPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseListDocumentItem> => {
+    const url = this.$basePath + `/kms-view-server/document/find`;
+    const p: any = {};
+    p.query = {};
+    if ("fileType" in params) p.query.fileType = params.fileType;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 文档预览
+   * @param params ParamskmsViewServerDocumentPreviewPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponsestring1
+   */
+  public kmsViewServerDocumentPreviewPost = (
+    params: ParamskmsViewServerDocumentPreviewPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponsestring1> => {
+    const url = this.$basePath + `/kms-view-server/document/preview`;
+    const p: any = {};
+    p.query = {};
+    if ("fileName" in params) p.query.fileName = params.fileName;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 导入文档
+   * @param params ParamskmsViewServerDocumentUploadPost
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListstring
+   */
+  public kmsViewServerDocumentUploadPost = (
+    params: ParamskmsViewServerDocumentUploadPost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseListstring> => {
+    const url = this.$basePath + `/kms-view-server/document/upload`;
+    const p: any = {};
+    p.form = new FormData();
+    // 上传文件
+    opt = {
+      ...opt,
+      headers: {
+        ...(opt && opt.headers),
+        "Content-Type": "multipart/form-data",
+      },
+    };
+    // p.form = new FormData();
+    if ("file" in params) p.form.append("file", params.file);
+    if ("fileType" in params) p.form.fileType = params.fileType;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
    * @summary 根据ID删除
    * @param params ParamskmsViewServerViewDeletePost
    
@@ -1294,6 +1792,7 @@ export class DefaultApi {
     p.query = {};
     if ("id" in params) p.query.id = params.id;
     if ("newName" in params) p.query.newName = params.newName;
+    if ("nodeCode" in params) p.query.nodeCode = params.nodeCode;
     return ajax.ajax({
       ...opt,
       method: "POST",
@@ -1410,15 +1909,16 @@ export class DefaultApi {
    * @param params ParamskmsViewServerViewNodeAddPost
    
    * @param opt ajax config
-   * @returns models.BaseResponsestring1
+   * @returns models.BaseResponseKnowledgeView
    */
   public kmsViewServerViewNodeAddPost = (
     params: ParamskmsViewServerViewNodeAddPost,
     opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponsestring1> => {
+  ): AjaxPromise<models.BaseResponseKnowledgeView> => {
     const url = this.$basePath + `/kms-view-server/view/node/add`;
     const p: any = {};
     p.query = {};
+    if ("newNodeCode" in params) p.query.newNodeCode = params.newNodeCode;
     if ("newNodeName" in params) p.query.newNodeName = params.newNodeName;
     if ("nodeId" in params) p.query.nodeId = params.nodeId;
     return ajax.ajax({

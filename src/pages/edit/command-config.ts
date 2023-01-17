@@ -36,6 +36,8 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
                 }
                 break;
 
+              case "for":
+                break;
               default:
                 break;
             }
@@ -54,10 +56,12 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
           const res = (await handler(args)) as NsEdgeCmd.AddEdge.IResult;
           if (res && res.edgeCell) {
             const getSourceCell = res.edgeCell.getSourceCell() as Node;
+            const getTargetCell = res.edgeCell.getTargetNode();
+            console.log(getTargetCell);
             const { label } = getSourceCell.getData();
+            const x6Graph = (await args.getX6Graph()) as X6Graph;
             switch (label) {
               case "if":
-                const x6Graph = (await args.getX6Graph()) as X6Graph;
                 const edges = x6Graph.getOutgoingEdges(getSourceCell);
                 if (edges && edges.length === 1) {
                   res.edgeCell.setLabels("true");
@@ -73,7 +77,8 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
                   });
                 }
                 break;
-
+              case "for":
+                break;
               default:
                 break;
             }

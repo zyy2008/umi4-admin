@@ -19,10 +19,10 @@ import * as models from './models';
   * @property `[size]` 
   * @property `[total]` 
   */
-export interface IPageAlgorithm {
+export interface IPageObjectGroupBean {
   "current"?: number;
   "pages"?: number;
-  "records"?: Array<models.Algorithm2>;
+  "records"?: Array<models.ObjectGroupBean1>;
   "size"?: number;
   "total"?: number;
 }

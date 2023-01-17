@@ -21,8 +21,13 @@ import * as models from './models';
   * @property `[createTime]` 创建时间
   * @property `[createUser]` 添加人
   * @property `[id]` 主键id
+  * @property `[inputMessage]` 输入信息
   * @property `[isLoad]` 是否加载
   * @property `[loadTime]` 加载时间
+  * @property `[operatingSystem]` 操作系统
+  * @property `[outputMessage]` 输出信息
+  * @property `[startupModel]` 启动方式
+  * @property `[triggerCondition]` 触发条件
   * @property `[updateTime]` 编辑时间
   * @property `[updateUser]` 编辑人
   */
@@ -56,6 +61,10 @@ export interface Algorithm {
    */
   "id"?: number;
   /**
+   * 输入信息
+   */
+  "inputMessage"?: string;
+  /**
    * 是否加载
    */
   "isLoad"?: number;
@@ -63,6 +72,22 @@ export interface Algorithm {
    * 加载时间
    */
   "loadTime"?: Date;
+  /**
+   * 操作系统
+   */
+  "operatingSystem"?: string;
+  /**
+   * 输出信息
+   */
+  "outputMessage"?: string;
+  /**
+   * 启动方式
+   */
+  "startupModel"?: string;
+  /**
+   * 触发条件
+   */
+  "triggerCondition"?: string;
   /**
    * 编辑时间
    */

@@ -13,17 +13,19 @@
 import * as models from './models';
 
 /**
-  * @property `code` 对象组标识
-  * @property `name` 对象组名称
+  * @property `[data]` 
+  * @property `[errorMsg]` 错误信息
+  * @property `[success]` 返回状态
   */
-export interface ObjectGroupBean {
+export interface BaseResponseKnowledgeView {
+  "data"?: models.KnowledgeView;
   /**
-   * 对象组标识
+   * 错误信息
    */
-  "code": string;
+  "errorMsg"?: string;
   /**
-   * 对象组名称
+   * 返回状态
    */
-  "name": string;
+  "success"?: boolean;
 }
 

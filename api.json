@@ -28,6 +28,14 @@
       "description": "Algorithm Controller"
     },
     {
+      "name": "对象组",
+      "description": "Object Group Controller"
+    },
+    {
+      "name": "文档管理接口",
+      "description": "Document Controller"
+    },
+    {
       "name": "知识图谱接口",
       "description": "View Import Controller"
     },
@@ -132,7 +140,7 @@
                         "description": "主键id"
                       },
                       "objId": {
-                        "type": "integer",
+                        "type": "string",
                         "format": "int32",
                         "description": "对象id"
                       }
@@ -238,8 +246,7 @@
                     "description": "主键id"
                   },
                   "objId": {
-                    "type": "integer",
-                    "format": "int32",
+                    "type": "string",
                     "description": "对象id"
                   }
                 },
@@ -257,8 +264,7 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object",
-                  "properties": {}
+                  "type": "object"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -300,8 +306,7 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object",
-                  "properties": {}
+                  "type": "object"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -2841,6 +2846,124 @@
         }
       }
     },
+    "/kms-job-server/algorithm/add": {
+      "post": {
+        "tags": [
+          "算法任务"
+        ],
+        "summary": "算法任务-新增",
+        "description": "算法任务-新增",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsJobServerAlgorithmAddBody",
+            "in": "body",
+            "description": "算法表",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activateVersion": {
+                  "type": "string",
+                  "description": "活跃版本号"
+                },
+                "algorithmIdentify": {
+                  "type": "string",
+                  "description": "算法标识"
+                },
+                "algorithmName": {
+                  "type": "string",
+                  "description": "算法名称"
+                },
+                "assessTime": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "评估时长"
+                },
+                "createTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "创建时间"
+                },
+                "createUser": {
+                  "type": "string",
+                  "description": "添加人"
+                },
+                "id": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "主键id"
+                },
+                "inputMessage": {
+                  "type": "string",
+                  "description": "输入信息"
+                },
+                "isLoad": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "是否加载"
+                },
+                "loadTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "加载时间"
+                },
+                "operatingSystem": {
+                  "type": "string",
+                  "description": "操作系统"
+                },
+                "outputMessage": {
+                  "type": "string",
+                  "description": "输出信息"
+                },
+                "startupModel": {
+                  "type": "string",
+                  "description": "启动方式"
+                },
+                "triggerCondition": {
+                  "type": "string",
+                  "description": "触发条件"
+                },
+                "updateTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "编辑时间"
+                },
+                "updateUser": {
+                  "type": "string",
+                  "description": "编辑人"
+                }
+              },
+              "title": "Algorithm对象",
+              "description": "算法表",
+              "$$ref": "#/definitions/Algorithm对象"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse",
+              "$$ref": "#/definitions/BaseResponse"
+            }
+          }
+        }
+      }
+    },
     "/kms-job-server/algorithm/list": {
       "post": {
         "tags": [
@@ -2875,64 +2998,73 @@
               "properties": {
                 "activateVersion": {
                   "type": "string",
-                  "description": "活跃版本号",
-                  "refType": null
+                  "description": "活跃版本号"
                 },
                 "algorithmIdentify": {
                   "type": "string",
-                  "description": "算法标识",
-                  "refType": null
+                  "description": "算法标识"
                 },
                 "algorithmName": {
                   "type": "string",
-                  "description": "算法名称",
-                  "refType": null
+                  "description": "算法名称"
                 },
                 "assessTime": {
                   "type": "integer",
                   "format": "int32",
-                  "description": "评估时长",
-                  "refType": null
+                  "description": "评估时长"
                 },
                 "createTime": {
                   "type": "string",
                   "format": "date-time",
-                  "description": "创建时间",
-                  "refType": null
+                  "description": "创建时间"
                 },
                 "createUser": {
                   "type": "string",
-                  "description": "添加人",
-                  "refType": null
+                  "description": "添加人"
                 },
                 "id": {
                   "type": "integer",
                   "format": "int32",
-                  "description": "主键id",
-                  "refType": null
+                  "description": "主键id"
+                },
+                "inputMessage": {
+                  "type": "string",
+                  "description": "输入信息"
                 },
                 "isLoad": {
                   "type": "integer",
                   "format": "int32",
-                  "description": "是否加载",
-                  "refType": null
+                  "description": "是否加载"
                 },
                 "loadTime": {
                   "type": "string",
                   "format": "date-time",
-                  "description": "加载时间",
-                  "refType": null
+                  "description": "加载时间"
+                },
+                "operatingSystem": {
+                  "type": "string",
+                  "description": "操作系统"
+                },
+                "outputMessage": {
+                  "type": "string",
+                  "description": "输出信息"
+                },
+                "startupModel": {
+                  "type": "string",
+                  "description": "启动方式"
+                },
+                "triggerCondition": {
+                  "type": "string",
+                  "description": "触发条件"
                 },
                 "updateTime": {
                   "type": "string",
                   "format": "date-time",
-                  "description": "编辑时间",
-                  "refType": null
+                  "description": "编辑时间"
                 },
                 "updateUser": {
                   "type": "string",
-                  "description": "编辑人",
-                  "refType": null
+                  "description": "编辑人"
                 }
               },
               "title": "Algorithm对象",
@@ -3003,6 +3135,10 @@
                             "description": "主键id",
                             "refType": null
                           },
+                          "inputMessage": {
+                            "type": "string",
+                            "description": "输入信息"
+                          },
                           "isLoad": {
                             "type": "integer",
                             "format": "int32",
@@ -3014,6 +3150,22 @@
                             "format": "date-time",
                             "description": "加载时间",
                             "refType": null
+                          },
+                          "operatingSystem": {
+                            "type": "string",
+                            "description": "操作系统"
+                          },
+                          "outputMessage": {
+                            "type": "string",
+                            "description": "输出信息"
+                          },
+                          "startupModel": {
+                            "type": "string",
+                            "description": "启动方式"
+                          },
+                          "triggerCondition": {
+                            "type": "string",
+                            "description": "触发条件"
                           },
                           "updateTime": {
                             "type": "string",
@@ -3061,6 +3213,79 @@
         }
       }
     },
+    "/kms-job-server/algorithm/auditLogList": {
+      "post": {
+        "tags": [
+          "算法任务"
+        ],
+        "summary": "算法任务-审计日志列表",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "pageNum",
+            "in": "query",
+            "required": false,
+            "description": "pageNum",
+            "type": "string"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "description": "pageSize",
+            "type": "string"
+          },
+          {
+            "name": "KmsJobServerAlgorithmAuditLogListBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "endTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "结束时间"
+                },
+                "startTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "开始时间"
+                },
+                "user": {
+                  "type": "string",
+                  "description": "用户"
+                }
+              },
+              "title": "基础基于时间和用户的查询条件",
+              "$$ref": "#/definitions/基础基于时间和用户的查询条件"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse",
+              "$$ref": "#/definitions/BaseResponse"
+            }
+          }
+        }
+      }
+    },
     "/kms-job-server/algorithm/import": {
       "post": {
         "tags": [
@@ -3071,7 +3296,94 @@
         "consumes": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "KmsJobServerAlgorithmImportBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "activateVersion": {
+                  "type": "string",
+                  "description": "活跃版本号"
+                },
+                "algorithmIdentify": {
+                  "type": "string",
+                  "description": "算法标识"
+                },
+                "algorithmName": {
+                  "type": "string",
+                  "description": "算法名称"
+                },
+                "dependencyList": {
+                  "type": "array",
+                  "description": "依赖包名称",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "dependencyUrl": {
+                  "type": "string",
+                  "description": "依赖包url"
+                },
+                "fileName": {
+                  "type": "string",
+                  "description": "运行文件名称"
+                },
+                "imagesTags": {
+                  "type": "string",
+                  "description": "镜像文件Tags"
+                },
+                "importFrom": {
+                  "type": "string",
+                  "description": "输入信息来源"
+                },
+                "importPath": {
+                  "type": "string",
+                  "description": "导入路径"
+                },
+                "importTo": {
+                  "type": "string",
+                  "description": "输入信息去向"
+                },
+                "inputMessage": {
+                  "type": "string",
+                  "description": "输入信息"
+                },
+                "kmsTags": {
+                  "type": "string",
+                  "description": "私服Tags"
+                },
+                "operatingSystem": {
+                  "type": "string",
+                  "description": "操作系统"
+                },
+                "outputMessage": {
+                  "type": "string",
+                  "description": "输出信息"
+                },
+                "savePath": {
+                  "type": "string",
+                  "description": "保存路径"
+                },
+                "startupModel": {
+                  "type": "string",
+                  "description": "启动方式"
+                },
+                "triggerCondition": {
+                  "type": "string",
+                  "description": "触发条件"
+                },
+                "userName": {
+                  "type": "string",
+                  "description": "作者"
+                }
+              },
+              "title": "RequestAlgorithmImportInfo",
+              "$$ref": "#/definitions/RequestAlgorithmImportInfo"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -3105,7 +3417,22 @@
         "consumes": [
           "application/json"
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "algoId",
+            "in": "query",
+            "required": true,
+            "description": "algoId",
+            "type": "string"
+          },
+          {
+            "name": "exportPath",
+            "in": "query",
+            "required": true,
+            "description": "exportPath",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -3181,90 +3508,22 @@
         }
       }
     },
-    "/kms-job-server/algorithm/add": {
-      "post": {
+    "/kms-job-server/algorithm/load": {
+      "get": {
         "tags": [
           "算法任务"
         ],
-        "summary": "算法任务-新增",
-        "description": "算法任务-新增",
+        "summary": "算法任务-加载",
         "consumes": [
-          "application/json"
+          "text/plain"
         ],
         "parameters": [
           {
-            "name": "KmsJobServerAlgorithmAddBody",
-            "in": "body",
-            "description": "算法表",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "activateVersion": {
-                  "type": "string",
-                  "description": "活跃版本号",
-                  "refType": null
-                },
-                "algorithmIdentify": {
-                  "type": "string",
-                  "description": "算法标识",
-                  "refType": null
-                },
-                "algorithmName": {
-                  "type": "string",
-                  "description": "算法名称",
-                  "refType": null
-                },
-                "assessTime": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "评估时长",
-                  "refType": null
-                },
-                "createTime": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "创建时间",
-                  "refType": null
-                },
-                "createUser": {
-                  "type": "string",
-                  "description": "添加人",
-                  "refType": null
-                },
-                "id": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "主键id",
-                  "refType": null
-                },
-                "isLoad": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "是否加载",
-                  "refType": null
-                },
-                "loadTime": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "加载时间",
-                  "refType": null
-                },
-                "updateTime": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "编辑时间",
-                  "refType": null
-                },
-                "updateUser": {
-                  "type": "string",
-                  "description": "编辑人",
-                  "refType": null
-                }
-              },
-              "title": "Algorithm对象",
-              "description": "算法表",
-              "$$ref": "#/definitions/Algorithm对象"
-            }
+            "name": "algoId",
+            "in": "query",
+            "required": true,
+            "description": "algoId",
+            "type": "string"
           }
         ],
         "responses": {
@@ -3310,64 +3569,73 @@
               "properties": {
                 "activateVersion": {
                   "type": "string",
-                  "description": "活跃版本号",
-                  "refType": null
+                  "description": "活跃版本号"
                 },
                 "algorithmIdentify": {
                   "type": "string",
-                  "description": "算法标识",
-                  "refType": null
+                  "description": "算法标识"
                 },
                 "algorithmName": {
                   "type": "string",
-                  "description": "算法名称",
-                  "refType": null
+                  "description": "算法名称"
                 },
                 "assessTime": {
                   "type": "integer",
                   "format": "int32",
-                  "description": "评估时长",
-                  "refType": null
+                  "description": "评估时长"
                 },
                 "createTime": {
                   "type": "string",
                   "format": "date-time",
-                  "description": "创建时间",
-                  "refType": null
+                  "description": "创建时间"
                 },
                 "createUser": {
                   "type": "string",
-                  "description": "添加人",
-                  "refType": null
+                  "description": "添加人"
                 },
                 "id": {
                   "type": "integer",
                   "format": "int32",
-                  "description": "主键id",
-                  "refType": null
+                  "description": "主键id"
+                },
+                "inputMessage": {
+                  "type": "string",
+                  "description": "输入信息"
                 },
                 "isLoad": {
                   "type": "integer",
                   "format": "int32",
-                  "description": "是否加载",
-                  "refType": null
+                  "description": "是否加载"
                 },
                 "loadTime": {
                   "type": "string",
                   "format": "date-time",
-                  "description": "加载时间",
-                  "refType": null
+                  "description": "加载时间"
+                },
+                "operatingSystem": {
+                  "type": "string",
+                  "description": "操作系统"
+                },
+                "outputMessage": {
+                  "type": "string",
+                  "description": "输出信息"
+                },
+                "startupModel": {
+                  "type": "string",
+                  "description": "启动方式"
+                },
+                "triggerCondition": {
+                  "type": "string",
+                  "description": "触发条件"
                 },
                 "updateTime": {
                   "type": "string",
                   "format": "date-time",
-                  "description": "编辑时间",
-                  "refType": null
+                  "description": "编辑时间"
                 },
                 "updateUser": {
                   "type": "string",
-                  "description": "编辑人",
-                  "refType": null
+                  "description": "编辑人"
                 }
               },
               "title": "Algorithm对象",
@@ -3606,28 +3874,435 @@
         }
       }
     },
-    "/kms-view-server/view/node/add": {
+    "/kmsSysconfigServer/objectGroup/updateObjectGroupConfig": {
       "post": {
         "tags": [
-          "知识图谱接口"
+          "对象组"
         ],
-        "summary": "图谱节点增加",
+        "summary": "对象组修改信息",
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "newNodeName",
+            "name": "KmsSysconfigServerObjectGroupUpdateObjectGroupConfigBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "objectCode": {
+                  "type": "string",
+                  "example": "对象组标识",
+                  "description": "对象组标识"
+                },
+                "objectName": {
+                  "type": "string",
+                  "example": "对象组名称",
+                  "description": "对象组名称"
+                },
+                "objectRemark": {
+                  "type": "string",
+                  "example": "备注",
+                  "description": "备注"
+                },
+                "pkId": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "主键"
+                }
+              },
+              "title": "ObjectGroupUpdateBean",
+              "$$ref": "#/definitions/ObjectGroupUpdateBean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "objectCode": {
+                      "type": "string",
+                      "example": "对象组标识",
+                      "description": "对象组标识"
+                    },
+                    "objectName": {
+                      "type": "string",
+                      "example": "对象组名称",
+                      "description": "对象组名称"
+                    },
+                    "objectRemark": {
+                      "type": "string",
+                      "example": "备注",
+                      "description": "备注"
+                    },
+                    "objectTime": {
+                      "type": "string",
+                      "example": "创建时间",
+                      "description": "创建时间"
+                    },
+                    "objectUser": {
+                      "type": "string",
+                      "example": "创建用户",
+                      "description": "创建用户"
+                    },
+                    "pkId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "主键"
+                    }
+                  },
+                  "title": "ObjectGroupBean",
+                  "$$ref": "#/definitions/ObjectGroupBean"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«ObjectGroupBean»",
+              "$$ref": "#/definitions/BaseResponse«ObjectGroupBean»"
+            }
+          }
+        }
+      }
+    },
+    "/kmsSysconfigServer/objectGroup/objectGroupConfigByPage": {
+      "get": {
+        "tags": [
+          "对象组"
+        ],
+        "summary": "对象组分页查询",
+        "consumes": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "name": "objectCode",
             "in": "query",
             "required": false,
-            "description": "新增节点名",
+            "description": "对象组标识",
             "type": "string"
           },
           {
-            "name": "nodeId",
+            "name": "objectName",
             "in": "query",
             "required": false,
-            "description": "节点ID",
+            "description": "对象组名称",
+            "type": "string"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "description": "页数",
+            "type": "string"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": true,
+            "description": "条数",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "current": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "pages": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "records": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "objectCode": {
+                            "type": "string",
+                            "example": "对象组标识",
+                            "description": "对象组标识"
+                          },
+                          "objectName": {
+                            "type": "string",
+                            "example": "对象组名称",
+                            "description": "对象组名称"
+                          },
+                          "objectRemark": {
+                            "type": "string",
+                            "example": "备注",
+                            "description": "备注"
+                          },
+                          "objectTime": {
+                            "type": "string",
+                            "example": "创建时间",
+                            "description": "创建时间"
+                          },
+                          "objectUser": {
+                            "type": "string",
+                            "example": "创建用户",
+                            "description": "创建用户"
+                          },
+                          "pkId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "主键"
+                          }
+                        },
+                        "title": "ObjectGroupBean",
+                        "$$ref": "#/definitions/ObjectGroupBean"
+                      }
+                    },
+                    "size": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  },
+                  "title": "IPage«ObjectGroupBean»",
+                  "$$ref": "#/definitions/IPage«ObjectGroupBean»"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«IPage«ObjectGroupBean»»",
+              "$$ref": "#/definitions/BaseResponse«IPage«ObjectGroupBean»»"
+            }
+          }
+        }
+      }
+    },
+    "/kmsSysconfigServer/objectGroup/id/{pkId}": {
+      "delete": {
+        "tags": [
+          "对象组"
+        ],
+        "summary": "对象组删除信息",
+        "consumes": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "name": "pkId",
+            "in": "path",
+            "description": "主键",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "raw",
+            "in": "body",
+            "description": "raw paramter",
+            "schema": {
+              "type": "string",
+              "format": "binary"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "objectCode": {
+                      "type": "string",
+                      "example": "对象组标识",
+                      "description": "对象组标识"
+                    },
+                    "objectName": {
+                      "type": "string",
+                      "example": "对象组名称",
+                      "description": "对象组名称"
+                    },
+                    "objectRemark": {
+                      "type": "string",
+                      "example": "备注",
+                      "description": "备注"
+                    },
+                    "objectTime": {
+                      "type": "string",
+                      "example": "创建时间",
+                      "description": "创建时间"
+                    },
+                    "objectUser": {
+                      "type": "string",
+                      "example": "创建用户",
+                      "description": "创建用户"
+                    },
+                    "pkId": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "主键"
+                    }
+                  },
+                  "title": "ObjectGroupBean",
+                  "$$ref": "#/definitions/ObjectGroupBean"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«ObjectGroupBean»",
+              "$$ref": "#/definitions/BaseResponse«ObjectGroupBean»"
+            }
+          }
+        }
+      }
+    },
+    "/kmsSysconfigServer/objectGroup/addObjectGroupConfig": {
+      "post": {
+        "tags": [
+          "对象组"
+        ],
+        "summary": "对象组添加信息",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsSysconfigServerObjectGroupAddObjectGroupConfigBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "objectCode": {
+                  "type": "string",
+                  "example": "对象组标识",
+                  "description": "对象组标识"
+                },
+                "objectName": {
+                  "type": "string",
+                  "example": "对象组名称",
+                  "description": "对象组名称"
+                },
+                "objectRemark": {
+                  "type": "string",
+                  "example": "备注",
+                  "description": "备注"
+                }
+              },
+              "title": "ObjectGroupAddBean",
+              "$$ref": "#/definitions/ObjectGroupAddBean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "objectCode": {
+                      "type": "string",
+                      "example": "对象组标识",
+                      "description": "对象组标识"
+                    },
+                    "objectName": {
+                      "type": "string",
+                      "example": "对象组名称",
+                      "description": "对象组名称"
+                    },
+                    "objectRemark": {
+                      "type": "string",
+                      "example": "备注",
+                      "description": "备注"
+                    }
+                  },
+                  "title": "ObjectGroupAddBean",
+                  "$$ref": "#/definitions/ObjectGroupAddBean"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«ObjectGroupAddBean»",
+              "$$ref": "#/definitions/BaseResponse«ObjectGroupAddBean»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-view-server/document/download": {
+      "post": {
+        "tags": [
+          "文档管理接口"
+        ],
+        "summary": "下载文档",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "query",
+            "required": false,
+            "description": "fileName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string",
+              "format": "byte",
+              "title": "KmsViewServerDocumentDownload"
+            }
+          }
+        }
+      }
+    },
+    "/kms-view-server/document/delete": {
+      "post": {
+        "tags": [
+          "文档管理接口"
+        ],
+        "summary": "删除文档",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "query",
+            "required": false,
+            "description": "fileName",
             "type": "string"
           }
         ],
@@ -3657,6 +4332,330 @@
         }
       }
     },
+    "/kms-view-server/document/upload": {
+      "post": {
+        "tags": [
+          "文档管理接口"
+        ],
+        "summary": "导入文档",
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "parameters": [
+          {
+            "name": "file",
+            "in": "formData",
+            "required": false,
+            "type": "file"
+          },
+          {
+            "name": "fileType",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "description": "数据集",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«List«string»»",
+              "$$ref": "#/definitions/BaseResponse«List«string»»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-view-server/document/correlation": {
+      "post": {
+        "tags": [
+          "文档管理接口"
+        ],
+        "summary": "文档关联",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsViewServerDocumentCorrelationBody",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "docInfo": {
+                    "type": "string",
+                    "description": "文档信息"
+                  },
+                  "docName": {
+                    "type": "string",
+                    "description": "文档文件名"
+                  },
+                  "docPath": {
+                    "type": "string",
+                    "description": "文档路径"
+                  },
+                  "nodeCode": {
+                    "type": "string",
+                    "description": "节点标识符"
+                  },
+                  "nodeId": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "节点ID"
+                  },
+                  "nodeName": {
+                    "type": "string",
+                    "description": "节点名"
+                  }
+                },
+                "title": "CorrelationInfo",
+                "$$ref": "#/definitions/CorrelationInfo"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "description": "数据集"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«string»",
+              "$$ref": "#/definitions/BaseResponse«string»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-view-server/document/preview": {
+      "post": {
+        "tags": [
+          "文档管理接口"
+        ],
+        "summary": "文档预览",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fileName",
+            "in": "query",
+            "required": false,
+            "description": "fileName",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "string",
+                  "description": "数据集"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«string»",
+              "$$ref": "#/definitions/BaseResponse«string»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-view-server/document/find": {
+      "post": {
+        "tags": [
+          "文档管理接口"
+        ],
+        "summary": "查询文档",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "fileType",
+            "in": "query",
+            "required": false,
+            "description": "fileType",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "description": "数据集",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "fileType": {
+                        "type": "string"
+                      },
+                      "objectName": {
+                        "type": "string"
+                      },
+                      "size": {
+                        "type": "integer",
+                        "format": "int64"
+                      }
+                    },
+                    "title": "DocumentItem",
+                    "$$ref": "#/definitions/DocumentItem"
+                  }
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«List«DocumentItem»»",
+              "$$ref": "#/definitions/BaseResponse«List«DocumentItem»»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-view-server/view/node/add": {
+      "post": {
+        "tags": [
+          "知识图谱接口"
+        ],
+        "summary": "图谱节点增加",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "newNodeCode",
+            "in": "query",
+            "required": false,
+            "description": "节点标识符",
+            "type": "string"
+          },
+          {
+            "name": "newNodeName",
+            "in": "query",
+            "required": false,
+            "description": "新增节点名",
+            "type": "string"
+          },
+          {
+            "name": "nodeId",
+            "in": "query",
+            "required": false,
+            "description": "节点ID",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "docInfo": {
+                      "type": "string",
+                      "description": "文档信息"
+                    },
+                    "docName": {
+                      "type": "string",
+                      "description": "文档文件名"
+                    },
+                    "docPath": {
+                      "type": "string",
+                      "description": "文档路径"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "format": "int64",
+                      "description": "id"
+                    },
+                    "mark": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "节点级别(0:根节点,1:节点二,2:节点三,3:节点四)"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "节点名"
+                    },
+                    "nodeCode": {
+                      "type": "string",
+                      "description": "节点标识符"
+                    }
+                  },
+                  "title": "KnowledgeView",
+                  "$$ref": "#/definitions/KnowledgeView"
+                },
+                "errorMsg": {
+                  "type": "string",
+                  "description": "错误信息"
+                },
+                "success": {
+                  "type": "boolean",
+                  "description": "返回状态"
+                }
+              },
+              "title": "BaseResponse«KnowledgeView»",
+              "$$ref": "#/definitions/BaseResponse«KnowledgeView»"
+            }
+          }
+        }
+      }
+    },
     "/kms-view-server/view/editor": {
       "post": {
         "tags": [
@@ -3679,6 +4678,13 @@
             "in": "query",
             "required": false,
             "description": "新节点名",
+            "type": "string"
+          },
+          {
+            "name": "nodeCode",
+            "in": "query",
+            "required": false,
+            "description": "节点标识符",
             "type": "string"
           }
         ],
@@ -3748,6 +4754,18 @@
                       "child": {
                         "type": "object",
                         "properties": {
+                          "docInfo": {
+                            "type": "string",
+                            "description": "文档信息"
+                          },
+                          "docName": {
+                            "type": "string",
+                            "description": "文档文件名"
+                          },
+                          "docPath": {
+                            "type": "string",
+                            "description": "文档路径"
+                          },
                           "id": {
                             "type": "integer",
                             "format": "int64",
@@ -3761,6 +4779,10 @@
                           "name": {
                             "type": "string",
                             "description": "节点名"
+                          },
+                          "nodeCode": {
+                            "type": "string",
+                            "description": "节点标识符"
                           }
                         },
                         "title": "KnowledgeView",
@@ -3774,6 +4796,18 @@
                       "parent": {
                         "type": "object",
                         "properties": {
+                          "docInfo": {
+                            "type": "string",
+                            "description": "文档信息"
+                          },
+                          "docName": {
+                            "type": "string",
+                            "description": "文档文件名"
+                          },
+                          "docPath": {
+                            "type": "string",
+                            "description": "文档路径"
+                          },
                           "id": {
                             "type": "integer",
                             "format": "int64",
@@ -3787,6 +4821,10 @@
                           "name": {
                             "type": "string",
                             "description": "节点名"
+                          },
+                          "nodeCode": {
+                            "type": "string",
+                            "description": "节点标识符"
                           }
                         },
                         "title": "KnowledgeView",
@@ -3845,6 +4883,18 @@
                       "child": {
                         "type": "object",
                         "properties": {
+                          "docInfo": {
+                            "type": "string",
+                            "description": "文档信息"
+                          },
+                          "docName": {
+                            "type": "string",
+                            "description": "文档文件名"
+                          },
+                          "docPath": {
+                            "type": "string",
+                            "description": "文档路径"
+                          },
                           "id": {
                             "type": "integer",
                             "format": "int64",
@@ -3858,6 +4908,10 @@
                           "name": {
                             "type": "string",
                             "description": "节点名"
+                          },
+                          "nodeCode": {
+                            "type": "string",
+                            "description": "节点标识符"
                           }
                         },
                         "title": "KnowledgeView",
@@ -3871,6 +4925,18 @@
                       "parent": {
                         "type": "object",
                         "properties": {
+                          "docInfo": {
+                            "type": "string",
+                            "description": "文档信息"
+                          },
+                          "docName": {
+                            "type": "string",
+                            "description": "文档文件名"
+                          },
+                          "docPath": {
+                            "type": "string",
+                            "description": "文档路径"
+                          },
                           "id": {
                             "type": "integer",
                             "format": "int64",
@@ -3884,6 +4950,10 @@
                           "name": {
                             "type": "string",
                             "description": "节点名"
+                          },
+                          "nodeCode": {
+                            "type": "string",
+                            "description": "节点标识符"
                           }
                         },
                         "title": "KnowledgeView",
@@ -4031,6 +5101,18 @@
                       "child": {
                         "type": "object",
                         "properties": {
+                          "docInfo": {
+                            "type": "string",
+                            "description": "文档信息"
+                          },
+                          "docName": {
+                            "type": "string",
+                            "description": "文档文件名"
+                          },
+                          "docPath": {
+                            "type": "string",
+                            "description": "文档路径"
+                          },
                           "id": {
                             "type": "integer",
                             "format": "int64",
@@ -4044,6 +5126,10 @@
                           "name": {
                             "type": "string",
                             "description": "节点名"
+                          },
+                          "nodeCode": {
+                            "type": "string",
+                            "description": "节点标识符"
                           }
                         },
                         "title": "KnowledgeView",
@@ -4057,6 +5143,18 @@
                       "parent": {
                         "type": "object",
                         "properties": {
+                          "docInfo": {
+                            "type": "string",
+                            "description": "文档信息"
+                          },
+                          "docName": {
+                            "type": "string",
+                            "description": "文档文件名"
+                          },
+                          "docPath": {
+                            "type": "string",
+                            "description": "文档路径"
+                          },
                           "id": {
                             "type": "integer",
                             "format": "int64",
@@ -4070,6 +5168,10 @@
                           "name": {
                             "type": "string",
                             "description": "节点名"
+                          },
+                          "nodeCode": {
+                            "type": "string",
+                            "description": "节点标识符"
                           }
                         },
                         "title": "KnowledgeView",
@@ -4117,13 +5219,11 @@
                   "description": "遥测参数集",
                   "items": {
                     "type": "string"
-                  },
-                  "refType": "string"
+                  }
                 },
                 "satelliteCode": {
                   "type": "string",
-                  "description": "卫星代号",
-                  "refType": null
+                  "description": "卫星代号"
                 }
               },
               "title": "ParameterInPo",
@@ -4142,24 +5242,21 @@
                   "properties": {
                     "satelliteCode": {
                       "type": "string",
-                      "description": "卫星代号",
-                      "refType": null
+                      "description": "卫星代号"
                     },
                     "ycExist": {
                       "type": "array",
                       "description": "图谱中存在的遥测参数集",
                       "items": {
                         "type": "string"
-                      },
-                      "refType": "string"
+                      }
                     },
                     "ycNoExist": {
                       "type": "array",
                       "description": "图谱中不存在的遥测参数集",
                       "items": {
                         "type": "string"
-                      },
-                      "refType": "string"
+                      }
                     }
                   },
                   "title": "ParameterOutPo",
@@ -4457,8 +5554,7 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object",
-                  "properties": {}
+                  "type": "object"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -4566,13 +5662,6 @@
         ],
         "parameters": [
           {
-            "name": "taskId",
-            "in": "path",
-            "description": "taskId",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "pageNum",
             "in": "path",
             "description": "pageNum",
@@ -4583,6 +5672,13 @@
             "name": "pageSize",
             "in": "path",
             "description": "pageSize",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "taskId",
             "required": true,
             "type": "string"
           },
@@ -4639,6 +5735,10 @@
                             "format": "date-time",
                             "description": "创建时间"
                           },
+                          "createType": {
+                            "type": "string",
+                            "description": "创建类型"
+                          },
                           "createUser": {
                             "type": "string",
                             "description": "添加人"
@@ -4661,6 +5761,10 @@
                             "type": "string",
                             "description": "版本号"
                           },
+                          "versionId": {
+                            "type": "string",
+                            "description": "minio桶对象版本号"
+                          },
                           "viewJson": {
                             "type": "string",
                             "description": "前端dag json"
@@ -4668,7 +5772,10 @@
                         },
                         "title": "CommonTaskVersion对象",
                         "description": "公共任务历史表",
-                        "$$ref": "#/definitions/CommonTaskVersion对象"
+                        "$$ref": "#/definitions/CommonTaskVersion对象",
+                        "required": [
+                          "createType"
+                        ]
                       }
                     },
                     "size": {
@@ -4692,6 +5799,51 @@
               },
               "title": "BaseResponse«IPage«CommonTaskVersion对象»»",
               "$$ref": "#/definitions/BaseResponse«IPage«CommonTaskVersion对象»»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-job-server/commonTask/batch": {
+      "delete": {
+        "tags": [
+          "公共任务管理"
+        ],
+        "summary": "批量删除",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsJobServerCommonTaskBatchBody",
+            "in": "body",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int32"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse",
+              "$$ref": "#/definitions/BaseResponse"
             }
           }
         }
@@ -4857,13 +6009,6 @@
         ],
         "parameters": [
           {
-            "name": "taskId",
-            "in": "path",
-            "description": "taskId",
-            "required": true,
-            "type": "string"
-          },
-          {
             "name": "pageNum",
             "in": "path",
             "description": "pageNum",
@@ -4874,6 +6019,13 @@
             "name": "pageSize",
             "in": "path",
             "description": "pageSize",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "taskId",
+            "in": "path",
+            "description": "taskId",
             "required": true,
             "type": "string"
           },

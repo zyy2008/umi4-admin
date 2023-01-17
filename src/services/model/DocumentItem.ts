@@ -13,17 +13,13 @@
 import * as models from './models';
 
 /**
-  * @property `code` 对象组标识
-  * @property `name` 对象组名称
+  * @property `[fileType]` 
+  * @property `[objectName]` 
+  * @property `[size]` 
   */
-export interface ObjectGroupBean {
-  /**
-   * 对象组标识
-   */
-  "code": string;
-  /**
-   * 对象组名称
-   */
-  "name": string;
+export interface DocumentItem {
+  "fileType"?: string;
+  "objectName"?: string;
+  "size"?: number;
 }
 

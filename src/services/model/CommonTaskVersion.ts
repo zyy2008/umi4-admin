@@ -15,11 +15,13 @@ import * as models from './models';
 /**
   * @description 公共任务历史表
   * @property `[createTime]` 创建时间
+  * @property `createType` 创建类型
   * @property `[createUser]` 添加人
   * @property `[filePath]` 版本文件路径
   * @property `[id]` 主键id
   * @property `[taskId]` 公共任务id
   * @property `[version]` 版本号
+  * @property `[versionId]` minio桶对象版本号
   * @property `[viewJson]` 前端dag json
   */
 export interface CommonTaskVersion {
@@ -27,6 +29,10 @@ export interface CommonTaskVersion {
    * 创建时间
    */
   "createTime"?: Date;
+  /**
+   * 创建类型
+   */
+  "createType": string;
   /**
    * 添加人
    */
@@ -47,6 +53,10 @@ export interface CommonTaskVersion {
    * 版本号
    */
   "version"?: string;
+  /**
+   * minio桶对象版本号
+   */
+  "versionId"?: string;
   /**
    * 前端dag json
    */

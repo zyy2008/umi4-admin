@@ -13,17 +13,27 @@
 import * as models from './models';
 
 /**
-  * @property `code` 对象组标识
-  * @property `name` 对象组名称
+  * @property `[objectCode]` 对象组标识
+  * @property `[objectName]` 对象组名称
+  * @property `[objectRemark]` 备注
+  * @property `[pkId]` 主键
   */
-export interface ObjectGroupBean {
+export interface ObjectGroupUpdateBean {
   /**
    * 对象组标识
    */
-  "code": string;
+  "objectCode"?: string;
   /**
    * 对象组名称
    */
-  "name": string;
+  "objectName"?: string;
+  /**
+   * 备注
+   */
+  "objectRemark"?: string;
+  /**
+   * 主键
+   */
+  "pkId"?: number;
 }
 

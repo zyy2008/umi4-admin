@@ -20,7 +20,7 @@ import * as models from './models';
   * @property `[id]` 主键id
   * @property `[objId]` 对象id
   */
-export interface ObjectCommonTask {
+export interface ObjectCommonTask1 {
   "commonTask"?: models.CommonTask;
   /**
    * 公共任务id

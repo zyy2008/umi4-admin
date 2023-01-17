@@ -13,17 +13,22 @@
 import * as models from './models';
 
 /**
-  * @property `code` 对象组标识
-  * @property `name` 对象组名称
+  * @property `[data]` 数据集
+  * @property `[errorMsg]` 错误信息
+  * @property `[success]` 返回状态
   */
-export interface ObjectGroupBean {
+export interface BaseResponseListstring {
   /**
-   * 对象组标识
+   * 数据集
    */
-  "code": string;
+  "data"?: Array<string>;
   /**
-   * 对象组名称
+   * 错误信息
    */
-  "name": string;
+  "errorMsg"?: string;
+  /**
+   * 返回状态
+   */
+  "success"?: boolean;
 }
 
