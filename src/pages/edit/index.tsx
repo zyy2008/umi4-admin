@@ -8,6 +8,7 @@ import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
 import { useRequest, useModel } from "@umijs/max";
 import { APIS } from "@/services";
+import { commandConfig } from "./command-config";
 
 export type Check = { uuid: string; version: string } | null;
 
@@ -64,6 +65,7 @@ const Edit = () => {
           title: "知识编辑器",
         }}
         graphData={graphData}
+        commandConfig={commandConfig}
       >
         <>
           <CustomPanel

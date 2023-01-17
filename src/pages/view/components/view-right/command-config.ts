@@ -6,7 +6,7 @@ import { formatChildren } from "@/utils";
 export const commandConfig: IProps["commandConfig"] = (hooks) => {
   return [
     hooks.addEdge.registerHook({
-      name: "get edge config from  api",
+      name: "get edge config from api",
       handler: async (args) => {
         args.createEdgeService = async (args) => {
           const { edgeConfig } = args;
