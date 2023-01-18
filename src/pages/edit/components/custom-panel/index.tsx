@@ -67,6 +67,13 @@ const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
         nodeConfig={{
           label: "switch",
           renderKey: "SectorNode",
+          ports: [
+            {
+              type: NsGraph.AnchorType.INPUT,
+              group: NsGraph.AnchorGroup.TOP,
+              tooltip: "输入桩",
+            },
+          ] as NsGraph.INodeAnchor[],
         }}
       />
       <ColNode
@@ -79,6 +86,26 @@ const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
         nodeConfig={{
           label: "while",
           renderKey: "ManualOperationNode",
+          ports: [
+            {
+              type: NsGraph.AnchorType.OUTPUT,
+              group: NsGraph.AnchorGroup.BOTTOM,
+              tooltip: "输出桩:true",
+            },
+            {
+              type: NsGraph.AnchorType.OUTPUT,
+              group: NsGraph.AnchorGroup.LEFT,
+              tooltip: "输出桩:false",
+              args: {
+                dx: 16,
+              },
+            },
+            {
+              type: NsGraph.AnchorType.INPUT,
+              group: NsGraph.AnchorGroup.TOP,
+              tooltip: "输入桩",
+            },
+          ] as NsGraph.INodeAnchor[],
         }}
       />
     </Row>

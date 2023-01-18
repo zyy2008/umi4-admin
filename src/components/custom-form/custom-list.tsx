@@ -15,7 +15,7 @@ export const FormListShape: React.FC<NsJsonSchemaForm.IControlProps> = (
       {({ initialValue }) => {
         return (
           <Form.List name={name} initialValue={initialValue as any}>
-            {(fields, { add }, { errors }) => (
+            {(fields, { add, remove }, { errors }) => (
               <>
                 {fields.map((field, index) => (
                   <Form.Item
@@ -34,6 +34,9 @@ export const FormListShape: React.FC<NsJsonSchemaForm.IControlProps> = (
                           `${name}`,
                           values.filter((_: string, i: number) => i != index)
                         );
+                        setTimeout(() => {
+                          remove(index);
+                        }, 0);
                       }}
                     />
                   </Form.Item>

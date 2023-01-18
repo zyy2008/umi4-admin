@@ -23,6 +23,8 @@ import "antd/dist/antd.css";
 import "@antv/xflow/dist/index.css";
 import "./index.less";
 
+export { portAttrs } from "./config-cmd";
+
 export interface IProps {
   meta?: { flowId: string };
   toolbarProps?: Partial<IToolbarProps>;

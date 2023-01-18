@@ -68,9 +68,10 @@ export namespace NsCustomMenuItems {
 export const useMenuConfig = createCtxMenuConfig<IProps>((config, proxy) => {
   const { menuDisabled = [] } = proxy.getValue();
   config.setMenuModelService(async (data, model) => {
-    let { type } = data ?? {};
+    let { type, cell } = data ?? {};
+    const { renderKey } = cell?.getData();
     const findIndex = menuDisabled.findIndex((item) => item === type);
-    if (findIndex > -1) {
+    if (findIndex > -1 || renderKey === "循环") {
       type = "blank";
     }
     switch (type) {

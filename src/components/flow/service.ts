@@ -2,6 +2,21 @@
 import { DND_RENDER_ID, NODE_WIDTH, NODE_HEIGHT } from "./constants";
 import { uuidv4, NsGraph, NsGraphStatusCommand } from "@antv/xflow";
 import type { NsNodeCmd, NsEdgeCmd, NsGraphCmd } from "@antv/xflow";
+
+export const portAttrs = {
+  circle: {
+    r: 4,
+    magnet: true,
+    stroke: "#31d0c6",
+    strokeWidth: 2,
+    fill: "#fff",
+    style: {
+      visibility: "hidden",
+    },
+    class: "xflow-port x6-port-body",
+  },
+};
+
 /** mock 后端接口调用 */
 export namespace MockApi {
   export const NODE_COMMON_PROPS = {
@@ -55,19 +70,7 @@ export namespace MockApi {
         return {
           ...port,
           id: uuidv4(),
-          attrs: {
-            circle: {
-              r: 4,
-              magnet: true,
-              stroke: "#31d0c6",
-              strokeWidth: 2,
-              fill: "#fff",
-              style: {
-                visibility: "hidden",
-              },
-              class: "xflow-port x6-port-body",
-            },
-          },
+          attrs: portAttrs,
         };
       }),
     };

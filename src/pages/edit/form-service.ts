@@ -1,10 +1,11 @@
 import { NsJsonSchemaForm, XFlowNodeCommands } from "@antv/xflow";
 import { set } from "lodash";
-import type { NsNodeCmd, NsGraph } from "@antv/xflow";
+import { NsNodeCmd, NsGraph, uuidv4 } from "@antv/xflow";
 import { ControlShapeEnum } from "@/components/custom-form";
 import type { IModelService, IGraphCommandService } from "@antv/xflow-core";
 import type { Cell, Graph as X6Graph } from "@antv/x6";
 import { AppInitialState } from "@/app";
+import { portAttrs } from "@/components/flow";
 
 type IFormSchemaService = (
   args: {
@@ -27,6 +28,26 @@ export namespace NsJsonForm {
     async (args) => {
       const { commandService, targetData, allFields } = args;
       const updateNode = (node: NsGraph.INodeConfig) => {
+        const { label, conditions = [] } = node;
+        console.log(conditions);
+        if (label === "switch") {
+          node.ports = [
+            {
+              id: uuidv4(),
+              type: NsGraph.AnchorType.INPUT,
+              group: NsGraph.AnchorGroup.TOP,
+              tooltip: "输入桩",
+              attrs: portAttrs,
+            },
+            ...conditions.map((item: string, index: number) => ({
+              id: uuidv4(),
+              type: NsGraph.AnchorType.OUTPUT,
+              group: NsGraph.AnchorGroup.BOTTOM,
+              tooltip: `输出桩:条件${index + 1}`,
+              attrs: portAttrs,
+            })),
+          ] as NsGraph.INodeAnchor[];
+        }
         return commandService.executeCommand<NsNodeCmd.UpdateNode.IArgs>(
           XFlowNodeCommands.UPDATE_NODE.id,
           { nodeConfig: node }
@@ -202,13 +223,13 @@ export namespace NsJsonForm {
               value: targetData.name,
               placeholder: "请输入",
             },
-            {
-              name: "num",
-              label: "分支数量",
-              shape: ControlShape.FLOAT,
-              value: targetData.num,
-              placeholder: "请输入",
-            },
+            // {
+            //   name: "num",
+            //   label: "分支数量",
+            //   shape: ControlShape.FLOAT,
+            //   value: targetData.num,
+            //   placeholder: "请输入",
+            // },
             {
               name: "var",
               label: "分支变量",

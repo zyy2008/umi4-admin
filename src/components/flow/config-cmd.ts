@@ -7,8 +7,9 @@ import {
 import { Shape, Node } from "@antv/x6";
 import { MockApi } from "./service";
 import { XFlowNode } from "./node";
-import type { Graph as X6Graph } from "@antv/x6";
 import type { IProps } from "./index";
+
+export { portAttrs } from "./service";
 
 export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
   // 设置hook
