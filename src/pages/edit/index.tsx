@@ -1,5 +1,10 @@
 import React from "react";
-import { JsonSchemaForm, NsGraph, NsJsonSchemaForm } from "@antv/xflow";
+import {
+  JsonSchemaForm,
+  NsGraph,
+  NsJsonSchemaForm,
+  IAppLoad,
+} from "@antv/xflow";
 import KnowledgeFlow from "@/components/flow";
 import { NsJsonForm } from "./form-service";
 import { CustomPanel } from "./components";
@@ -9,6 +14,7 @@ import { useToolbarConfig } from "./toolbar-config";
 import { useRequest, useModel } from "@umijs/max";
 import { APIS } from "@/services";
 import { commandConfig } from "./command-config";
+import { Graph } from "@antv/x6";
 
 export type Check = { uuid: string; version: string } | null;
 
@@ -25,6 +31,7 @@ const Edit = () => {
     uuid: "",
     version: "",
   });
+  const [graph, setGraph] = React.useState<Graph>();
   const toolbarConfig = useToolbarConfig(setState);
   const { data, loading, run } = useRequest(
     () =>
@@ -37,6 +44,10 @@ const Edit = () => {
       manual: true,
     }
   );
+  const onLoad: IAppLoad = async (app) => {
+    const graph = await app.getGraphInstance();
+    setGraph(graph);
+  };
   React.useEffect(() => {
     if (state?.uuid) {
       run();
@@ -55,6 +66,12 @@ const Edit = () => {
       [satList]
     );
 
+  const formValueUpdateService: NsJsonSchemaForm.IFormValueUpdateService =
+    React.useCallback(
+      (args) => NsJsonForm.formValueUpdateService(args, graph),
+      [graph]
+    );
+
   return (
     <Context.Provider value={{ state, setState }}>
       <KnowledgeFlow
@@ -66,6 +83,7 @@ const Edit = () => {
         }}
         graphData={graphData}
         commandConfig={commandConfig}
+        onLoad={onLoad}
       >
         <>
           <CustomPanel
@@ -77,7 +95,7 @@ const Edit = () => {
             targetType={["node", "edge", "canvas"]}
             controlMapService={controlMapService}
             formSchemaService={formSchemaService}
-            formValueUpdateService={NsJsonForm.formValueUpdateService}
+            formValueUpdateService={formValueUpdateService}
             position={{ top: 0, bottom: 0, right: 0, width: 290 }}
             footerPosition={{
               height: 0,

@@ -176,6 +176,8 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
                 }
 
                 break;
+              case "switch":
+                break;
               default:
                 break;
             }

@@ -19,49 +19,72 @@ type IFormSchemaService = (
   satList: AppInitialState["satList"]
 ) => Promise<NsJsonSchemaForm.ISchema>;
 
+type IFormValueUpdateService = {
+  (
+    args: {
+      values: NsJsonSchemaForm.FieldData[];
+      allFields: NsJsonSchemaForm.FieldData[];
+      targetType: NsJsonSchemaForm.TargetType;
+      targetData: NsJsonSchemaForm.TargetData;
+      modelService: IModelService;
+      commandService: IGraphCommandService;
+    },
+    graph?: X6Graph
+  ): Promise<any>;
+};
+
 export namespace NsJsonForm {
   /** ControlShape的Enum */
   const { ControlShape } = NsJsonSchemaForm;
 
   /** 保存form的values */
-  export const formValueUpdateService: NsJsonSchemaForm.IFormValueUpdateService =
-    async (args) => {
-      const { commandService, targetData, allFields } = args;
-      const updateNode = (node: NsGraph.INodeConfig) => {
-        const { label, conditions = [] } = node;
-        console.log(conditions);
-        if (label === "switch") {
-          node.ports = [
-            {
-              id: uuidv4(),
-              type: NsGraph.AnchorType.INPUT,
-              group: NsGraph.AnchorGroup.TOP,
-              tooltip: "输入桩",
-              attrs: portAttrs,
-            },
-            ...conditions.map((item: string, index: number) => ({
+  export const formValueUpdateService: IFormValueUpdateService = async (
+    args,
+    graph
+  ) => {
+    const { commandService, targetData: data, allFields } = args;
+    const targetData = graph?.getCellById(data?.id as string).getData();
+    const updateNode = (node: NsGraph.INodeConfig) => {
+      const { label, conditions = [] } = node;
+      if (label === "switch") {
+        const ports = [...(node.ports as NsGraph.INodeAnchor[])];
+        const input = ports.filter((item) => item.tooltip === "输入桩");
+        node.ports = [
+          ...input,
+          ...conditions.map((_: any, index: number) => {
+            const find = ports.filter(
+              (item) => item.tooltip === `输出桩:条件${index + 1}`
+            );
+            if (find.length > 0) {
+              const [item] = find;
+              return item;
+            }
+            return {
               id: uuidv4(),
               type: NsGraph.AnchorType.OUTPUT,
               group: NsGraph.AnchorGroup.BOTTOM,
               tooltip: `输出桩:条件${index + 1}`,
               attrs: portAttrs,
-            })),
-          ] as NsGraph.INodeAnchor[];
+            };
+          }),
+        ] as NsGraph.INodeAnchor[];
+      }
+      return commandService.executeCommand<NsNodeCmd.UpdateNode.IArgs>(
+        XFlowNodeCommands.UPDATE_NODE.id,
+        {
+          nodeConfig: node,
         }
-        return commandService.executeCommand<NsNodeCmd.UpdateNode.IArgs>(
-          XFlowNodeCommands.UPDATE_NODE.id,
-          { nodeConfig: node }
-        );
-      };
-      const nodeConfig: NsGraph.INodeConfig = {
-        id: "",
-        ...targetData,
-      };
-      allFields.forEach((val) => {
-        set(nodeConfig, val.name, val.value);
-      });
-      updateNode(nodeConfig);
+      );
     };
+    const nodeConfig: NsGraph.INodeConfig = {
+      id: "",
+      ...targetData,
+    };
+    allFields.forEach((val) => {
+      set(nodeConfig, val.name, val.value);
+    });
+    updateNode(nodeConfig);
+  };
 
   /** 根据选中的节点更新formSchema */
   export const formSchemaService: IFormSchemaService = async (
