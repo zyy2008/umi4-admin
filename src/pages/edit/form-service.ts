@@ -1,9 +1,13 @@
-import { NsJsonSchemaForm, XFlowNodeCommands } from "@antv/xflow";
+import {
+  NsJsonSchemaForm,
+  XFlowNodeCommands,
+  XFlowEdgeCommands,
+} from "@antv/xflow";
 import { set } from "lodash";
-import { NsNodeCmd, NsGraph, uuidv4 } from "@antv/xflow";
+import { NsNodeCmd, NsGraph, uuidv4, NsEdgeCmd } from "@antv/xflow";
 import { ControlShapeEnum } from "@/components/custom-form";
 import type { IModelService, IGraphCommandService } from "@antv/xflow-core";
-import type { Cell, Graph as X6Graph } from "@antv/x6";
+import type { Cell, Graph as X6Graph, Node } from "@antv/x6";
 import { AppInitialState } from "@/app";
 import { portAttrs } from "@/components/flow";
 
@@ -47,7 +51,33 @@ export namespace NsJsonForm {
     const updateNode = (node: NsGraph.INodeConfig) => {
       const { label, conditions = [] } = node;
       if (label === "switch") {
-        const ports = [...(node.ports as NsGraph.INodeAnchor[])];
+        const ports = node.ports as NsGraph.INodeAnchor[];
+        const [_, ...others] = ports;
+        if (others.length > conditions.length) {
+          const [{ id }] = others.filter((_, index) => {
+            const is = conditions.some((_: string, i: number) => i === index);
+            return !is;
+          });
+          const cell = graph?.getCellById(data?.id as string);
+          const edges = graph?.getOutgoingEdges(cell as Node);
+          const [edge] =
+            edges?.filter((cell) => {
+              const sourcePortId = cell.getSourcePortId();
+              return sourcePortId === id;
+            }) ?? [];
+          const targetCell = edge.getTargetCell() as Node;
+          const { ports } = targetCell?.getData();
+          ports.forEach((item: any) => {
+            targetCell.setPortProp(item?.id, "connected", false);
+          });
+          const [delEdge] = graph?.getOutgoingEdges(targetCell as Node) ?? [];
+          commandService.executeCommand<NsEdgeCmd.DelEdge.IArgs>(
+            XFlowEdgeCommands.DEL_EDGE.id,
+            {
+              edgeConfig: delEdge.getData(),
+            }
+          );
+        }
         const input = ports.filter((item) => item.tooltip === "输入桩");
         node.ports = [
           ...input,
