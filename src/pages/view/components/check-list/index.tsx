@@ -86,7 +86,7 @@ const CheckList: React.FC<CheckListProps> = (props) => {
               satelliteCode: satList?.[0]?.value,
             },
             {
-              prefix: "/atlas",
+              // prefix: "/atlas",
             }
           );
         if (success) {

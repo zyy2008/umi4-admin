@@ -76,10 +76,10 @@ const File: FC<FileProps> = (props) => {
                 await APIS.DefaultApi.kmsViewServerViewImportPost(
                   {
                     file,
-                  },
-                  {
-                    prefix: "/atlas",
                   }
+                  // {
+                  //   prefix: "/atlas",
+                  // }
                 );
               if (success) {
                 setTimeout(() => {
@@ -113,7 +113,7 @@ const File: FC<FileProps> = (props) => {
               },
               {
                 responseType: "blob",
-                prefix: "/atlas",
+                // prefix: "/atlas",
               }
             );
             hide();

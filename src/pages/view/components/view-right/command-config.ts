@@ -16,8 +16,8 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
               {
                 nodeId: isNaN(Number(source)) ? 0 : Number(source),
                 newNodeName: "1",
-              },
-              { prefix: "/atlas" }
+              }
+              // { prefix: "/atlas" }
             );
           if (success) {
             return edgeConfig;
@@ -37,8 +37,8 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
             await APIS.DefaultApi.kmsViewServerViewDeletePost(
               {
                 id: isNaN(Number(id)) ? 0 : Number(id),
-              },
-              { prefix: "/atlas" }
+              }
+              // { prefix: "/atlas" }
             );
           if (success) {
             const getX6Graph: Graph = await args.getX6Graph();

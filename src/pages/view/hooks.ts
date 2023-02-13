@@ -37,8 +37,8 @@ export const useView = (props: IProps) => {
           {
             id: data.id,
             newName: value?.tmName,
-          },
-          { prefix: "/atlas" }
+          }
+          // { prefix: "/atlas" }
         );
         if (success) {
           node.setData({

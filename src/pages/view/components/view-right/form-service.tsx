@@ -109,8 +109,8 @@ export namespace NsJsonForm {
                 {
                   id,
                   newName: value,
-                },
-                { prefix: "/atlas" }
+                }
+                // { prefix: "/atlas" }
               );
             if (success) {
               message.success("修改成功！");

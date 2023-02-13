@@ -6,6 +6,8 @@ import type {
 } from "umi-request";
 import { notification } from "antd";
 
+declare var http: string;
+
 const codeMessage: Record<number, string> = {
   200: "服务器成功返回请求的数据。",
   201: "新建或修改数据成功。",
@@ -52,7 +54,7 @@ const errorHandler = (error: ResponseError) => {
 export const request: RequestMethod = extend({
   errorHandler,
   // prefix: "http://192.169.7.12:8079",
-  prefix: "http://192.169.7.200:8070",
+  prefix: http,
 });
 
 const { interceptors } = request;
