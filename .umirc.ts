@@ -30,13 +30,17 @@ export default defineConfig({
       },
       apps: [
         {
-          name: "task",
-          entry: "//localhost:8081",
+          name: "knowledge",
+          entry: "//192.169.7.200:8091",
         },
-        // {
-        //   name: "app2",
-        //   entry: "//192.169.7.200:8092/",
-        // },
+        {
+          name: "task",
+          entry: "//192.169.7.200:8092",
+        },
+        {
+          name: "arithmetic",
+          entry: "//192.169.7.200:8093",
+        },
       ],
     },
   },
@@ -54,22 +58,6 @@ export default defineConfig({
       path: "/",
       redirect: "/home",
     },
-    // {
-    //   name: "知识管理",
-    //   path: "/knowledge",
-    //   routes: [
-    //     { path: "/knowledge/project/*", name: "知识编辑", microApp: "app1" },
-    //   ],
-    // },
-    {
-      name: "任务调度",
-      path: "/task",
-      routes: [
-        { path: "/task/publicTaskMgt", name: "公共任务管理", microApp: "task" },
-        { path: "/task/taskMgt", name: "任务管理", microApp: "task" },
-        { path: "/task/thresholdDet", name: "门限知识检测", microApp: "task" },
-      ],
-    },
     {
       name: "首页",
       path: "/home",
@@ -82,15 +70,57 @@ export default defineConfig({
       // layout: false,
     },
     {
-      path: "/view",
-      name: "知识图谱",
-      component: "./view",
+      name: "知识管理",
+      path: "/knowledge",
+      routes: [
+        { path: "/knowledge/page1", name: "知识编辑", microApp: "knowledge" },
+        {
+          path: "/knowledge/transfer",
+          name: "知识转换",
+          microApp: "knowledge",
+        },
+        {
+          path: "/knowledge/view",
+          name: "知识图谱",
+          component: "./view",
+        },
+      ],
     },
     {
-      // path: "/task",
-      // name: "任务编辑",
-      // component: "./task",
-      // layout: false,
+      name: "任务调度",
+      path: "/task",
+      routes: [
+        {
+          path: "/task/page1",
+          name: "任务调度",
+          redirect: "/arithmetic/page1",
+        },
+        {
+          path: "/task/arithmetic",
+          name: "算法管理",
+          redirect: "/arithmetic/arithmetic",
+        },
+        { path: "/task/publicTaskMgt", name: "公共任务管理", microApp: "task" },
+        { path: "/task/taskMgt", name: "任务管理", microApp: "task" },
+        { path: "/task/thresholdDet", name: "门限知识检测", microApp: "task" },
+      ],
+    },
+    {
+      name: "算法任务",
+      path: "/arithmetic",
+      menu: false,
+      routes: [
+        {
+          path: "/arithmetic/page1",
+          name: "任务调度",
+          microApp: "arithmetic",
+        },
+        {
+          path: "/arithmetic/arithmetic",
+          name: "算法管理",
+          microApp: "arithmetic",
+        },
+      ],
     },
   ],
   npmClient: "yarn",
