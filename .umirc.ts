@@ -30,9 +30,13 @@ export default defineConfig({
       },
       apps: [
         {
-          name: "vue3",
-          entry: "//localhost",
+          name: "task",
+          entry: "//localhost:8081",
         },
+        // {
+        //   name: "app2",
+        //   entry: "//192.169.7.200:8092/",
+        // },
       ],
     },
   },
@@ -49,6 +53,22 @@ export default defineConfig({
     {
       path: "/",
       redirect: "/home",
+    },
+    // {
+    //   name: "知识管理",
+    //   path: "/knowledge",
+    //   routes: [
+    //     { path: "/knowledge/project/*", name: "知识编辑", microApp: "app1" },
+    //   ],
+    // },
+    {
+      name: "任务调度",
+      path: "/task",
+      routes: [
+        { path: "/task/publicTaskMgt", name: "公共任务管理", microApp: "task" },
+        { path: "/task/taskMgt", name: "任务管理", microApp: "task" },
+        { path: "/task/thresholdDet", name: "门限知识检测", microApp: "task" },
+      ],
     },
     {
       name: "首页",
@@ -67,9 +87,9 @@ export default defineConfig({
       component: "./view",
     },
     {
-      path: "/task",
-      name: "任务编辑",
-      component: "./task",
+      // path: "/task",
+      // name: "任务编辑",
+      // component: "./task",
       // layout: false,
     },
   ],

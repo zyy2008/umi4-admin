@@ -19,10 +19,10 @@ import * as models from './models';
   * @property `[size]` 
   * @property `[total]` 
   */
-export interface IPageKnowledgeDetailInfo {
+export interface IPageKnowledgeInfo {
   "current"?: number;
   "pages"?: number;
-  "records"?: Array<models.KnowledgeDetailInfo>;
+  "records"?: Array<models.KnowledgeInfo>;
   "size"?: number;
   "total"?: number;
 }

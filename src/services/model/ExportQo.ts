@@ -17,6 +17,7 @@ import * as models from './models';
   * @property `[subsystem]` 分系统
   * @property `[targetCode]` 对象代号
   * @property `[uuidList]` 选择导出的知识列表
+  * @property `[version]` 版本
   */
 export interface ExportQo {
   /**
@@ -35,5 +36,9 @@ export interface ExportQo {
    * 选择导出的知识列表
    */
   "uuidList"?: Array<string>;
+  /**
+   * 版本
+   */
+  "version"?: string;
 }
 

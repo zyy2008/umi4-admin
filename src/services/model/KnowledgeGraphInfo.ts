@@ -13,13 +13,12 @@
 import * as models from './models';
 
 /**
-  * @property `[data]` 
-  * @property `[errorMsg]` 
-  * @property `[success]` 
+  * @property `[graphInfo]` 图形信息
   */
-export interface BaseResponseIPageKnowledgeDetailInfo {
-  "data"?: models.IPageKnowledgeDetailInfo;
-  "errorMsg"?: string;
-  "success"?: boolean;
+export interface KnowledgeGraphInfo {
+  /**
+   * 图形信息
+   */
+  "graphInfo"?: string;
 }
 

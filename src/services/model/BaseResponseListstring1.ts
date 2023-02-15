@@ -13,13 +13,22 @@
 import * as models from './models';
 
 /**
-  * @property `[data]` 
-  * @property `[errorMsg]` 
-  * @property `[success]` 
+  * @property `[data]` 数据集
+  * @property `[errorMsg]` 错误信息
+  * @property `[success]` 返回状态
   */
-export interface BaseResponseKnowledgeVersion {
-  "data"?: models.KnowledgeVersion;
+export interface BaseResponseListstring1 {
+  /**
+   * 数据集
+   */
+  "data"?: Array<string>;
+  /**
+   * 错误信息
+   */
   "errorMsg"?: string;
+  /**
+   * 返回状态
+   */
   "success"?: boolean;
 }
 

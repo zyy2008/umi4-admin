@@ -16,6 +16,10 @@ import * as models from './models';
   * @description 知识函数
   * @property `funContent` 函数内容
   * @property `funName` 函数名称
+  * @property `[funNote]` 函数功能说明
+  * @property `[paramNote]` 输入说明
+  * @property `[returnNote]` 输出说明
+  * @property `returnType` 返回类型
   */
 export interface KnowledgeFunDto {
   /**
@@ -26,5 +30,21 @@ export interface KnowledgeFunDto {
    * 函数名称
    */
   "funName": string;
+  /**
+   * 函数功能说明
+   */
+  "funNote"?: string;
+  /**
+   * 输入说明
+   */
+  "paramNote"?: string;
+  /**
+   * 输出说明
+   */
+  "returnNote"?: string;
+  /**
+   * 返回类型
+   */
+  "returnType": number;
 }
 

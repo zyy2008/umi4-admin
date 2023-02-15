@@ -13,31 +13,44 @@
 import * as models from './models';
 
 /**
-  * @description 知识信息表
-  * @property `[createType]` 创建类型
+  * @description 知识基本信息列表
+  * @property `[createTime]` 创建时间
+  * @property `[createType]` 创建类型(1_代码, 2_可视化, 3_转换)
   * @property `[diagnosis]` 参与诊断(0_否, 1_是)
+  * @property `[editUser]` 编辑用户
   * @property `[faultDelay]` 故障延迟
   * @property `[faultLevel]` 故障等级(1_一般, 2_严重，3_警告)
   * @property `[faultPart]` 故障部件
+  * @property `[globalParamList]` 全局参数列表
+  * @property `[globalParams]` 全局参数Json
   * @property `[id]` 主键id
-  * @property `[isUpload]` 是否加载(0_否, 1_是)
+  * @property `[isChecked]` 是否校验(0_否, 1_是)
   * @property `[returnType]` 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
   * @property `ruleName` 规则名
   * @property `[subsystem]` 分系统
   * @property `[targetCode]` 对象代号
   * @property `[targetId]` 对象ID
+  * @property `[uploadTime]` 加载时间
   * @property `uuid` 知识唯一标识uuid
   * @property `[version]` 版本号
   */
 export interface KnowledgeInfo {
   /**
-   * 创建类型
+   * 创建时间
    */
-  "createType"?: string;
+  "createTime"?: Date;
+  /**
+   * 创建类型(1_代码, 2_可视化, 3_转换)
+   */
+  "createType"?: number;
   /**
    * 参与诊断(0_否, 1_是)
    */
   "diagnosis"?: number;
+  /**
+   * 编辑用户
+   */
+  "editUser"?: string;
   /**
    * 故障延迟
    */
@@ -51,13 +64,21 @@ export interface KnowledgeInfo {
    */
   "faultPart"?: string;
   /**
+   * 全局参数列表
+   */
+  "globalParamList"?: Array<models.TelemetryParam>;
+  /**
+   * 全局参数Json
+   */
+  "globalParams"?: string;
+  /**
    * 主键id
    */
   "id"?: number;
   /**
-   * 是否加载(0_否, 1_是)
+   * 是否校验(0_否, 1_是)
    */
-  "isUpload"?: number;
+  "isChecked"?: number;
   /**
    * 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
    */
@@ -78,6 +99,10 @@ export interface KnowledgeInfo {
    * 对象ID
    */
   "targetId"?: number;
+  /**
+   * 加载时间
+   */
+  "uploadTime"?: Date;
   /**
    * 知识唯一标识uuid
    */

@@ -13,27 +13,31 @@
 import * as models from './models';
 
 /**
-  * @description 知识信息表
+  * @property `[codeContent]` 规则内容
   * @property `[createType]` 创建类型
   * @property `[diagnosis]` 参与诊断(0_否, 1_是)
   * @property `[faultDelay]` 故障延迟
   * @property `[faultLevel]` 故障等级(1_一般, 2_严重，3_警告)
   * @property `[faultPart]` 故障部件
-  * @property `[id]` 主键id
-  * @property `[isUpload]` 是否加载(0_否, 1_是)
+  * @property `[isChecked]` 是否校验(0_否, 1_是)
+  * @property `[paramCode]` 参数代号
+  * @property `[paramName]` 参数名称
   * @property `[returnType]` 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
-  * @property `ruleName` 规则名
+  * @property `ruleName` 规则名称
   * @property `[subsystem]` 分系统
   * @property `[targetCode]` 对象代号
   * @property `[targetId]` 对象ID
-  * @property `uuid` 知识唯一标识uuid
   * @property `[version]` 版本号
   */
-export interface KnowledgeInfo1 {
+export interface KnowledgeQo {
+  /**
+   * 规则内容
+   */
+  "codeContent"?: string;
   /**
    * 创建类型
    */
-  "createType"?: string;
+  "createType"?: number;
   /**
    * 参与诊断(0_否, 1_是)
    */
@@ -51,19 +55,23 @@ export interface KnowledgeInfo1 {
    */
   "faultPart"?: string;
   /**
-   * 主键id
+   * 是否校验(0_否, 1_是)
    */
-  "id"?: number;
+  "isChecked"?: number;
   /**
-   * 是否加载(0_否, 1_是)
+   * 参数代号
    */
-  "isUpload"?: number;
+  "paramCode"?: string;
+  /**
+   * 参数名称
+   */
+  "paramName"?: string;
   /**
    * 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
    */
   "returnType"?: number;
   /**
-   * 规则名
+   * 规则名称
    */
   "ruleName": string;
   /**
@@ -78,10 +86,6 @@ export interface KnowledgeInfo1 {
    * 对象ID
    */
   "targetId"?: number;
-  /**
-   * 知识唯一标识uuid
-   */
-  "uuid": string;
   /**
    * 版本号
    */

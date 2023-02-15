@@ -13,28 +13,32 @@
 import * as models from './models';
 
 /**
-  * @description 知识
-  * @property `[createType]` 创建类型
+  * @description 知识新增
+  * @property `[codeContent]` 知识表达式
+  * @property `createType` 创建类型
   * @property `[diagnosis]` 参与诊断(0_否, 1_是)
   * @property `[editUser]` 编辑用户
-  * @property `[expression]` 知识表达式
   * @property `[faultDelay]` 故障延迟
   * @property `[faultLevel]` 故障等级(1_一般, 2_严重，3_警告)
   * @property `[faultPart]` 故障部件
   * @property `[globalParams]` 全局参数
   * @property `[graphInfo]` 图形信息
-  * @property `[returnType]` 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
+  * @property `returnType` 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
   * @property `ruleName` 规则名
   * @property `[subsystem]` 分系统
-  * @property `[targetCode]` 对象代号
-  * @property `[targetId]` 对象ID
-  * @property `uuid` 知识唯一标识uuid(新建知识不用填自动生成，更新知识时必填)
+  * @property `targetCode` 对象代号
+  * @property `targetId` 对象ID
+  * @property `version` 版本号
   */
-export interface Knowledge1 {
+export interface KnowledgeDto {
+  /**
+   * 知识表达式
+   */
+  "codeContent"?: string;
   /**
    * 创建类型
    */
-  "createType"?: string;
+  "createType": number;
   /**
    * 参与诊断(0_否, 1_是)
    */
@@ -43,10 +47,6 @@ export interface Knowledge1 {
    * 编辑用户
    */
   "editUser"?: string;
-  /**
-   * 知识表达式
-   */
-  "expression"?: string;
   /**
    * 故障延迟
    */
@@ -70,7 +70,7 @@ export interface Knowledge1 {
   /**
    * 返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)
    */
-  "returnType"?: number;
+  "returnType": number;
   /**
    * 规则名
    */
@@ -82,14 +82,14 @@ export interface Knowledge1 {
   /**
    * 对象代号
    */
-  "targetCode"?: string;
+  "targetCode": string;
   /**
    * 对象ID
    */
-  "targetId"?: number;
+  "targetId": number;
   /**
-   * 知识唯一标识uuid(新建知识不用填自动生成，更新知识时必填)
+   * 版本号
    */
-  "uuid": string;
+  "version": string;
 }
 

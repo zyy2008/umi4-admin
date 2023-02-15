@@ -40,6 +40,10 @@
       "description": "View Import Controller"
     },
     {
+      "name": "门限检测知识",
+      "description": "Tm Threshold Controller"
+    },
+    {
       "name": "公共任务管理",
       "description": "公共任务管理"
     },
@@ -371,31 +375,35 @@
         }
       }
     },
-    "/kms-zsbj-server/api/knowledge/add": {
-      "post": {
+    "/kms-zsbj-server/api/knowledge/update": {
+      "put": {
         "tags": [
           "知识管理"
         ],
-        "summary": "新增知识",
-        "description": "新增一条知识信息",
+        "summary": "更新一条知识信息",
+        "description": "更新一条知识记录",
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "KmsZsbjServerApiKnowledgeAddBody",
+            "name": "KmsZsbjServerApiKnowledgeUpdateBody",
             "in": "body",
             "description": "知识",
             "schema": {
               "type": "object",
               "required": [
-                "ruleName",
                 "uuid"
               ],
               "properties": {
-                "createType": {
+                "codeContent": {
                   "type": "string",
-                  "description": "创建类型"
+                  "description": "知识表达式"
+                },
+                "createType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "创建类型(1_代码，2_可视化图形,3_转换)"
                 },
                 "diagnosis": {
                   "type": "integer",
@@ -405,10 +413,6 @@
                 "editUser": {
                   "type": "string",
                   "description": "编辑用户"
-                },
-                "expression": {
-                  "type": "string",
-                  "description": "知识表达式"
                 },
                 "faultDelay": {
                   "type": "integer",
@@ -521,6 +525,10 @@
                 "uuid": {
                   "type": "string",
                   "description": "知识唯一标识uuid(新建知识不用填自动生成，更新知识时必填)"
+                },
+                "version": {
+                  "type": "string",
+                  "description": "版本号"
                 }
               },
               "title": "Knowledge对象",
@@ -536,68 +544,7 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object",
-                  "required": [
-                    "knowledgeUuid",
-                    "ruleName"
-                  ],
-                  "properties": {
-                    "createTime": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "创建时间"
-                    },
-                    "editUser": {
-                      "type": "string",
-                      "description": "编辑用户"
-                    },
-                    "filePath": {
-                      "type": "string",
-                      "description": "版本文件路径"
-                    },
-                    "globalParams": {
-                      "type": "string",
-                      "description": "全局参数"
-                    },
-                    "graphInfo": {
-                      "type": "string",
-                      "description": "图形信息"
-                    },
-                    "id": {
-                      "type": "integer",
-                      "format": "int32",
-                      "description": "主键id"
-                    },
-                    "isChecked": {
-                      "type": "integer",
-                      "format": "int32",
-                      "description": "是否校验(否_0, 是_1)"
-                    },
-                    "knowledgeUuid": {
-                      "type": "string",
-                      "description": "知识ID"
-                    },
-                    "ruleName": {
-                      "type": "string",
-                      "description": "规则名"
-                    },
-                    "uploadTime": {
-                      "type": "string",
-                      "format": "date-time",
-                      "description": "加载时间"
-                    },
-                    "version": {
-                      "type": "string",
-                      "description": "版本号"
-                    },
-                    "versionUuid": {
-                      "type": "string",
-                      "description": "版本标识UUID"
-                    }
-                  },
-                  "title": "KnowledgeVersion对象",
-                  "description": "知识版本历史表",
-                  "$$ref": "#/definitions/KnowledgeVersion对象"
+                  "type": "object"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -606,8 +553,8 @@
                   "type": "boolean"
                 }
               },
-              "title": "BaseResponse«KnowledgeVersion对象»",
-              "$$ref": "#/definitions/BaseResponse«KnowledgeVersion对象»"
+              "title": "BaseResponse",
+              "$$ref": "#/definitions/BaseResponse"
             }
           }
         }
@@ -635,8 +582,7 @@
                   "description": "待操作的知识标识uuid列表",
                   "items": {
                     "type": "string"
-                  },
-                  "refType": "string"
+                  }
                 }
               },
               "title": "MultiQo",
@@ -689,8 +635,7 @@
                   "description": "待操作的知识标识uuid列表",
                   "items": {
                     "type": "string"
-                  },
-                  "refType": "string"
+                  }
                 }
               },
               "title": "MultiQo",
@@ -743,8 +688,7 @@
                   "description": "待操作的知识标识uuid列表",
                   "items": {
                     "type": "string"
-                  },
-                  "refType": "string"
+                  }
                 }
               },
               "title": "MultiQo",
@@ -822,7 +766,7 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "expression": {
+                    "codeContent": {
                       "type": "string",
                       "description": "知识表达式内容"
                     }
@@ -914,8 +858,7 @@
                   "description": "待操作的知识标识uuid列表",
                   "items": {
                     "type": "string"
-                  },
-                  "refType": "string"
+                  }
                 }
               },
               "title": "MultiQo",
@@ -933,10 +876,40 @@
                   "type": "object",
                   "properties": {
                     "result": {
-                      "type": "object",
-                      "description": "多条知识校验结果<uuid, result>",
-                      "additionalProperties": {
-                        "type": "boolean"
+                      "type": "array",
+                      "description": "多条知识校验结果",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "errorMsg": {
+                            "type": "array",
+                            "description": "知识校验错误日志",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "知识名称"
+                          },
+                          "output": {
+                            "type": "array",
+                            "description": "知识校验输出",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "result": {
+                            "type": "boolean",
+                            "description": "知识校验结果"
+                          },
+                          "uuid": {
+                            "type": "string",
+                            "description": "知识标识uuid"
+                          }
+                        },
+                        "title": "知识校验结果",
+                        "$$ref": "#/definitions/知识校验结果"
                       }
                     }
                   },
@@ -1053,6 +1026,13 @@
             "type": "string"
           },
           {
+            "name": "version",
+            "in": "query",
+            "required": true,
+            "description": "导入版本",
+            "type": "string"
+          },
+          {
             "name": "file",
             "in": "formData",
             "required": false,
@@ -1118,6 +1098,10 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "version": {
+                  "type": "string",
+                  "description": "版本"
                 }
               },
               "title": "ExportQo",
@@ -1148,28 +1132,28 @@
         }
       }
     },
-    "/kms-zsbj-server/api/knowledge/download": {
-      "get": {
+    "/kms-zsbj-server/api/knowledge/version-add": {
+      "put": {
         "tags": [
           "知识管理"
         ],
-        "summary": "下载知识文件",
+        "summary": "新增对象版本",
         "consumes": [
-          "text/plain"
+          "application/json"
         ],
         "parameters": [
           {
-            "name": "uuid",
+            "name": "targetCode",
             "in": "query",
             "required": true,
-            "description": "待下载的知识标识uuid",
+            "description": "对象代号",
             "type": "string"
           },
           {
             "name": "version",
             "in": "query",
             "required": true,
-            "description": "待下载的知识版本号",
+            "description": "版本号",
             "type": "string"
           }
         ],
@@ -1177,38 +1161,58 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "type": "string",
-              "format": "byte",
-              "title": "KmsZsbjServerApiKnowledgeDownload"
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse",
+              "$$ref": "#/definitions/BaseResponse"
             }
           }
         }
       }
     },
-    "/kms-zsbj-server/api/knowledge/update": {
-      "put": {
+    "/kms-zsbj-server/api/knowledge/add": {
+      "post": {
         "tags": [
           "知识管理"
         ],
-        "summary": "更新一条知识信息",
-        "description": "更新一条知识记录",
+        "summary": "新增知识",
+        "description": "新增一条知识信息",
         "consumes": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "KmsZsbjServerApiKnowledgeUpdateBody",
+            "name": "KmsZsbjServerApiKnowledgeAddBody",
             "in": "body",
-            "description": "知识",
+            "description": "知识新增",
             "schema": {
               "type": "object",
               "required": [
+                "createType",
+                "returnType",
                 "ruleName",
-                "uuid"
+                "targetCode",
+                "targetId",
+                "version"
               ],
               "properties": {
-                "createType": {
+                "codeContent": {
                   "type": "string",
+                  "description": "知识表达式"
+                },
+                "createType": {
+                  "type": "integer",
+                  "format": "int32",
                   "description": "创建类型"
                 },
                 "diagnosis": {
@@ -1219,10 +1223,6 @@
                 "editUser": {
                   "type": "string",
                   "description": "编辑用户"
-                },
-                "expression": {
-                  "type": "string",
-                  "description": "知识表达式"
                 },
                 "faultDelay": {
                   "type": "integer",
@@ -1332,14 +1332,14 @@
                   "format": "int32",
                   "description": "对象ID"
                 },
-                "uuid": {
+                "version": {
                   "type": "string",
-                  "description": "知识唯一标识uuid(新建知识不用填自动生成，更新知识时必填)"
+                  "description": "版本号"
                 }
               },
-              "title": "Knowledge对象",
-              "description": "知识",
-              "$$ref": "#/definitions/Knowledge对象"
+              "title": "新增KnowledgeDto对象",
+              "description": "知识新增",
+              "$$ref": "#/definitions/新增KnowledgeDto对象"
             }
           }
         ],
@@ -1350,7 +1350,91 @@
               "type": "object",
               "properties": {
                 "data": {
-                  "type": "object"
+                  "type": "object",
+                  "required": [
+                    "knowledgeUuid",
+                    "ruleName"
+                  ],
+                  "properties": {
+                    "globalParams": {
+                      "type": "array",
+                      "description": "全局参数",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "satId",
+                          "tmCode",
+                          "tmDataType",
+                          "tmName",
+                          "tmNum",
+                          "tmSid",
+                          "tmValueUnit"
+                        ],
+                        "properties": {
+                          "createTime": {
+                            "type": "string",
+                            "example": "创建时间",
+                            "description": "创建时间"
+                          },
+                          "createUser": {
+                            "type": "string",
+                            "example": "创建人",
+                            "description": "创建人"
+                          },
+                          "satId": {
+                            "type": "string",
+                            "example": "SAT1",
+                            "description": "卫星标识"
+                          },
+                          "tmCode": {
+                            "type": "string",
+                            "example": "TM01",
+                            "description": "参数代号"
+                          },
+                          "tmDataType": {
+                            "type": "integer",
+                            "format": "int32",
+                            "example": 1,
+                            "description": "参数类型1：整数型 2：浮点型 3：字符型"
+                          },
+                          "tmName": {
+                            "type": "string",
+                            "example": "参数01",
+                            "description": "参数名称"
+                          },
+                          "tmNum": {
+                            "type": "integer",
+                            "format": "int32",
+                            "example": 1,
+                            "description": "参数序号"
+                          },
+                          "tmSid": {
+                            "type": "string",
+                            "example": "参数01",
+                            "description": "参数标识"
+                          },
+                          "tmValueUnit": {
+                            "type": "string",
+                            "example": "米",
+                            "description": "参数值单位"
+                          }
+                        },
+                        "title": "TelemetryParam对象",
+                        "description": "遥测参数",
+                        "$$ref": "#/definitions/TelemetryParam对象"
+                      }
+                    },
+                    "knowledgeUuid": {
+                      "type": "string",
+                      "description": "知识ID"
+                    },
+                    "ruleName": {
+                      "type": "string",
+                      "description": "规则名"
+                    }
+                  },
+                  "title": "知识保存结果",
+                  "$$ref": "#/definitions/知识保存结果"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -1359,8 +1443,45 @@
                   "type": "boolean"
                 }
               },
-              "title": "BaseResponse",
-              "$$ref": "#/definitions/BaseResponse"
+              "title": "BaseResponse«知识保存结果»",
+              "$$ref": "#/definitions/BaseResponse«知识保存结果»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/download": {
+      "get": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "下载知识文件",
+        "consumes": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "required": true,
+            "description": "待下载的知识标识uuid",
+            "type": "string"
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": true,
+            "description": "待下载的知识版本号",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "string",
+              "format": "byte",
+              "title": "KmsZsbjServerApiKnowledgeDownload"
             }
           }
         }
@@ -1451,6 +1572,50 @@
         }
       }
     },
+    "/kms-zsbj-server/api/knowledge/version-list": {
+      "get": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "查看对象版本列表",
+        "consumes": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "name": "targetCode",
+            "in": "query",
+            "required": true,
+            "description": "对象代号",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«List«string»»",
+              "$$ref": "#/definitions/BaseResponse«List«string»»"
+            }
+          }
+        }
+      }
+    },
     "/kms-zsbj-server/api/knowledge/view": {
       "get": {
         "tags": [
@@ -1485,7 +1650,7 @@
                 "data": {
                   "type": "object",
                   "properties": {
-                    "expression": {
+                    "codeContent": {
                       "type": "string",
                       "description": "知识表达式内容"
                     }
@@ -1502,6 +1667,55 @@
               },
               "title": "BaseResponse«KnowledgeContentBo»",
               "$$ref": "#/definitions/BaseResponse«KnowledgeContentBo»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/graph": {
+      "get": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "查看知识图形信息",
+        "consumes": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "required": true,
+            "description": "待查看的知识标识uuid",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "graphInfo": {
+                      "type": "string",
+                      "description": "图形信息"
+                    }
+                  },
+                  "title": "KnowledgeGraphInfo",
+                  "$$ref": "#/definitions/KnowledgeGraphInfo"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«KnowledgeGraphInfo»",
+              "$$ref": "#/definitions/BaseResponse«KnowledgeGraphInfo»"
             }
           }
         }
@@ -1687,6 +1901,10 @@
                         "type": "string"
                       }
                     },
+                    "name": {
+                      "type": "string",
+                      "description": "知识名称"
+                    },
                     "output": {
                       "type": "array",
                       "description": "知识校验输出",
@@ -1697,6 +1915,10 @@
                     "result": {
                       "type": "boolean",
                       "description": "知识校验结果"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "知识标识uuid"
                     }
                   },
                   "title": "知识校验结果",
@@ -1711,6 +1933,206 @@
               },
               "title": "BaseResponse«知识校验结果»",
               "$$ref": "#/definitions/BaseResponse«知识校验结果»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/info": {
+      "get": {
+        "tags": [
+          "知识管理"
+        ],
+        "summary": "获取单条知识信息",
+        "consumes": [
+          "text/plain"
+        ],
+        "parameters": [
+          {
+            "name": "uuid",
+            "in": "query",
+            "required": true,
+            "description": "知识标识uuid",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object",
+                  "required": [
+                    "ruleName",
+                    "uuid"
+                  ],
+                  "properties": {
+                    "createTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "创建时间"
+                    },
+                    "createType": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "创建类型(1_代码, 2_可视化, 3_转换)"
+                    },
+                    "diagnosis": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "参与诊断(0_否, 1_是)"
+                    },
+                    "editUser": {
+                      "type": "string",
+                      "description": "编辑用户"
+                    },
+                    "faultDelay": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "故障延迟"
+                    },
+                    "faultLevel": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "故障等级(1_一般, 2_严重，3_警告)"
+                    },
+                    "faultPart": {
+                      "type": "string",
+                      "description": "故障部件"
+                    },
+                    "globalParamList": {
+                      "type": "array",
+                      "description": "全局参数列表",
+                      "items": {
+                        "type": "object",
+                        "required": [
+                          "satId",
+                          "tmCode",
+                          "tmDataType",
+                          "tmName",
+                          "tmNum",
+                          "tmSid",
+                          "tmValueUnit"
+                        ],
+                        "properties": {
+                          "createTime": {
+                            "type": "string",
+                            "example": "创建时间",
+                            "description": "创建时间"
+                          },
+                          "createUser": {
+                            "type": "string",
+                            "example": "创建人",
+                            "description": "创建人"
+                          },
+                          "satId": {
+                            "type": "string",
+                            "example": "SAT1",
+                            "description": "卫星标识"
+                          },
+                          "tmCode": {
+                            "type": "string",
+                            "example": "TM01",
+                            "description": "参数代号"
+                          },
+                          "tmDataType": {
+                            "type": "integer",
+                            "format": "int32",
+                            "example": 1,
+                            "description": "参数类型1：整数型 2：浮点型 3：字符型"
+                          },
+                          "tmName": {
+                            "type": "string",
+                            "example": "参数01",
+                            "description": "参数名称"
+                          },
+                          "tmNum": {
+                            "type": "integer",
+                            "format": "int32",
+                            "example": 1,
+                            "description": "参数序号"
+                          },
+                          "tmSid": {
+                            "type": "string",
+                            "example": "参数01",
+                            "description": "参数标识"
+                          },
+                          "tmValueUnit": {
+                            "type": "string",
+                            "example": "米",
+                            "description": "参数值单位"
+                          }
+                        },
+                        "title": "TelemetryParam对象",
+                        "description": "遥测参数",
+                        "$$ref": "#/definitions/TelemetryParam对象"
+                      }
+                    },
+                    "globalParams": {
+                      "type": "string",
+                      "description": "全局参数Json"
+                    },
+                    "id": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "主键id"
+                    },
+                    "isChecked": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "是否校验(0_否, 1_是)"
+                    },
+                    "returnType": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)"
+                    },
+                    "ruleName": {
+                      "type": "string",
+                      "description": "规则名"
+                    },
+                    "subsystem": {
+                      "type": "string",
+                      "description": "分系统"
+                    },
+                    "targetCode": {
+                      "type": "string",
+                      "description": "对象代号"
+                    },
+                    "targetId": {
+                      "type": "integer",
+                      "format": "int32",
+                      "description": "对象ID"
+                    },
+                    "uploadTime": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "加载时间"
+                    },
+                    "uuid": {
+                      "type": "string",
+                      "description": "知识唯一标识uuid"
+                    },
+                    "version": {
+                      "type": "string",
+                      "description": "版本号"
+                    }
+                  },
+                  "title": "KnowledgeInfo对象",
+                  "description": "知识基本信息列表",
+                  "$$ref": "#/definitions/KnowledgeInfo对象"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«KnowledgeInfo对象»",
+              "$$ref": "#/definitions/BaseResponse«KnowledgeInfo对象»"
             }
           }
         }
@@ -1876,8 +2298,8 @@
                   "items": {
                     "type": "object",
                     "required": [
-                      "knowledgeUuid",
-                      "ruleName"
+                      "ruleName",
+                      "uuid"
                     ],
                     "properties": {
                       "createTime": {
@@ -1885,21 +2307,105 @@
                         "format": "date-time",
                         "description": "创建时间"
                       },
+                      "createType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "创建类型(1_代码, 2_可视化, 3_转换)"
+                      },
+                      "diagnosis": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "参与诊断(0_否, 1_是)"
+                      },
                       "editUser": {
                         "type": "string",
                         "description": "编辑用户"
                       },
-                      "filePath": {
+                      "faultDelay": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "故障延迟"
+                      },
+                      "faultLevel": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "故障等级(1_一般, 2_严重，3_警告)"
+                      },
+                      "faultPart": {
                         "type": "string",
-                        "description": "版本文件路径"
+                        "description": "故障部件"
+                      },
+                      "globalParamList": {
+                        "type": "array",
+                        "description": "全局参数列表",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "satId",
+                            "tmCode",
+                            "tmDataType",
+                            "tmName",
+                            "tmNum",
+                            "tmSid",
+                            "tmValueUnit"
+                          ],
+                          "properties": {
+                            "createTime": {
+                              "type": "string",
+                              "example": "创建时间",
+                              "description": "创建时间"
+                            },
+                            "createUser": {
+                              "type": "string",
+                              "example": "创建人",
+                              "description": "创建人"
+                            },
+                            "satId": {
+                              "type": "string",
+                              "example": "SAT1",
+                              "description": "卫星标识"
+                            },
+                            "tmCode": {
+                              "type": "string",
+                              "example": "TM01",
+                              "description": "参数代号"
+                            },
+                            "tmDataType": {
+                              "type": "integer",
+                              "format": "int32",
+                              "example": 1,
+                              "description": "参数类型1：整数型 2：浮点型 3：字符型"
+                            },
+                            "tmName": {
+                              "type": "string",
+                              "example": "参数01",
+                              "description": "参数名称"
+                            },
+                            "tmNum": {
+                              "type": "integer",
+                              "format": "int32",
+                              "example": 1,
+                              "description": "参数序号"
+                            },
+                            "tmSid": {
+                              "type": "string",
+                              "example": "参数01",
+                              "description": "参数标识"
+                            },
+                            "tmValueUnit": {
+                              "type": "string",
+                              "example": "米",
+                              "description": "参数值单位"
+                            }
+                          },
+                          "title": "TelemetryParam对象",
+                          "description": "遥测参数",
+                          "$$ref": "#/definitions/TelemetryParam对象"
+                        }
                       },
                       "globalParams": {
                         "type": "string",
-                        "description": "全局参数"
-                      },
-                      "graphInfo": {
-                        "type": "string",
-                        "description": "图形信息"
+                        "description": "全局参数Json"
                       },
                       "id": {
                         "type": "integer",
@@ -1909,33 +2415,47 @@
                       "isChecked": {
                         "type": "integer",
                         "format": "int32",
-                        "description": "是否校验(否_0, 是_1)"
+                        "description": "是否校验(0_否, 1_是)"
                       },
-                      "knowledgeUuid": {
-                        "type": "string",
-                        "description": "知识ID"
+                      "returnType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "返回值类型(0_无, 1_INT，2_FLOAT,3_STRING,4_BOOLEAN)"
                       },
                       "ruleName": {
                         "type": "string",
                         "description": "规则名"
+                      },
+                      "subsystem": {
+                        "type": "string",
+                        "description": "分系统"
+                      },
+                      "targetCode": {
+                        "type": "string",
+                        "description": "对象代号"
+                      },
+                      "targetId": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "对象ID"
                       },
                       "uploadTime": {
                         "type": "string",
                         "format": "date-time",
                         "description": "加载时间"
                       },
+                      "uuid": {
+                        "type": "string",
+                        "description": "知识唯一标识uuid"
+                      },
                       "version": {
                         "type": "string",
                         "description": "版本号"
-                      },
-                      "versionUuid": {
-                        "type": "string",
-                        "description": "版本标识UUID"
                       }
                     },
-                    "title": "KnowledgeVersion对象",
-                    "description": "知识版本历史表",
-                    "$$ref": "#/definitions/KnowledgeVersion对象"
+                    "title": "KnowledgeInfo对象",
+                    "description": "知识基本信息列表",
+                    "$$ref": "#/definitions/KnowledgeInfo对象"
                   }
                 },
                 "errorMsg": {
@@ -1945,8 +2465,8 @@
                   "type": "boolean"
                 }
               },
-              "title": "BaseResponse«List«KnowledgeVersion对象»»",
-              "$$ref": "#/definitions/BaseResponse«List«KnowledgeVersion对象»»"
+              "title": "BaseResponse«List«KnowledgeInfo对象»»",
+              "$$ref": "#/definitions/BaseResponse«List«KnowledgeInfo对象»»"
             }
           }
         }
@@ -1979,16 +2499,19 @@
           {
             "name": "KmsZsbjServerApiKnowledgePagePageNumPageSizeBody",
             "in": "body",
-            "description": "知识信息表",
             "schema": {
               "type": "object",
               "required": [
-                "ruleName",
-                "uuid"
+                "ruleName"
               ],
               "properties": {
-                "createType": {
+                "codeContent": {
                   "type": "string",
+                  "description": "规则内容"
+                },
+                "createType": {
+                  "type": "integer",
+                  "format": "int32",
                   "description": "创建类型"
                 },
                 "diagnosis": {
@@ -2010,15 +2533,18 @@
                   "type": "string",
                   "description": "故障部件"
                 },
-                "id": {
+                "isChecked": {
                   "type": "integer",
                   "format": "int32",
-                  "description": "主键id"
+                  "description": "是否校验(0_否, 1_是)"
                 },
-                "isUpload": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "是否加载(0_否, 1_是)"
+                "paramCode": {
+                  "type": "string",
+                  "description": "参数代号"
+                },
+                "paramName": {
+                  "type": "string",
+                  "description": "参数名称"
                 },
                 "returnType": {
                   "type": "integer",
@@ -2027,7 +2553,7 @@
                 },
                 "ruleName": {
                   "type": "string",
-                  "description": "规则名"
+                  "description": "规则名称"
                 },
                 "subsystem": {
                   "type": "string",
@@ -2042,18 +2568,13 @@
                   "format": "int32",
                   "description": "对象ID"
                 },
-                "uuid": {
-                  "type": "string",
-                  "description": "知识唯一标识uuid"
-                },
                 "version": {
                   "type": "string",
                   "description": "版本号"
                 }
               },
-              "title": "KnowledgeInfo对象",
-              "description": "知识信息表",
-              "$$ref": "#/definitions/KnowledgeInfo对象"
+              "title": "KnowledgeQo",
+              "$$ref": "#/definitions/KnowledgeQo"
             }
           }
         ],
@@ -2085,11 +2606,13 @@
                         "properties": {
                           "createTime": {
                             "type": "string",
+                            "format": "date-time",
                             "description": "创建时间"
                           },
                           "createType": {
-                            "type": "string",
-                            "description": "创建类型"
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "创建类型(1_代码, 2_可视化, 3_转换)"
                           },
                           "diagnosis": {
                             "type": "integer",
@@ -2114,17 +2637,77 @@
                             "type": "string",
                             "description": "故障部件"
                           },
-                          "filePath": {
-                            "type": "string",
-                            "description": "版本文件路径"
+                          "globalParamList": {
+                            "type": "array",
+                            "description": "全局参数列表",
+                            "items": {
+                              "type": "object",
+                              "required": [
+                                "satId",
+                                "tmCode",
+                                "tmDataType",
+                                "tmName",
+                                "tmNum",
+                                "tmSid",
+                                "tmValueUnit"
+                              ],
+                              "properties": {
+                                "createTime": {
+                                  "type": "string",
+                                  "example": "创建时间",
+                                  "description": "创建时间"
+                                },
+                                "createUser": {
+                                  "type": "string",
+                                  "example": "创建人",
+                                  "description": "创建人"
+                                },
+                                "satId": {
+                                  "type": "string",
+                                  "example": "SAT1",
+                                  "description": "卫星标识"
+                                },
+                                "tmCode": {
+                                  "type": "string",
+                                  "example": "TM01",
+                                  "description": "参数代号"
+                                },
+                                "tmDataType": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "example": 1,
+                                  "description": "参数类型1：整数型 2：浮点型 3：字符型"
+                                },
+                                "tmName": {
+                                  "type": "string",
+                                  "example": "参数01",
+                                  "description": "参数名称"
+                                },
+                                "tmNum": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "example": 1,
+                                  "description": "参数序号"
+                                },
+                                "tmSid": {
+                                  "type": "string",
+                                  "example": "参数01",
+                                  "description": "参数标识"
+                                },
+                                "tmValueUnit": {
+                                  "type": "string",
+                                  "example": "米",
+                                  "description": "参数值单位"
+                                }
+                              },
+                              "title": "TelemetryParam对象",
+                              "description": "遥测参数",
+                              "$$ref": "#/definitions/TelemetryParam对象"
+                            }
                           },
                           "globalParams": {
                             "type": "string",
-                            "description": "全局参数"
-                          },
-                          "graphInfo": {
-                            "type": "string",
-                            "description": "图形信息"
+                            "description": "全局参数Json"
                           },
                           "id": {
                             "type": "integer",
@@ -2135,11 +2718,6 @@
                             "type": "integer",
                             "format": "int32",
                             "description": "是否校验(0_否, 1_是)"
-                          },
-                          "isUpload": {
-                            "type": "integer",
-                            "format": "int32",
-                            "description": "是否加载(0_否, 1_是)"
                           },
                           "returnType": {
                             "type": "integer",
@@ -2165,6 +2743,7 @@
                           },
                           "uploadTime": {
                             "type": "string",
+                            "format": "date-time",
                             "description": "加载时间"
                           },
                           "uuid": {
@@ -2174,15 +2753,11 @@
                           "version": {
                             "type": "string",
                             "description": "版本号"
-                          },
-                          "versionUuid": {
-                            "type": "string",
-                            "description": "版本标识UUID"
                           }
                         },
-                        "title": "KnowledgeDetailInfo对象",
-                        "description": "知识详细信息表",
-                        "$$ref": "#/definitions/KnowledgeDetailInfo对象"
+                        "title": "KnowledgeInfo对象",
+                        "description": "知识基本信息列表",
+                        "$$ref": "#/definitions/KnowledgeInfo对象"
                       }
                     },
                     "size": {
@@ -2194,8 +2769,8 @@
                       "format": "int64"
                     }
                   },
-                  "title": "IPage«KnowledgeDetailInfo对象»",
-                  "$$ref": "#/definitions/IPage«KnowledgeDetailInfo对象»"
+                  "title": "IPage«KnowledgeInfo对象»",
+                  "$$ref": "#/definitions/IPage«KnowledgeInfo对象»"
                 },
                 "errorMsg": {
                   "type": "string"
@@ -2204,14 +2779,14 @@
                   "type": "boolean"
                 }
               },
-              "title": "BaseResponse«IPage«KnowledgeDetailInfo对象»»",
-              "$$ref": "#/definitions/BaseResponse«IPage«KnowledgeDetailInfo对象»»"
+              "title": "BaseResponse«IPage«KnowledgeInfo对象»»",
+              "$$ref": "#/definitions/BaseResponse«IPage«KnowledgeInfo对象»»"
             }
           }
         }
       }
     },
-    "/kms-zsbj-server/api/knowledge/return-type-list": {
+    "/kms-zsbj-server/api/knowledge/list-has-return": {
       "get": {
         "tags": [
           "知识管理"
@@ -2236,14 +2811,24 @@
                       "uuid"
                     ],
                     "properties": {
-                      "createType": {
+                      "createTime": {
                         "type": "string",
-                        "description": "创建类型"
+                        "format": "date-time",
+                        "description": "创建时间"
+                      },
+                      "createType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "创建类型(1_代码, 2_可视化, 3_转换)"
                       },
                       "diagnosis": {
                         "type": "integer",
                         "format": "int32",
                         "description": "参与诊断(0_否, 1_是)"
+                      },
+                      "editUser": {
+                        "type": "string",
+                        "description": "编辑用户"
                       },
                       "faultDelay": {
                         "type": "integer",
@@ -2259,15 +2844,87 @@
                         "type": "string",
                         "description": "故障部件"
                       },
+                      "globalParamList": {
+                        "type": "array",
+                        "description": "全局参数列表",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "satId",
+                            "tmCode",
+                            "tmDataType",
+                            "tmName",
+                            "tmNum",
+                            "tmSid",
+                            "tmValueUnit"
+                          ],
+                          "properties": {
+                            "createTime": {
+                              "type": "string",
+                              "example": "创建时间",
+                              "description": "创建时间"
+                            },
+                            "createUser": {
+                              "type": "string",
+                              "example": "创建人",
+                              "description": "创建人"
+                            },
+                            "satId": {
+                              "type": "string",
+                              "example": "SAT1",
+                              "description": "卫星标识"
+                            },
+                            "tmCode": {
+                              "type": "string",
+                              "example": "TM01",
+                              "description": "参数代号"
+                            },
+                            "tmDataType": {
+                              "type": "integer",
+                              "format": "int32",
+                              "example": 1,
+                              "description": "参数类型1：整数型 2：浮点型 3：字符型"
+                            },
+                            "tmName": {
+                              "type": "string",
+                              "example": "参数01",
+                              "description": "参数名称"
+                            },
+                            "tmNum": {
+                              "type": "integer",
+                              "format": "int32",
+                              "example": 1,
+                              "description": "参数序号"
+                            },
+                            "tmSid": {
+                              "type": "string",
+                              "example": "参数01",
+                              "description": "参数标识"
+                            },
+                            "tmValueUnit": {
+                              "type": "string",
+                              "example": "米",
+                              "description": "参数值单位"
+                            }
+                          },
+                          "title": "TelemetryParam对象",
+                          "description": "遥测参数",
+                          "$$ref": "#/definitions/TelemetryParam对象"
+                        }
+                      },
+                      "globalParams": {
+                        "type": "string",
+                        "description": "全局参数Json"
+                      },
                       "id": {
                         "type": "integer",
                         "format": "int32",
                         "description": "主键id"
                       },
-                      "isUpload": {
+                      "isChecked": {
                         "type": "integer",
                         "format": "int32",
-                        "description": "是否加载(0_否, 1_是)"
+                        "description": "是否校验(0_否, 1_是)"
                       },
                       "returnType": {
                         "type": "integer",
@@ -2291,6 +2948,11 @@
                         "format": "int32",
                         "description": "对象ID"
                       },
+                      "uploadTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "加载时间"
+                      },
                       "uuid": {
                         "type": "string",
                         "description": "知识唯一标识uuid"
@@ -2301,7 +2963,7 @@
                       }
                     },
                     "title": "KnowledgeInfo对象",
-                    "description": "知识信息表",
+                    "description": "知识基本信息列表",
                     "$$ref": "#/definitions/KnowledgeInfo对象"
                   }
                 },
@@ -2337,7 +2999,8 @@
               "type": "object",
               "required": [
                 "funContent",
-                "funName"
+                "funName",
+                "returnType"
               ],
               "properties": {
                 "funContent": {
@@ -2347,6 +3010,23 @@
                 "funName": {
                   "type": "string",
                   "description": "函数名称"
+                },
+                "funNote": {
+                  "type": "string",
+                  "description": "函数功能说明"
+                },
+                "paramNote": {
+                  "type": "string",
+                  "description": "输入说明"
+                },
+                "returnNote": {
+                  "type": "string",
+                  "description": "输出说明"
+                },
+                "returnType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "返回类型"
                 }
               },
               "title": "KnowledgeFunDto对象",
@@ -2397,6 +3077,7 @@
               "required": [
                 "funContent",
                 "funName",
+                "returnType",
                 "uuid"
               ],
               "properties": {
@@ -2408,10 +3089,27 @@
                   "type": "string",
                   "description": "函数名称"
                 },
+                "funNote": {
+                  "type": "string",
+                  "description": "函数功能说明"
+                },
                 "id": {
                   "type": "integer",
                   "format": "int32",
                   "description": "主键id"
+                },
+                "paramNote": {
+                  "type": "string",
+                  "description": "输入说明"
+                },
+                "returnNote": {
+                  "type": "string",
+                  "description": "输出说明"
+                },
+                "returnType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "返回类型"
                 },
                 "uuid": {
                   "type": "string",
@@ -2478,6 +3176,7 @@
                     "required": [
                       "funContent",
                       "funName",
+                      "returnType",
                       "uuid"
                     ],
                     "properties": {
@@ -2489,10 +3188,27 @@
                         "type": "string",
                         "description": "函数名称"
                       },
+                      "funNote": {
+                        "type": "string",
+                        "description": "函数功能说明"
+                      },
                       "id": {
                         "type": "integer",
                         "format": "int32",
                         "description": "主键id"
+                      },
+                      "paramNote": {
+                        "type": "string",
+                        "description": "输入说明"
+                      },
+                      "returnNote": {
+                        "type": "string",
+                        "description": "输出说明"
+                      },
+                      "returnType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "返回类型"
                       },
                       "uuid": {
                         "type": "string",
@@ -5273,6 +5989,256 @@
               },
               "title": "BaseResponse«ParameterOutPo»",
               "$$ref": "#/definitions/BaseResponse«ParameterOutPo»"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/tm-threshold-save": {
+      "post": {
+        "tags": [
+          "门限检测知识"
+        ],
+        "summary": "保存参数门限值",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsZsbjServerApiKnowledgeTmThresholdSaveBody",
+            "in": "body",
+            "description": "参数门限知识",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "satId": {
+                  "type": "string",
+                  "description": "卫星标识",
+                  "refType": null
+                },
+                "tmThresholdList": {
+                  "type": "array",
+                  "description": "参数门限列表",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "bottomLimit": {
+                        "type": "string",
+                        "description": "参数下限",
+                        "refType": null
+                      },
+                      "tmCode": {
+                        "type": "string",
+                        "description": "参数代号",
+                        "refType": null
+                      },
+                      "tmDataType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "参数数据类型",
+                        "refType": null
+                      },
+                      "tmName": {
+                        "type": "string",
+                        "description": "参数名称",
+                        "refType": null
+                      },
+                      "tmSid": {
+                        "type": "string",
+                        "description": "参数标识",
+                        "refType": null
+                      },
+                      "topLimit": {
+                        "type": "string",
+                        "description": "参数上限",
+                        "refType": null
+                      }
+                    },
+                    "title": "TmThresholdBean",
+                    "$$ref": "#/definitions/TmThresholdBean"
+                  },
+                  "refType": "TmThresholdBean"
+                }
+              },
+              "title": "TmThresholdDto对象",
+              "description": "参数门限知识",
+              "$$ref": "#/definitions/TmThresholdDto对象"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "object"
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse",
+              "$$ref": "#/definitions/BaseResponse"
+            }
+          }
+        }
+      }
+    },
+    "/kms-zsbj-server/api/knowledge/tm-threshold-get": {
+      "post": {
+        "tags": [
+          "门限检测知识"
+        ],
+        "summary": "获取参数门限列表",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "KmsZsbjServerApiKnowledgeTmThresholdGetBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "endTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "结束时间",
+                  "refType": null
+                },
+                "satId": {
+                  "type": "string",
+                  "description": "卫星标识",
+                  "refType": null
+                },
+                "startTime": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "开始时间",
+                  "refType": null
+                },
+                "tmParamList": {
+                  "type": "array",
+                  "description": "待查询参数列表",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "tmCode": {
+                        "type": "string",
+                        "description": "参数代号",
+                        "refType": null
+                      },
+                      "tmDataType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "参数数据类型",
+                        "refType": null
+                      },
+                      "tmName": {
+                        "type": "string",
+                        "description": "参数名称",
+                        "refType": null
+                      },
+                      "tmSid": {
+                        "type": "string",
+                        "description": "参数标识",
+                        "refType": null
+                      }
+                    },
+                    "title": "TmParamSimpleBean",
+                    "$$ref": "#/definitions/TmParamSimpleBean"
+                  },
+                  "refType": "TmParamSimpleBean"
+                }
+              },
+              "title": "TmThresholdQo",
+              "$$ref": "#/definitions/TmThresholdQo"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "bottomLimit": {
+                        "type": "string",
+                        "description": "参数下限",
+                        "refType": null
+                      },
+                      "endTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "结束时间",
+                        "refType": null
+                      },
+                      "maxValue": {
+                        "type": "string",
+                        "description": "参数最大值",
+                        "refType": null
+                      },
+                      "minValue": {
+                        "type": "string",
+                        "description": "参数最小值",
+                        "refType": null
+                      },
+                      "startTime": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "开始时间",
+                        "refType": null
+                      },
+                      "tmCode": {
+                        "type": "string",
+                        "description": "参数代号",
+                        "refType": null
+                      },
+                      "tmDataType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "参数数据类型",
+                        "refType": null
+                      },
+                      "tmName": {
+                        "type": "string",
+                        "description": "参数名称",
+                        "refType": null
+                      },
+                      "tmSid": {
+                        "type": "string",
+                        "description": "参数标识",
+                        "refType": null
+                      },
+                      "topLimit": {
+                        "type": "string",
+                        "description": "参数上限",
+                        "refType": null
+                      }
+                    },
+                    "title": "参数门限知识返回结果",
+                    "$$ref": "#/definitions/参数门限知识返回结果"
+                  }
+                },
+                "errorMsg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "BaseResponse«List«参数门限知识返回结果»»",
+              "$$ref": "#/definitions/BaseResponse«List«参数门限知识返回结果»»"
             }
           }
         }

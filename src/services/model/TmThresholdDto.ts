@@ -13,12 +13,18 @@
 import * as models from './models';
 
 /**
-  * @property `[codeContent]` 知识表达式内容
+  * @description 参数门限知识
+  * @property `[satId]` 卫星标识
+  * @property `[tmThresholdList]` 参数门限列表
   */
-export interface KnowledgeContentBo {
+export interface TmThresholdDto {
   /**
-   * 知识表达式内容
+   * 卫星标识
    */
-  "codeContent"?: string;
+  "satId"?: string;
+  /**
+   * 参数门限列表
+   */
+  "tmThresholdList"?: Array<models.TmThresholdBean>;
 }
 

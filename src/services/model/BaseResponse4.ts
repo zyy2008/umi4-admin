@@ -18,7 +18,7 @@ import * as models from './models';
   * @property `[success]` 
   */
 export interface BaseResponse4 {
-  "data"?: 7;
+  "data"?: 8;
   "errorMsg"?: string;
   "success"?: boolean;
 }

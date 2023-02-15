@@ -13,12 +13,13 @@
 import * as models from './models';
 
 /**
-  * @property `[codeContent]` 知识表达式内容
+  * @property `[data]` 
+  * @property `[errorMsg]` 
+  * @property `[success]` 
   */
-export interface KnowledgeContentBo {
-  /**
-   * 知识表达式内容
-   */
-  "codeContent"?: string;
+export interface BaseResponseIPageKnowledgeInfo {
+  "data"?: models.IPageKnowledgeInfo;
+  "errorMsg"?: string;
+  "success"?: boolean;
 }
 

@@ -222,7 +222,7 @@ export interface ParamskmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizeP
 /**
  */
 export type ParamsBodykmsJobServerCommonTaskAuditPageListTaskIdPageNumPageSizePost =
-  6;
+  7;
 /**
  */
 export type ParamsBodykmsJobServerCommonTaskBatchDelete = Array<number>;
@@ -265,7 +265,7 @@ export interface ParamskmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSiz
 /**
  */
 export type ParamsBodykmsJobServerCommonTaskHistoryPageListTaskIdPageNumPageSizePost =
-  4;
+  5;
 /**
  * @description kmsJobServerCommonTaskPageListPageNumPageSizePost参数
  * @property `pageNum` pageNum
@@ -293,7 +293,7 @@ export type ParamsBodykmsJobServerCommonTaskPageListPageNumPageSizePost =
 export type ParamsBodykmsJobServerCommonTaskPost = models.CommonTask01;
 /**
  */
-export type ParamsBodykmsJobServerCommonTaskPut = 5;
+export type ParamsBodykmsJobServerCommonTaskPut = 6;
 /**
  * @description kmsJobServerCommonTaskTaskIdDelete参数
  * @property `taskId` taskId
@@ -488,7 +488,7 @@ export interface ParamskmsViewServerViewDeletePost {
   /**
    * 节点ID
    */
-  id?: number;
+  id?: string;
 }
 /**
  * @description kmsViewServerViewEditorPost参数
@@ -575,15 +575,15 @@ export interface ParamskmsViewServerViewNodeAddPost {
   /**
    * 节点ID
    */
-  nodeId?: number;
+  nodeId?: string;
 }
 /**
  */
 export type ParamsBodykmsViewServerViewYcImportPost = models.ParameterInPo;
 /**
- * 知识
+ * 知识新增
  */
-export type ParamsBodykmsZsbjServerApiKnowledgeAddPost = models.Knowledge;
+export type ParamsBodykmsZsbjServerApiKnowledgeAddPost = models.KnowledgeDto;
 /**
  * @description kmsZsbjServerApiKnowledgeAuditPagePageNumPageSizePost参数
  * @property `pageNum` pageNum
@@ -663,6 +663,17 @@ export interface ParamskmsZsbjServerApiKnowledgeExistsGet {
  */
 export type ParamsBodykmsZsbjServerApiKnowledgeExportPost = models.ExportQo;
 /**
+ * @description kmsZsbjServerApiKnowledgeGraphGet参数
+ * @property `uuid` 待查看的知识标识uuid
+ */
+export interface ParamskmsZsbjServerApiKnowledgeGraphGet {
+  // queryParams
+  /**
+   * 待查看的知识标识uuid
+   */
+  uuid: string;
+}
+/**
  * @description kmsZsbjServerApiKnowledgeHistoryGet参数
  * @property `uuid` 知识标识uuid
  */
@@ -676,6 +687,7 @@ export interface ParamskmsZsbjServerApiKnowledgeHistoryGet {
 /**
  * @description kmsZsbjServerApiKnowledgeImportPost参数
  * @property `targetCode` 导入对象代号
+ * @property `version` 导入版本
  * @property `[file]`
  */
 export interface ParamskmsZsbjServerApiKnowledgeImportPost {
@@ -684,8 +696,23 @@ export interface ParamskmsZsbjServerApiKnowledgeImportPost {
    * 导入对象代号
    */
   targetCode: string;
+  /**
+   * 导入版本
+   */
+  version: string;
   // formParams
   file?: any;
+}
+/**
+ * @description kmsZsbjServerApiKnowledgeInfoGet参数
+ * @property `uuid` 知识标识uuid
+ */
+export interface ParamskmsZsbjServerApiKnowledgeInfoGet {
+  // queryParams
+  /**
+   * 知识标识uuid
+   */
+  uuid: string;
 }
 /**
  */
@@ -723,14 +750,49 @@ export interface ParamskmsZsbjServerApiKnowledgePagePageNumPageSizePost {
   pageSize: string;
 }
 /**
- * 知识信息表
  */
 export type ParamsBodykmsZsbjServerApiKnowledgePagePageNumPageSizePost =
-  models.KnowledgeInfo;
+  models.KnowledgeQo;
+/**
+ */
+export type ParamsBodykmsZsbjServerApiKnowledgeTmThresholdGetPost =
+  models.TmThresholdQo;
+/**
+ * 参数门限知识
+ */
+export type ParamsBodykmsZsbjServerApiKnowledgeTmThresholdSavePost =
+  models.TmThresholdDto;
 /**
  * 知识
  */
-export type ParamsBodykmsZsbjServerApiKnowledgeUpdatePut = models.Knowledge1;
+export type ParamsBodykmsZsbjServerApiKnowledgeUpdatePut = models.Knowledge;
+/**
+ * @description kmsZsbjServerApiKnowledgeVersionAddPut参数
+ * @property `targetCode` 对象代号
+ * @property `version` 版本号
+ */
+export interface ParamskmsZsbjServerApiKnowledgeVersionAddPut {
+  // queryParams
+  /**
+   * 对象代号
+   */
+  targetCode: string;
+  /**
+   * 版本号
+   */
+  version: string;
+}
+/**
+ * @description kmsZsbjServerApiKnowledgeVersionListGet参数
+ * @property `targetCode` 对象代号
+ */
+export interface ParamskmsZsbjServerApiKnowledgeVersionListGet {
+  // queryParams
+  /**
+   * 对象代号
+   */
+  targetCode: string;
+}
 /**
  * @description kmsZsbjServerApiKnowledgeViewGet参数
  * @property `uuid` 待查看的知识标识uuid
@@ -768,8 +830,7 @@ export class DefaultApi {
   public baseServerDataQueryQueryObjectGroupListGet = (
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseListObjectGroupBean> => {
-    const url =
-      this.$basePath + `/kmsSysconfigServer/DataQuery/queryObjectGroupList`;
+    const url = this.$basePath + `/base-server/DataQuery/queryObjectGroupList`;
     const p: any = {};
     return ajax.ajax({
       ...opt,
@@ -790,7 +851,7 @@ export class DefaultApi {
     params: ParamsbaseServerDataQueryQuerySatBySidGet,
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseSatBean> => {
-    const url = this.$basePath + `/kmsSysconfigServer/DataQuery/querySatById`;
+    const url = this.$basePath + `/base-server/DataQuery/querySatBySid`;
     const p: any = {};
     p.query = {};
     if ("satId" in params) p.query.satId = params.satId;
@@ -1725,12 +1786,12 @@ export class DefaultApi {
    * @param params ParamskmsViewServerDocumentUploadPost
    
    * @param opt ajax config
-   * @returns models.BaseResponseListstring
+   * @returns models.BaseResponseListstring1
    */
   public kmsViewServerDocumentUploadPost = (
     params: ParamskmsViewServerDocumentUploadPost,
     opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponseListstring> => {
+  ): AjaxPromise<models.BaseResponseListstring1> => {
     const url = this.$basePath + `/kms-view-server/document/upload`;
     const p: any = {};
     p.form = new FormData();
@@ -1954,14 +2015,14 @@ export class DefaultApi {
    * 新增一条知识信息
    * @summary 新增知识
    
-   * @param data: ParamsBodykmsZsbjServerApiKnowledgeAddPost// 知识
+   * @param data: ParamsBodykmsZsbjServerApiKnowledgeAddPost// 知识新增
    * @param opt ajax config
-   * @returns models.BaseResponseKnowledgeVersion
+   * @returns models.BaseResponse3
    */
   public kmsZsbjServerApiKnowledgeAddPost = (
     data: ParamsBodykmsZsbjServerApiKnowledgeAddPost,
     opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponseKnowledgeVersion> => {
+  ): AjaxPromise<models.BaseResponse3> => {
     const url = this.$basePath + `/kms-zsbj-server/api/knowledge/add`;
     const p: any = {};
     p.data = data;
@@ -2050,12 +2111,12 @@ export class DefaultApi {
    
    * @param data: ParamsBodykmsZsbjServerApiKnowledgeCheckPost
    * @param opt ajax config
-   * @returns models.BaseResponse3
+   * @returns models.BaseResponse1
    */
   public kmsZsbjServerApiKnowledgeCheckPost = (
     data: ParamsBodykmsZsbjServerApiKnowledgeCheckPost,
     opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponse3> => {
+  ): AjaxPromise<models.BaseResponse1> => {
     const url = this.$basePath + `/kms-zsbj-server/api/knowledge/check`;
     const p: any = {};
     p.data = data;
@@ -2229,16 +2290,40 @@ export class DefaultApi {
   };
   /**
    * 
+   * @summary 查看知识图形信息
+   * @param params ParamskmsZsbjServerApiKnowledgeGraphGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseKnowledgeGraphInfo
+   */
+  public kmsZsbjServerApiKnowledgeGraphGet = (
+    params: ParamskmsZsbjServerApiKnowledgeGraphGet,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseKnowledgeGraphInfo> => {
+    const url = this.$basePath + `/kms-zsbj-server/api/knowledge/graph`;
+    const p: any = {};
+    p.query = {};
+    if ("uuid" in params) p.query.uuid = params.uuid;
+    ajax.check(params.uuid, "uuid");
+    return ajax.ajax({
+      ...opt,
+      method: "GET",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
    * @summary 获取指定知识历史版本列表
    * @param params ParamskmsZsbjServerApiKnowledgeHistoryGet
    
    * @param opt ajax config
-   * @returns models.BaseResponseListKnowledgeVersion
+   * @returns models.BaseResponseListKnowledgeInfo
    */
   public kmsZsbjServerApiKnowledgeHistoryGet = (
     params: ParamskmsZsbjServerApiKnowledgeHistoryGet,
     opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponseListKnowledgeVersion> => {
+  ): AjaxPromise<models.BaseResponseListKnowledgeInfo> => {
     const url = this.$basePath + `/kms-zsbj-server/api/knowledge/history`;
     const p: any = {};
     p.query = {};
@@ -2268,6 +2353,8 @@ export class DefaultApi {
     p.query = {};
     if ("targetCode" in params) p.query.targetCode = params.targetCode;
     ajax.check(params.targetCode, "targetCode");
+    if ("version" in params) p.query.version = params.version;
+    ajax.check(params.version, "version");
     p.form = new FormData();
     // 上传文件
     opt = {
@@ -2282,6 +2369,51 @@ export class DefaultApi {
     return ajax.ajax({
       ...opt,
       method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 获取单条知识信息
+   * @param params ParamskmsZsbjServerApiKnowledgeInfoGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseKnowledgeInfo
+   */
+  public kmsZsbjServerApiKnowledgeInfoGet = (
+    params: ParamskmsZsbjServerApiKnowledgeInfoGet,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseKnowledgeInfo> => {
+    const url = this.$basePath + `/kms-zsbj-server/api/knowledge/info`;
+    const p: any = {};
+    p.query = {};
+    if ("uuid" in params) p.query.uuid = params.uuid;
+    ajax.check(params.uuid, "uuid");
+    return ajax.ajax({
+      ...opt,
+      method: "GET",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 获取有返回知识列表
+   
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListKnowledgeInfo
+   */
+  public kmsZsbjServerApiKnowledgeListHasReturnGet = (
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseListKnowledgeInfo> => {
+    const url =
+      this.$basePath + `/kms-zsbj-server/api/knowledge/list-has-return`;
+    const p: any = {};
+    return ajax.ajax({
+      ...opt,
+      method: "GET",
       url,
       ...p,
     });
@@ -2338,15 +2470,15 @@ export class DefaultApi {
    *
    * @summary 获取指定页知识列表
    * @param params ParamskmsZsbjServerApiKnowledgePagePageNumPageSizePost
-   * @param data: ParamsBodykmsZsbjServerApiKnowledgePagePageNumPageSizePost// 知识信息表
+   * @param data: ParamsBodykmsZsbjServerApiKnowledgePagePageNumPageSizePost
    * @param opt ajax config
-   * @returns models.BaseResponseIPageKnowledgeDetailInfo
+   * @returns models.BaseResponseIPageKnowledgeInfo
    */
   public kmsZsbjServerApiKnowledgePagePageNumPageSizePost = (
     params: ParamskmsZsbjServerApiKnowledgePagePageNumPageSizePost,
     data: ParamsBodykmsZsbjServerApiKnowledgePagePageNumPageSizePost,
     opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponseIPageKnowledgeDetailInfo> => {
+  ): AjaxPromise<models.BaseResponseIPageKnowledgeInfo> => {
     const { pageNum, pageSize } = params;
     const url =
       this.$basePath +
@@ -2364,21 +2496,46 @@ export class DefaultApi {
   };
   /**
    * 
-   * @summary 获取有返回知识列表
+   * @summary 获取参数门限列表
    
-   
+   * @param data: ParamsBodykmsZsbjServerApiKnowledgeTmThresholdGetPost
    * @param opt ajax config
-   * @returns models.BaseResponseListKnowledgeInfo
+   * @returns models.BaseResponseList
    */
-  public kmsZsbjServerApiKnowledgeReturnTypeListGet = (
+  public kmsZsbjServerApiKnowledgeTmThresholdGetPost = (
+    data: ParamsBodykmsZsbjServerApiKnowledgeTmThresholdGetPost,
     opt?: ExtraFetchParams
-  ): AjaxPromise<models.BaseResponseListKnowledgeInfo> => {
+  ): AjaxPromise<models.BaseResponseList> => {
     const url =
-      this.$basePath + `/kms-zsbj-server/api/knowledge/return-type-list`;
+      this.$basePath + `/kms-zsbj-server/api/knowledge/tm-threshold-get`;
     const p: any = {};
+    p.data = data;
     return ajax.ajax({
       ...opt,
-      method: "GET",
+      method: "POST",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 保存参数门限值
+   
+   * @param data: ParamsBodykmsZsbjServerApiKnowledgeTmThresholdSavePost// 参数门限知识
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsZsbjServerApiKnowledgeTmThresholdSavePost = (
+    data: ParamsBodykmsZsbjServerApiKnowledgeTmThresholdSavePost,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponse> => {
+    const url =
+      this.$basePath + `/kms-zsbj-server/api/knowledge/tm-threshold-save`;
+    const p: any = {};
+    p.data = data;
+    return ajax.ajax({
+      ...opt,
+      method: "POST",
       url,
       ...p,
     });
@@ -2401,6 +2558,56 @@ export class DefaultApi {
     return ajax.ajax({
       ...opt,
       method: "PUT",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 新增对象版本
+   * @param params ParamskmsZsbjServerApiKnowledgeVersionAddPut
+   
+   * @param opt ajax config
+   * @returns models.BaseResponse
+   */
+  public kmsZsbjServerApiKnowledgeVersionAddPut = (
+    params: ParamskmsZsbjServerApiKnowledgeVersionAddPut,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponse> => {
+    const url = this.$basePath + `/kms-zsbj-server/api/knowledge/version-add`;
+    const p: any = {};
+    p.query = {};
+    if ("targetCode" in params) p.query.targetCode = params.targetCode;
+    ajax.check(params.targetCode, "targetCode");
+    if ("version" in params) p.query.version = params.version;
+    ajax.check(params.version, "version");
+    return ajax.ajax({
+      ...opt,
+      method: "PUT",
+      url,
+      ...p,
+    });
+  };
+  /**
+   * 
+   * @summary 查看对象版本列表
+   * @param params ParamskmsZsbjServerApiKnowledgeVersionListGet
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListstring
+   */
+  public kmsZsbjServerApiKnowledgeVersionListGet = (
+    params: ParamskmsZsbjServerApiKnowledgeVersionListGet,
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseListstring> => {
+    const url = this.$basePath + `/kms-zsbj-server/api/knowledge/version-list`;
+    const p: any = {};
+    p.query = {};
+    if ("targetCode" in params) p.query.targetCode = params.targetCode;
+    ajax.check(params.targetCode, "targetCode");
+    return ajax.ajax({
+      ...opt,
+      method: "GET",
       url,
       ...p,
     });

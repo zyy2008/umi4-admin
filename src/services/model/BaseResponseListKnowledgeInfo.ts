@@ -18,7 +18,7 @@ import * as models from './models';
   * @property `[success]` 
   */
 export interface BaseResponseListKnowledgeInfo {
-  "data"?: Array<models.KnowledgeInfo1>;
+  "data"?: Array<models.KnowledgeInfo>;
   "errorMsg"?: string;
   "success"?: boolean;
 }
