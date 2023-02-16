@@ -8,7 +8,7 @@ import { APIS } from "@/services";
 const Fact: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const { data = [], loading } = useRequest(() =>
-    APIS.DefaultApi.kmsZsbjServerApiKnowledgeReturnTypeListGet()
+    APIS.DefaultApi.kmsZsbjServerApiKnowledgeListHasReturnGet()
   );
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     return data?.map((item) => ({

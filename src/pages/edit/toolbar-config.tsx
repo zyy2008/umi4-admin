@@ -123,7 +123,7 @@ namespace NsConfig {
                     const { success } =
                       await APIS.DefaultApi.kmsZsbjServerApiKnowledgeAddPost({
                         ...object,
-                        createType: object?.type,
+                        createType: object?.type ?? "",
                         faultLevel: object?.grade,
                         faultDelay: object?.delay,
                         subsystem: object?.partSystem,
