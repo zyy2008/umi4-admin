@@ -220,11 +220,19 @@ export namespace NsJsonForm {
               label: "时间",
               shape: ControlShapeEnum.NUMBER_SHAPE,
               value: targetData.timer,
+              hidden: true,
               placeholder: "请输入",
               originData: {
                 addonAfter: "秒",
                 min: 0,
               },
+              dependencies: [
+                {
+                  name: "type",
+                  condition: "时间序列",
+                  hidden: false,
+                },
+              ],
             },
             // {
             //   name: "param",
@@ -493,6 +501,23 @@ export namespace NsJsonForm {
               label: "函数内容",
               shape: ControlShape.TEXTAREA,
               value: targetData.funContent,
+            },
+          ];
+          break;
+        case "ProcessNode":
+          controls = [
+            {
+              name: "name",
+              label: "变量名称",
+              shape: ControlShape.INPUT,
+              value: targetData.name,
+              placeholder: "请输入",
+            },
+            {
+              name: "expression",
+              label: "变量内容",
+              shape: ControlShapeEnum.EDITOR_SHAPE,
+              value: targetData.expression,
             },
           ];
           break;

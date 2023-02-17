@@ -10,15 +10,15 @@ import {
   Menu,
   Card,
   Divider,
-  MenuProps,
+  Radio,
   List,
   Popover,
 } from "antd";
 import insertTextAtCursor from "insert-text-at-cursor";
-import { useRequest, useModel } from "@umijs/max";
-import { APIS, ParamBean } from "@/services";
+import { ParamBean } from "@/services";
 import VirtualList from "rc-virtual-list";
 import styles from "./styles.less";
+import { Context } from "@/pages/edit";
 
 const { Search } = Input;
 
@@ -55,11 +55,6 @@ const tags: string[] = [
   "9",
 ];
 
-const items: MenuProps["items"] = [
-  { label: "菜单项一", key: "item-1" }, // 菜单项务必填写 key
-  { label: "菜单项二", key: "item-2" },
-];
-
 interface IEditorProps extends NsJsonSchemaForm.IFormItemProps {
   controlSchema: NsJsonSchemaForm.IControlSchema;
   placeholder?: string;
@@ -72,37 +67,55 @@ type ParamMenuProps = {
 
 const ParamMenu: React.FC<ParamMenuProps> = (props) => {
   const { onClick } = props;
-  const { initialState } = useModel("@@initialState");
-  const { satList = [] } = initialState ?? {};
   const [keyword, setKeyword] = React.useState<string>("");
-  const { data: dataSource = [], run } = useRequest(
-    (satId) => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
-    {
-      manual: true,
-    }
-  );
-  React.useEffect(() => {
-    if (satList?.length > 0) {
-      run(satList?.[0]?.pkId);
-    }
-  }, [satList]);
+  const [value, setValue] = React.useState<"params" | "custom">("params");
+  const ctx = React.useContext(Context);
   const data = React.useMemo<ParamBean[]>(() => {
-    const list = dataSource?.filter((node) => node.tmName?.includes(keyword));
-    return list;
-  }, [dataSource, keyword]);
+    if (value === "params") {
+      if (ctx?.params) {
+        const list =
+          ctx.params.filter((node) => node.tmName?.includes(keyword)) ?? [];
+        return list;
+      }
+      return [];
+    } else {
+      return [];
+    }
+  }, [ctx?.params, keyword, value]);
   return (
     <List
       style={{
-        width: 200,
+        width: 220,
       }}
       bordered
       header={
-        <Search
-          onSearch={setKeyword}
-          allowClear
-          placeholder="过滤条件"
-          size="middle"
-        />
+        <Card
+          bordered={false}
+          headStyle={{
+            padding: 0,
+          }}
+          bodyStyle={{
+            padding: 0,
+            textAlign: "center",
+          }}
+          title={
+            <Search
+              onSearch={setKeyword}
+              allowClear
+              placeholder="过滤条件"
+              size="middle"
+            />
+          }
+        >
+          <Radio.Group
+            value={value}
+            onChange={({ target: { value } }) => setValue(value)}
+            buttonStyle="solid"
+          >
+            <Radio.Button value="params">参数</Radio.Button>
+            <Radio.Button value="custom">变量</Radio.Button>
+          </Radio.Group>
+        </Card>
       }
     >
       <VirtualList<ParamBean>

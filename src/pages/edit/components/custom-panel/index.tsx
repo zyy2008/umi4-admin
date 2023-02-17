@@ -14,6 +14,7 @@ import {
   SectorNode,
   PreparationNode,
   ManualOperationNode,
+  ProcessNode,
 } from "@/components/nodes";
 import Param from "./param";
 import Fact from "./fact";
@@ -130,6 +131,16 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               label: "中间事件",
             }}
             node={PreparationNode}
+          />
+          <ColNode
+            onMouseDown={onMouseDown}
+            nodeConfig={{
+              renderKey: "ProcessNode",
+              label: "变量",
+              width: 110,
+              height: 40,
+            }}
+            node={ProcessNode}
           />
         </Row>
       </Card>

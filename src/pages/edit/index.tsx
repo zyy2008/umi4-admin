@@ -11,7 +11,7 @@ import { CustomPanel } from "./components";
 import { controlMapService } from "@/components/custom-form";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
-import { useRequest, useModel } from "@umijs/max";
+import { useRequest } from "@umijs/max";
 import { APIS, ParamBean } from "@/services";
 import { commandConfig } from "./command-config";
 import { Graph } from "@antv/x6";
@@ -72,10 +72,6 @@ const Edit = () => {
     };
   }, [data]);
 
-  React.useCallback(() => {
-    console.log("2132");
-  }, [paramsLoading]);
-
   const formSchemaService: NsJsonSchemaForm.IFormSchemaService =
     React.useCallback(
       (args) => NsJsonForm.formSchemaService(args, params),
@@ -102,7 +98,6 @@ const Edit = () => {
         graphData={graphData}
         commandConfig={commandConfig}
         onLoad={onLoad}
-        connectionType="many-to-one"
       >
         <>
           <CustomPanel
