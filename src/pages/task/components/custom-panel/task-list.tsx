@@ -26,6 +26,7 @@ const TaskList: React.FC<IConfigRenderOptions> = (props) => {
   return (
     <CardList
       title="任务"
+      height={600}
       dataSource={filterData}
       onMouseDown={onMouseDown}
       loading={loading}

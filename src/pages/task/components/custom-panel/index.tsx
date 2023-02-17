@@ -49,9 +49,9 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
   return (
     <>
       <TaskList onMouseDown={onMouseDown} />
-      <Card title="条件类型" size="small">
+      {/* <Card title="条件类型" size="small">
         <BaseNodes onMouseDown={onMouseDown} />
-      </Card>
+      </Card> */}
     </>
   );
 };

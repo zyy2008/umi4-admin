@@ -24,10 +24,6 @@ export default defineConfig({
   request: {},
   qiankun: {
     master: {
-      sandbox: {
-        strictStyleIsolation: false,
-        experimentalStyleIsolation: true,
-      },
       apps: [
         {
           name: "knowledge",
@@ -103,6 +99,7 @@ export default defineConfig({
         { path: "/task/publicTaskMgt", name: "公共任务管理", microApp: "task" },
         { path: "/task/taskMgt", name: "任务管理", microApp: "task" },
         { path: "/task/thresholdDet", name: "门限知识检测", microApp: "task" },
+        { path: "/task/edit", name: "任务编辑", component: "./task" },
       ],
     },
     {

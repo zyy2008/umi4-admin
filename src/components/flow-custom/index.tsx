@@ -5,6 +5,7 @@ import VirtualList from "rc-virtual-list";
 import { EditOutlined } from "@ant-design/icons";
 import { NsGraph } from "@antv/xflow-core";
 import { uuidv4, useXFlowApp } from "@antv/xflow";
+import type { Graph } from "@antv/x6";
 
 const { Search } = Input;
 
@@ -16,10 +17,19 @@ export type CardListProps = {
   header?: React.ReactNode;
   filterData?: IPanelNode[];
   setKeyword?: React.Dispatch<React.SetStateAction<string>>;
+  height?: number;
 };
 
 export const CardList: React.FC<CardListProps> = (props) => {
-  const { dataSource, title, onMouseDown, loading, header, filterData } = props;
+  const {
+    dataSource,
+    title,
+    onMouseDown,
+    loading,
+    header,
+    filterData,
+    height = 200,
+  } = props;
   const [keyword, setKeyword] = React.useState<string>("");
   const data = React.useMemo<IPanelNode[]>(() => {
     if (filterData && filterData.length > 0) {
@@ -47,7 +57,7 @@ export const CardList: React.FC<CardListProps> = (props) => {
       }
     >
       {data?.length > 0 ? (
-        <VirtualList data={data} height={200} itemHeight={36} itemKey="id">
+        <VirtualList data={data} height={height} itemHeight={36} itemKey="id">
           {(item) => (
             <List.Item className="node-item">
               <div
@@ -138,7 +148,7 @@ export const CardListDisabled: React.FC<CardListProps> = (props) => {
   React.useEffect(() => {
     (async () => {
       if (app) {
-        const graph = await app.getGraphInstance();
+        const graph: Graph = await app.getGraphInstance();
         graph.on("node:added", () => {
           const nodes = graph.getNodes();
           setNodes(nodes.map((cell) => cell.getData()));

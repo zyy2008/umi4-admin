@@ -8,8 +8,8 @@ import { NsNodeCmd, NsGraph, uuidv4, NsEdgeCmd } from "@antv/xflow";
 import { ControlShapeEnum } from "@/components/custom-form";
 import type { IModelService, IGraphCommandService } from "@antv/xflow-core";
 import type { Cell, Graph as X6Graph, Node } from "@antv/x6";
-import { AppInitialState } from "@/app";
 import { portAttrs } from "@/components/flow";
+import { ParamBean } from "@/services";
 
 type IFormSchemaService = (
   args: {
@@ -20,7 +20,7 @@ type IFormSchemaService = (
     commandService: IGraphCommandService;
     graph: X6Graph;
   },
-  satList: AppInitialState["satList"]
+  params?: ParamBean[]
 ) => Promise<NsJsonSchemaForm.ISchema>;
 
 type IFormValueUpdateService = {
@@ -117,10 +117,7 @@ export namespace NsJsonForm {
   };
 
   /** 根据选中的节点更新formSchema */
-  export const formSchemaService: IFormSchemaService = async (
-    args,
-    satList
-  ) => {
+  export const formSchemaService: IFormSchemaService = async (args, params) => {
     const { targetData, targetType } = args;
     if (!targetData || targetType === "edge") {
       return {
@@ -163,14 +160,14 @@ export namespace NsJsonForm {
                 },
               ],
             },
-            {
-              name: "satCode",
-              label: "卫星名称",
-              shape: ControlShape.SELECT,
-              value: targetData.satCode,
-              placeholder: "请选择",
-              options: satList,
-            },
+            // {
+            //   name: "satCode",
+            //   label: "卫星名称",
+            //   shape: ControlShape.SELECT,
+            //   value: targetData.satCode,
+            //   placeholder: "请选择",
+            //   options: satList,
+            // },
           ];
           break;
         case "RectNode":
@@ -201,11 +198,45 @@ export namespace NsJsonForm {
                   value: "int",
                 },
                 {
+                  title: "float",
+                  value: "float",
+                },
+                {
                   title: "string",
                   value: "string",
                 },
+                {
+                  title: "boolean",
+                  value: "boolean",
+                },
+                {
+                  title: "时间序列",
+                  value: "时间序列",
+                },
               ],
             },
+            {
+              name: "timer",
+              label: "时间",
+              shape: ControlShapeEnum.NUMBER_SHAPE,
+              value: targetData.timer,
+              placeholder: "请输入",
+              originData: {
+                addonAfter: "秒",
+                min: 0,
+              },
+            },
+            // {
+            //   name: "param",
+            //   label: "参数",
+            //   shape: ControlShape.SELECT,
+            //   value: targetData.param,
+            //   placeholder: "请输入",
+            //   options: params?.map((item) => ({
+            //     title: "1",
+            //     value: item.satSid,
+            //   })),
+            // },
           ];
           break;
         case "DecisionNode":

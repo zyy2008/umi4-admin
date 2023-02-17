@@ -12,7 +12,7 @@ import { controlMapService } from "@/components/custom-form";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
 import { useRequest, useModel } from "@umijs/max";
-import { APIS } from "@/services";
+import { APIS, ParamBean } from "@/services";
 import { commandConfig } from "./command-config";
 import { Graph } from "@antv/x6";
 
@@ -21,19 +21,20 @@ export type Check = { uuid: string; version: string } | null;
 export type CheckContext = {
   state: Check;
   setState: React.Dispatch<React.SetStateAction<Check | null>>;
+  paramsLoading?: boolean;
+  getParams: (...args: any) => Promise<any>;
+  params?: ParamBean[];
 };
 export const Context = React.createContext<CheckContext | null>(null);
 
 const Edit = () => {
-  const { initialState } = useModel("@@initialState");
-  const { satList = [] } = initialState ?? {};
   const [state, setState] = React.useState<Check>({
     uuid: "",
     version: "",
   });
   const [graph, setGraph] = React.useState<Graph>();
   const toolbarConfig = useToolbarConfig(setState);
-  const { data, loading, run } = useRequest(
+  const { data, run } = useRequest(
     () =>
       APIS.DefaultApi.kmsZsbjServerApiKnowledgeViewGet({
         uuid: "",
@@ -44,6 +45,17 @@ const Edit = () => {
       manual: true,
     }
   );
+  const {
+    data: params,
+    loading: paramsLoading,
+    run: getParams,
+  } = useRequest(
+    (satId) => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
+    {
+      manual: true,
+    }
+  );
+
   const onLoad: IAppLoad = async (app) => {
     const graph = await app.getGraphInstance();
     setGraph(graph);
@@ -60,10 +72,14 @@ const Edit = () => {
     };
   }, [data]);
 
+  React.useCallback(() => {
+    console.log("2132");
+  }, [paramsLoading]);
+
   const formSchemaService: NsJsonSchemaForm.IFormSchemaService =
     React.useCallback(
-      (args) => NsJsonForm.formSchemaService(args, satList),
-      [satList]
+      (args) => NsJsonForm.formSchemaService(args, params),
+      [paramsLoading]
     );
 
   const formValueUpdateService: NsJsonSchemaForm.IFormValueUpdateService =
@@ -73,7 +89,9 @@ const Edit = () => {
     );
 
   return (
-    <Context.Provider value={{ state, setState }}>
+    <Context.Provider
+      value={{ state, setState, paramsLoading, getParams, params }}
+    >
       <KnowledgeFlow
         toolbarProps={{
           config: toolbarConfig,
@@ -84,6 +102,7 @@ const Edit = () => {
         graphData={graphData}
         commandConfig={commandConfig}
         onLoad={onLoad}
+        connectionType="many-to-one"
       >
         <>
           <CustomPanel

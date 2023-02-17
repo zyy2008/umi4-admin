@@ -2,54 +2,65 @@ import React from "react";
 import { NsGraph } from "@antv/xflow-core";
 import type { IConfigRenderOptions } from "@/components/flow";
 import { CardList, CardListProps } from "@/components/flow-custom";
-import { APIS } from "@/services";
-import { useRequest, useModel } from "@umijs/max";
+import { useModel } from "@umijs/max";
+import { Card, Select } from "antd";
+import { Context } from "@/pages/edit";
 
 const Param: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const { initialState } = useModel("@@initialState");
   const { satList = [] } = initialState ?? {};
-  const {
-    data = [],
-    loading,
-    run,
-  } = useRequest(
-    (satId) => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
-    {
-      manual: true,
-    }
-  );
+  const ctx = React.useContext(Context);
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
-    return data?.map((item) => ({
-      ...item,
-      id: item.tmCode,
-      label: item.tmName,
-      renderKey: "ConnectorNode",
-      width: 70,
-      height: 70,
-      ports: [
-        {
-          type: NsGraph.AnchorType.OUTPUT,
-          group: NsGraph.AnchorGroup.BOTTOM,
-          tooltip: "输出桩",
-        },
-      ] as NsGraph.INodeAnchor[],
-    }));
-  }, [data]);
-
-  React.useEffect(() => {
-    if (satList?.length > 0) {
-      run(satList?.[0]?.pkId);
+    if (ctx?.params) {
+      return ctx?.params?.map((item) => ({
+        ...item,
+        id: item.tmCode,
+        label: item.tmName,
+        renderKey: "ConnectorNode",
+        width: 70,
+        height: 70,
+        ports: [
+          {
+            type: NsGraph.AnchorType.OUTPUT,
+            group: NsGraph.AnchorGroup.BOTTOM,
+            tooltip: "输出桩",
+          },
+        ] as NsGraph.INodeAnchor[],
+      }));
     }
-  }, [satList]);
+    return [];
+  }, [ctx?.params]);
 
   return (
-    <CardList
-      loading={loading}
-      title="参数"
-      dataSource={dataSource}
-      onMouseDown={onMouseDown}
-    />
+    <Card
+      size="small"
+      title={
+        <div className="node-title">
+          <span> 卫星</span>
+          <Select
+            placeholder="请选择卫星"
+            style={{ flex: 1, margin: "0 5px" }}
+            options={satList.map((item) => {
+              return {
+                value: item.pkId,
+                label: item.value,
+              };
+            })}
+            onChange={ctx?.getParams}
+          />
+        </div>
+      }
+      bodyStyle={{ padding: 0 }}
+      headStyle={{ padding: 0 }}
+    >
+      <CardList
+        loading={ctx?.paramsLoading}
+        title="参数"
+        dataSource={dataSource}
+        onMouseDown={onMouseDown}
+      />
+    </Card>
   );
 };
 

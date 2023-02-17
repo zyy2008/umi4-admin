@@ -95,6 +95,39 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
           args.createEdgeService = MockApi.addEdge;
         },
       }),
+      hooks.addEdge.registerHook({
+        name: "after add edge",
+        after: "after add edge, set target port props",
+        handler: async (_, handler: any) => {
+          const main = async (args: any) => {
+            const res = (await handler(args)) as NsEdgeCmd.AddEdge.IResult;
+            if (res && res.edgeCell) {
+              const targetNode = res.edgeCell.getTargetCell() as Node;
+              const getSourceCell = res.edgeCell.getSourceCell() as Node;
+              const sourcePortId = res.edgeCell.getSourcePortId() as string;
+              const targetPortId = res.edgeCell.getTargetPortId() as string;
+              if (connectionType === "one-to-one") {
+                getSourceCell.setPortProp(sourcePortId, "connected", true);
+              } else if (connectionType === "one-to-many") {
+                getSourceCell.setPortProp(sourcePortId, "connected", false);
+              } else {
+                getSourceCell.setPortProp(sourcePortId, "connected", true);
+                targetNode.setPortProp(targetPortId, "connected", false);
+              }
+              getSourceCell.setData({
+                ...getSourceCell.getData(),
+                ports: getSourceCell.getParsedPorts(),
+              });
+              targetNode.setData({
+                ...targetNode.getData(),
+                ports: targetNode.getParsedPorts(),
+              });
+            }
+            return res;
+          };
+          return main;
+        },
+      }),
       hooks.delEdge.registerHook({
         name: "get edge config from backend api",
         handler: async (args) => {
@@ -131,35 +164,6 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
       }),
       ...(commandConfig?.(hooks) ?? []),
     ];
-    if (connectionType === "one-to-one") {
-      list.push(
-        hooks.addEdge.registerHook({
-          name: "after add edge",
-          after: "after add edge, set target port props",
-          handler: async (_, handler: any) => {
-            const main = async (args: any) => {
-              const res = (await handler(args)) as NsEdgeCmd.AddEdge.IResult;
-              if (res && res.edgeCell) {
-                const targetNode = res.edgeCell.getTargetCell() as Node;
-                const getSourceCell = res.edgeCell.getSourceCell() as Node;
-                const portId = res.edgeCell.getSourcePortId() as string;
-                getSourceCell.setPortProp(portId, "connected", true);
-                getSourceCell.setData({
-                  ...getSourceCell.getData(),
-                  ports: getSourceCell.getParsedPorts(),
-                });
-                targetNode.setData({
-                  ...targetNode.getData(),
-                  ports: targetNode.getParsedPorts(),
-                });
-              }
-              return res;
-            };
-            return main;
-          },
-        })
-      );
-    }
     const toDispose = new DisposableCollection();
     toDispose.pushAll(list);
     return toDispose;

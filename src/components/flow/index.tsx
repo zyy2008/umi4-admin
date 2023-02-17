@@ -30,7 +30,7 @@ export interface IProps {
   toolbarProps?: Partial<IToolbarProps>;
   cardProps?: CardProps;
   position?: IPosition;
-  connectionType?: "one-to-one" | "one-to-many";
+  connectionType?: "one-to-one" | "one-to-many" | "many-to-one";
   onLoad?: IAppLoad;
   events?: NsGraph.IEvent[];
   graphData?: NsGraph.IGraphData;
