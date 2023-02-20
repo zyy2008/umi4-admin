@@ -4,6 +4,9 @@ import {
   NsGraph,
   NsJsonSchemaForm,
   IAppLoad,
+  uuidv4,
+  NsGraphCmd,
+  XFlowGraphCommands,
 } from "@antv/xflow";
 import KnowledgeFlow from "@/components/flow";
 import { NsJsonForm } from "./form-service";
@@ -66,11 +69,35 @@ const Edit = () => {
     }
   }, [state]);
   const graphData = React.useMemo<NsGraph.IGraphData>(() => {
+    if (graph) {
+      const { width } = graph?.getGraphArea();
+      return {
+        nodes: [
+          {
+            id: uuidv4(),
+            label: "开始",
+            renderKey: "StartNode",
+            width: 70,
+            height: 70,
+            x: (width - 35) / 2,
+            y: 100,
+            ports: [
+              {
+                type: NsGraph.AnchorType.OUTPUT,
+                group: NsGraph.AnchorGroup.BOTTOM,
+                tooltip: "输出桩",
+              },
+            ] as NsGraph.INodeAnchor[],
+          },
+        ],
+        edges: [],
+      };
+    }
     return {
       nodes: [],
       edges: [],
     };
-  }, [data]);
+  }, [data, graph]);
 
   const formSchemaService: NsJsonSchemaForm.IFormSchemaService =
     React.useCallback(

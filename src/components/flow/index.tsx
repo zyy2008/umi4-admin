@@ -13,6 +13,7 @@ import {
   ICanvasContextMenuProps,
   Disposable,
   ICmdHooks,
+  NsGraphCmd,
 } from "@antv/xflow";
 import { useGraphConfig } from "./graph-config";
 import { useGraphHookConfig } from "./config-graph";
@@ -38,6 +39,7 @@ export interface IProps {
   contextMenu?: boolean | ICanvasContextMenuProps;
   menuDisabled?: Array<"node" | "edge" | "blank" | "null">;
   commandConfig?: (T: ICmdHooks) => Disposable[];
+  graphLayout?: NsGraphCmd.GraphLayout.IArgs;
 }
 
 const toolbarConfig = createToolbarConfig(() => {});
@@ -51,6 +53,7 @@ const XFlowView: React.FC<IProps> = (props) => {
     onLoad,
     graphData,
     contextMenu = true,
+    graphLayout,
   } = props;
   const config = toolbarConfig();
   const graphConfig = useGraphConfig(props);
@@ -81,6 +84,7 @@ const XFlowView: React.FC<IProps> = (props) => {
         commandConfig={cmdConfig}
         onLoad={onLoad}
         graphData={graphData}
+        graphLayout={graphLayout}
       >
         <DagGraphExtension
           router={{

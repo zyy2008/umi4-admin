@@ -140,10 +140,10 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
             const getTargetCell = edgeCell.getTargetCell() as Node;
             const { label, ports, renderKey } =
               getSourceCell.getData() as NsGraph.INodeConfig;
-            if (renderKey === "ConnectorNode") {
-              const portId = edgeCell.getTargetPortId() as string;
-              getTargetCell.setPortProp(portId, "connected", false);
-            }
+            // if (renderKey === "ConnectorNode") {
+            //   const portId = edgeCell.getTargetPortId() as string;
+            //   getTargetCell.setPortProp(portId, "connected", false);
+            // }
             const x6Graph = (await args.getX6Graph()) as X6Graph;
             const { id: sourceId } = getSourceCell;
             const { id: targetId } = getTargetCell;

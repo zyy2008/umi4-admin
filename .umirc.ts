@@ -14,6 +14,10 @@ export default defineConfig({
   tabsLayout: {
     hasDropdown: true,
   },
+  layout: {
+    layout: "top",
+    contentWidth: "Fluid",
+  },
   model: {},
   initialState: {},
   chainWebpack(memo, { env, webpack }) {
@@ -48,7 +52,6 @@ export default defineConfig({
   //   },
   // },
   clickToComponent: {},
-  layout: {},
   routes: [
     {
       path: "/",

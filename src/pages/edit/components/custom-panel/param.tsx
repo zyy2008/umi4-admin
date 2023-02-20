@@ -9,6 +9,7 @@ import { Context } from "@/pages/edit";
 const Param: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const { initialState } = useModel("@@initialState");
+  const [value, setValue] = React.useState<number>();
   const { satList = [] } = initialState ?? {};
   const ctx = React.useContext(Context);
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
@@ -32,6 +33,18 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
     return [];
   }, [ctx?.params]);
 
+  React.useEffect(() => {
+    if (value) {
+      ctx?.getParams(value);
+    }
+  }, [value]);
+
+  React.useEffect(() => {
+    if (satList?.length > 0) {
+      setValue(satList?.[0]?.pkId);
+    }
+  }, [satList]);
+
   return (
     <Card
       size="small"
@@ -41,13 +54,14 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
           <Select
             placeholder="请选择卫星"
             style={{ flex: 1, margin: "0 5px" }}
+            value={value}
             options={satList.map((item) => {
               return {
                 value: item.pkId,
                 label: item.value,
               };
             })}
-            onChange={ctx?.getParams}
+            onChange={setValue}
           />
         </div>
       }
