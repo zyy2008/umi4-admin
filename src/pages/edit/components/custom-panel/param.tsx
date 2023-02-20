@@ -21,13 +21,6 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
         renderKey: "ConnectorNode",
         width: 70,
         height: 70,
-        ports: [
-          {
-            type: NsGraph.AnchorType.OUTPUT,
-            group: NsGraph.AnchorGroup.BOTTOM,
-            tooltip: "输出桩",
-          },
-        ] as NsGraph.INodeAnchor[],
       }));
     }
     return [];

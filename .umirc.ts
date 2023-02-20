@@ -6,6 +6,12 @@ function resolve(dir: string) {
 }
 
 export default defineConfig({
+  hash: true,
+  antd: {},
+  headScripts: [
+    // 解决首次加载时白屏的问题
+    { src: "/scripts/loading.js", async: true },
+  ],
   plugins: [
     require.resolve("@alita/plugins/dist/keepalive"),
     require.resolve("@alita/plugins/dist/tabs-layout"),
@@ -44,13 +50,14 @@ export default defineConfig({
       ],
     },
   },
-  // proxy: {
-  //   "/atlas": {
-  //     target: "http://192.169.7.200:8079/",
-  //     changeOrigin: true,
-  //     pathRewrite: { "^/atlas": "" },
-  //   },
-  // },
+  proxy: {
+    "/atlas": {
+      target: "http://192.169.7.200:8079/",
+      changeOrigin: true,
+      pathRewrite: { "^/atlas": "" },
+    },
+  },
+
   clickToComponent: {},
   routes: [
     {
