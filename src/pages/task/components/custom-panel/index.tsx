@@ -10,6 +10,7 @@ import {
 import { DecisionNode } from "@/components/nodes";
 import { ColNode } from "@/components/flow-custom";
 import TaskList from "./task-list";
+import AlgorithmList from "./algorithm-list";
 
 const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
@@ -49,9 +50,10 @@ const CardBody: React.FC<{ onNodeDrop: IOnNodeDrop }> = (props) => {
   return (
     <>
       <TaskList onMouseDown={onMouseDown} />
-      {/* <Card title="条件类型" size="small">
+      <AlgorithmList onMouseDown={onMouseDown} />
+      <Card title="条件类型" size="small">
         <BaseNodes onMouseDown={onMouseDown} />
-      </Card> */}
+      </Card>
     </>
   );
 };

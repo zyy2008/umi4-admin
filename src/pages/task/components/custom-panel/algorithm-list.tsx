@@ -5,27 +5,27 @@ import { useRequest } from "@umijs/max";
 import { APIS } from "@/services";
 import { uuidv4 } from "@antv/xflow";
 
-const TaskList: React.FC<IConfigRenderOptions> = (props) => {
+const AlgorithmList: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const { data = {}, loading } = useRequest(() =>
-    APIS.DefaultApi.kmsJobServerCommonTaskPageListPageNumPageSizePost(
+    APIS.DefaultApi.kmsJobServerAlgorithmListPost(
       { pageNum: "1", pageSize: "100" },
-      { taskName: "", createType: "", taskIdentify: "" }
+      { algorithmName: "", id: "" }
     )
   );
   const filterData = React.useMemo<CardListProps["dataSource"]>(() => {
     return (data?.records ?? []).map((item) => ({
       ...item,
       id: uuidv4(),
-      label: item.taskName,
-      renderKey: "ProcessNode",
+      label: item.algorithmName,
+      renderKey: "RectNode",
       width: 110,
       height: 45,
     }));
   }, [data]);
   return (
     <CardList
-      title="任务"
+      title="算法"
       height={200}
       dataSource={filterData}
       onMouseDown={onMouseDown}
@@ -34,4 +34,4 @@ const TaskList: React.FC<IConfigRenderOptions> = (props) => {
   );
 };
 
-export default TaskList;
+export default AlgorithmList;

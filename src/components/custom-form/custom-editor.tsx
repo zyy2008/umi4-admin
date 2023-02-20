@@ -60,14 +60,16 @@ interface IEditorProps extends NsJsonSchemaForm.IFormItemProps {
   controlSchema: NsJsonSchemaForm.IControlSchema;
   placeholder?: string;
   disabled: boolean;
+  originData?: Record<string, any>;
 }
 
 type ParamMenuProps = {
   onClick: (T: { key: string }) => void;
+  isRadioNode?: boolean;
 };
 
 const ParamMenu: React.FC<ParamMenuProps> = (props) => {
-  const { onClick } = props;
+  const { onClick, isRadioNode = true } = props;
   const app = useXFlowApp();
   const [graph, setGraph] = React.useState<Graph>();
   const [isCustom, setIsCustom] = React.useState<boolean>(false);
@@ -91,30 +93,32 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
           const { renderKey } = cell.getData();
           return renderKey === "ProcessNode";
         });
-        return processCells.map((cell, index) => {
+        const list = processCells.map((cell, index) => {
           const { name, expression } = cell.getData();
           return {
             tmCode: expression ?? "",
             tmName: name ?? `var${index}`,
           };
         });
+        return list.filter((node) => node.tmName?.includes(keyword)) ?? [];
       }
       return [];
     }
   }, [ctx?.params, keyword, value, graph]);
-  React.useEffect(() => {
-    (async () => {
-      const graph: Graph = await app.getGraphInstance();
-      const [cell] = graph.getSelectedCells();
-      const { renderKey } = cell.getData();
-      if (renderKey === "ProcessNode") {
-        setIsCustom(false);
-      } else {
-        setIsCustom(true);
-      }
-      setGraph(graph);
-    })();
-  }, []);
+  isRadioNode &&
+    React.useEffect(() => {
+      (async () => {
+        const graph: Graph = await app.getGraphInstance();
+        const [cell] = graph.getSelectedCells();
+        const { renderKey } = cell.getData();
+        if (renderKey === "ProcessNode") {
+          setIsCustom(false);
+        } else {
+          setIsCustom(true);
+        }
+        setGraph(graph);
+      })();
+    }, []);
   return (
     <List
       style={{
@@ -173,7 +177,8 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
 };
 
 const Editor: React.FC<IEditorProps> = (props) => {
-  const { placeholder, disabled, onChange, value } = props;
+  const { placeholder, disabled, onChange, value, originData = {} } = props;
+  const { isRadioNode } = originData;
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
   const [open, setOpen] = React.useState<boolean>(false);
   const insertText = (val: string) => {
@@ -194,6 +199,7 @@ const Editor: React.FC<IEditorProps> = (props) => {
               placement="bottom"
               content={
                 <ParamMenu
+                  isRadioNode={isRadioNode}
                   onClick={({ key }) => {
                     insertText(key);
                     setOpen(false);
@@ -264,7 +270,8 @@ export const EditorShape: React.FC<NsJsonSchemaForm.IControlProps> = (
   props
 ) => {
   const { controlSchema } = props;
-  const { required, tooltip, extra, name, label, placeholder } = controlSchema;
+  const { required, tooltip, extra, name, label, placeholder, originData } =
+    controlSchema;
   return (
     <FormItemWrapper schema={controlSchema}>
       {({ disabled, hidden, initialValue }) => {
@@ -283,6 +290,7 @@ export const EditorShape: React.FC<NsJsonSchemaForm.IControlProps> = (
               controlSchema={controlSchema}
               placeholder={placeholder}
               disabled={disabled}
+              originData={originData}
             />
           </Form.Item>
         );
