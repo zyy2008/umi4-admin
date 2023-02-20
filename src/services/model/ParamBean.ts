@@ -23,23 +23,23 @@ export interface ParamBean {
   /**
    * 参数代号
    */
-  paramCode: string;
+  paramCode?: string;
   /**
    * 参数名称
    */
-  paramName: string;
+  paramName?: string;
   /**
    * 参数序号
    */
-  paramNum: number;
+  paramNum?: number;
   /**
    * 参数类型
    */
-  paramType: number;
+  paramType?: number;
   /**
    * 卫星标识
    */
-  satSid: string;
+  satSid?: string;
   tmCode: string;
-  tmName: string;
+  tmName?: string;
 }

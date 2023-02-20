@@ -512,12 +512,14 @@ export namespace NsJsonForm {
               shape: ControlShape.INPUT,
               value: targetData.name,
               placeholder: "请输入",
+              required: true,
             },
             {
               name: "expression",
               label: "变量内容",
               shape: ControlShapeEnum.EDITOR_SHAPE,
               value: targetData.expression,
+              required: true,
             },
           ];
           break;

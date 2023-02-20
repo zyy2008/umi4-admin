@@ -40,13 +40,13 @@ export default defineConfig({
       ],
     },
   },
-  proxy: {
-    "/atlas": {
-      target: "http://192.169.7.200:8079/",
-      changeOrigin: true,
-      pathRewrite: { "^/atlas": "" },
-    },
-  },
+  // proxy: {
+  //   "/atlas": {
+  //     target: "http://192.169.7.200:8079/",
+  //     changeOrigin: true,
+  //     pathRewrite: { "^/atlas": "" },
+  //   },
+  // },
   clickToComponent: {},
   layout: {},
   routes: [

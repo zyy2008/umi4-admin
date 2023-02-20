@@ -1,6 +1,7 @@
 import React from "react";
 import type { NsJsonSchemaForm } from "@antv/xflow";
-import { FormItemWrapper } from "@antv/xflow";
+import { FormItemWrapper, useXFlowApp } from "@antv/xflow";
+import { Graph } from "@antv/x6";
 import {
   Form,
   Input,
@@ -67,6 +68,9 @@ type ParamMenuProps = {
 
 const ParamMenu: React.FC<ParamMenuProps> = (props) => {
   const { onClick } = props;
+  const app = useXFlowApp();
+  const [graph, setGraph] = React.useState<Graph>();
+  const [isCustom, setIsCustom] = React.useState<boolean>(false);
   const [keyword, setKeyword] = React.useState<string>("");
   const [value, setValue] = React.useState<"params" | "custom">("params");
   const ctx = React.useContext(Context);
@@ -77,11 +81,40 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
           ctx.params.filter((node) => node.tmName?.includes(keyword)) ?? [];
         return list;
       }
+
       return [];
     } else {
+      if (graph) {
+        const [cell] = graph.getSelectedCells();
+        const predecessors = graph.getPredecessors(cell);
+        const processCells = predecessors.filter((cell) => {
+          const { renderKey } = cell.getData();
+          return renderKey === "ProcessNode";
+        });
+        return processCells.map((cell, index) => {
+          const { name, expression } = cell.getData();
+          return {
+            tmCode: expression ?? "",
+            tmName: name ?? `var${index}`,
+          };
+        });
+      }
       return [];
     }
-  }, [ctx?.params, keyword, value]);
+  }, [ctx?.params, keyword, value, graph]);
+  React.useEffect(() => {
+    (async () => {
+      const graph: Graph = await app.getGraphInstance();
+      const [cell] = graph.getSelectedCells();
+      const { renderKey } = cell.getData();
+      if (renderKey === "ProcessNode") {
+        setIsCustom(false);
+      } else {
+        setIsCustom(true);
+      }
+      setGraph(graph);
+    })();
+  }, []);
   return (
     <List
       style={{
@@ -107,14 +140,16 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
             />
           }
         >
-          <Radio.Group
-            value={value}
-            onChange={({ target: { value } }) => setValue(value)}
-            buttonStyle="solid"
-          >
-            <Radio.Button value="params">参数</Radio.Button>
-            <Radio.Button value="custom">变量</Radio.Button>
-          </Radio.Group>
+          {isCustom && (
+            <Radio.Group
+              value={value}
+              onChange={({ target: { value } }) => setValue(value)}
+              buttonStyle="solid"
+            >
+              <Radio.Button value="params">参数</Radio.Button>
+              <Radio.Button value="custom">变量</Radio.Button>
+            </Radio.Group>
+          )}
         </Card>
       }
     >
