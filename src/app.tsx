@@ -12,8 +12,8 @@ export declare type AppInitialState = {
 
 export const layout: RunTimeLayoutConfig = () => {
   return {
-    title: "123",
-    layout: "mix",
+    title: "XX系统",
+    layout: "side",
     childrenRender: (_, props) => {
       const element = useKeepOutlets();
       return <>{element}</>;

@@ -8,6 +8,7 @@ function resolve(dir: string) {
 export default defineConfig({
   hash: true,
   antd: {},
+  layout: {},
   headScripts: [
     // 解决首次加载时白屏的问题
     { src: "/scripts/loading.js", async: true },
@@ -20,10 +21,6 @@ export default defineConfig({
   tabsLayout: {
     hasDropdown: true,
   },
-  layout: {
-    layout: "top",
-    contentWidth: "Fluid",
-  },
   model: {},
   initialState: {},
   chainWebpack(memo, { env, webpack }) {
@@ -34,6 +31,10 @@ export default defineConfig({
   request: {},
   qiankun: {
     master: {
+      // sandbox: {
+      //   strictStyleIsolation: false,
+      //   experimentalStyleIsolation: false,
+      // },
       apps: [
         {
           name: "knowledge",
