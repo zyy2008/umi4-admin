@@ -31,10 +31,10 @@ export default defineConfig({
   request: {},
   qiankun: {
     master: {
-      // sandbox: {
-      //   strictStyleIsolation: false,
-      //   experimentalStyleIsolation: false,
-      // },
+      sandbox: {
+        strictStyleIsolation: false,
+        experimentalStyleIsolation: true,
+      },
       apps: [
         {
           name: "knowledge",
