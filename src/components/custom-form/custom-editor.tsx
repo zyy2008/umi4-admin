@@ -96,7 +96,7 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
         const list = processCells.map((cell, index) => {
           const { name, expression } = cell.getData();
           return {
-            tmCode: expression ?? "",
+            tmCode: name ?? `var${index}`,
             tmName: name ?? `var${index}`,
           };
         });
