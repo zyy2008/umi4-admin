@@ -74,7 +74,10 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
   const [graph, setGraph] = React.useState<Graph>();
   const [isCustom, setIsCustom] = React.useState<boolean>(false);
   const [keyword, setKeyword] = React.useState<string>("");
-  const [value, setValue] = React.useState<"params" | "custom">("params");
+  const [renderKey, setRenderKey] = React.useState<string>("");
+  const [value, setValue] = React.useState<"params" | "var" | "result">(
+    "params"
+  );
   const ctx = React.useContext(Context);
   const data = React.useMemo<ParamBean[]>(() => {
     if (value === "params") {
@@ -91,10 +94,16 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
         const predecessors = graph.getPredecessors(cell);
         const processCells = predecessors.filter((cell) => {
           const { renderKey } = cell.getData();
-          return renderKey === "ProcessNode";
+          if (value === "var") {
+            return renderKey === "ProcessNode";
+          }
+          if (value === "result") {
+            return renderKey === "PreparationNode";
+          }
+          return false;
         });
         const list = processCells.map((cell, index) => {
-          const { name, expression } = cell.getData();
+          const { name } = cell.getData();
           return {
             tmCode: name ?? `var${index}`,
             tmName: name ?? `var${index}`,
@@ -111,11 +120,8 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
         const graph: Graph = await app.getGraphInstance();
         const [cell] = graph.getSelectedCells();
         const { renderKey } = cell.getData();
-        if (renderKey === "ProcessNode") {
-          setIsCustom(false);
-        } else {
-          setIsCustom(true);
-        }
+        setRenderKey(renderKey);
+        setIsCustom(true);
         setGraph(graph);
       })();
     }, []);
@@ -151,7 +157,13 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
               buttonStyle="solid"
             >
               <Radio.Button value="params">参数</Radio.Button>
-              <Radio.Button value="custom">变量</Radio.Button>
+              {(renderKey === "DecisionNode" ||
+                renderKey === "ManualOperationNode") && (
+                <Radio.Button value="var">变量</Radio.Button>
+              )}
+              {renderKey === "ProcessNode" && (
+                <Radio.Button value="result">结果</Radio.Button>
+              )}
             </Radio.Group>
           )}
         </Card>

@@ -2,9 +2,9 @@
  * loading 占位
  * 解决首次加载时白屏的问题
  */
- (function () {
-  const _root = document.querySelector('#root');
-  if (_root && _root.innerHTML === '') {
+(function () {
+  const _root = document.querySelector("#root-master");
+  if (_root && _root.innerHTML === "") {
     _root.innerHTML = `
       <style>
         html,

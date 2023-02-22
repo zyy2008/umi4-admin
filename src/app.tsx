@@ -22,8 +22,9 @@ export const layout: RunTimeLayoutConfig = () => {
 };
 
 export async function getInitialState(): Promise<AppInitialState> {
-  const { data = [] } =
-    await APIS.DefaultApi.baseServerDataQueryQuerySatListGet();
+  // const { data = [] } =
+  //   await APIS.DefaultApi.baseServerDataQueryQuerySatListGet();
+  const data: any[] = [];
   return {
     satList: data.map(({ satCode, satName, pkId }) => ({
       pkId,

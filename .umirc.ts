@@ -7,8 +7,18 @@ function resolve(dir: string) {
 
 export default defineConfig({
   hash: true,
-  antd: {},
+  antd: {
+    configProvider: {
+      prefixCls: "main",
+    },
+  },
   layout: {},
+  lessLoader: {
+    modifyVars: {
+      "@ant-prefix": "main",
+    },
+    javascriptEnabled: true,
+  },
   headScripts: [
     // 解决首次加载时白屏的问题
     { src: "/scripts/loading.js", async: true },
@@ -31,10 +41,10 @@ export default defineConfig({
   request: {},
   qiankun: {
     master: {
-      sandbox: {
-        strictStyleIsolation: false,
-        experimentalStyleIsolation: true,
-      },
+      // sandbox: {
+      //   strictStyleIsolation: false,
+      //   experimentalStyleIsolation: true,
+      // },
       apps: [
         {
           name: "knowledge",
@@ -47,6 +57,10 @@ export default defineConfig({
         {
           name: "arithmetic",
           entry: "//192.169.7.200:8093",
+        },
+        {
+          name: "vue3",
+          entry: "//localhost:8081",
         },
       ],
     },
@@ -70,6 +84,11 @@ export default defineConfig({
       path: "/home",
       component: "./home",
     },
+    // {
+    //   path: "/vue3/dashboard",
+    //   name: "测试",
+    //   microApp: "vue3",
+    // },
     {
       name: "知识编辑",
       path: "/edit",
