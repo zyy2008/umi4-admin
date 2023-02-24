@@ -1,5 +1,13 @@
-import { createGraphConfig, NsGraph } from "@antv/xflow";
-import { EdgeView } from "@antv/x6";
+import {
+  createGraphConfig,
+  NsGraph,
+  XFlowNodeCommands,
+  XFlowGroupCommands,
+  NsGroupCmd,
+  NsNodeCmd,
+  uuidv4,
+} from "@antv/xflow";
+import { EdgeView, Cell } from "@antv/x6";
 import type { IProps } from "./index";
 
 /**  graphConfig：配置Graph  */
@@ -33,6 +41,33 @@ export const useGraphConfig = createGraphConfig<IProps>(
             const edgeView = graph.findViewByCell(edge) as EdgeView;
             edgeView.update();
           });
+        },
+      },
+      {
+        eventName: "node:change:parent",
+        callback: async (
+          x6Event: { node: Cell; cell: Cell; current: string },
+          commandService,
+          modelService,
+          graph
+        ) => {
+          const { node, cell, current } = x6Event;
+          if (current) {
+            const groupCell = graph.getCellById(current);
+            const groupData: NsGraph.IGroupConfig = groupCell.getData();
+            if (groupData.init) {
+              groupCell.setData({
+                ...groupData,
+                init: false,
+              });
+            } else {
+              cell.setData({
+                ...cell.getData(),
+                group: current,
+                isCollapsed: false,
+              });
+            }
+          }
         },
       },
       ...events,

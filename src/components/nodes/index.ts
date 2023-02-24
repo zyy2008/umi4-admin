@@ -9,3 +9,4 @@ export { PreparationNode } from "./preparation";
 export { ManualOperationNode } from "./manual-operation";
 export { MultiDocumentNode } from "./multi-document";
 export { ProcessNode } from "./process";
+export { GroupNode } from "./group-node";

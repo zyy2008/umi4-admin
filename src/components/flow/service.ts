@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DND_RENDER_ID, NODE_WIDTH, NODE_HEIGHT } from "./constants";
 import { uuidv4, NsGraph, NsGraphStatusCommand } from "@antv/xflow";
-import type { NsNodeCmd, NsEdgeCmd, NsGraphCmd } from "@antv/xflow";
+import type { NsNodeCmd, NsEdgeCmd, NsGraphCmd, NsGroupCmd } from "@antv/xflow";
 
 export const portAttrs = {
   circle: {
@@ -107,6 +107,34 @@ export namespace MockApi {
   ) => {
     console.info("delEdge service running, del edge:", args);
     return true;
+  };
+
+  /** 添加组的api */
+  export const addGroup: NsGroupCmd.AddGroup.IArgs["createService"] = async (
+    args: NsGroupCmd.AddGroup.IArgs
+  ) => {
+    debugger;
+    const portItems = [
+      {
+        type: NsGraph.AnchorType.INPUT,
+        group: NsGraph.AnchorGroup.TOP,
+        tooltip: "输入桩",
+      },
+    ] as NsGraph.INodeAnchor[];
+    const { id, ports = portItems } = args.nodeConfig;
+    const nodeId = id || uuidv4();
+    const node: NsNodeCmd.AddNode.IArgs["nodeConfig"] = {
+      ...args.nodeConfig,
+      id: nodeId,
+      ports: (ports as NsGraph.INodeAnchor[]).map((port) => {
+        return {
+          ...port,
+          id: uuidv4(),
+          attrs: portAttrs,
+        };
+      }),
+    };
+    return node;
   };
 
   let runningNodeId = 0;

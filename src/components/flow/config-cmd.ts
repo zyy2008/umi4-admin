@@ -30,6 +30,12 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
           }
         },
       }),
+      // hooks.addGroup.registerHook({
+      //   name: "add group",
+      //   handler: async (args) => {
+      //     args.createService = MockApi.addGroup;
+      //   },
+      // }),
       hooks.addNode.registerHook({
         name: "get node config from backend api",
         after: "dag-add-node",
@@ -158,6 +164,7 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
           return newHandler;
         },
       }),
+
       ...(commandConfig?.(hooks) ?? []),
     ];
     const toDispose = new DisposableCollection();

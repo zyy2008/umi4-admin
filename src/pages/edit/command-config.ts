@@ -7,55 +7,7 @@ import {
   NsGraph,
 } from "@antv/xflow";
 import { Node, Graph as X6Graph } from "@antv/x6";
-
-const addEdge = ({
-  x6Graph,
-  targetId,
-  sourceId,
-}: {
-  x6Graph: X6Graph;
-  targetId: string;
-  sourceId: string;
-}) => {
-  x6Graph.addEdge({
-    source: {
-      cell: targetId,
-      anchor: {
-        name: "right",
-      },
-    },
-    data: {
-      renderKey: "循环",
-    },
-    router: {
-      name: "oneSide",
-      args: {
-        side: "right",
-      },
-    },
-    label: "循环",
-    attrs: {
-      line: {
-        stroke: "#A2B1C3",
-        strokeWidth: 2,
-        targetMarker: {
-          name: "block",
-          width: 12,
-          height: 8,
-        },
-      },
-    },
-    target: {
-      cell: sourceId,
-      anchor: {
-        name: "right",
-        args: {
-          dx: -14,
-        },
-      },
-    },
-  });
-};
+import addEdgeHandle from "./add-edge";
 
 export const commandConfig: IProps["commandConfig"] = (hooks) => {
   return [
@@ -136,20 +88,16 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
           const { edgeConfig, edgeCell } = res;
           if (edgeCell && edgeConfig) {
             const { sourcePortId } = edgeConfig;
-            const getSourceCell = edgeCell.getSourceCell() as Node;
-            const getTargetCell = edgeCell.getTargetCell() as Node;
+            const sourceCell = edgeCell.getSourceCell() as Node;
+            const targetCell = edgeCell.getTargetCell() as Node;
             const { label, ports, renderKey } =
-              getSourceCell.getData() as NsGraph.INodeConfig;
-            // if (renderKey === "ConnectorNode") {
-            //   const portId = edgeCell.getTargetPortId() as string;
-            //   getTargetCell.setPortProp(portId, "connected", false);
-            // }
+              sourceCell.getData() as NsGraph.INodeConfig;
             const x6Graph = (await args.getX6Graph()) as X6Graph;
-            const { id: sourceId } = getSourceCell;
-            const { id: targetId } = getTargetCell;
+            const { id: sourceId } = sourceCell;
+            const { id: targetId } = targetCell;
             switch (label) {
               case "if":
-                const edges = x6Graph.getOutgoingEdges(getSourceCell);
+                const edges = x6Graph.getOutgoingEdges(sourceCell);
                 if (edges && edges.length === 1) {
                   edgeCell.setLabels("true");
                   edgeCell.setData({
@@ -165,30 +113,36 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
                 }
                 break;
               case "for":
-                addEdge({
+                // addEdge({
+                //   x6Graph,
+                //   sourceId,
+                //   targetId,
+                // });
+                addEdgeHandle["for"]({
+                  commandService,
                   x6Graph,
-                  sourceId,
-                  targetId,
+                  sourceCell,
+                  targetCell,
                 });
                 break;
               case "while":
-                const port = getSourceCell.getPort(sourcePortId as string);
+                const port = sourceCell.getPort(sourcePortId as string);
                 if (port?.group === "bottom") {
                   edgeCell.setLabels("true");
                   edgeCell.setData({
                     ...edgeCell.getData(),
                     label: "true",
                   });
-                  addEdge({
-                    x6Graph,
-                    sourceId,
-                    targetId,
-                  });
-                  const ports = getTargetCell.getPorts();
+                  // addEdge({
+                  //   x6Graph,
+                  //   sourceId,
+                  //   targetId,
+                  // });
+                  const ports = targetCell.getPorts();
                   const [{ id }] = ports.filter(
                     (item) => item.group === "bottom"
                   );
-                  getTargetCell.setPortProp(id as string, "connected", true);
+                  targetCell.setPortProp(id as string, "connected", true);
                 }
                 if (port?.group === "left") {
                   edgeCell.setLabels("false");
@@ -215,8 +169,8 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
                 break;
             }
             const edges =
-              x6Graph.getIncomingEdges(getSourceCell) ||
-              x6Graph.getIncomingEdges(getTargetCell);
+              x6Graph.getIncomingEdges(sourceCell) ||
+              x6Graph.getIncomingEdges(targetCell);
             if (edges && edges.length > 0) {
               const [edge] = edges;
               const targetCell = edge.getSourceCell() as Node;

@@ -45,6 +45,20 @@ export const useGraphHookConfig = createHookConfig<IProps>(
               ...graphOptions.connecting,
             };
             options.grid = true;
+            options.embedding = {
+              enabled: true,
+              findParent({ node }) {
+                const bbox = node.getBBox();
+                return this.getNodes().filter((node) => {
+                  const data = node.getData<any>();
+                  if (data && data.parent) {
+                    const targetBBox = node.getBBox();
+                    return bbox.isIntersectWithRect(targetBBox);
+                  }
+                  return false;
+                });
+              },
+            };
             options.interacting = {
               nodeMovable,
               edgeLabelMovable: false,
