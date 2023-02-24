@@ -59,8 +59,8 @@ export default defineConfig({
           entry: "//192.169.7.200:8093",
         },
         {
-          name: "vue3",
-          entry: "//localhost:8081",
+          name: "system",
+          entry: "//192.169.7.200:18090",
         },
       ],
     },
@@ -140,7 +140,6 @@ export default defineConfig({
     {
       name: "算法任务",
       path: "/arithmetic",
-      menu: false,
       routes: [
         {
           path: "/arithmetic/page1",
@@ -151,6 +150,79 @@ export default defineConfig({
           path: "/arithmetic/arithmetic",
           name: "算法管理",
           microApp: "arithmetic",
+        },
+      ],
+    },
+    {
+      name: "系统配置",
+      path: "/system",
+      key: "sysConfig",
+      routes: [
+        {
+          path: "/system/sysConfig/sateInfoConfig",
+          name: "卫星信息配置",
+          microApp: "system",
+        },
+        {
+          path: "/system/sysConfig/paramsInfoConfig",
+          name: "参数信息配置",
+          microApp: "system",
+        },
+        {
+          path: "/system/sysConfig/groupConfigManage",
+          name: "对象组配置管理",
+          microApp: "system",
+        },
+        {
+          path: "/system/sysConfig/externalConnecter",
+          name: "外部接口配置",
+          microApp: "system",
+        },
+        {
+          path: "/system/sysConfig/SubsystemIdentification",
+          name: "分系统标识配置",
+          microApp: "system",
+        },
+        {
+          path: "/system/sysConfig/sysInfoType",
+          name: "系统信息类型管理",
+          microApp: "system",
+        },
+        // {
+        //   path: "/system/sysOps/serverMonitor",
+        //   name: "服务器监视",
+        //   microApp: "system",
+        //   menu: false,
+        // },
+      ],
+    },
+    {
+      name: "系统运维",
+      path: "/system",
+      key: "sysOps",
+      routes: [
+        {
+          path: "/system/sysOps/serverMonitor",
+          name: "服务器监视",
+          microApp: "system",
+        },
+        {
+          path: "/system/sysOps/serverManage",
+          name: "服务器管理",
+          microApp: "system",
+        },
+        {
+          path: "/system/telemetryInformation",
+          name: "遥测信息查询",
+          microApp: "system",
+        },
+        {
+          name: "软件监视",
+          path: "http://192.169.7.200:8071/wallboard",
+        },
+        {
+          name: "容器监视",
+          path: "http://192.169.7.200:9000",
         },
       ],
     },
