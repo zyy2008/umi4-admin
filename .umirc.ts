@@ -91,9 +91,15 @@ export default defineConfig({
     // },
     {
       name: "知识编辑",
-      path: "/edit",
+      path: "/knowledgeEdit",
       component: "./edit",
-      // layout: false,
+      layout: false,
+    },
+    {
+      path: "/taskEdit",
+      name: "任务编辑",
+      component: "./task",
+      layout: false,
     },
     {
       name: "知识管理",
@@ -129,7 +135,6 @@ export default defineConfig({
         { path: "/task/publicTaskMgt", name: "公共任务管理", microApp: "task" },
         { path: "/task/taskMgt", name: "任务管理", microApp: "task" },
         { path: "/task/thresholdDet", name: "门限知识检测", microApp: "task" },
-        { path: "/task/edit", name: "任务编辑", component: "./task" },
       ],
     },
     {
