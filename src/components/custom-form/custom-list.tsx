@@ -27,7 +27,10 @@ export const FormListShape: React.FC<NsJsonSchemaForm.IControlProps> = (
                     <Form.Item {...field} noStyle style={{ display: "flex" }}>
                       <Input placeholder={placeholder} />
                     </Form.Item>
-                    <MinusCircleOutlined
+                    <Button
+                      type="link"
+                      icon={<MinusCircleOutlined />}
+                      disabled={!(index === fields.length - 1)}
                       onClick={() => {
                         const values = form.getFieldValue(`${name}`);
                         form.setFieldValue(

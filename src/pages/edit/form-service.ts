@@ -52,7 +52,7 @@ export namespace NsJsonForm {
       const { label, conditions = [] } = node;
       if (label === "switch") {
         const ports = node.ports as NsGraph.INodeAnchor[];
-        const [_, ...others] = ports;
+        const [top, left, ...others] = ports;
         if (others.length > conditions.length) {
           const [{ id }] = others.filter((_, index) => {
             const is = conditions.some((_: string, i: number) => i === index);
@@ -60,27 +60,20 @@ export namespace NsJsonForm {
           });
           const cell = graph?.getCellById(data?.id as string);
           const edges = graph?.getOutgoingEdges(cell as Node);
-          const [edge] =
-            edges?.filter((cell) => {
-              const sourcePortId = cell.getSourcePortId();
-              return sourcePortId === id;
-            }) ?? [];
-          const targetCell = edge.getTargetCell() as Node;
-          const { ports } = targetCell?.getData();
-          ports.forEach((item: any) => {
-            targetCell.setPortProp(item?.id, "connected", false);
-          });
-          const [delEdge] = graph?.getOutgoingEdges(targetCell as Node) ?? [];
-          commandService.executeCommand<NsEdgeCmd.DelEdge.IArgs>(
-            XFlowEdgeCommands.DEL_EDGE.id,
-            {
-              edgeConfig: delEdge.getData(),
-            }
-          );
+          if (edges) {
+            const [edge] =
+              edges.filter((cell) => {
+                const sourcePortId = cell.getSourcePortId();
+                return sourcePortId === id;
+              }) ?? [];
+            const targetCell = edge.getTargetCell() as Node;
+            edge.remove();
+            targetCell.remove();
+          }
         }
-        const input = ports.filter((item) => item.tooltip === "输入桩");
         node.ports = [
-          ...input,
+          top,
+          left,
           ...conditions.map((_: any, index: number) => {
             const find = ports.filter(
               (item) => item.tooltip === `输出桩:条件${index + 1}`

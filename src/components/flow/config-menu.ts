@@ -71,7 +71,12 @@ export const useMenuConfig = createCtxMenuConfig<IProps>((config, proxy) => {
     let { type, cell } = data ?? {};
     const { renderKey } = cell?.getData();
     const findIndex = menuDisabled.findIndex((item) => item === type);
-    if (findIndex > -1 || renderKey === "循环" || renderKey === "StartNode") {
+    if (
+      findIndex > -1 ||
+      renderKey === "循环" ||
+      renderKey === "StartNode" ||
+      renderKey === "GroupNode"
+    ) {
       type = "blank";
     }
     switch (type) {
