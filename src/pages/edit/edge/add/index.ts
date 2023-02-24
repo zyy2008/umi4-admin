@@ -1,20 +1,6 @@
 import { default as ifHandle } from "./if";
 import { default as forHandle } from "./for";
-import {
-  NsEdgeCmd,
-  IGraphCommandService,
-  XFlowEdgeCommands,
-  uuidv4,
-  NsGraph,
-} from "@antv/xflow";
-import { Node, Graph } from "@antv/x6";
-
-export type Args = {
-  commandService: IGraphCommandService;
-  sourceCell: Node;
-  targetCell: Node;
-  x6Graph: Graph;
-};
+import { Graph } from "@antv/x6";
 
 export const addEdge = ({
   x6Graph,

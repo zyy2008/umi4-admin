@@ -7,7 +7,7 @@ import {
   NsGraph,
 } from "@antv/xflow";
 import { Node, Graph as X6Graph } from "@antv/x6";
-import addEdgeHandle from "./add-edge";
+import { addEdge, delEdge } from "./edge";
 
 export const commandConfig: IProps["commandConfig"] = (hooks) => {
   return [
@@ -46,21 +46,28 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
 
               case "for":
               case "while":
-                var targetCell = res.targetCell as Node;
-                const ports = targetCell.getPorts();
-                const [{ id }] = ports.filter(
-                  (item) => item.group === "bottom"
-                );
-                targetCell.setPortProp(id as string, "connected", false);
-                const targetEdges = x6Graph.getOutgoingEdges(targetCell);
-                if (targetEdges && targetEdges.length > 0) {
-                  const [edge] = targetEdges;
-                  edge.remove();
-                }
+                delEdge["for"]({
+                  commandService,
+                  x6Graph,
+                  sourceCell,
+                  targetCell: res.targetCell as any,
+                });
+                // var targetCell = res.targetCell as Node;
+                // const ports = targetCell.getPorts();
+                // const [{ id }] = ports.filter(
+                //   (item) => item.group === "bottom"
+                // );
+                // targetCell.setPortProp(id as string, "connected", false);
+                // const targetEdges = x6Graph.getOutgoingEdges(targetCell);
+                // if (targetEdges && targetEdges.length > 0) {
+                //   const [edge] = targetEdges;
+                //   edge.remove();
+                // }
                 break;
               case "switch":
-                var targetCell = res.targetCell as Node;
-                const [edge] = x6Graph.getOutgoingEdges(targetCell) ?? [];
+                // var targetCell = res.targetCell as Node;
+                const [edge] =
+                  x6Graph.getOutgoingEdges(res.targetCell as any) ?? [];
                 commandService.executeCommand<
                   NsEdgeCmd.DelEdge.IArgs,
                   NsEdgeCmd.DelEdge.IResult
@@ -118,7 +125,7 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
                 //   sourceId,
                 //   targetId,
                 // });
-                addEdgeHandle["for"]({
+                addEdge["for"]({
                   commandService,
                   x6Graph,
                   sourceCell,

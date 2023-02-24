@@ -1,6 +1,6 @@
 import type { IProps } from "./index";
-import { createHookConfig, DisposableCollection } from "@antv/xflow";
-import type { Graph } from "@antv/x6";
+import { createHookConfig, DisposableCollection, NsGraph } from "@antv/xflow";
+import type { Graph, CellView, Cell, Node } from "@antv/x6";
 import * as NodesComponent from "../nodes";
 
 export function isValidKey(
@@ -37,6 +37,51 @@ export const useGraphHookConfig = createHookConfig<IProps>(
                 // 是否触发交互事件
                 validateMagnet() {
                   return true;
+                },
+                // 显示可用的链接桩
+                validateConnection(args) {
+                  const { sourceView, targetView, sourceMagnet, targetMagnet } =
+                    args;
+                  // 不允许连接到自己
+                  if (sourceView === targetView) {
+                    return false;
+                  }
+
+                  if (!sourceMagnet || !targetMagnet) {
+                    return false;
+                  }
+
+                  // 判断源链接桩是否可连接
+                  const sourceNode = sourceView!.cell as Node;
+                  const sourcePortId = sourceMagnet.getAttribute("port");
+                  if (!sourcePortId) {
+                    return false;
+                  }
+
+                  const sourcePort = sourceNode.getPort(sourcePortId);
+                  if (sourcePort?.type !== NsGraph.AnchorType.OUTPUT) {
+                    return false;
+                  }
+
+                  // 判断目标链接桩是否可连接
+                  const targetNode = targetView!.cell as Node;
+                  const targetPortId = targetMagnet.getAttribute("port")!;
+                  if (!targetPortId) {
+                    return false;
+                  }
+
+                  const targetPort = targetNode.getPort(targetPortId);
+                  if (targetPort?.type !== NsGraph.AnchorType.INPUT) {
+                    return false;
+                  }
+
+                  const targetData: NsGraph.INodeConfig = targetNode.getData();
+                  const sourceData: NsGraph.INodeConfig = sourceNode.getData();
+
+                  if (sourceData.group) {
+                    return targetData.group === sourceData.group;
+                  }
+                  return !targetData.group;
                 },
               },
             };

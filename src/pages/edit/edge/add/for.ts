@@ -1,5 +1,5 @@
-import { Args, addEdge } from "./index";
-
+import { Args } from "../index";
+import { addEdge } from "./index";
 import {
   XFlowGroupCommands,
   NsGroupCmd,
@@ -23,7 +23,7 @@ export default async function handle(args: Args) {
         groupChildren: [targetId],
         renderKey: "GroupNode",
         groupPadding: 40,
-        groupHeaderHeight: 20,
+        groupHeaderHeight: 0,
         parent: true,
         init: true,
       },
