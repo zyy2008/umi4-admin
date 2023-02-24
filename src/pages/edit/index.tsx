@@ -5,8 +5,6 @@ import {
   NsJsonSchemaForm,
   IAppLoad,
   uuidv4,
-  NsGraphCmd,
-  XFlowGraphCommands,
 } from "@antv/xflow";
 import KnowledgeFlow from "@/components/flow";
 import { NsJsonForm } from "./form-service";
@@ -14,7 +12,7 @@ import { CustomPanel } from "./components";
 import { controlMapService } from "@/components/custom-form";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
-import { useRequest } from "@umijs/max";
+import { useRequest, useSearchParams } from "@umijs/max";
 import { APIS, ParamBean } from "@/services";
 import { commandConfig } from "./command-config";
 import { Graph } from "@antv/x6";
@@ -36,6 +34,8 @@ const Edit = () => {
     version: "",
   });
   const [graph, setGraph] = React.useState<Graph>();
+  const [searchParams] = useSearchParams();
+  const object = searchParams.get("object");
   const toolbarConfig = useToolbarConfig(setState);
   const { data, run } = useRequest(
     () =>
@@ -69,13 +69,20 @@ const Edit = () => {
     }
   }, [state]);
   const graphData = React.useMemo<NsGraph.IGraphData>(() => {
-    if (graph) {
+    if (graph && object) {
       const { width } = graph?.getGraphArea();
+      let format: any;
+      try {
+        format = JSON.parse(object);
+      } catch (error) {
+        format = {};
+        console.error("地址传参格式异常，请检查！");
+      }
       return {
         nodes: [
           {
             id: uuidv4(),
-            label: "开始",
+            label: format?.ruleName ? format.ruleName : "开始",
             renderKey: "StartNode",
             width: 70,
             height: 70,
@@ -97,7 +104,7 @@ const Edit = () => {
       nodes: [],
       edges: [],
     };
-  }, [data, graph]);
+  }, [data, graph, object]);
 
   const formSchemaService: NsJsonSchemaForm.IFormSchemaService =
     React.useCallback(
