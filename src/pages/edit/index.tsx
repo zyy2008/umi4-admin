@@ -69,14 +69,16 @@ const Edit = () => {
     }
   }, [state]);
   const graphData = React.useMemo<NsGraph.IGraphData>(() => {
-    if (graph && object) {
+    if (graph) {
       const { width } = graph?.getGraphArea();
       let format: any;
-      try {
-        format = JSON.parse(object);
-      } catch (error) {
-        format = {};
-        console.error("地址传参格式异常，请检查！");
+      if (object) {
+        try {
+          format = JSON.parse(object);
+        } catch (error) {
+          format = {};
+          console.error("地址传参格式异常，请检查！");
+        }
       }
       return {
         nodes: [

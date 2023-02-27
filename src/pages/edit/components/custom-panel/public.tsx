@@ -27,7 +27,10 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
       width: 90,
       height: 60,
       onEditClick: () => {
-        formRef.current?.setFieldsValue(item);
+        formRef.current?.setFieldsValue({
+          ...item,
+          paramNote: item.paramNote?.split(",").map((item) => ({ name: item })),
+        });
         setOpen(true);
         setAdd(false);
       },
@@ -38,10 +41,19 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
   >(
     async (val) => {
       const { success } = add
-        ? await APIS._Api.kmsZsbjServerApiCommonFunctionAddPost(val)
-        : await APIS._Api.kmsZsbjServerApiCommonFunctionUpdatePut(
-            val as KnowledgeFunction
-          );
+        ? await APIS._Api.kmsZsbjServerApiCommonFunctionAddPost({
+            ...val,
+            paramNote: (val.paramNote as any)
+              ?.map((item: { name: string }) => item?.name)
+              .toString(),
+          })
+        : await APIS._Api.kmsZsbjServerApiCommonFunctionUpdatePut({
+            uuid: "",
+            ...val,
+            paramNote: (val.paramNote as any)
+              ?.map((item: { name: string }) => item?.name)
+              .toString(),
+          });
       if (success) {
         run();
         setOpen(false);
@@ -65,6 +77,10 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
             onCancel: () => {
               setOpen(false);
               formRef.current?.resetFields();
+            },
+            bodyStyle: {
+              maxHeight: 600,
+              overflowY: "auto",
             },
           }}
           trigger={
@@ -100,6 +116,24 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
                   },
                 ],
               },
+            },
+            {
+              title: "函数参数",
+              dataIndex: "paramNote",
+              valueType: "formList",
+              columns: [
+                {
+                  dataIndex: "name",
+                  title: "参数名称",
+                  formItemProps: {
+                    rules: [
+                      {
+                        required: true,
+                      },
+                    ],
+                  },
+                },
+              ],
             },
             {
               title: "函数内容",

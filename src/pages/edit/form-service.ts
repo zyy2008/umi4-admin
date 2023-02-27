@@ -490,6 +490,21 @@ export namespace NsJsonForm {
               placeholder: "请输入",
             },
             {
+              name: "paramValues",
+              label: "函数参数",
+              shape: ControlShapeEnum.LIST_SELECT_SHAPE,
+              value: targetData.paramNote
+                .split(",")
+                .map((_: any, index: number) => {
+                  return targetData.paramValues?.[index];
+                }),
+              placeholder: "请选择",
+              required: true,
+              originData: {
+                paramNote: targetData.paramNote,
+              },
+            },
+            {
               name: "funContent",
               label: "函数内容",
               shape: ControlShape.TEXTAREA,

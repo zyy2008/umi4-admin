@@ -9,8 +9,8 @@ import { Context } from "@/pages/edit";
 const Param: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const { initialState } = useModel("@@initialState");
-  const [value, setValue] = React.useState<number>();
   const { satList = [] } = initialState ?? {};
+  const [value, setValue] = React.useState<number>();
   const ctx = React.useContext(Context);
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     if (ctx?.params) {

@@ -93,7 +93,7 @@ export default defineConfig({
       name: "知识编辑",
       path: "/knowledgeEdit",
       component: "./edit",
-      layout: false,
+      // layout: false,
     },
     {
       path: "/taskEdit",
@@ -188,12 +188,6 @@ export default defineConfig({
           name: "系统信息类型管理",
           microApp: "system",
         },
-        // {
-        //   path: "/system/sysOps/serverMonitor",
-        //   name: "服务器监视",
-        //   microApp: "system",
-        //   menu: false,
-        // },
       ],
     },
     {

@@ -5,6 +5,7 @@ import { FormListShape } from "./custom-list";
 import { TagsShape } from "./custom-tags";
 import { SaveShape } from "./custom-save";
 import { NumberShape } from "./custom-number";
+import { SelectListShape } from "./custom-list-select";
 
 /** 自定义form控件 */
 export enum ControlShapeEnum {
@@ -14,6 +15,7 @@ export enum ControlShapeEnum {
   TAGS_SHAPE = "SELECT-TAGS",
   SAVE_SHAPE = "SAVE",
   NUMBER_SHAPE = "NUMBER",
+  LIST_SELECT_SHAPE = "LIST-SELECT",
 }
 
 export const controlMapService: NsJsonSchemaForm.IControlMapService = (
@@ -25,5 +27,6 @@ export const controlMapService: NsJsonSchemaForm.IControlMapService = (
   controlMap.set(ControlShapeEnum.TAGS_SHAPE, TagsShape);
   controlMap.set(ControlShapeEnum.SAVE_SHAPE, SaveShape);
   controlMap.set(ControlShapeEnum.NUMBER_SHAPE, NumberShape);
+  controlMap.set(ControlShapeEnum.LIST_SELECT_SHAPE, SelectListShape);
   return controlMap;
 };
