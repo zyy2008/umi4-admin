@@ -80,6 +80,9 @@ const Edit = () => {
           console.error("地址传参格式异常，请检查！");
         }
       }
+      if (data?.codeContent) {
+        return JSON.parse(data?.codeContent);
+      }
       return {
         nodes: [
           {
