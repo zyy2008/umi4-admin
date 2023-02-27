@@ -85,6 +85,7 @@ const XFlowView: React.FC<IProps> = (props) => {
         onLoad={onLoad}
         graphData={graphData}
         graphLayout={graphLayout}
+        isAutoCenter
       >
         <DagGraphExtension
           router={{

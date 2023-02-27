@@ -91,8 +91,8 @@ const Edit = () => {
             renderKey: "StartNode",
             width: 70,
             height: 70,
-            x: (width - 35) / 2,
-            y: 100,
+            // x: (width - 35) / 2,
+            // y: 100,
             ports: [
               {
                 type: NsGraph.AnchorType.OUTPUT,
