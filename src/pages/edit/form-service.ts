@@ -493,11 +493,10 @@ export namespace NsJsonForm {
               name: "paramValues",
               label: "函数参数",
               shape: ControlShapeEnum.LIST_SELECT_SHAPE,
-              value: targetData.paramNote
-                .split(",")
-                .map((_: any, index: number) => {
-                  return targetData.paramValues?.[index];
-                }),
+              value: targetData.paramNote.map((_: any, index: number) => {
+                return targetData.paramValues?.[index];
+              }),
+
               placeholder: "请选择",
               required: true,
               originData: {

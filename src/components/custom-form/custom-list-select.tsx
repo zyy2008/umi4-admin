@@ -12,12 +12,12 @@ export const SelectListShape: React.FC<NsJsonSchemaForm.IControlProps> = (
   const { controlSchema, form } = props;
   const ctx = React.useContext(Context);
   const { name, label, placeholder, originData, required } = controlSchema;
-  const labels = React.useMemo<string[]>(() => {
-    if (originData?.paramNote) {
-      return (originData?.paramNote as string).split(",");
-    }
-    return [];
-  }, [originData?.paramNote]);
+  // const labels = React.useMemo<string[]>(() => {
+  //   if (originData?.paramNote) {
+  //     return originData?.paramNote.map((item: any) => item.name);
+  //   }
+  //   return [];
+  // }, [originData?.paramNote]);
   const options = React.useMemo<SelectProps["options"]>(() => {
     if (ctx?.params) {
       return ctx?.params?.map((item) => ({
@@ -41,7 +41,11 @@ export const SelectListShape: React.FC<NsJsonSchemaForm.IControlProps> = (
                     key={field.key}
                     className={styles["form-item"]}
                   >
-                    <Form.Item {...field} label={labels[index]}>
+                    <Form.Item
+                      {...field}
+                      label={originData?.paramNote?.[index].name}
+                      tooltip={originData?.paramNote?.[index].paramNote}
+                    >
                       <Select placeholder={placeholder} options={options} />
                     </Form.Item>
                   </Form.Item>

@@ -31,9 +31,11 @@ const File: FC<FileProps> = (props) => {
   const { satList } = initialState ?? {};
   const [importLoading, setImportLoading] = useState<boolean>(false);
   const fileRef = React.useRef<any>(null);
+  const [key, setKey] = React.useState<string>();
   const onClick: MenuProps["onClick"] = ({ key }) => {
     if (fileRef.current) {
-      fileRef.current.upload.uploader.onClick();
+      setKey(key);
+      fileRef.current.upload.uploader.onClick({ data: { a: 1 } });
     }
   };
   return (
@@ -45,19 +47,19 @@ const File: FC<FileProps> = (props) => {
             items: [
               {
                 label: "本体内容",
-                key: "1",
+                key: "0",
               },
               {
                 label: "技术文档",
-                key: "2",
+                key: "1",
               },
               {
                 label: "预案",
-                key: "3",
+                key: "2",
               },
               {
                 label: "案例",
-                key: "4",
+                key: "3",
               },
             ],
             onClick,
@@ -73,18 +75,18 @@ const File: FC<FileProps> = (props) => {
             setImportLoading(true);
             try {
               const { success, data = [] } =
-                await APIS.DefaultApi.kmsViewServerViewImportPost(
-                  {
-                    file,
-                  }
-                  // {
-                  //   prefix: "/atlas",
-                  // }
-                );
+                key === "0"
+                  ? await APIS.DefaultApi.kmsViewServerViewImportPost({
+                      file,
+                    })
+                  : await APIS.DefaultApi.kmsViewServerDocumentUploadPost({
+                      file,
+                      fileType: key,
+                    });
               if (success) {
                 setTimeout(() => {
                   message.success("导入成功！");
-                  onSuccess?.(data);
+                  key === "0" && onSuccess?.(data as ViewRelationship[]);
                 }, 100);
               } else {
                 onError?.("导入失败！" as any);

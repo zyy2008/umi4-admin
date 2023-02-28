@@ -27,10 +27,7 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
       width: 90,
       height: 60,
       onEditClick: () => {
-        formRef.current?.setFieldsValue({
-          ...item,
-          paramNote: item.paramNote?.split(",").map((item) => ({ name: item })),
-        });
+        formRef.current?.setFieldsValue(item);
         setOpen(true);
         setAdd(false);
       },
@@ -41,19 +38,13 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
   >(
     async (val) => {
       const { success } = add
-        ? await APIS._Api.kmsZsbjServerApiCommonFunctionAddPost({
-            ...val,
-            paramNote: (val.paramNote as any)
-              ?.map((item: { name: string }) => item?.name)
-              .toString(),
-          })
+        ? await APIS._Api.kmsZsbjServerApiCommonFunctionAddPost(
+            val as KnowledgeFunDto
+          )
         : await APIS._Api.kmsZsbjServerApiCommonFunctionUpdatePut({
             uuid: "",
             ...val,
-            paramNote: (val.paramNote as any)
-              ?.map((item: { name: string }) => item?.name)
-              .toString(),
-          });
+          } as KnowledgeFunction);
       if (success) {
         run();
         setOpen(false);
@@ -123,15 +114,24 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
               valueType: "formList",
               columns: [
                 {
-                  dataIndex: "name",
-                  title: "参数名称",
-                  formItemProps: {
-                    rules: [
-                      {
-                        required: true,
+                  valueType: "group",
+                  columns: [
+                    {
+                      dataIndex: "name",
+                      title: "参数名称",
+                      formItemProps: {
+                        rules: [
+                          {
+                            required: true,
+                          },
+                        ],
                       },
-                    ],
-                  },
+                    },
+                    {
+                      dataIndex: "paramNote",
+                      title: "参数说明",
+                    },
+                  ],
                 },
               ],
             },
