@@ -15,6 +15,7 @@ import { useModel } from "umi";
 import { formatChildren } from "@/utils";
 import { ViewHandle } from "./index";
 import { data } from "./mock";
+import DocConnect from "./doc-connect";
 
 type FileProps = {
   onSuccess?: (T: ViewRelationship[]) => void;
@@ -162,6 +163,7 @@ const File: FC<FileProps> = (props) => {
           },
         ]}
       />
+      <DocConnect />
     </Space>
   );
 };

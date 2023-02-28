@@ -14,7 +14,6 @@ import {
   File,
   NodeView,
   ParamsExport,
-  Object,
 } from "./components";
 import styles from "./index.less";
 import type { DataNode } from "antd/es/tree";

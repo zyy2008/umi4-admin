@@ -821,6 +821,30 @@ export class DefaultApi {
 
   /**
    * 
+   * @summary 根据对象标识查询卫星列表
+   
+   
+   * @param opt ajax config
+   * @returns models.BaseResponseListObjectGroupBean
+   */
+  public kmsSysconfigServerDataQueryQueryObjectSatList = (
+    params: { code: string | null },
+    opt?: ExtraFetchParams
+  ): AjaxPromise<models.BaseResponseObjectSatList> => {
+    const url = this.$basePath + `/kmsSysconfigServer/DataQuery/objectSatList`;
+    const p: any = {};
+    p.query = {};
+    if ("code" in params) p.query.code = params.code;
+    return ajax.ajax({
+      ...opt,
+      method: "GET",
+      url,
+      ...p,
+    });
+  };
+
+  /**
+   * 
    * @summary 对象组列表查询
    
    
@@ -830,7 +854,8 @@ export class DefaultApi {
   public baseServerDataQueryQueryObjectGroupListGet = (
     opt?: ExtraFetchParams
   ): AjaxPromise<models.BaseResponseListObjectGroupBean> => {
-    const url = this.$basePath + `/base-server/DataQuery/queryObjectGroupList`;
+    const url =
+      this.$basePath + `/kmsSysconfigServer/DataQuery/queryObjectGroupList`;
     const p: any = {};
     return ajax.ajax({
       ...opt,
