@@ -488,7 +488,7 @@ export interface ParamskmsViewServerViewDeletePost {
   /**
    * 节点ID
    */
-  id?: string;
+  id?: number;
 }
 /**
  * @description kmsViewServerViewEditorPost参数
@@ -575,7 +575,7 @@ export interface ParamskmsViewServerViewNodeAddPost {
   /**
    * 节点ID
    */
-  nodeId?: string;
+  nodeId?: number;
 }
 /**
  */

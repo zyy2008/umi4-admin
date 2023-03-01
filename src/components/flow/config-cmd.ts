@@ -46,12 +46,6 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
           args.cellFactory = cellFactory;
         },
       }),
-      hooks.delNode.registerHook({
-        name: "get edge config from backend api",
-        handler: async (args) => {
-          args.deleteNodeService = MockApi.delNode;
-        },
-      }),
       hooks.addEdge.registerHook({
         name: "dag-add-edge-after",
         after: "dag-add-edge",
@@ -90,12 +84,6 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
         },
       }),
       hooks.addEdge.registerHook({
-        name: "get edge config from backend api",
-        handler: async (args) => {
-          args.createEdgeService = MockApi.addEdge;
-        },
-      }),
-      hooks.addEdge.registerHook({
         name: "after add edge",
         after: "after add edge, set target port props",
         handler: async (_, handler: any) => {
@@ -125,12 +113,6 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
         },
       }),
       hooks.delEdge.registerHook({
-        name: "get edge config from backend api",
-        handler: async (args) => {
-          args.deleteEdgeService = MockApi.delEdge;
-        },
-      }),
-      hooks.delEdge.registerHook({
         name: "after del edge",
         after: "afetr del edge, reset target node port props",
         handler: async (args, handler: any) => {
@@ -153,6 +135,7 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
                 ports: sourceCell.getParsedPorts(),
               });
             }
+            console.log(result);
             return result;
           };
           return newHandler;

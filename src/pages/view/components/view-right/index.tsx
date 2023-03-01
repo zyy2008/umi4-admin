@@ -2,8 +2,9 @@ import React from "react";
 import ViewFlow from "@/components/flow";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { CustomPanel } from "./components";
-import type { IAppLoad, NsGraphCmd, NsGraph, IApplication } from "@antv/xflow";
-import { XFlowGraphCommands, JsonSchemaForm } from "@antv/xflow";
+import type { IAppLoad, NsGraph, IApplication } from "@antv/xflow";
+import { JsonSchemaForm } from "@antv/xflow";
+import { Cell } from "@antv/x6";
 import { NsJsonForm } from "./form-service";
 import { commandConfig } from "./command-config";
 import styles from "./index.less";
@@ -32,15 +33,32 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
   const onLoad: IAppLoad = async (app) => {
     const graph = await app.getGraphInstance();
     graph.enableHistory();
-    graph.history.on("change", () => {
-      app.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
-        XFlowGraphCommands.SAVE_GRAPH_DATA.id,
-        {
-          saveGraphDataService: async (meta, data) => {
-            setGraphData?.(data);
-          },
-        }
-      );
+    graph.history.on("change", (res) => {
+      const x6Nodes = graph.getNodes();
+      const x6Edges = graph.getEdges();
+      const nodes = x6Nodes.map((node) => {
+        const data = node.getData<NsGraph.INodeConfig>();
+        const position = node.position();
+        const size = node.size();
+        const model = {
+          ...data,
+          ...position,
+          ...size,
+        };
+        return model;
+      });
+
+      const edges = x6Edges.map((edge: Cell) => {
+        const data = edge.getData<NsGraph.IEdgeConfig>();
+        const model = {
+          ...data,
+        };
+        return model;
+      });
+      setGraphData?.({
+        nodes,
+        edges,
+      });
     });
     setApp(app);
   };

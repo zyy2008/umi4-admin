@@ -93,6 +93,7 @@ const DocConnect = () => {
             <ProCard
               title={<Object setValue={setValue} value={value} />}
               colSpan="260px"
+              headerBordered
             >
               <TreeNode value={value} />
             </ProCard>

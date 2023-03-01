@@ -427,7 +427,7 @@
   dependencies:
     toposort "^2.0.2"
 
-"@antv/xflow@^1.0.52":
+"@antv/xflow@^1.0.53":
   version "1.0.53"
   resolved "https://registry.npmjs.org/@antv/xflow/-/xflow-1.0.53.tgz#1264e25a1271cb73286d4dbcc613b52003f1faca"
   integrity sha512-b14Bazald7UxIEtA1m6TdepQa2SbIkmhRgWES7xHxDPX7dk8+mibmzFEeRI1bH1tkt7lhN2KEmpToIeLvj1O6g==

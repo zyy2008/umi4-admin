@@ -13,7 +13,7 @@
   "dependencies": {
     "@alita/plugins": "^3.2.3",
     "@ant-design/pro-components": "^2.3.35",
-    "@antv/xflow": "^1.0.52",
+    "@antv/xflow": "^1.0.53",
     "@umijs/max": "^4.0.33",
     "antd": "^4.24.4",
     "insert-text-at-cursor": "^0.3.0",
