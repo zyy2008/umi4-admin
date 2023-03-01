@@ -34,13 +34,18 @@ const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
           ports: [
             {
               type: NsGraph.AnchorType.OUTPUT,
-              group: NsGraph.AnchorGroup.LEFT,
+              group: NsGraph.AnchorGroup.BOTTOM,
               tooltip: "输出桩",
             },
             {
               type: NsGraph.AnchorType.OUTPUT,
+              group: NsGraph.AnchorGroup.LEFT,
+              tooltip: "输出桩:true",
+            },
+            {
+              type: NsGraph.AnchorType.OUTPUT,
               group: NsGraph.AnchorGroup.RIGHT,
-              tooltip: "输出桩",
+              tooltip: "输出桩:false",
             },
             {
               type: NsGraph.AnchorType.INPUT,

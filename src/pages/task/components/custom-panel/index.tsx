@@ -22,6 +22,7 @@ const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
         nodeConfig={{
           label: "if",
           renderKey: "DecisionNode",
+          nodeType: "BRANCH",
           ports: [
             {
               type: NsGraph.AnchorType.OUTPUT,

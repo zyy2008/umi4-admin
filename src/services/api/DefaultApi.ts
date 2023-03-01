@@ -457,7 +457,7 @@ export interface ParamskmsViewServerDocumentFindPost {
   /**
    * fileType
    */
-  fileType?: string;
+  fileName?: string;
 }
 /**
  * @description kmsViewServerDocumentPreviewPost参数
@@ -1774,7 +1774,7 @@ export class DefaultApi {
     const url = this.$basePath + `/kms-view-server/document/find`;
     const p: any = {};
     p.query = {};
-    if ("fileType" in params) p.query.fileType = params.fileType;
+    if ("fileName" in params) p.query.fileName = params.fileName;
     return ajax.ajax({
       ...opt,
       method: "POST",
@@ -1830,7 +1830,7 @@ export class DefaultApi {
     };
     // p.form = new FormData();
     if ("file" in params) p.form.append("file", params.file);
-    if ("fileType" in params) p.form.fileType = params.fileType;
+    if ("fileType" in params) p.form.append("fileType", params.fileType);
     return ajax.ajax({
       ...opt,
       method: "POST",

@@ -17,6 +17,8 @@ import { ViewHandle } from "./index";
 import { data } from "./mock";
 import DocConnect from "./doc-connect";
 
+export const fileTypeName = ["本体内容", "技术文档", "预案", "案例"];
+
 type FileProps = {
   onSuccess?: (T: ViewRelationship[]) => void;
   leftRef: React.RefObject<ViewHandle>;
@@ -45,24 +47,10 @@ const File: FC<FileProps> = (props) => {
         <Dropdown
           placement="bottom"
           menu={{
-            items: [
-              {
-                label: "本体内容",
-                key: "0",
-              },
-              {
-                label: "技术文档",
-                key: "1",
-              },
-              {
-                label: "预案",
-                key: "2",
-              },
-              {
-                label: "案例",
-                key: "3",
-              },
-            ],
+            items: fileTypeName.map((val, index) => ({
+              label: val,
+              key: `${index}`,
+            })),
             onClick,
           }}
         >

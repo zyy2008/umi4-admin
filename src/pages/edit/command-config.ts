@@ -52,9 +52,7 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
               edgeCell,
             });
           }
-          return {
-            ...res,
-          };
+          return res;
         };
         return main;
       },

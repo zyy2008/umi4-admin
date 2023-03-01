@@ -5,6 +5,7 @@ import { Space, Select, Tree, TreeProps, Empty, Spin } from "antd";
 import { useRequest } from "@umijs/max";
 import { APIS } from "@/services";
 import { ProCard, ProTable } from "@ant-design/pro-components";
+import { fileTypeName } from "./file";
 
 type ObjectProps = {
   setValue: React.Dispatch<React.SetStateAction<string | null>>;
@@ -69,6 +70,14 @@ const TreeNode: React.FC<{ value: string | null }> = (props) => {
   );
 };
 
+const SpanTag: React.FC<{ fileType: any }> = ({ fileType }) => {
+  const name = fileTypeName?.[fileType];
+  if (name) {
+    return <span>{name}</span>;
+  }
+  return <span>未知类型</span>;
+};
+
 const DocConnect = () => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [value, setValue] = React.useState<string | null>(null);
@@ -99,10 +108,30 @@ const DocConnect = () => {
             </ProCard>
             <ProCard>
               <ProTable
+                search={false}
+                columns={[
+                  {
+                    title: "文件名称",
+                    dataIndex: "objectName",
+                  },
+                  {
+                    title: "文件类型",
+                    dataIndex: "fileType",
+                    hideInSearch: true,
+                    render: (val) => <SpanTag fileType={val} />,
+                  },
+                  {
+                    title: "操作",
+                    key: "option",
+                    width: 120,
+                    valueType: "option",
+                    render: () => [<a key="1">删除</a>, <a key="2">下载</a>],
+                  },
+                ]}
                 request={async () => {
                   const { success, data } =
                     await APIS.DefaultApi.kmsViewServerDocumentFindPost({
-                      fileType: "1",
+                      fileName: "",
                     });
                   return {
                     data,

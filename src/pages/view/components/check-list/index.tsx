@@ -33,7 +33,7 @@ const CheckList: React.FC<CheckListProps> = (props) => {
   const { disabled, onChange, nodesValue, rightRef, params = [] } = props;
   const { initialState } = useModel("@@initialState");
   const { satList = [] } = initialState ?? {};
-  const [ycExist, seYcExist] = React.useState<ParamBean[]>([]);
+  const [ycExist, setYcExist] = React.useState<ParamBean[]>([]);
   const [selectValue, setSelectValue] =
     React.useState<CheckCardGroupProps["value"]>();
   const { data: dataSource = [], run } = useRequest(
@@ -80,15 +80,10 @@ const CheckList: React.FC<CheckListProps> = (props) => {
     (async () => {
       if (dataSource.length > 0) {
         const { success, data: val } =
-          await APIS.DefaultApi.kmsViewServerViewYcImportPost(
-            {
-              parameters: dataSource?.map(({ tmName }) => tmName),
-              satelliteCode: satList?.[0]?.value,
-            },
-            {
-              // prefix: "/atlas",
-            }
-          );
+          await APIS.DefaultApi.kmsViewServerViewYcImportPost({
+            parameters: dataSource?.map(({ tmCode }) => tmCode),
+            satelliteCode: satList?.[0]?.value,
+          });
         if (success) {
           const { ycExist = [] } = val ?? {};
           const find =
@@ -98,7 +93,7 @@ const CheckList: React.FC<CheckListProps> = (props) => {
               );
               return findIndex > -1;
             }) ?? [];
-          seYcExist(find);
+          setYcExist(find);
         }
       }
     })();

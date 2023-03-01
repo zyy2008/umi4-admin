@@ -32,18 +32,19 @@ export const useView = (props: IProps) => {
         const x6Graph = await app.getGraphInstance();
         const node = await MODELS.SELECTED_NODE.useValue(app.modelService);
         const data = node.getData();
-        const value = val ? item : { label: "参数", value: "", tmName: "参数" };
-        const { success } = await APIS.DefaultApi.kmsViewServerViewEditorPost(
-          {
-            id: data.id,
-            newName: value?.tmName,
-          }
-          // { prefix: "/atlas" }
-        );
+        const value = val
+          ? item
+          : { label: "参数", value: "", tmName: "参数", tmCode: "" };
+        const { success } = await APIS.DefaultApi.kmsViewServerViewEditorPost({
+          id: data.id,
+          newName: value?.tmName,
+          nodeCode: value?.tmCode,
+        });
         if (success) {
           node.setData({
             ...data,
             ...value,
+            label: value?.tmName,
           });
           x6Graph.cleanSelection();
           setTimeout(() => {
@@ -168,7 +169,6 @@ export const useData = (props: DProps) => {
   }, [custom, formatData, data]);
   React.useEffect(() => {
     if (selectData && rightRef.current) {
-      console.log(selectData);
       graphReader(selectData, rightRef.current.app);
     }
   }, [selectData, rightRef.current]);

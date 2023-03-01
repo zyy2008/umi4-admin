@@ -59,6 +59,8 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
         nodes,
         edges,
       });
+      console.log(res);
+      console.log({ nodes, edges });
     });
     setApp(app);
   };
