@@ -15,7 +15,7 @@ const TaskList: React.FC<IConfigRenderOptions> = (props) => {
   );
   const filterData = React.useMemo<CardListProps["dataSource"]>(() => {
     return (data?.records ?? []).map((item) => ({
-      ...item,
+      data: item,
       nodeType: "COMMON_TASK",
       id: uuidv4(),
       label: item.taskName,

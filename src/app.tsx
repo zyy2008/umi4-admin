@@ -1,6 +1,14 @@
 import { useKeepOutlets, RunTimeLayoutConfig } from "@umijs/max";
 import { APIS } from "@/services";
 
+declare var apps: string;
+
+declare global {
+  interface Window {
+    config?: any;
+  }
+}
+
 export declare type AppInitialState = {
   satList: {
     pkId?: number;
@@ -33,3 +41,7 @@ export async function getInitialState(): Promise<AppInitialState> {
     })),
   };
 }
+
+export const qiankun = {
+  apps: apps || window?.config?.apps,
+};

@@ -15,7 +15,7 @@ const AlgorithmList: React.FC<IConfigRenderOptions> = (props) => {
   );
   const filterData = React.useMemo<CardListProps["dataSource"]>(() => {
     return (data?.records ?? []).map((item) => ({
-      ...item,
+      data: item,
       nodeType: "ALGORITHM",
       id: uuidv4(),
       label: item.algorithmName,

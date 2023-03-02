@@ -21,7 +21,7 @@ export default defineConfig({
   },
   headScripts: [
     // 解决首次加载时白屏的问题
-    { src: "/scripts/loading.js", async: true },
+    { src: `/scripts/loading.js?t=${new Date().getTime()}`, async: true },
   ],
   plugins: [
     require.resolve("@alita/plugins/dist/keepalive"),
@@ -45,24 +45,6 @@ export default defineConfig({
       //   strictStyleIsolation: false,
       //   experimentalStyleIsolation: true,
       // },
-      apps: [
-        {
-          name: "knowledge",
-          entry: "//192.169.7.200:8091",
-        },
-        {
-          name: "task",
-          entry: "//192.169.7.200:8092",
-        },
-        {
-          name: "arithmetic",
-          entry: "//192.169.7.200:8093",
-        },
-        {
-          name: "system",
-          entry: "//192.169.7.200:18090",
-        },
-      ],
     },
   },
   proxy: {

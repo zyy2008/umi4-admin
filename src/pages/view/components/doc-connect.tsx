@@ -1,10 +1,10 @@
 import React from "react";
 import ButtonModal from "@/components/button-modal";
 import { SwapOutlined } from "@ant-design/icons";
-import { Space, Select, Tree, TreeProps, Empty, Spin } from "antd";
+import { Space, Select, Tree, TreeProps, Empty, Spin, message } from "antd";
 import { useRequest } from "@umijs/max";
 import { APIS } from "@/services";
-import { ProCard, ProTable } from "@ant-design/pro-components";
+import { ProCard, ProTable, ActionType } from "@ant-design/pro-components";
 import { fileTypeName } from "./file";
 
 type ObjectProps = {
@@ -81,6 +81,30 @@ const SpanTag: React.FC<{ fileType: any }> = ({ fileType }) => {
 const DocConnect = () => {
   const [open, setOpen] = React.useState<boolean>(false);
   const [value, setValue] = React.useState<string | null>(null);
+  const ref = React.useRef<ActionType>();
+  const delHandle = async (fileName?: string) => {
+    const { success } = await APIS.DefaultApi.kmsViewServerDocumentDeletePost({
+      fileName,
+    });
+    if (success) {
+      message.success("删除成功");
+      ref.current?.reload();
+    } else {
+      message.warning("删除失败!");
+    }
+  };
+  const downloadHandle = (fileName?: string) => {
+    APIS.DefaultApi.kmsViewServerDocumentDownloadPost(
+      {
+        fileName,
+      },
+      {
+        responseType: "blob",
+        // prefix: "/atlas",
+      }
+    );
+  };
+
   return (
     <ButtonModal
       buttonProps={{
@@ -97,6 +121,7 @@ const DocConnect = () => {
         width: 800,
         onCancel: () => setOpen(false),
         title: "文档关联",
+        destroyOnClose: true,
         children: (
           <ProCard split="vertical" size="small">
             <ProCard
@@ -108,6 +133,7 @@ const DocConnect = () => {
             </ProCard>
             <ProCard>
               <ProTable
+                actionRef={ref}
                 search={false}
                 columns={[
                   {
@@ -125,7 +151,22 @@ const DocConnect = () => {
                     key: "option",
                     width: 120,
                     valueType: "option",
-                    render: () => [<a key="1">删除</a>, <a key="2">下载</a>],
+                    render: (_, r) => [
+                      <a
+                        onClick={() => {
+                          delHandle(r.objectName);
+                        }}
+                      >
+                        删除
+                      </a>,
+                      <a
+                        onClick={() => {
+                          downloadHandle(r.objectName);
+                        }}
+                      >
+                        下载
+                      </a>,
+                    ],
                   },
                 ]}
                 request={async () => {
