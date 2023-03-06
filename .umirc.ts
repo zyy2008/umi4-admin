@@ -75,7 +75,7 @@ export default defineConfig({
       name: "知识编辑",
       path: "/knowledgeEdit",
       component: "./edit",
-      layout: false,
+      // layout: false,
     },
     {
       path: "/taskEdit",

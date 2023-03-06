@@ -25,6 +25,8 @@ export type ViewHandle = {
 
 type Visibility = "hidden" | "visible";
 
+let timer: any = null;
+
 const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
   const { setGraphData, setDisabled, graphData } = props;
   const [app, setApp] = React.useState<IApplication>();
@@ -33,34 +35,39 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
   const onLoad: IAppLoad = async (app) => {
     const graph = await app.getGraphInstance();
     graph.enableHistory();
-    graph.history.on("change", (res) => {
-      const x6Nodes = graph.getNodes();
-      const x6Edges = graph.getEdges();
-      const nodes = x6Nodes.map((node) => {
-        const data = node.getData<NsGraph.INodeConfig>();
-        const position = node.position();
-        const size = node.size();
-        const model = {
-          ...data,
-          ...position,
-          ...size,
-        };
-        return model;
-      });
+    graph.history.on("change", ({ options }) => {
+      if (timer) {
+        clearTimeout(timer);
+        timer = null;
+      } else {
+        timer = setTimeout(() => {
+          const x6Nodes = graph.getNodes();
+          const x6Edges = graph.getEdges();
+          const nodes = x6Nodes.map((node) => {
+            const data = node.getData<NsGraph.INodeConfig>();
+            const position = node.position();
+            const size = node.size();
+            const model = {
+              ...data,
+              ...position,
+              ...size,
+            };
+            return model;
+          });
 
-      const edges = x6Edges.map((edge: Cell) => {
-        const data = edge.getData<NsGraph.IEdgeConfig>();
-        const model = {
-          ...data,
-        };
-        return model;
-      });
-      setGraphData?.({
-        nodes,
-        edges,
-      });
-      console.log(res);
-      console.log({ nodes, edges });
+          const edges = x6Edges.map((edge: Cell) => {
+            const data = edge.getData<NsGraph.IEdgeConfig>();
+            const model = {
+              ...data,
+            };
+            return model;
+          });
+          setGraphData?.({
+            nodes,
+            edges,
+          });
+        }, 0);
+      }
     });
     setApp(app);
   };

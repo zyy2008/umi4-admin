@@ -135,6 +135,7 @@ const DocConnect = () => {
               <ProTable
                 actionRef={ref}
                 search={false}
+                rowKey="objectName"
                 columns={[
                   {
                     title: "文件名称",
@@ -156,6 +157,7 @@ const DocConnect = () => {
                         onClick={() => {
                           delHandle(r.objectName);
                         }}
+                        key="del"
                       >
                         删除
                       </a>,
@@ -163,6 +165,7 @@ const DocConnect = () => {
                         onClick={() => {
                           downloadHandle(r.objectName);
                         }}
+                        key="download"
                       >
                         下载
                       </a>,
