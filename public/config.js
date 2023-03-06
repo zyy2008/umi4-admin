@@ -1,6 +1,6 @@
-const http = "http://192.169.7.200:8070";
+var http = "http://192.169.7.200:8070";
 
-const apps = [
+var apps = [
   {
     name: "knowledge",
     entry: "//192.169.7.200:8091",

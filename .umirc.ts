@@ -21,7 +21,7 @@ export default defineConfig({
   },
   headScripts: [
     // 解决首次加载时白屏的问题
-    { src: `/scripts/loading.js?t=${new Date().getTime()}`, async: true },
+    { src: `/scripts/loading.js`, async: true },
   ],
   plugins: [
     require.resolve("@alita/plugins/dist/keepalive"),
@@ -37,7 +37,7 @@ export default defineConfig({
     // 设置 alias
     memo.resolve.alias.set("@ajax", resolve("src/utils/ajax"));
   },
-  // mfsu: false,
+  mfsu: false,
   request: {},
   qiankun: {
     master: {
@@ -75,7 +75,7 @@ export default defineConfig({
       name: "知识编辑",
       path: "/knowledgeEdit",
       component: "./edit",
-      // layout: false,
+      layout: false,
     },
     {
       path: "/taskEdit",
