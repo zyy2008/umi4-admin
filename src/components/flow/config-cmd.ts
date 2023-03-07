@@ -135,7 +135,6 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
                 ports: sourceCell.getParsedPorts(),
               });
             }
-            console.log(result);
             return result;
           };
           return newHandler;

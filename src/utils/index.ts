@@ -121,13 +121,19 @@ export const treeDeep: (T: {
 
 export async function graphReader(
   graphData: NsGraph.IGraphData,
-  app?: IApplication
+  app?: IApplication,
+  graphLayout?: NsGraphCmd.GraphLayout.IArgs
 ) {
   const graph = await app?.getGraphInstance();
   const config = await app?.getGraphConfig();
   graph?.disableHistory();
   graph?.clearCells();
-  await app?.executeCommand<
+  console.log(graphLayout);
+  const format = graphData?.nodes?.map((item) => ({
+    ...item,
+    view: config?.graphId,
+  }));
+  const res = await app?.executeCommand<
     NsGraphCmd.GraphLayout.IArgs,
     NsGraphCmd.GraphLayout.IResult
   >(XFlowGraphCommands.GRAPH_LAYOUT.id, {
@@ -141,17 +147,15 @@ export async function graphReader(
       /** 层间距 */
       ranksep: 30,
     },
-    graphData,
-  });
-  const format = graphData?.nodes?.map((item) => ({
-    ...item,
-    view: config?.graphId,
-  }));
-  await app?.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, {
     graphData: {
       ...graphData,
       nodes: format,
     },
+    ...graphLayout,
+  });
+  const result = res?.contextProvider().getResult();
+  await app?.executeCommand(XFlowGraphCommands.GRAPH_RENDER.id, {
+    ...result,
   } as NsGraphCmd.GraphRender.IArgs);
   // 居中
   await app?.executeCommand<NsGraphCmd.GraphZoom.IArgs>(

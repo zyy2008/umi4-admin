@@ -38,7 +38,6 @@ const ViewLeft = React.forwardRef<ViewHandle, IProps>((props, ref) => {
       graphReader(graphData, app);
     }
     return () => {
-      console.log(graph);
       if (graph) {
         graph.clearCells();
       }
