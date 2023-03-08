@@ -8,7 +8,6 @@ export default async function handle(args: Args, isFor = true) {
   const { id: targetId } = targetCell;
   const { sourcePortId } = edgeCell?.getData();
   const port = sourceCell.getPort(sourcePortId);
-  console.log(port);
   if (port?.group === "bottom") {
     edgeCell?.setLabels("true");
     edgeCell?.setData({

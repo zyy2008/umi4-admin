@@ -8,6 +8,7 @@ import { NsJsonForm } from "./form-service";
 import { useToolbarConfig } from "./toolbar-config";
 import { useSearchParams, useRequest } from "@umijs/max";
 import { APIS } from "@/services";
+import { Cell } from "@antv/x6";
 
 const Task = () => {
   const [searchParams] = useSearchParams();
@@ -36,6 +37,48 @@ const Task = () => {
         config: toolbarConfig,
       }}
       graphData={graphData}
+      connectionType="many-to-many"
+      graphOptions={(opt) => {
+        return {
+          ...opt,
+          connecting: {
+            ...opt.connecting,
+            validateConnection: function (args) {
+              const {
+                sourceView,
+                targetView,
+                sourceMagnet,
+                targetMagnet,
+                targetCell,
+                sourceCell,
+              } = args;
+              // 不允许连接到自己
+              if (sourceView === targetView) {
+                return false;
+              }
+              if (!sourceMagnet || !targetMagnet) {
+                return false;
+              }
+
+              // if (
+              //   this?.isPredecessor(sourceCell as Cell, targetCell as Cell) ||
+              //   this.isSuccessor(sourceCell as Cell, targetCell as Cell)
+              // ) {
+              //   return false;
+              // }
+              // const cells = this.getNeighbors(targetCell as Cell, {
+              //   incoming: true,
+              //   outgoing: true,
+              //   deep: true,
+              // });
+
+              // console.log(cells);
+
+              return true;
+            },
+          },
+        };
+      }}
     >
       <>
         <CustomPanel

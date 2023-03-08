@@ -81,7 +81,7 @@ export default defineConfig({
       path: "/taskEdit",
       name: "任务编辑",
       component: "./task",
-      layout: false,
+      // layout: false,
     },
     {
       name: "知识管理",

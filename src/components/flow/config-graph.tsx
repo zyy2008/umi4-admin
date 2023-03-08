@@ -13,7 +13,8 @@ export function isValidKey(
 export const useGraphHookConfig = createHookConfig<IProps>(
   async (config, proxy) => {
     // 获取 Props
-    const { nodeMovable = true } = proxy.getValue();
+    const { nodeMovable = true, graphOptions: customOptions } =
+      proxy.getValue();
     config.setRegisterHook((hooks) => {
       const disposableList = [
         // 注册增加 react Node Render
@@ -83,6 +84,9 @@ export const useGraphHookConfig = createHookConfig<IProps>(
                   }
                   return !targetData.group;
                 },
+                snap: {
+                  radius: 50,
+                },
               },
             };
             options.connecting = {
@@ -108,6 +112,8 @@ export const useGraphHookConfig = createHookConfig<IProps>(
               nodeMovable,
               edgeLabelMovable: false,
             };
+            const custom = customOptions?.(options) ?? {};
+            Object.assign(options, custom);
           },
         }),
       ];

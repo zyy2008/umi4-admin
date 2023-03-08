@@ -15,6 +15,7 @@ import {
   ICmdHooks,
   NsGraphCmd,
 } from "@antv/xflow";
+import type { Graph } from "@antv/x6";
 import { useGraphConfig } from "./graph-config";
 import { useGraphHookConfig } from "./config-graph";
 import { useCmdConfig } from "./config-cmd";
@@ -31,7 +32,11 @@ export interface IProps {
   toolbarProps?: Partial<IToolbarProps>;
   cardProps?: CardProps;
   position?: IPosition;
-  connectionType?: "one-to-one" | "one-to-many" | "many-to-one";
+  connectionType?:
+    | "one-to-one"
+    | "one-to-many"
+    | "many-to-one"
+    | "many-to-many";
   onLoad?: IAppLoad;
   events?: NsGraph.IEvent[];
   graphData?: NsGraph.IGraphData;
@@ -40,6 +45,7 @@ export interface IProps {
   menuDisabled?: Array<"node" | "edge" | "blank" | "null">;
   commandConfig?: (T: ICmdHooks) => Disposable[];
   graphLayout?: NsGraphCmd.GraphLayout.IArgs;
+  graphOptions?: (T: Graph.Options) => Graph.Options;
 }
 
 const toolbarConfig = createToolbarConfig(() => {});

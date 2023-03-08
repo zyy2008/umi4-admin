@@ -4,6 +4,7 @@ import { CardListProps, CardList } from "@/components/flow-custom";
 import { useRequest } from "@umijs/max";
 import { APIS } from "@/services";
 import { uuidv4 } from "@antv/xflow";
+import { ports } from "./index";
 
 const TaskList: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
@@ -22,6 +23,7 @@ const TaskList: React.FC<IConfigRenderOptions> = (props) => {
       renderKey: "ProcessNode",
       width: 110,
       height: 45,
+      ports,
     }));
   }, [data]);
   return (

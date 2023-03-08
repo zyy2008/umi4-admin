@@ -12,6 +12,18 @@ import { ColNode } from "@/components/flow-custom";
 import TaskList from "./task-list";
 import AlgorithmList from "./algorithm-list";
 
+const portsFuc = (): NsGraph.INodeAnchor[] => {
+  return Object.values(NsGraph.AnchorGroup).map((val) => {
+    return {
+      id: "",
+      group: val,
+      tooltip: "连接桩",
+    };
+  });
+};
+
+export const ports = portsFuc();
+
 const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   return (
@@ -23,23 +35,7 @@ const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
           label: "if",
           renderKey: "DecisionNode",
           nodeType: "BRANCH",
-          ports: [
-            {
-              type: NsGraph.AnchorType.OUTPUT,
-              group: NsGraph.AnchorGroup.LEFT,
-              tooltip: "输出桩",
-            },
-            {
-              type: NsGraph.AnchorType.OUTPUT,
-              group: NsGraph.AnchorGroup.RIGHT,
-              tooltip: "输出桩",
-            },
-            {
-              type: NsGraph.AnchorType.INPUT,
-              group: NsGraph.AnchorGroup.TOP,
-              tooltip: "输入桩",
-            },
-          ] as NsGraph.INodeAnchor[],
+          ports,
         }}
       />
     </Row>

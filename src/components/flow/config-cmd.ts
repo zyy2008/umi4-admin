@@ -93,10 +93,24 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
               const targetNode = res.edgeCell.getTargetCell() as Node;
               const getSourceCell = res.edgeCell.getSourceCell() as Node;
               const sourcePortId = res.edgeCell.getSourcePortId() as string;
-              if (connectionType === "one-to-one") {
-                getSourceCell.setPortProp(sourcePortId, "connected", true);
-              } else {
-                getSourceCell.setPortProp(sourcePortId, "connected", false);
+              const targetPortId = res.edgeCell.getTargetPortId() as string;
+              switch (connectionType) {
+                case "one-to-one":
+                  getSourceCell.setPortProp(sourcePortId, "connected", true);
+                  break;
+                case "one-to-many":
+                  getSourceCell.setPortProp(sourcePortId, "connected", false);
+                  break;
+                case "many-to-one":
+                  getSourceCell.setPortProp(sourcePortId, "connected", true);
+                  targetNode.setPortProp(targetPortId, "connected", false);
+                  break;
+                case "many-to-many":
+                  getSourceCell.setPortProp(sourcePortId, "connected", false);
+                  targetNode.setPortProp(targetPortId, "connected", false);
+                  break;
+                default:
+                  break;
               }
               getSourceCell.setData({
                 ...getSourceCell.getData(),
