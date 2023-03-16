@@ -35,7 +35,23 @@ const BaseNodes: React.FC<IConfigRenderOptions> = (props) => {
           label: "if",
           renderKey: "DecisionNode",
           nodeType: "BRANCH",
-          ports,
+          ports: [
+            {
+              type: NsGraph.AnchorType.OUTPUT,
+              group: NsGraph.AnchorGroup.LEFT,
+              tooltip: "输出桩",
+            },
+            {
+              type: NsGraph.AnchorType.OUTPUT,
+              group: NsGraph.AnchorGroup.RIGHT,
+              tooltip: "输出桩",
+            },
+            {
+              type: NsGraph.AnchorType.INPUT,
+              group: NsGraph.AnchorGroup.TOP,
+              tooltip: "输入桩",
+            },
+          ] as NsGraph.INodeAnchor[],
         }}
       />
     </Row>

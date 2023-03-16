@@ -597,12 +597,12 @@
     mousetrap "^1.6.5"
     utility-types "^3.10.0"
 
-"@antv/xflow-core@1.1.52":
-  version "1.1.52"
-  resolved "https://registry.npmjs.org/@antv/xflow-core/-/xflow-core-1.1.52.tgz#39c2a9819d155fc773db4f943223cebdab61f003"
-  integrity sha512-62CZeOLMXvDpKOqbq/8zoDt7MUjOkGh9dKBDbxL744UgZCN5Fx4SE+qRhK5purGixTq35XzZ+b9G5wdAX4rLjw==
+"@antv/xflow-core@1.0.54":
+  version "1.0.54"
+  resolved "https://registry.npmjs.org/@antv/xflow-core/-/xflow-core-1.0.54.tgz#e6ce1d9a4344ed7dd8a763dccb3430ab30ec7f64"
+  integrity sha512-OlYUe3CyKojnt9tHjL4aOlAGz8tU0fvAj3uY4xrsWjeTPp6KgKeaCcq8uyrRP/3mt7E5ljVtvW+dIGVz+CwcUw==
   dependencies:
-    "@antv/xflow-hook" "1.0.52"
+    "@antv/xflow-hook" "1.0.54"
     classnames "^2.3.1"
     immer "^9.0.7"
     mana-common "^0.3.1"
@@ -610,45 +610,38 @@
     reflect-metadata "^0.1.13"
     rxjs "^6.6.7"
 
-"@antv/xflow-extension@1.1.52":
-  version "1.1.52"
-  resolved "https://registry.npmjs.org/@antv/xflow-extension/-/xflow-extension-1.1.52.tgz#f1781136b8449c475bef70ef38325b907ec4388e"
-  integrity sha512-pPpx00xwucAkl5+QyxxWiOaRpKGnu0Z1+IDUEYuDvEKxms7+Ml0nDc4+CnDi1e1wr4hB3QgxgLOb0JpUTgBCfg==
+"@antv/xflow-extension@1.0.54":
+  version "1.0.54"
+  resolved "https://registry.npmjs.org/@antv/xflow-extension/-/xflow-extension-1.0.54.tgz#9580ea84a1c6c9732690faef52fded5b7f3b9a41"
+  integrity sha512-YlujX67lXfqwhVwrnhTMn2uzSQtOBg2rIBh66HgayBOpPCVua5k7OyHEA+o+bMDNsTvvMl8odT7mlLEr0xdIyw==
   dependencies:
-    "@antv/xflow-core" "1.1.52"
-    "@antv/xflow-hook" "1.0.52"
+    "@antv/xflow-core" "1.0.54"
+    "@antv/xflow-hook" "1.0.54"
     mana-syringe "^0.2.2"
     moment "^2.29.1"
     rc-field-form "^1.22.0"
     react-color "2.17.1"
     reflect-metadata "^0.1.13"
 
-"@antv/xflow-hook@1.0.52":
-  version "1.0.52"
-  resolved "https://registry.npmjs.org/@antv/xflow-hook/-/xflow-hook-1.0.52.tgz#bbd2426d4a6e81127109f7afa49a22d45f4d2b8a"
-  integrity sha512-qyheVO5bwhDjKGSldf3pkneowf8ZCydIIrX4n8LRTFpvVhVF9cPoXG9e6+1LhIFvSEaLAJcYBH4gNqAjRrbUYw==
+"@antv/xflow-hook@1.0.54":
+  version "1.0.54"
+  resolved "https://registry.npmjs.org/@antv/xflow-hook/-/xflow-hook-1.0.54.tgz#847af85a490946cded8cf8c0c4927cab9bf04f85"
+  integrity sha512-XwGroKBMFq3GLclrWeapm+VpDZlBgYjDOerIPfdHkeHll55XDOkiU28eDbxB1hXB7GSKRt7EmRZyFsFJRAR5xQ==
   dependencies:
     toposort "^2.0.2"
 
-"@antv/xflow-hook@1.1.52":
-  version "1.1.52"
-  resolved "https://registry.npmjs.org/@antv/xflow-hook/-/xflow-hook-1.1.52.tgz#a70bd8f90a9149fb5ffc5b1fbd884f39fe200bb0"
-  integrity sha512-wQfJgCxZG/PYH4DhpcfOi8Js0gHlVmTMHYVJ4DZMvGPcuhEhic0vOtyd9cie0YPzWPufw6lBKtn3/0FY3yHapg==
-  dependencies:
-    toposort "^2.0.2"
-
-"@antv/xflow@^1.1.52":
-  version "1.1.52"
-  resolved "https://registry.npmjs.org/@antv/xflow/-/xflow-1.1.52.tgz#bace03137b839cc3e12ce7d745fae9b73d1dbc8f"
-  integrity sha512-B2IApV4vG2DmMubbfXGjE+oKi2eXvPuijdHhbxwQheIWcm+VtVQscaFvwUexb4CHH5tBSnjtUeKrhRIkXop70w==
+"@antv/xflow@^1.0.54":
+  version "1.0.54"
+  resolved "https://registry.npmjs.org/@antv/xflow/-/xflow-1.0.54.tgz#2c193460cbc25508591fcd9400a2b49a340b75aa"
+  integrity sha512-NCP3y64z0g4/Dong8my1GTAqv1pHPgtkP8ZYkEkQMFUNcooN85wNuaj6gmGQ0Vww6eBvVTKYWrsVtMh9KVLV9g==
   dependencies:
     "@antv/layout" "^0.1.22"
     "@antv/x6" "^1.30.1"
     "@antv/x6-react-components" "^1.1.15"
     "@antv/x6-react-shape" "^1.5.2"
-    "@antv/xflow-core" "1.1.52"
-    "@antv/xflow-extension" "1.1.52"
-    "@antv/xflow-hook" "1.1.52"
+    "@antv/xflow-core" "1.0.54"
+    "@antv/xflow-extension" "1.0.54"
+    "@antv/xflow-hook" "1.0.54"
 
 "@babel/cli@^7.18.6", "@babel/cli@^7.20.7":
   version "7.20.7"
