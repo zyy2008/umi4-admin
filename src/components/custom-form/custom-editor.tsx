@@ -1,7 +1,6 @@
 import React from "react";
 import type { NsJsonSchemaForm } from "@antv/xflow";
-import { FormItemWrapper, useXFlowApp } from "@antv/xflow";
-import { Graph } from "@antv/x6";
+import { FormItemWrapper } from "@antv/xflow";
 import {
   Form,
   Input,
@@ -11,17 +10,15 @@ import {
   Menu,
   Card,
   Divider,
-  Radio,
   List,
   Popover,
+  Empty,
 } from "antd";
 import insertTextAtCursor from "insert-text-at-cursor";
 import { ParamBean } from "@/services";
 import VirtualList from "rc-virtual-list";
 import styles from "./styles.less";
-import { Context } from "@/pages/edit";
-
-const { Search } = Input;
+import { CardRadio } from "./index";
 
 const tags: string[] = [
   "+",
@@ -65,132 +62,43 @@ interface IEditorProps extends NsJsonSchemaForm.IFormItemProps {
 
 type ParamMenuProps = {
   onClick: (T: { key: string }) => void;
-  isRadioNode?: boolean;
 };
 
 const ParamMenu: React.FC<ParamMenuProps> = (props) => {
-  const { onClick, isRadioNode = true } = props;
-  const app = useXFlowApp();
-  const [graph, setGraph] = React.useState<Graph>();
-  const [isCustom, setIsCustom] = React.useState<boolean>(false);
-  const [keyword, setKeyword] = React.useState<string>("");
-  const [renderKey, setRenderKey] = React.useState<string>("");
-  const [value, setValue] = React.useState<"params" | "var" | "result">(
-    "params"
-  );
-  const ctx = React.useContext(Context);
-  const data = React.useMemo<ParamBean[]>(() => {
-    if (value === "params") {
-      if (ctx?.params) {
-        const list =
-          ctx.params.filter((node) => node.tmName?.includes(keyword)) ?? [];
-        return list;
-      }
-
-      return [];
-    } else {
-      if (graph) {
-        const [cell] = graph.getSelectedCells();
-        const predecessors = graph.getPredecessors(cell);
-        const processCells = predecessors.filter((cell) => {
-          const { renderKey } = cell.getData();
-          if (value === "var") {
-            return renderKey === "ProcessNode";
-          }
-          if (value === "result") {
-            return renderKey === "PreparationNode";
-          }
-          return false;
-        });
-        const list = processCells.map((cell, index) => {
-          const { name } = cell.getData();
-          return {
-            tmCode: name ?? `var${index}`,
-            tmName: name ?? `var${index}`,
-          };
-        });
-        return list.filter((node) => node.tmName?.includes(keyword)) ?? [];
-      }
-      return [];
-    }
-  }, [ctx?.params, keyword, value, graph]);
-  isRadioNode &&
-    React.useEffect(() => {
-      (async () => {
-        const graph: Graph = await app.getGraphInstance();
-        const [cell] = graph.getSelectedCells();
-        const { renderKey } = cell.getData();
-        setRenderKey(renderKey);
-        setIsCustom(true);
-        setGraph(graph);
-      })();
-    }, []);
+  const { onClick } = props;
+  const [data, setData] = React.useState<ParamBean[]>([]);
   return (
     <List
-      style={{
-        width: 220,
-      }}
+      className={styles["list"]}
       bordered
-      header={
-        <Card
-          bordered={false}
-          headStyle={{
-            padding: 0,
-          }}
-          bodyStyle={{
-            padding: 0,
-            textAlign: "center",
-          }}
-          title={
-            <Search
-              onSearch={setKeyword}
-              allowClear
-              placeholder="过滤条件"
-              size="middle"
-            />
-          }
-        >
-          {isCustom && (
-            <Radio.Group
-              value={value}
-              onChange={({ target: { value } }) => setValue(value)}
-              buttonStyle="solid"
-            >
-              <Radio.Button value="params">参数</Radio.Button>
-              {(renderKey === "DecisionNode" ||
-                renderKey === "ManualOperationNode") && (
-                <Radio.Button value="var">变量</Radio.Button>
-              )}
-              {renderKey === "ProcessNode" && (
-                <Radio.Button value="result">结果</Radio.Button>
-              )}
-            </Radio.Group>
-          )}
-        </Card>
-      }
+      size="small"
+      header={<CardRadio onChange={setData} />}
     >
-      <VirtualList<ParamBean>
-        data={data}
-        height={200}
-        itemHeight={36}
-        itemKey="tmCode"
-      >
-        {(item) => (
-          <List.Item
-            key={item.tmCode}
-            onClick={() => onClick?.({ key: item.tmCode })}
-          >
-            {item.tmName}
-          </List.Item>
-        )}
-      </VirtualList>
+      {data.length === 0 ? (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+      ) : (
+        <VirtualList<ParamBean>
+          data={data}
+          height={200}
+          itemHeight={36}
+          itemKey="tmCode"
+        >
+          {(item) => (
+            <List.Item
+              key={item.tmCode}
+              onClick={() => onClick?.({ key: item.tmCode })}
+            >
+              {item.tmName}
+            </List.Item>
+          )}
+        </VirtualList>
+      )}
     </List>
   );
 };
 
 const Editor: React.FC<IEditorProps> = (props) => {
   const { placeholder, disabled, onChange, value, originData = {} } = props;
-  const { isRadioNode } = originData;
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
   const [open, setOpen] = React.useState<boolean>(false);
   const insertText = (val: string) => {
@@ -211,7 +119,6 @@ const Editor: React.FC<IEditorProps> = (props) => {
               placement="bottom"
               content={
                 <ParamMenu
-                  isRadioNode={isRadioNode}
                   onClick={({ key }) => {
                     insertText(key);
                     setOpen(false);

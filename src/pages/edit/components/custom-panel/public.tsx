@@ -147,6 +147,46 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
                 ],
               },
             },
+            {
+              title: "返回类型",
+              dataIndex: "returnType",
+              valueType: "select",
+              fieldProps: {
+                options: [
+                  {
+                    label: "int",
+                    value: 1,
+                  },
+                  {
+                    label: "float",
+                    value: 2,
+                  },
+                  {
+                    label: "string",
+                    value: 3,
+                  },
+                  {
+                    label: "boolean",
+                    value: 4,
+                  },
+                  {
+                    label: "void",
+                    value: 5,
+                  },
+                ],
+              },
+              formItemProps: {
+                rules: [
+                  {
+                    required: true,
+                  },
+                ],
+              },
+            },
+            {
+              title: "返回说明",
+              dataIndex: "returnNote",
+            },
           ]}
           onFinish={onFinish}
         />

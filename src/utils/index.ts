@@ -128,7 +128,6 @@ export async function graphReader(
   const config = await app?.getGraphConfig();
   graph?.disableHistory();
   graph?.clearCells();
-  console.log(graphLayout);
   const format = graphData?.nodes?.map((item) => ({
     ...item,
     view: config?.graphId,

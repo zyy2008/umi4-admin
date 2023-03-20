@@ -2,7 +2,7 @@
   :global {
     .main-form-item-control-input-content {
       display: flex;
-      align-items: center;
+      align-items: end;
 
       .anticon {
         margin-left: 10px;
@@ -21,10 +21,73 @@
   }
 }
 
+.form-columns {
+  :global {
+    .main-form-item-control-input-content {
+      display: grid;
+      grid-template-columns: 80px 80px 80px auto;
+      align-items: end;
+    }
+
+    .main-form-item {
+      display: flex;
+      width: 100%;
+      margin-bottom: 0;
+
+      .main-form-item-row {
+        flex: 1
+      }
+    }
+  }
+}
+
+.multi-item {
+  :global {
+    .main-space-item:last-child {
+      flex: 1;
+    }
+  }
+}
+
+.multi-select {
+  width: 225px !important;
+}
+
+.multi-addon {
+  :global {
+    .main-select-selector {
+      border-right: none !important;
+      background-color: rgba(0, 0, 0, .02) !important;
+    }
+  }
+
+}
+
 .popover-content {
   :global {
     .main-popover-inner-content {
       padding: 0;
     }
   }
+}
+
+.list {
+  width: 230px;
+
+  :global {
+    .main-list-item {
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+        transition: background-color 0.3s;
+
+      }
+    }
+
+    .main-list-header {
+      padding: 5px !important;
+    }
+  }
+
 }

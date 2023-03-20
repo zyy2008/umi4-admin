@@ -1,32 +1,15 @@
 import React from "react";
 import { FormItemWrapper } from "@antv/xflow";
 import type { NsJsonSchemaForm } from "@antv/xflow";
-import { Form, Select, SelectProps } from "antd";
-import { useModel } from "@umijs/max";
+import { Form } from "antd";
 import styles from "./styles.less";
-import { Context } from "@/pages/edit";
+import { SelectMids } from "./index";
 
-export const SelectListShape: React.FC<NsJsonSchemaForm.IControlProps> = (
+export const ListSelectShape: React.FC<NsJsonSchemaForm.IControlProps> = (
   props
 ) => {
   const { controlSchema, form } = props;
-  const ctx = React.useContext(Context);
   const { name, label, placeholder, originData, required } = controlSchema;
-  // const labels = React.useMemo<string[]>(() => {
-  //   if (originData?.paramNote) {
-  //     return originData?.paramNote.map((item: any) => item.name);
-  //   }
-  //   return [];
-  // }, [originData?.paramNote]);
-  const options = React.useMemo<SelectProps["options"]>(() => {
-    if (ctx?.params) {
-      return ctx?.params?.map((item) => ({
-        label: item.tmName,
-        value: item.tmCode,
-      }));
-    }
-    return [];
-  }, [ctx?.params]);
   return (
     <FormItemWrapper schema={controlSchema}>
       {({ initialValue }) => {
@@ -46,7 +29,7 @@ export const SelectListShape: React.FC<NsJsonSchemaForm.IControlProps> = (
                       label={originData?.paramNote?.[index].name}
                       tooltip={originData?.paramNote?.[index].paramNote}
                     >
-                      <Select placeholder={placeholder} options={options} />
+                      <SelectMids placeholder={placeholder} />
                     </Form.Item>
                   </Form.Item>
                 ))}

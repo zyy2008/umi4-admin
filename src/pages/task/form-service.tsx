@@ -210,9 +210,6 @@ export namespace NsJsonForm {
               label: "表达式编辑",
               shape: ControlShapeEnum.EDITOR_SHAPE,
               value: targetData.expression,
-              originData: {
-                isRadioNode: false,
-              },
             },
           ];
           break;
