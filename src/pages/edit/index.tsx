@@ -87,7 +87,7 @@ const Edit = () => {
         nodes: [
           {
             id: uuidv4(),
-            label: format?.ruleName ? format.ruleName : "开始",
+            label: format?.ruleName ? format.ruleName : "start",
             renderKey: "StartNode",
             width: 70,
             height: 70,

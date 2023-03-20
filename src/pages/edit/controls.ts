@@ -370,7 +370,6 @@ const controlsFuc: (
         label: "函数内容",
         shape: ControlShape.TEXTAREA,
         value: targetData?.funContent,
-        disabled: true,
       },
       {
         name: "returnType",
