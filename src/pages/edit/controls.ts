@@ -1,6 +1,12 @@
 import { NsJsonSchemaForm } from "@antv/xflow";
 import { ControlShapeEnum } from "@/components/custom-form";
+
 const { ControlShape } = NsJsonSchemaForm;
+
+const returnType = ["int", "float", "string", "boolean", "void"];
+
+const formatSelect: { title: string; value: string | number | boolean }[] =
+  returnType.map((val, index) => ({ title: val, value: index }));
 
 const controlsFuc: (
   targetData: NsJsonSchemaForm.TargetData
@@ -20,16 +26,7 @@ const controlsFuc: (
         shape: ControlShape.SELECT,
         value: targetData?.type,
         placeholder: "请选择",
-        options: [
-          {
-            title: "int",
-            value: "int",
-          },
-          {
-            title: "string",
-            value: "string",
-          },
-        ],
+        options: formatSelect,
       },
       // {
       //   name: "satCode",
@@ -62,22 +59,7 @@ const controlsFuc: (
         value: targetData?.type,
         placeholder: "请选择",
         options: [
-          {
-            title: "int",
-            value: "int",
-          },
-          {
-            title: "float",
-            value: "float",
-          },
-          {
-            title: "string",
-            value: "string",
-          },
-          {
-            title: "boolean",
-            value: "boolean",
-          },
+          ...formatSelect,
           {
             title: "时间序列",
             value: "时间序列",
@@ -201,16 +183,7 @@ const controlsFuc: (
         shape: ControlShape.SELECT,
         value: targetData?.type,
         placeholder: "请选择",
-        options: [
-          {
-            title: "int",
-            value: "int",
-          },
-          {
-            title: "string",
-            value: "string",
-          },
-        ],
+        options: formatSelect,
       },
       {
         name: "conditions",
@@ -375,28 +348,7 @@ const controlsFuc: (
         name: "returnType",
         label: "返回类型",
         shape: ControlShape.SELECT,
-        options: [
-          {
-            title: "int",
-            value: 1,
-          },
-          {
-            title: "float",
-            value: 2,
-          },
-          {
-            title: "string",
-            value: 3,
-          },
-          {
-            title: "boolean",
-            value: 4,
-          },
-          {
-            title: "void",
-            value: 5,
-          },
-        ],
+        options: formatSelect,
         value: targetData?.returnType,
         disabled: true,
       },
@@ -434,13 +386,13 @@ const controlsFuc: (
         placeholder: "请输入",
         disabled: true,
       },
-      {
-        name: "input",
-        label: "输入",
-        shape: ControlShapeEnum.LIST_TABLE_SHAPE,
-        value: targetData?.input,
-        placeholder: "请输入",
-      },
+      // {
+      //   name: "input",
+      //   label: "输入",
+      //   shape: ControlShapeEnum.LIST_TABLE_SHAPE,
+      //   value: targetData?.input,
+      //   placeholder: "请输入",
+      // },
     ],
   };
   if (targetData?.renderKey) {

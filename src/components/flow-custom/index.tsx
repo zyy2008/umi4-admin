@@ -64,7 +64,7 @@ export const CardList: React.FC<CardListProps> = (props) => {
                 className={`node-list ${item.isDisabled ? "disabled" : ""}`}
                 onMouseDown={onMouseDown({
                   ...item,
-                  fontSize: 15,
+                  fontSize: 14,
                   itemId: item.id,
                 })}
               >
@@ -111,7 +111,7 @@ export const ColNode: React.FC<
         height: 55,
         ...nodeConfig,
         id: uuidv4(),
-        fontSize: 15,
+        fontSize: 14,
       })}
     >
       {React.createElement(node, {
