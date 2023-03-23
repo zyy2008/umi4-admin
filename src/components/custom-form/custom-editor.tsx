@@ -1,8 +1,7 @@
 import React from "react";
 import type { NsJsonSchemaForm } from "@antv/xflow";
-import { FormItemWrapper } from "@antv/xflow";
+import { FormItemWrapper } from "./index";
 import {
-  Form,
   Input,
   Dropdown,
   Button,
@@ -56,7 +55,7 @@ const tags: string[] = [
 interface IEditorProps extends NsJsonSchemaForm.IFormItemProps {
   controlSchema: NsJsonSchemaForm.IControlSchema;
   placeholder?: string;
-  disabled: boolean;
+  disabled?: boolean;
   originData?: Record<string, any>;
 }
 
@@ -189,29 +188,17 @@ export const EditorShape: React.FC<NsJsonSchemaForm.IControlProps> = (
   props
 ) => {
   const { controlSchema } = props;
-  const { required, tooltip, extra, name, label, placeholder, originData } =
-    controlSchema;
+  const { originData } = controlSchema;
   return (
-    <FormItemWrapper schema={controlSchema}>
-      {({ disabled, hidden, initialValue }) => {
+    <FormItemWrapper {...props}>
+      {({ placeholder, disabled }) => {
         return (
-          <Form.Item
-            name={name}
-            label={label}
-            initialValue={initialValue}
-            tooltip={tooltip}
-            extra={extra}
-            required={required}
-            hidden={hidden}
-          >
-            {/* 这里的组件可以拿到onChange和value */}
-            <Editor
-              controlSchema={controlSchema}
-              placeholder={placeholder}
-              disabled={disabled}
-              originData={originData}
-            />
-          </Form.Item>
+          <Editor
+            controlSchema={controlSchema}
+            placeholder={placeholder}
+            disabled={disabled}
+            originData={originData}
+          />
         );
       }}
     </FormItemWrapper>

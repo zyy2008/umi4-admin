@@ -108,9 +108,12 @@ export namespace NsJsonForm {
                   {
                     name: "tags",
                     label: "tags",
-                    shape: ControlShapeEnum.TAGS_SHAPE,
+                    shape: ControlShapeEnum.SELECT_SHAPE,
                     value: meta.tags,
                     defaultValue: ["python"] as any,
+                    originData: {
+                      mode: "tags",
+                    },
                     options: [
                       {
                         title: "python",

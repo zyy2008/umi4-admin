@@ -21,6 +21,7 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
         renderKey: "ConnectorNode",
         width: 70,
         height: 70,
+        name: item?.tmCode.toUpperCase(),
       }));
     }
     return [];
@@ -34,7 +35,7 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
 
   React.useEffect(() => {
     if (satList?.length > 0) {
-      setValue(satList?.[0]?.pkId);
+      setValue(256);
     }
   }, [satList]);
 

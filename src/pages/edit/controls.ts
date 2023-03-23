@@ -6,13 +6,19 @@ const { ControlShape } = NsJsonSchemaForm;
 const returnType = ["int", "float", "string", "boolean", "void"];
 
 const formatSelect: { title: string; value: string | number | boolean }[] =
-  returnType.map((val, index) => ({ title: val, value: index }));
+  returnType.map((val, index) => ({ title: val, value: index + 1 }));
 
 const controlsFuc: (
   targetData: NsJsonSchemaForm.TargetData
 ) => NsJsonSchemaForm.IControlSchema[] = (targetData) => {
   const ControlRecord: Record<string, NsJsonSchemaForm.IControlSchema[]> = {
     ConnectorNode: [
+      {
+        name: "name",
+        label: "变量名称",
+        shape: ControlShape.INPUT,
+        value: targetData?.name,
+      },
       {
         name: "label",
         label: "参数名称",
@@ -21,21 +27,13 @@ const controlsFuc: (
         disabled: true,
       },
       {
-        name: "type",
+        name: "tmDataType",
         label: "参数类型",
         shape: ControlShape.SELECT,
-        value: targetData?.type,
+        value: targetData?.tmDataType,
         placeholder: "请选择",
         options: formatSelect,
       },
-      // {
-      //   name: "satCode",
-      //   label: "卫星名称",
-      //   shape: ControlShape.SELECT,
-      //   value: targetData.satCode,
-      //   placeholder: "请选择",
-      //   options: satList,
-      // },
     ],
     RectNode: [
       {
@@ -343,6 +341,7 @@ const controlsFuc: (
         label: "函数内容",
         shape: ControlShape.TEXTAREA,
         value: targetData?.funContent,
+        disabled: true,
       },
       {
         name: "returnType",
@@ -370,6 +369,15 @@ const controlsFuc: (
         required: true,
       },
       {
+        name: "type",
+        label: "变量类型",
+        shape: ControlShape.SELECT,
+        value: targetData?.type,
+        options: formatSelect,
+        placeholder: "请输入",
+        required: true,
+      },
+      {
         name: "expression",
         label: "变量内容",
         shape: ControlShapeEnum.EDITOR_SHAPE,
@@ -384,7 +392,7 @@ const controlsFuc: (
         shape: ControlShape.INPUT,
         value: targetData?.label,
         placeholder: "请输入",
-        disabled: true,
+        // disabled: true,
       },
       // {
       //   name: "input",

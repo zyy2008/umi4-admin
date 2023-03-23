@@ -1,16 +1,21 @@
 import React from "react";
-import { Card, Select, SelectProps, Input, Radio, CardProps } from "antd";
-import { NsJsonSchemaForm, useXFlowApp } from "@antv/xflow";
+import { Card, Select, SelectProps, Input, Radio, Tooltip, Form } from "antd";
+import {
+  NsJsonSchemaForm,
+  useXFlowApp,
+  FormItemWrapper as Wrapper,
+} from "@antv/xflow";
 import { Graph } from "@antv/x6";
 import { EditorShape } from "./custom-editor";
 import { LabelShape } from "./custom-label";
 import { FormListShape } from "./custom-list";
-import { TagsShape } from "./custom-tags";
+import { SelectShape } from "./custom-select";
 import { SaveShape } from "./custom-save";
 import { NumberShape } from "./custom-number";
 import { ListSelectShape } from "./custom-list-select";
 import { ListTableShape } from "./custom-list-table";
 import { MultiInputShape } from "./custom-multi-input";
+import { InputShape } from "./custom-input";
 import { Context } from "@/pages/edit";
 import { ParamBean } from "@/services";
 import styles from "./styles.less";
@@ -22,12 +27,13 @@ export enum ControlShapeEnum {
   EDITOR_SHAPE = "EDITOR",
   TEXT_SHAPE = "TEXT",
   LIST_SHAPE = "LIST",
-  TAGS_SHAPE = "SELECT-TAGS",
+  SELECT_SHAPE = "NEW-SELECT",
   SAVE_SHAPE = "SAVE",
   NUMBER_SHAPE = "NUMBER",
   LIST_SELECT_SHAPE = "LIST-SELECT",
   LIST_TABLE_SHAPE = "LIST-TABLE",
   MULTI_INPUT_SHAPE = "MULTI_INPUT",
+  INPUT_SHAPE = "NEW-INPUT",
 }
 
 export const controlMapService: NsJsonSchemaForm.IControlMapService = (
@@ -36,13 +42,80 @@ export const controlMapService: NsJsonSchemaForm.IControlMapService = (
   controlMap.set(ControlShapeEnum.EDITOR_SHAPE, EditorShape);
   controlMap.set(ControlShapeEnum.TEXT_SHAPE, LabelShape);
   controlMap.set(ControlShapeEnum.LIST_SHAPE, FormListShape);
-  controlMap.set(ControlShapeEnum.TAGS_SHAPE, TagsShape);
+  controlMap.set(ControlShapeEnum.SELECT_SHAPE, SelectShape);
   controlMap.set(ControlShapeEnum.SAVE_SHAPE, SaveShape);
   controlMap.set(ControlShapeEnum.NUMBER_SHAPE, NumberShape);
   controlMap.set(ControlShapeEnum.LIST_SELECT_SHAPE, ListSelectShape);
   controlMap.set(ControlShapeEnum.LIST_TABLE_SHAPE, ListTableShape);
   controlMap.set(ControlShapeEnum.MULTI_INPUT_SHAPE, MultiInputShape);
+  controlMap.set(ControlShapeEnum.INPUT_SHAPE, InputShape);
   return controlMap;
+};
+
+export function renderFormItemExtra(title?: string) {
+  if (!title) {
+    return undefined;
+  }
+  return <Tooltip title={title} />;
+}
+
+type CalculatedData = Pick<
+  NsJsonSchemaForm.IControlSchema,
+  "placeholder" | "options" | "disabled"
+>;
+
+const Fields = (props: {
+  children: React.ReactElement;
+  initialValue: any;
+  onChange?: (T: any) => void;
+}) => {
+  const { children, initialValue, ...others } = props;
+  const { onChange } = others;
+  React.useEffect(() => {
+    if (initialValue) {
+      onChange?.(initialValue);
+    }
+  }, []);
+  return React.cloneElement(children, others);
+};
+
+export const FormItemWrapper: React.FC<
+  NsJsonSchemaForm.IControlProps & {
+    children: (data: CalculatedData) => React.ReactElement;
+  }
+> = (props) => {
+  const { controlSchema, children } = props;
+  const {
+    required,
+    tooltip,
+    extra,
+    name,
+    label,
+    placeholder,
+    options = [],
+    rules,
+  } = controlSchema;
+
+  return (
+    <Wrapper schema={controlSchema}>
+      {({ hidden, disabled, initialValue }) => {
+        return (
+          <Form.Item
+            name={name}
+            label={label}
+            initialValue={initialValue}
+            tooltip={tooltip}
+            extra={renderFormItemExtra(extra)}
+            required={required}
+            hidden={hidden}
+            rules={rules}
+          >
+            {children({ placeholder, options, disabled })}
+          </Form.Item>
+        );
+      }}
+    </Wrapper>
+  );
 };
 
 export const SelectMids: React.FC<SelectProps> = (props) => {
@@ -94,7 +167,7 @@ type CardRadioProps = {
   headStyle?: React.CSSProperties;
 };
 
-type RadioValue = "params" | "var" | "result" | "entry" | "function";
+type RadioValue = "params" | "var" | "result" | "useParams" | "function";
 
 export const CardRadio: React.FC<CardRadioProps> = (props) => {
   const { isRadio = true, onChange, headStyle } = props;
@@ -128,40 +201,22 @@ export const CardRadio: React.FC<CardRadioProps> = (props) => {
           if (value === "result") {
             return renderKey === "PreparationNode";
           }
-          if (value === "entry") {
-            return renderKey === "StartNode";
+          if (value === "useParams") {
+            return renderKey === "ConnectorNode";
           }
           if (value === "function") {
             return renderKey === "MultiDocumentNode";
           }
           return false;
         });
-        if (value === "entry") {
-          const [cell] = processCells;
-          if (cell) {
-            const {
-              input,
-            }: { input: { name: string; type: string; value: string }[] } =
-              cell.getData();
-            for (let i = 0; i < input.length; i++) {
-              const { name } = input[i];
-              if (name) {
-                list.push({
-                  tmCode: name,
-                  tmName: name,
-                });
-              }
-            }
-          }
-        } else {
-          for (let i = 0; i < processCells.length; i++) {
-            const { name } = processCells[i].getData();
-            if (name) {
-              list.push({
-                tmCode: name,
-                tmName: name,
-              });
-            }
+        for (let i = 0; i < processCells.length; i++) {
+          const data = processCells[i].getData();
+          const name = data?.name;
+          if (name) {
+            list.push({
+              tmCode: name,
+              tmName: name,
+            });
           }
         }
       }
@@ -195,8 +250,8 @@ export const CardRadio: React.FC<CardRadioProps> = (props) => {
             onChange={({ target: { value } }) => setValue(value)}
             buttonStyle="solid"
           >
-            <Radio.Button value="params">参数</Radio.Button>
-            <Radio.Button value="entry">入参</Radio.Button>
+            <Radio.Button value="params">全参</Radio.Button>
+            <Radio.Button value="useParams">参数</Radio.Button>
             <Radio.Button value="var">变量</Radio.Button>
             <Radio.Button value="function">返回</Radio.Button>
             <Radio.Button value="result">结果</Radio.Button>
