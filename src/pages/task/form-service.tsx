@@ -7,6 +7,7 @@ import {
 import { set } from "lodash";
 import type { NsNodeCmd, NsGraph, NsGraphCmd } from "@antv/xflow";
 import { ControlShapeEnum } from "@/components/custom-form";
+import controlsFuc from "./controls";
 
 export namespace NsJsonForm {
   /** ControlShape的Enum */
@@ -61,6 +62,7 @@ export namespace NsJsonForm {
   ) => {
     const { targetData, targetType, modelService } = args;
     const { meta } = await MODELS.GRAPH_META.useValue(modelService);
+    const controls = controlsFuc(targetData, meta);
     if (!targetData || targetType === "edge") {
       return {
         tabs: [
@@ -70,163 +72,13 @@ export namespace NsJsonForm {
             groups: [
               {
                 name: "dag",
-                controls: [
-                  {
-                    name: "dagId",
-                    label: "dagId",
-                    shape: ControlShape.INPUT,
-                    value: meta.dagId,
-                    defaultValue: "pyfuntion_operator",
-                  },
-                  {
-                    name: "cron",
-                    label: "cron",
-                    shape: ControlShape.INPUT,
-                    value: meta.cron,
-                    defaultValue: "0***",
-                  },
-                  {
-                    name: "startDate",
-                    label: "startDate",
-                    shape: ControlShape.DATETIME,
-                    value: meta.startDate,
-                    defaultValue: "2022-10-11",
-                  },
-                  {
-                    name: "timeZone",
-                    label: "timeZone",
-                    shape: ControlShape.SELECT,
-                    value: meta.timeZone,
-                    defaultValue: "UTC",
-                    options: [
-                      {
-                        title: "UTC",
-                        value: "UTC",
-                      },
-                    ],
-                  },
-                  {
-                    name: "tags",
-                    label: "tags",
-                    shape: ControlShapeEnum.SELECT_SHAPE,
-                    value: meta.tags,
-                    defaultValue: ["python"] as any,
-                    originData: {
-                      mode: "tags",
-                    },
-                    options: [
-                      {
-                        title: "python",
-                        value: "python",
-                      },
-                    ],
-                  },
-                ],
+                controls,
               },
             ],
           },
         ],
       };
     }
-    const { renderKey } = targetData;
-    const groups: () => NsJsonSchemaForm.IGroup[] = () => {
-      let controls: NsJsonSchemaForm.IControlSchema[];
-      switch (renderKey) {
-        case "ProcessNode":
-          controls = [
-            {
-              name: "label",
-              label: "名称",
-              shape: ControlShape.INPUT,
-              value: targetData.label,
-              disabled: true,
-            },
-            {
-              name: "input",
-              label: "输入",
-              shape: ControlShape.INPUT,
-              value: targetData.input,
-            },
-            {
-              name: "output",
-              label: "输出",
-              shape: ControlShape.INPUT,
-              value: targetData.output,
-            },
-            {
-              name: "dataSource",
-              label: "数据来源",
-              shape: ControlShape.SELECT,
-              value: targetData.dataSource,
-              options: [
-                {
-                  title: "kafka",
-                  value: "kafka",
-                },
-                {
-                  title: "udp",
-                  value: "udp",
-                },
-                {
-                  title: "mysql",
-                  value: "mysql",
-                },
-                {
-                  title: "hbase",
-                  value: "hbase",
-                },
-              ],
-            },
-            {
-              name: "dataGo",
-              label: "数据去向",
-              shape: ControlShape.SELECT,
-              value: targetData.dataGo,
-              options: [
-                {
-                  title: "mysql",
-                  value: "mysql",
-                },
-                {
-                  title: "hbase",
-                  value: "hbase",
-                },
-                {
-                  title: "txt",
-                  value: "txt",
-                },
-              ],
-            },
-          ];
-          break;
-        case "DecisionNode":
-          controls = [
-            {
-              name: "name",
-              label: "条件名称",
-              shape: ControlShape.INPUT,
-              value: targetData.name,
-              placeholder: "请输入",
-            },
-            {
-              name: "expression",
-              label: "表达式编辑",
-              shape: ControlShapeEnum.EDITOR_SHAPE,
-              value: targetData.expression,
-            },
-          ];
-          break;
-        default:
-          return [];
-      }
-
-      return [
-        {
-          name: "more",
-          controls,
-        },
-      ];
-    };
 
     return {
       /** 配置一个Tab */
@@ -234,7 +86,12 @@ export namespace NsJsonForm {
         {
           /** Tab的title */
           name: "节点配置",
-          groups: groups(),
+          groups: [
+            {
+              name: "more",
+              controls,
+            },
+          ],
         },
       ],
     };
