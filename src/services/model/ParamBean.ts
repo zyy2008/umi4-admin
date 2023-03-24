@@ -42,4 +42,5 @@ export interface ParamBean {
   satSid?: string;
   tmCode: string;
   tmName?: string;
+  satCode?: string;
 }

@@ -85,7 +85,9 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
           {(item) => (
             <List.Item
               key={item.tmCode}
-              onClick={() => onClick?.({ key: item.tmCode })}
+              onClick={() =>
+                onClick?.({ key: `${item.satCode}.${item.tmCode}` })
+              }
             >
               {item.tmName}
             </List.Item>

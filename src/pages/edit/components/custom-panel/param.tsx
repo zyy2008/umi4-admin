@@ -6,14 +6,23 @@ import { useModel } from "@umijs/max";
 import { Card, Select } from "antd";
 import { Context } from "@/pages/edit";
 
+type Option = {
+  label: string;
+  value?: string | number | null;
+};
+
 const Param: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
   const { initialState } = useModel("@@initialState");
   const { satList = [] } = initialState ?? {};
-  const [value, setValue] = React.useState<number>();
+  const [option, setOption] = React.useState<Option>({
+    label: "",
+    value: null,
+  });
   const ctx = React.useContext(Context);
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     if (ctx?.params) {
+      console.log(ctx.params);
       return ctx?.params?.map((item) => ({
         ...item,
         id: item.tmCode,
@@ -25,17 +34,20 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
       }));
     }
     return [];
-  }, [ctx?.params]);
+  }, [ctx?.params, option.label]);
 
   React.useEffect(() => {
-    if (value) {
-      ctx?.getParams(value);
+    if (option.value) {
+      ctx?.getParams(option);
     }
-  }, [value]);
+  }, [option.value]);
 
   React.useEffect(() => {
     if (satList?.length > 0) {
-      setValue(256);
+      setOption({
+        value: 256,
+        label: "WX-321",
+      });
     }
   }, [satList]);
 
@@ -48,14 +60,16 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
           <Select
             placeholder="请选择卫星"
             style={{ flex: 1, margin: "0 5px" }}
-            value={value}
+            value={option.value}
             options={satList.map((item) => {
               return {
                 value: item.pkId,
                 label: item.value,
               };
             })}
-            onChange={setValue}
+            onChange={(_, option) => {
+              setOption(option as Option);
+            }}
           />
         </div>
       }

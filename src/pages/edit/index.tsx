@@ -12,7 +12,7 @@ import { CustomPanel } from "./components";
 import { controlMapService } from "@/components/custom-form";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
-import { useRequest, useSearchParams } from "@umijs/max";
+import { useRequest, useSearchParams, useModel } from "@umijs/max";
 import { APIS, ParamBean } from "@/services";
 import { commandConfig } from "./command-config";
 import { Graph } from "@antv/x6";
@@ -23,7 +23,10 @@ export type CheckContext = {
   state: Check;
   setState: React.Dispatch<React.SetStateAction<Check | null>>;
   paramsLoading?: boolean;
-  getParams: (...args: any) => Promise<any>;
+  getParams: (T: {
+    label: string;
+    value?: string | number | null;
+  }) => Promise<any>;
   params?: ParamBean[];
 };
 export const Context = React.createContext<CheckContext | null>(null);
@@ -53,7 +56,18 @@ const Edit = () => {
     loading: paramsLoading,
     run: getParams,
   } = useRequest(
-    (satId) => APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({ satId }),
+    async (val: { label: string; value?: any }) => {
+      const { value: satId, label: satCode } = val;
+      const res = await APIS.DefaultApi.baseServerDataQueryQueryTmBySidGet({
+        satId,
+      });
+      return {
+        data: res.data?.map((item) => ({
+          ...item,
+          satCode,
+        })),
+      };
+    },
     {
       manual: true,
     }

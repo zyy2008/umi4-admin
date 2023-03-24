@@ -136,7 +136,15 @@ export const SelectMulti: React.FC<SelectProps> = (props) => {
   const [data, setData] = React.useState<ParamBean[]>([]);
   const options = React.useMemo<SelectProps["options"]>(() => {
     if (data.length > 0) {
-      return data.map((item) => ({ label: item.tmName, value: item.tmCode }));
+      return data.map((item) => {
+        if (item.satCode) {
+          return {
+            label: item.tmName,
+            value: `${item.satCode}.${item.tmCode}`,
+          };
+        }
+        return { label: item.tmName, value: item.tmCode };
+      });
     }
     return [];
   }, [data]);
@@ -146,6 +154,8 @@ export const SelectMulti: React.FC<SelectProps> = (props) => {
       placeholder="请选择"
       options={options}
       popupClassName={styles["multi-select"]}
+      dropdownMatchSelectWidth={225}
+      maxTagTextLength={3}
       dropdownRender={(menus) => (
         <>
           <CardRadio
