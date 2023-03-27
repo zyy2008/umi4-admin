@@ -84,7 +84,6 @@ const Edit = () => {
   }, [state]);
   const graphData = React.useMemo<NsGraph.IGraphData>(() => {
     if (graph) {
-      const { width } = graph?.getGraphArea();
       let format: any;
       if (object) {
         try {

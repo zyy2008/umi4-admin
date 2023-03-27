@@ -103,7 +103,13 @@ const XFlowView: React.FC<IProps> = (props) => {
         />
         {props?.children}
         <XFlowCanvas
-          position={{ top: 0, left: 260, right: 290, bottom: 0, ...position }}
+          position={{
+            top: 0,
+            left: 260,
+            right: 290,
+            bottom: 0,
+            ...position,
+          }}
           config={graphConfig}
         >
           {toolbarProps && (

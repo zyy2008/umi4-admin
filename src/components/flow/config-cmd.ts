@@ -84,6 +84,12 @@ export const useCmdConfig = createCmdConfig<IProps>((config, proxy) => {
         },
       }),
       hooks.addEdge.registerHook({
+        name: "get edge config from backend api",
+        handler: async (args) => {
+          args.createEdgeService = MockApi.addEdge;
+        },
+      }),
+      hooks.addEdge.registerHook({
         name: "after add edge",
         after: "after add edge, set target port props",
         handler: async (_, handler: any) => {

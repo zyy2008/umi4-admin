@@ -378,6 +378,13 @@ const controlsFuc: (
         required: true,
       },
       {
+        name: "explanation",
+        label: "变量说明",
+        shape: ControlShape.INPUT,
+        value: targetData?.explanation,
+        placeholder: "请输入",
+      },
+      {
         name: "expression",
         label: "变量内容",
         shape: ControlShapeEnum.EDITOR_SHAPE,
@@ -392,7 +399,7 @@ const controlsFuc: (
         shape: ControlShape.INPUT,
         value: targetData?.label,
         placeholder: "请输入",
-        // disabled: true,
+        disabled: true,
       },
       // {
       //   name: "input",
