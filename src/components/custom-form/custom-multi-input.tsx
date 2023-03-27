@@ -8,6 +8,7 @@ import { SelectMulti } from "./index";
 type Value = {
   status: "text" | "select";
   fieldValue: string | undefined;
+  radioValue: string | undefined;
 };
 
 type MultiInputProps = {
@@ -17,9 +18,10 @@ type MultiInputProps = {
 
 const MultiInput: React.FC<MultiInputProps> = (props) => {
   const { value, onChange } = props;
-  const { status, fieldValue } = value ?? {
+  const { status, fieldValue, radioValue } = value ?? {
     status: "text",
     fieldValue: undefined,
+    radioValue: undefined,
   };
   return (
     <Space
@@ -44,6 +46,7 @@ const MultiInput: React.FC<MultiInputProps> = (props) => {
         onChange={(val) => {
           onChange?.({
             fieldValue: undefined,
+            radioValue: undefined,
             status: val,
           });
         }}
@@ -56,6 +59,7 @@ const MultiInput: React.FC<MultiInputProps> = (props) => {
             onChange?.({
               fieldValue: value,
               status,
+              radioValue,
             });
           }}
           placeholder="请输入"
@@ -63,10 +67,19 @@ const MultiInput: React.FC<MultiInputProps> = (props) => {
       ) : (
         <SelectMulti
           value={fieldValue}
-          onChange={(value) => {
+          onRadioValue={(radioValue) => {
             onChange?.({
-              fieldValue: value,
+              fieldValue,
               status,
+              radioValue,
+            });
+          }}
+          radioValue={radioValue}
+          onChange={(fieldValue) => {
+            onChange?.({
+              fieldValue,
+              status,
+              radioValue,
             });
           }}
         />

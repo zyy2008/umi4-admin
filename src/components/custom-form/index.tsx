@@ -132,7 +132,10 @@ export const SelectMids: React.FC<SelectProps> = (props) => {
   return <Select {...props} options={options} />;
 };
 
-export const SelectMulti: React.FC<SelectProps> = (props) => {
+export const SelectMulti: React.FC<
+  SelectProps & { onRadioValue?: (T: RadioValue) => void; radioValue?: string }
+> = (props) => {
+  const { onRadioValue, radioValue, ...others } = props;
   const [data, setData] = React.useState<ParamBean[]>([]);
   const options = React.useMemo<SelectProps["options"]>(() => {
     if (data.length > 0) {
@@ -150,7 +153,7 @@ export const SelectMulti: React.FC<SelectProps> = (props) => {
   }, [data]);
   return (
     <Select
-      {...props}
+      {...others}
       placeholder="请选择"
       options={options}
       popupClassName={styles["multi-select"]}
@@ -163,6 +166,8 @@ export const SelectMulti: React.FC<SelectProps> = (props) => {
             headStyle={{
               padding: "0px 10px",
             }}
+            onRadioValue={onRadioValue}
+            radioValue={radioValue}
           />
           {menus}
         </>
@@ -175,17 +180,33 @@ type CardRadioProps = {
   isRadio?: boolean;
   onChange: (T: ParamBean[]) => void;
   headStyle?: React.CSSProperties;
+  onRadioValue?: (T: RadioValue) => void;
+  radioValue?: string;
 };
 
 type RadioValue = "params" | "var" | "result" | "useParams" | "function";
 
 export const CardRadio: React.FC<CardRadioProps> = (props) => {
-  const { isRadio = true, onChange, headStyle } = props;
+  const {
+    isRadio = true,
+    onChange,
+    headStyle,
+    onRadioValue,
+    radioValue,
+  } = props;
   const app = useXFlowApp();
   const ctx = React.useContext(Context);
   const [value, setValue] = React.useState<RadioValue>("params");
   const [graph, setGraph] = React.useState<Graph>();
   const [keyword, setKeyword] = React.useState<string>("");
+
+  const useValue = React.useMemo<string>(() => {
+    if (radioValue) {
+      return radioValue;
+    }
+    return value;
+  }, [value, radioValue]);
+
   React.useEffect(() => {
     (async () => {
       const graph: Graph = await app.getGraphInstance();
@@ -195,7 +216,7 @@ export const CardRadio: React.FC<CardRadioProps> = (props) => {
 
   React.useEffect(() => {
     let list: ParamBean[] = [];
-    if (value === "params") {
+    if (useValue === "params") {
       if (ctx?.params) {
         list = ctx.params;
       }
@@ -205,16 +226,16 @@ export const CardRadio: React.FC<CardRadioProps> = (props) => {
         const predecessors = graph.getPredecessors(cell);
         const processCells = predecessors.filter((cell) => {
           const { renderKey } = cell.getData();
-          if (value === "var") {
+          if (useValue === "var") {
             return renderKey === "ProcessNode";
           }
-          if (value === "result") {
+          if (useValue === "result") {
             return renderKey === "PreparationNode";
           }
-          if (value === "useParams") {
+          if (useValue === "useParams") {
             return renderKey === "ConnectorNode";
           }
-          if (value === "function") {
+          if (useValue === "function") {
             return renderKey === "MultiDocumentNode";
           }
           return false;
@@ -233,7 +254,7 @@ export const CardRadio: React.FC<CardRadioProps> = (props) => {
     }
     const filters = list.filter((node) => node.tmName?.includes(keyword)) ?? [];
     onChange?.(filters);
-  }, [ctx?.params, graph, value, keyword, onChange]);
+  }, [ctx?.params, graph, useValue, keyword, onChange]);
   return (
     <Card
       bordered={false}
@@ -256,8 +277,11 @@ export const CardRadio: React.FC<CardRadioProps> = (props) => {
       children={
         isRadio && (
           <Radio.Group
-            value={value}
-            onChange={({ target: { value } }) => setValue(value)}
+            value={useValue}
+            onChange={({ target: { value } }) => {
+              setValue(value);
+              onRadioValue?.(value);
+            }}
             buttonStyle="solid"
           >
             <Radio.Button value="params">全参</Radio.Button>
