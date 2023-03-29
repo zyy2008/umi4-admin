@@ -82,7 +82,7 @@ export const useGraphHookConfig = createHookConfig<IProps>(
                   if (sourceData.group) {
                     return targetData.group === sourceData.group;
                   }
-                  return !targetData.group;
+                  return !(targetPort && targetPort.connected);
                 },
                 snap: {
                   radius: 50,
