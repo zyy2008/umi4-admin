@@ -102,6 +102,7 @@ const Edit = () => {
             id: uuidv4(),
             label: format?.ruleName ? format.ruleName : "Start",
             renderKey: "StartNode",
+            data: format,
             width: 70,
             height: 70,
             fontSize: 14,
