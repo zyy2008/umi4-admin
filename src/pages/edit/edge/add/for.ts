@@ -9,28 +9,30 @@ export default async function handle(args: Args, isFor = true) {
   const { sourcePortId } = edgeCell?.getData();
   const port = sourceCell.getPort(sourcePortId);
   if (port?.group === "bottom") {
+    const { group } = targetCell.getData();
     edgeCell?.setLabels("true");
     edgeCell?.setData({
       ...edgeCell.getData(),
       label: "true",
     });
-    const groupId = uuidv4();
-    await commandService.executeCommand<NsGroupCmd.AddGroup.IArgs>(
-      XFlowGroupCommands.ADD_GROUP.id,
-      {
-        nodeConfig: {
-          id: groupId,
-          isCollapsed: false,
-          groupChildren: [targetId],
-          renderKey: "GroupNode",
-          groupPadding: 40,
-          groupHeaderHeight: 0,
-          parent: true,
-          init: true,
-          label: isFor ? "" : (port.tooltip as string).split(":")[1],
-        },
-      }
-    );
+    const groupId = group ? group : uuidv4();
+    !group &&
+      (await commandService.executeCommand<NsGroupCmd.AddGroup.IArgs>(
+        XFlowGroupCommands.ADD_GROUP.id,
+        {
+          nodeConfig: {
+            id: groupId,
+            isCollapsed: false,
+            groupChildren: [targetId],
+            renderKey: "GroupNode",
+            groupPadding: 40,
+            groupHeaderHeight: 0,
+            parent: true,
+            init: true,
+            label: isFor ? "" : (port.tooltip as string).split(":")[1],
+          },
+        }
+      ));
     isFor &&
       addEdge({
         x6Graph,

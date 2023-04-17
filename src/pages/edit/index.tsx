@@ -94,7 +94,14 @@ const Edit = () => {
         }
       }
       if (data?.codeContent) {
-        return JSON.parse(data?.codeContent);
+        const { nodes, edges: parseEdges } = JSON.parse(
+          data?.codeContent
+        ) as NsGraph.IGraphData;
+        const edges = parseEdges.filter((item) => item.renderKey != "循环");
+        return {
+          nodes,
+          edges,
+        };
       }
       return {
         nodes: [
@@ -106,8 +113,6 @@ const Edit = () => {
             width: 70,
             height: 70,
             fontSize: 14,
-            // x: (width - 35) / 2,
-            // y: 100,
             ports: [
               {
                 type: NsGraph.AnchorType.OUTPUT,
