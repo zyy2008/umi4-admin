@@ -6,7 +6,7 @@ import {
   IAppLoad,
   uuidv4,
 } from "@antv/xflow";
-import KnowledgeFlow from "@/components/flow";
+import KnowledgeFlow, { portAttrs } from "@/components/flow";
 import { NsJsonForm } from "./form-service";
 import { CustomPanel } from "./components";
 import { controlMapService } from "@/components/custom-form";
@@ -118,6 +118,8 @@ const Edit = () => {
                 type: NsGraph.AnchorType.OUTPUT,
                 group: NsGraph.AnchorGroup.BOTTOM,
                 tooltip: "输出桩",
+                attrs: portAttrs,
+                id: uuidv4(),
               },
             ] as NsGraph.INodeAnchor[],
           },
