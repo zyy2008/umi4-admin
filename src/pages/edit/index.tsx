@@ -115,6 +115,13 @@ const Edit = () => {
             fontSize: 14,
             ports: [
               {
+                type: NsGraph.AnchorType.INPUT,
+                group: NsGraph.AnchorGroup.TOP,
+                tooltip: "输入桩",
+                attrs: portAttrs,
+                id: uuidv4(),
+              },
+              {
                 type: NsGraph.AnchorType.OUTPUT,
                 group: NsGraph.AnchorGroup.BOTTOM,
                 tooltip: "输出桩",

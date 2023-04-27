@@ -6,4 +6,6 @@ export default {
   for: forHandle,
   while: forHandle,
   switch: forHandle,
+  targetStart: () => {},
+  sourceStart: forHandle,
 };

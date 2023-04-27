@@ -1,6 +1,8 @@
 import { default as ifHandle } from "./if";
 import { default as forHandle } from "./for";
 import { default as switchHandle } from "./switch";
+import { default as targetStartHandle } from "./targetStart";
+import { default as sourceStartHandle } from "./sourceStart";
 import { Graph } from "@antv/x6";
 
 export const addEdge = ({
@@ -57,4 +59,6 @@ export default {
   for: forHandle,
   while: forHandle,
   switch: switchHandle,
+  targetStart: targetStartHandle,
+  sourceStart: sourceStartHandle,
 };

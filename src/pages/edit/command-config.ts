@@ -1,9 +1,20 @@
 import { IProps } from "@/components/flow";
-import { NsEdgeCmd, IGraphCommandService, NsGraph } from "@antv/xflow";
+import {
+  NsEdgeCmd,
+  NsNodeCmd,
+  IGraphCommandService,
+  NsGraph,
+} from "@antv/xflow";
 import { Node, Graph as X6Graph } from "@antv/x6";
 import { addEdge, delEdge } from "./edge";
 
-type NodeType = "if" | "for" | "while" | "switch";
+type NodeType =
+  | "if"
+  | "for"
+  | "while"
+  | "switch"
+  | "targetStart"
+  | "sourceStart";
 
 export const commandConfig: IProps["commandConfig"] = (hooks) => {
   return [
@@ -16,8 +27,12 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
           const commandService: IGraphCommandService = args.commandService;
           const { sourceCell, sourcePortId } = res;
           if (sourceCell && sourceCell.isNode() && sourcePortId) {
-            const { label } = sourceCell.getData();
+            let { label, renderKey } =
+              sourceCell.getData() as NsGraph.INodeConfig;
             const x6Graph = (await args.getX6Graph()) as X6Graph;
+            if (renderKey === "StartNode") {
+              label = "sourceStart";
+            }
             delEdge?.[label as NodeType]?.({
               commandService,
               x6Graph,
@@ -42,7 +57,16 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
           if (edgeCell && edgeConfig) {
             const sourceCell = edgeCell.getSourceCell() as Node;
             const targetCell = edgeCell.getTargetCell() as Node;
-            const { label } = sourceCell.getData() as NsGraph.INodeConfig;
+            const { renderKey: targetRenderKey } =
+              targetCell.getData() as NsGraph.INodeConfig;
+            let { label, renderKey: sourceRenderKey } =
+              sourceCell.getData() as NsGraph.INodeConfig;
+            if (targetRenderKey === "StartNode") {
+              label = "targetStart";
+            }
+            if (sourceRenderKey === "StartNode") {
+              label = "sourceStart";
+            }
             const x6Graph = (await args.getX6Graph()) as X6Graph;
             addEdge?.[label as NodeType]?.({
               commandService,

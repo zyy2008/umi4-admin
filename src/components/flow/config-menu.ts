@@ -75,7 +75,7 @@ export const useMenuConfig = createCtxMenuConfig<IProps>((config, proxy) => {
       findIndex > -1 ||
       renderKey === "循环" ||
       renderKey === "StartNode" ||
-      renderKey === "GroupNode"
+      renderKey === "GroupCollapsed"
     ) {
       type = "blank";
     }
