@@ -34,7 +34,12 @@ const nodeToString: {
   MultiDocumentNode: (node) => {
     const paramValues = `${node?.funName}(${
       node?.paramValues
-        ?.map((item: NsGraph.INodeConfig) => item?.fieldValue)
+        ?.map((item: NsGraph.INodeConfig) => {
+          if (item?.fieldValue) {
+            return `"${item?.fieldValue}"`;
+          }
+          return undefined;
+        })
         ?.filter(Boolean)
         ?.join() ?? ""
     })`;
@@ -57,7 +62,7 @@ const nodeToString: {
   ConnectorNode: (node) => {
     return `${returnType?.[node?.tmDataType - 1]} ${node?.name}=${
       node?.satCode
-    }.${node.tmCode}.value Name "${node.tmName}"`;
+    }.${node.tmCode}.value Name "${node.tmName}"\n`;
   },
 };
 
