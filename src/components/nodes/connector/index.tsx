@@ -23,8 +23,8 @@ export const ConnectorNode: NsGraph.INodeRender = (props) => {
     <svg
       viewBox={`0 0 ${width} ${height}`}
       xmlns="http://www.w3.org/2000/svg"
-      width="100%"
-      height="100%"
+      width={width}
+      height={height}
     >
       <path
         d={`M ${NODE_PADDING},${height / 2} a ${availableR / 2} ${

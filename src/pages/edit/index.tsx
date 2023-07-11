@@ -16,7 +16,6 @@ import { useRequest, useSearchParams, useModel } from "@umijs/max";
 import { APIS, ParamBean } from "@/services";
 import { commandConfig } from "./command-config";
 import { Graph } from "@antv/x6";
-import json from "./chart.json";
 
 export type Check = { uuid: string; version: string } | null;
 
@@ -104,7 +103,6 @@ const Edit = () => {
           edges,
         };
       }
-      return json;
       return {
         nodes: [
           {

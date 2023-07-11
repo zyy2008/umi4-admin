@@ -59,12 +59,12 @@ export default defineConfig({
   routes: [
     {
       path: "/",
-      redirect: "/home",
+      redirect: "/throw",
     },
     {
       name: "首页",
-      path: "/home",
-      component: "./home",
+      path: "/throw",
+      component: "./throw/edit",
     },
     // {
     //   path: "/vue3/dashboard",

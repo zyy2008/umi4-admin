@@ -3,7 +3,6 @@ import { set } from "lodash";
 import { NsNodeCmd, NsGraph, uuidv4 } from "@antv/xflow";
 import type { IModelService, IGraphCommandService } from "@antv/xflow-core";
 import type { Cell, Graph as X6Graph, Node } from "@antv/x6";
-import { portAttrs } from "@/components/flow";
 import { ParamBean } from "@/services";
 import controlsFuc from "./controls";
 
@@ -42,49 +41,6 @@ export namespace NsJsonForm {
     const { commandService, targetData: data, allFields } = args;
     const targetData = graph?.getCellById(data?.id as string).getData();
     const updateNode = (node: NsGraph.INodeConfig) => {
-      const { label, conditions = [] } = node;
-      if (label === "switch") {
-        const ports = node.ports as NsGraph.INodeAnchor[];
-        const [top, left, ...others] = ports;
-        if (others.length > conditions.length) {
-          const [{ id }] = others.filter((_, index) => {
-            const is = conditions.some((_: string, i: number) => i === index);
-            return !is;
-          });
-          const cell = graph?.getCellById(data?.id as string);
-          const edges = graph?.getOutgoingEdges(cell as Node);
-          if (edges) {
-            const [edge] =
-              edges.filter((cell) => {
-                const sourcePortId = cell.getSourcePortId();
-                return sourcePortId === id;
-              }) ?? [];
-            const targetCell = edge.getTargetCell() as Node;
-            edge.remove();
-            targetCell.remove();
-          }
-        }
-        node.ports = [
-          top,
-          left,
-          ...conditions.map((_: any, index: number) => {
-            const find = ports.filter(
-              (item) => item.tooltip === `输出桩:条件${index + 1}`
-            );
-            if (find.length > 0) {
-              const [item] = find;
-              return item;
-            }
-            return {
-              id: uuidv4(),
-              type: NsGraph.AnchorType.OUTPUT,
-              group: NsGraph.AnchorGroup.BOTTOM,
-              tooltip: `输出桩:条件${index + 1}`,
-              attrs: portAttrs,
-            };
-          }),
-        ] as NsGraph.INodeAnchor[];
-      }
       return commandService.executeCommand<NsNodeCmd.UpdateNode.IArgs>(
         XFlowNodeCommands.UPDATE_NODE.id,
         {
@@ -103,7 +59,7 @@ export namespace NsJsonForm {
   };
 
   /** 根据选中的节点更新formSchema */
-  export const formSchemaService: IFormSchemaService = async (args, params) => {
+  export const formSchemaService: IFormSchemaService = async (args) => {
     const { targetData, targetType } = args;
     if (!targetData || targetType === "edge") {
       return {

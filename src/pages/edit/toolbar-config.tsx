@@ -22,7 +22,6 @@ import { APIS, Knowledge } from "@/services";
 import { useSearchParams } from "@umijs/max";
 import { CheckContext, Context } from "./index";
 import { CheckItem, CheckCode } from "./components";
-import { formatJson } from "@/pages/home/chart";
 
 const ModalItem: React.FC<{
   modalRender?: React.ReactNode;
@@ -120,8 +119,6 @@ namespace NsConfig {
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {
               saveGraphDataService: async (meta, data) => {
-                console.log(JSON.stringify(data));
-                console.log(formatJson(data));
                 if (value) {
                   let object: Knowledge & {
                     type: string;

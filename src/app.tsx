@@ -29,18 +29,18 @@ export const layout: RunTimeLayoutConfig = () => {
   };
 };
 
-export async function getInitialState(): Promise<AppInitialState> {
-  const { data = [] } =
-    await APIS.DefaultApi.baseServerDataQueryQuerySatListGet();
-  return {
-    satList: data.map(({ satCode, satName, pkId }) => ({
-      pkId,
-      label: satName,
-      value: satCode,
-      title: satName,
-    })),
-  };
-}
+// export async function getInitialState(): Promise<AppInitialState> {
+//   const { data = [] } =
+//     await APIS.DefaultApi.baseServerDataQueryQuerySatListGet();
+//   return {
+//     satList: data.map(({ satCode, satName, pkId }) => ({
+//       pkId,
+//       label: satName,
+//       value: satCode,
+//       title: satName,
+//     })),
+//   };
+// }
 
 export const qiankun = {
   apps: apps || window?.config?.apps,

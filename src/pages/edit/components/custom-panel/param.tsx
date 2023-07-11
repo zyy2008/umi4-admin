@@ -22,7 +22,6 @@ const Param: React.FC<IConfigRenderOptions> = (props) => {
   const ctx = React.useContext(Context);
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     if (ctx?.params) {
-      console.log(ctx.params);
       return ctx?.params?.map((item) => ({
         ...item,
         id: item.tmCode,

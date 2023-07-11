@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, List, Col, Empty, Button } from "antd";
+import { Input, List, Col, Empty, Button, ColProps } from "antd";
 import { IPanelNode, IConfigRenderOptions } from "../flow";
 import VirtualList from "rc-virtual-list";
 import { EditOutlined } from "@ant-design/icons";
@@ -99,8 +99,9 @@ export const ColNode: React.FC<
     node: NsGraph.INodeRender;
     nodeConfig: Omit<NsGraph.INodeConfig, "id">;
     size?: NsGraph.IReactNodeProps["size"];
+    colProps?: ColProps;
   }
-> = ({ onMouseDown, node, nodeConfig, size }) => {
+> = ({ onMouseDown, node, nodeConfig, size, colProps }) => {
   const { label } = nodeConfig;
   return (
     <Col
@@ -113,6 +114,7 @@ export const ColNode: React.FC<
         id: uuidv4(),
         fontSize: 14,
       })}
+      {...colProps}
     >
       {React.createElement(node, {
         size: {
@@ -120,7 +122,7 @@ export const ColNode: React.FC<
           height: 50,
           ...size,
         },
-        data: { label, fontSize: 16 },
+        data: { label, fontSize: 14 },
         position: {
           x: 0,
           y: 0,

@@ -8,6 +8,10 @@ export { EllipseNode } from "./ellipse";
 export { PreparationNode } from "./preparation";
 export { ManualOperationNode } from "./manual-operation";
 export { MultiDocumentNode } from "./multi-document";
-export { ProcessNode } from "./process";
+export {
+  ProcessNode,
+  ProcessNode as SquareNode,
+  ProcessNode as StartProcessNode,
+} from "./process";
 export { GroupNode } from "./group-node";
 export { GroupCollapsed } from "./group-collapsed";
