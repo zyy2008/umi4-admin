@@ -5,6 +5,7 @@ import {
   NsGraphCmd,
   XFlowGraphCommands,
 } from "@antv/xflow";
+import Graphin from "@antv/graphin";
 import { ViewRelationship } from "@/services";
 import type { DataNode } from "antd/es/tree";
 import { groupBy } from "lodash";
@@ -165,6 +166,8 @@ export async function graphReader(
   );
   graph?.enableHistory();
 }
+
+export function graphinReader(graphData: NsGraph.IGraphData, app?: Graphin) {}
 
 export const formatChildren: (
   id: string,

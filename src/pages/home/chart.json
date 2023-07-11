@@ -1,0 +1,1133 @@
+{
+  "nodes": [
+    {
+      "id": "e8da5a6c-a903-4287-b4a6-686f26c41797",
+      "label": "Rule_85_S00001",
+      "renderKey": "StartNode",
+      "width": 70,
+      "height": 70,
+      "fontSize": 14,
+      "ports": [
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "f8104a44-7129-409b-b049-238c907fa3d4",
+          "connected": true,
+          "attrs": {},
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "id": "159debe0-c5b2-4277-98c4-2ba78ba8c2df",
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {},
+          "connected": false
+        }
+      ],
+      "x": -120,
+      "y": -340
+    },
+    {
+      "id": "3231fe3b-b471-4ba8-817f-eede54dd0299",
+      "renderKey": "DecisionNode",
+      "width": 110,
+      "height": 55,
+      "label": "if",
+      "ports": [
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "77ad1cc6-6fc0-4658-9343-e0ba38b19017",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "output",
+          "group": "left",
+          "tooltip": "输出桩:true",
+          "id": "f20e4bc6-bddf-4a63-b3ed-af7640be4b76",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "left",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {},
+          "connected": true
+        },
+        {
+          "type": "output",
+          "group": "right",
+          "tooltip": "输出桩:false",
+          "id": "971efd6f-1734-4cf2-8645-7f0f7e0eda42",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "right",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "id": "e032ac1e-0825-4331-8747-129331bd468d",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "connected": true,
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        }
+      ],
+      "fontSize": 14,
+      "x": -148,
+      "y": -190,
+      "expression": "S00001<86400",
+      "group": "aa8097b3-75ad-4eea-a66b-525767be04da",
+      "isCollapsed": false
+    },
+    {
+      "id": "4ca48188-f79e-4ee9-abf1-48591e9f4c72",
+      "renderKey": "MultiDocumentNode",
+      "width": 90,
+      "height": 60,
+      "uuid": "10704915-ece8-4576-92c7-23411527f46d",
+      "funName": "erromsg",
+      "funContent": "erromsg(string p)",
+      "returnType": 5,
+      "paramNote": [
+        {
+          "name": "p",
+          "paramNote": "错误信息"
+        }
+      ],
+      "returnNote": null,
+      "funNote": null,
+      "label": "erromsg",
+      "fontSize": 14,
+      "itemId": "10704915-ece8-4576-92c7-23411527f46d",
+      "x": -258,
+      "y": -130,
+      "ports": [
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "id": "c5dd1a8e-2cf3-4a0f-a044-498f8ebdaa1a",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "connected": true,
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "805a350e-7893-4964-a608-f94cf153e3ad",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {},
+          "connected": true
+        }
+      ],
+      "paramValues": [
+        {
+          "fieldValue": "星上时间秒值异常",
+          "status": "text"
+        }
+      ],
+      "group": "aa8097b3-75ad-4eea-a66b-525767be04da",
+      "isCollapsed": false
+    },
+    {
+      "id": "5cb8f8ff-853c-4c78-b85c-99cbbc81b7bc",
+      "renderKey": "ConnectorNode",
+      "width": 70,
+      "height": 70,
+      "pkId": 50068,
+      "tmName": "星上时间秒值",
+      "tmCode": "S00001",
+      "tmNum": 13,
+      "satId": 256,
+      "tmSid": "13",
+      "tmDataType": 1,
+      "tmValueUnit": null,
+      "createTime": "2023-03-21 06:34:29",
+      "createUser": "admin",
+      "satCode": "WX-321",
+      "label": "星上时间秒值",
+      "name": "S00001",
+      "fontSize": 14,
+      "itemId": "S00001",
+      "x": -248,
+      "y": -20,
+      "ports": [
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "id": "42403314-703d-4b25-b46a-ef723fa4caa0",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "connected": true,
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "dab3564a-338c-4603-acd3-f85a71b301b5",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {},
+          "connected": true
+        }
+      ],
+      "group": "aa8097b3-75ad-4eea-a66b-525767be04da",
+      "isCollapsed": false
+    },
+    {
+      "id": "bbb7effc-3259-46bd-9797-2e995916b3d6",
+      "renderKey": "MultiDocumentNode",
+      "width": 90,
+      "height": 60,
+      "uuid": "3b626c50-1d4d-4c95-8399-2aa360551cd9",
+      "funName": "TimeIncrementPara",
+      "funContent": "TimeIncrementPara(int p)",
+      "returnType": 1,
+      "paramNote": [
+        {
+          "name": "p",
+          "paramNote": "星上时间秒值"
+        }
+      ],
+      "returnNote": "时间函数",
+      "funNote": null,
+      "label": "TimeIncrementPara",
+      "fontSize": 14,
+      "itemId": "3b626c50-1d4d-4c95-8399-2aa360551cd9",
+      "x": -258,
+      "y": 100,
+      "ports": [
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "id": "55ab615b-e9b4-4467-98c9-bc96246063fc",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "connected": true,
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "9fe54c63-c36a-4b6a-bcba-35743de66bde",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {},
+          "connected": true
+        }
+      ],
+      "name": "temp",
+      "paramValues": [
+        {
+          "fieldValue": "S00001",
+          "status": "select"
+        }
+      ],
+      "group": "aa8097b3-75ad-4eea-a66b-525767be04da",
+      "isCollapsed": false
+    },
+    {
+      "id": "15f81893-8d32-4a8d-b023-afe16755fc49",
+      "renderKey": "DecisionNode",
+      "width": 110,
+      "height": 55,
+      "label": "if",
+      "ports": [
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "c7297f3e-4727-4d66-a97c-f0380d19cf63",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "output",
+          "group": "left",
+          "tooltip": "输出桩:true",
+          "id": "e04e2c1c-20c7-4278-aaeb-c2dbc3c23223",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "left",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {},
+          "connected": true
+        },
+        {
+          "type": "output",
+          "group": "right",
+          "tooltip": "输出桩:false",
+          "id": "9208b4b2-dea9-448c-8e44-b65c0c33104a",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "right",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "id": "45459d13-1dc3-402b-9465-fdd9670ca22c",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "connected": true,
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        }
+      ],
+      "fontSize": 14,
+      "x": -268,
+      "y": 230,
+      "expression": "temp <> 1",
+      "group": "aa8097b3-75ad-4eea-a66b-525767be04da",
+      "isCollapsed": false
+    },
+    {
+      "id": "09e5469a-9c91-4067-815a-c837cb8d7c37",
+      "renderKey": "MultiDocumentNode",
+      "width": 90,
+      "height": 60,
+      "uuid": "10704915-ece8-4576-92c7-23411527f46d",
+      "funName": "erromsg",
+      "funContent": "erromsg(string p)",
+      "returnType": 5,
+      "paramNote": [
+        {
+          "name": "p",
+          "paramNote": "错误信息"
+        }
+      ],
+      "returnNote": null,
+      "funNote": null,
+      "label": "erromsg",
+      "fontSize": 14,
+      "itemId": "10704915-ece8-4576-92c7-23411527f46d",
+      "x": -340,
+      "y": 340,
+      "ports": [
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "id": "6dc14296-2b6d-45c5-bdb2-ec9218d157d0",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "connected": true,
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "31d2eb68-edcd-45be-9070-89ca6959f17d",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {},
+          "connected": true
+        }
+      ],
+      "paramValues": [
+        {
+          "fieldValue": "星上时间秒值增加异常",
+          "status": "text"
+        }
+      ],
+      "group": "aa8097b3-75ad-4eea-a66b-525767be04da",
+      "isCollapsed": false
+    },
+    {
+      "id": "bb8ee464-943f-419d-83f9-0839261468f3",
+      "renderKey": "MultiDocumentNode",
+      "width": 90,
+      "height": 60,
+      "uuid": "d3d72f81-caa2-4b0b-9786-9cb982abbb24",
+      "funName": "solution",
+      "funContent": "solution(string p)",
+      "returnType": 5,
+      "paramNote": [
+        {
+          "name": "p",
+          "paramNote": "解决办法"
+        }
+      ],
+      "returnNote": null,
+      "funNote": null,
+      "label": "solution",
+      "fontSize": 14,
+      "itemId": "d3d72f81-caa2-4b0b-9786-9cb982abbb24",
+      "x": -340,
+      "y": 460,
+      "ports": [
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "id": "4adfcd94-7cee-4df0-a6fd-3483e6ea42be",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "connected": true,
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "607b994a-f9e4-40b7-882c-8a6ead1de004",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {},
+          "connected": true
+        }
+      ],
+      "paramValues": [
+        {
+          "fieldValue": "通报后台",
+          "status": "text"
+        }
+      ],
+      "group": "aa8097b3-75ad-4eea-a66b-525767be04da",
+      "isCollapsed": false
+    },
+    {
+      "id": "4df83866-fbf9-473a-bd95-a035604c8972",
+      "renderKey": "MultiDocumentNode",
+      "width": 90,
+      "height": 60,
+      "uuid": "29bc52f7-c183-4fc9-8cb0-8abd003e4d8a",
+      "funName": "explain",
+      "funContent": "explain(string p)",
+      "returnType": 5,
+      "paramNote": [
+        {
+          "name": "p",
+          "paramNote": "处置建议"
+        }
+      ],
+      "returnNote": null,
+      "funNote": null,
+      "label": "explain",
+      "fontSize": 14,
+      "itemId": "29bc52f7-c183-4fc9-8cb0-8abd003e4d8a",
+      "x": -340,
+      "y": 600,
+      "ports": [
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "id": "ca65d683-2633-43c3-a1c2-2a79a914821c",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "connected": true,
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "c0222e44-a4c3-4724-9132-f8f52cc3fe0f",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        }
+      ],
+      "paramValues": [
+        {
+          "fieldValue": "正常时S00001随时间不断累加，无预案，联系东方红确认状态",
+          "status": "text"
+        }
+      ],
+      "group": "aa8097b3-75ad-4eea-a66b-525767be04da",
+      "isCollapsed": false
+    },
+    {
+      "id": "987dadda-6eb3-4a47-9ae6-07cd7da0889a",
+      "renderKey": "ConnectorNode",
+      "width": 70,
+      "height": 70,
+      "pkId": 50068,
+      "tmName": "星上时间秒值",
+      "tmCode": "S00001",
+      "tmNum": 13,
+      "satId": 256,
+      "tmSid": "13",
+      "tmDataType": 2,
+      "tmValueUnit": null,
+      "createTime": "2023-03-21 06:34:29",
+      "createUser": "admin",
+      "satCode": "WX-321",
+      "label": "星上时间秒值",
+      "name": "S00001",
+      "fontSize": 14,
+      "itemId": "S00001",
+      "x": -120,
+      "y": -490,
+      "ports": [
+        {
+          "type": "input",
+          "group": "top",
+          "tooltip": "输入桩",
+          "id": "555bf257-5513-47b1-93f9-610f70336693",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "position": {
+            "name": "top",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        },
+        {
+          "type": "output",
+          "group": "bottom",
+          "tooltip": "输出桩",
+          "id": "de722a0f-878d-4ccd-b0bb-d6197614621a",
+          "attrs": {
+            "circle": {
+              "r": 4,
+              "magnet": true,
+              "stroke": "#31d0c6",
+              "strokeWidth": 2,
+              "fill": "#fff",
+              "style": {
+                "visibility": "hidden"
+              },
+              "class": "xflow-port x6-port-body"
+            }
+          },
+          "connected": true,
+          "position": {
+            "name": "bottom",
+            "args": {}
+          },
+          "label": {
+            "position": {
+              "name": "left",
+              "args": {}
+            }
+          },
+          "zIndex": 2,
+          "size": {}
+        }
+      ]
+    },
+    {
+      "id": "aa8097b3-75ad-4eea-a66b-525767be04da",
+      "renderKey": "GroupCollapsed",
+      "width": 326,
+      "height": 912,
+      "isCollapsed": false,
+      "groupChildren": ["3231fe3b-b471-4ba8-817f-eede54dd0299"],
+      "groupHeaderHeight": 20,
+      "groupPadding": 40,
+      "zIndex": -1,
+      "groupCollapsedSize": {
+        "width": 160,
+        "height": 40
+      },
+      "parent": true,
+      "init": false,
+      "ports": [],
+      "groupChildrenSize": {
+        "width": 326,
+        "height": 912
+      },
+      "x": -352,
+      "y": -240,
+      "isGroup": true
+    }
+  ],
+  "edges": [
+    {
+      "id": "3d8d8cd3-11fe-47e9-9a76-4279094b2ae8",
+      "targetPortId": "c5dd1a8e-2cf3-4a0f-a044-498f8ebdaa1a",
+      "sourcePortId": "f20e4bc6-bddf-4a63-b3ed-af7640be4b76",
+      "source": "3231fe3b-b471-4ba8-817f-eede54dd0299",
+      "target": "4ca48188-f79e-4ee9-abf1-48591e9f4c72",
+      "edge": null,
+      "sourcePort": "f20e4bc6-bddf-4a63-b3ed-af7640be4b76",
+      "targetPort": "c5dd1a8e-2cf3-4a0f-a044-498f8ebdaa1a",
+      "label": "true"
+    },
+    {
+      "id": "e115e4c8-374e-49cd-8ebf-aee70278cfa6",
+      "targetPortId": "42403314-703d-4b25-b46a-ef723fa4caa0",
+      "sourcePortId": "805a350e-7893-4964-a608-f94cf153e3ad",
+      "source": "4ca48188-f79e-4ee9-abf1-48591e9f4c72",
+      "target": "5cb8f8ff-853c-4c78-b85c-99cbbc81b7bc",
+      "edge": null,
+      "sourcePort": "805a350e-7893-4964-a608-f94cf153e3ad",
+      "targetPort": "42403314-703d-4b25-b46a-ef723fa4caa0"
+    },
+    {
+      "id": "31a0a268-7c99-4369-88dc-143cf50f0e47",
+      "targetPortId": "55ab615b-e9b4-4467-98c9-bc96246063fc",
+      "sourcePortId": "dab3564a-338c-4603-acd3-f85a71b301b5",
+      "source": "5cb8f8ff-853c-4c78-b85c-99cbbc81b7bc",
+      "target": "bbb7effc-3259-46bd-9797-2e995916b3d6",
+      "edge": null,
+      "sourcePort": "dab3564a-338c-4603-acd3-f85a71b301b5",
+      "targetPort": "55ab615b-e9b4-4467-98c9-bc96246063fc"
+    },
+    {
+      "id": "979c32c1-0ddb-4b26-8543-5cc98bd05d0f",
+      "targetPortId": "45459d13-1dc3-402b-9465-fdd9670ca22c",
+      "sourcePortId": "9fe54c63-c36a-4b6a-bcba-35743de66bde",
+      "source": "bbb7effc-3259-46bd-9797-2e995916b3d6",
+      "target": "15f81893-8d32-4a8d-b023-afe16755fc49",
+      "edge": null,
+      "sourcePort": "9fe54c63-c36a-4b6a-bcba-35743de66bde",
+      "targetPort": "45459d13-1dc3-402b-9465-fdd9670ca22c"
+    },
+    {
+      "id": "3a5e67e6-a6e4-4fec-9540-a71636db8eb7",
+      "targetPortId": "6dc14296-2b6d-45c5-bdb2-ec9218d157d0",
+      "sourcePortId": "e04e2c1c-20c7-4278-aaeb-c2dbc3c23223",
+      "source": "15f81893-8d32-4a8d-b023-afe16755fc49",
+      "target": "09e5469a-9c91-4067-815a-c837cb8d7c37",
+      "edge": null,
+      "sourcePort": "e04e2c1c-20c7-4278-aaeb-c2dbc3c23223",
+      "targetPort": "6dc14296-2b6d-45c5-bdb2-ec9218d157d0",
+      "label": "true"
+    },
+    {
+      "id": "b46537a9-fbbe-444f-99e6-e331ff22aa27",
+      "targetPortId": "4adfcd94-7cee-4df0-a6fd-3483e6ea42be",
+      "sourcePortId": "31d2eb68-edcd-45be-9070-89ca6959f17d",
+      "source": "09e5469a-9c91-4067-815a-c837cb8d7c37",
+      "target": "bb8ee464-943f-419d-83f9-0839261468f3",
+      "edge": null,
+      "sourcePort": "31d2eb68-edcd-45be-9070-89ca6959f17d",
+      "targetPort": "4adfcd94-7cee-4df0-a6fd-3483e6ea42be"
+    },
+    {
+      "id": "6d7d58dd-768e-4d92-9bfc-0fed83c38d1e",
+      "targetPortId": "ca65d683-2633-43c3-a1c2-2a79a914821c",
+      "sourcePortId": "607b994a-f9e4-40b7-882c-8a6ead1de004",
+      "source": "bb8ee464-943f-419d-83f9-0839261468f3",
+      "target": "4df83866-fbf9-473a-bd95-a035604c8972",
+      "edge": null,
+      "sourcePort": "607b994a-f9e4-40b7-882c-8a6ead1de004",
+      "targetPort": "ca65d683-2633-43c3-a1c2-2a79a914821c"
+    },
+    {
+      "id": "a71b3f9f-b54d-4234-8333-d60f57805850",
+      "targetPortId": "159debe0-c5b2-4277-98c4-2ba78ba8c2df",
+      "sourcePortId": "de722a0f-878d-4ccd-b0bb-d6197614621a",
+      "source": "987dadda-6eb3-4a47-9ae6-07cd7da0889a",
+      "target": "e8da5a6c-a903-4287-b4a6-686f26c41797",
+      "edge": null,
+      "sourcePort": "de722a0f-878d-4ccd-b0bb-d6197614621a",
+      "targetPort": "159debe0-c5b2-4277-98c4-2ba78ba8c2df"
+    },
+    {
+      "id": "63e4c7fc-d8ce-4975-a647-17a0c4b87321",
+      "targetPortId": "e032ac1e-0825-4331-8747-129331bd468d",
+      "sourcePortId": "f8104a44-7129-409b-b049-238c907fa3d4",
+      "source": "e8da5a6c-a903-4287-b4a6-686f26c41797",
+      "target": "3231fe3b-b471-4ba8-817f-eede54dd0299",
+      "edge": null,
+      "sourcePort": "f8104a44-7129-409b-b049-238c907fa3d4",
+      "targetPort": "e032ac1e-0825-4331-8747-129331bd468d"
+    }
+  ]
+}

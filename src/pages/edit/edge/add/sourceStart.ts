@@ -17,6 +17,7 @@ export default async function handle(args: Args) {
           renderKey: "GroupCollapsed",
           groupHeaderHeight: 20,
           groupPadding: 40,
+          zIndex: -1,
           groupCollapsedSize: {
             width: 160,
             height: 40,

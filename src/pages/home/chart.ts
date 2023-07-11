@@ -32,10 +32,14 @@ const nodeToString: {
     return str;
   },
   MultiDocumentNode: (node) => {
+    console.log(node);
     const paramValues = `${node?.funName}(${
       node?.paramValues
         ?.map((item: NsGraph.INodeConfig) => {
           if (item?.fieldValue) {
+            if (item?.status === "select") {
+              return item?.fieldValue;
+            }
             return `"${item?.fieldValue}"`;
           }
           return undefined;

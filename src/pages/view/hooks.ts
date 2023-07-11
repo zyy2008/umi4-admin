@@ -3,14 +3,24 @@ import { TreeSelectProps } from "antd";
 import { MODELS, NsGraph, uuidv4 } from "@antv/xflow";
 import { CheckCardProps } from "@ant-design/pro-components";
 import { uniqBy } from "lodash";
-import { ViewHandle, CheckListProps, controlShape } from "./components";
+import {
+  RightViewHandle,
+  LeftViewHandle,
+  CheckListProps,
+  controlShape,
+} from "./components";
 import { KnowledgeView, ViewRelationship, ParamBean, APIS } from "@/services";
-import { formatGraphData, formatTree, graphReader } from "@/utils";
+import {
+  formatGraphData,
+  formatTree,
+  graphReader,
+  graphinReader,
+} from "@/utils";
 import type { DataNode } from "antd/es/tree";
 
 type IProps = {
   graphData?: NsGraph.IGraphData;
-  rightRef: React.RefObject<ViewHandle>;
+  rightRef: React.RefObject<RightViewHandle>;
 };
 
 export type DProps = {
@@ -147,8 +157,8 @@ export const useData = (props: DProps) => {
   const [selectData, setSelectData] = React.useState<NsGraph.IGraphData>();
   const [graphData, setGraphData] = React.useState<NsGraph.IGraphData>();
   const [custom, setCustom] = React.useState<string[]>([]);
-  const leftRef = React.useRef<ViewHandle>(null);
-  const rightRef = React.useRef<ViewHandle>(null);
+  const leftRef = React.useRef<LeftViewHandle>(null);
+  const rightRef = React.useRef<RightViewHandle>(null);
   React.useEffect(() => {
     if (selectValue.length > 0 && formatData.length > 0 && data.length > 0) {
       const nodes = formatData.filter(({ mark }) => {
@@ -175,7 +185,7 @@ export const useData = (props: DProps) => {
 
   React.useEffect(() => {
     if (selectData && leftRef.current) {
-      graphReader(selectData, leftRef.current.app);
+      graphinReader(selectData, leftRef.current.app);
     }
   }, [selectData, leftRef.current]);
 

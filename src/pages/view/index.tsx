@@ -83,7 +83,7 @@ const View = () => {
               style={{
                 height: "100%",
               }}
-              title={<File onSuccess={onSuccess} leftRef={leftRef} />}
+              title={<File onSuccess={onSuccess} />}
               extra={
                 <NodeView value={value} onChange={onSelectChange} onOk={onOk} />
               }

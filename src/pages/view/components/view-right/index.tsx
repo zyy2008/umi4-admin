@@ -86,7 +86,7 @@ const ViewRight = React.forwardRef<ViewHandle, IProps>((props, ref) => {
       connectionType="one-to-many"
       onLoad={onLoad}
       menuDisabled={["edge"]}
-      commandConfig={commandConfig}
+      commandConfig={(hooks) => commandConfig?.(hooks, setGraphData)}
     >
       <>
         <CustomPanel

@@ -9,5 +9,6 @@ export { default as ParamsExport } from "./params-export";
 
 export * from "./view-right";
 
-export type { ViewHandle } from "./view-right";
+export type { ViewHandle as RightViewHandle } from "./view-right";
+export type { ViewHandle as LeftViewHandle } from "./view-left";
 export type { CheckListProps } from "./check-list";

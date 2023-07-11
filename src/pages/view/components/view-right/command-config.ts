@@ -4,13 +4,14 @@ import type { Graph } from "@antv/x6";
 import { formatChildren } from "@/utils";
 import { XFlowNode } from "@/components/flow/node";
 
-export const commandConfig: IProps["commandConfig"] = (hooks) => {
+export const commandConfig: IProps["commandConfig"] = (hooks, setGraphData) => {
   return [
     hooks.addEdge.registerHook({
       name: "get edge config from api",
       handler: async (args) => {
         args.createEdgeService = async (args) => {
           const { edgeConfig } = args;
+          console.log(args);
           const { source, target } = edgeConfig;
           const { success, data } =
             await APIS.DefaultApi.kmsViewServerViewNodeAddPost({
@@ -25,6 +26,7 @@ export const commandConfig: IProps["commandConfig"] = (hooks) => {
               id: `${data?.id}`,
             });
             graph.updateCellId(targetCell, `${data?.id}`);
+            console.log(setGraphData);
             return {
               ...edgeConfig,
               target: `${data?.id}`,

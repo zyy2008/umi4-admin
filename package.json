@@ -13,6 +13,9 @@
   "dependencies": {
     "@alita/plugins": "^3.2.3",
     "@ant-design/pro-components": "^2.3.58",
+    "@antv/graphin": "^2.7.16",
+    "@antv/graphin-components": "^2.4.0",
+    "@antv/graphin-icons": "^1.0.0",
     "@antv/xflow": "^1.0.54",
     "@umijs/max": "^4.0.55",
     "antd": "^4.24.4",
@@ -20,7 +23,8 @@
     "lodash": "^4.17.21",
     "rc-virtual-list": "^3.4.11",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "virtuallist-antd": "^0.7.6"
   },
   "devDependencies": {
     "@types/insert-text-at-cursor": "^0.3.0",

@@ -21,7 +21,6 @@ export const fileTypeName = ["本体内容", "技术文档", "预案", "案例"]
 
 type FileProps = {
   onSuccess?: (T: ViewRelationship[]) => void;
-  leftRef: React.RefObject<ViewHandle>;
 };
 
 type DataItem = {

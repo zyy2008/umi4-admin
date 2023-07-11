@@ -1,146 +1,49 @@
-import { Table } from "antd";
-import type { TableProps } from "antd";
-import classNames from "classnames";
-import ResizeObserver from "rc-resize-observer";
-import React, { useEffect, useRef, useState } from "react";
-import { VariableSizeGrid as Grid } from "react-window";
+import React from "react";
+import { ProTable, ProTableProps } from "@ant-design/pro-components";
+import { VList } from "virtuallist-antd";
+import { Input } from "antd";
 
-const VirtualTable = <RecordType extends object>(
-  props: TableProps<RecordType>
+const VirtualTable = <T extends object, U extends object, ValueType = "text">(
+  props: ProTableProps<T, U, ValueType>
 ) => {
-  const { columns, scroll } = props;
-  const [tableWidth, setTableWidth] = useState(0);
-
-  const widthColumnCount = columns!.filter(({ width }) => !width).length;
-  const mergedColumns = columns!.map((column) => {
-    if (column.width) {
-      return column;
-    }
-
-    return {
-      ...column,
-      width: Math.floor(tableWidth / widthColumnCount),
-    };
-  });
-
-  const gridRef = useRef<any>();
-  const [connectObject] = useState<any>(() => {
-    const obj = {};
-    Object.defineProperty(obj, "scrollLeft", {
-      get: () => {
-        if (gridRef.current) {
-          return gridRef.current?.state?.scrollLeft;
-        }
-        return null;
-      },
-      set: (scrollLeft: number) => {
-        if (gridRef.current) {
-          gridRef.current.scrollTo({ scrollLeft });
-        }
-      },
+  const { scroll } = props;
+  const vComponents = React.useMemo(() => {
+    // 使用VList 即可有虚拟列表的效果
+    return VList({
+      height: scroll?.y ?? 300, // 此值和scrollY值相同. 必传. (required).  same value for scrolly
     });
-
-    return obj;
-  });
-
-  const resetVirtualGrid = () => {
-    gridRef.current?.resetAfterIndices({
-      columnIndex: 0,
-      shouldForceUpdate: true,
-    });
-  };
-
-  useEffect(() => resetVirtualGrid, [tableWidth]);
-
-  const renderVirtualList = (
-    rawData: object[],
-    { scrollbarSize, ref, onScroll }: any
-  ) => {
-    ref.current = connectObject;
-    const totalHeight = rawData.length * 54;
-
-    return (
-      <Grid
-        ref={gridRef}
-        className="virtual-grid"
-        columnCount={mergedColumns.length}
-        columnWidth={(index: number) => {
-          const { width } = mergedColumns[index];
-          return totalHeight > scroll!.y! && index === mergedColumns.length - 1
-            ? (width as number) - scrollbarSize - 1
-            : (width as number);
-        }}
-        height={scroll!.y as number}
-        rowCount={rawData.length}
-        rowHeight={() => 54}
-        width={tableWidth}
-        onScroll={({ scrollLeft }: { scrollLeft: number }) => {
-          onScroll({ scrollLeft });
-        }}
-      >
-        {({
-          columnIndex,
-          rowIndex,
-          style,
-        }: {
-          columnIndex: number;
-          rowIndex: number;
-          style: React.CSSProperties;
-        }) => (
-          <div
-            className={classNames("virtual-table-cell", {
-              "virtual-table-cell-last":
-                columnIndex === mergedColumns.length - 1,
-            })}
-            style={style}
-          >
-            {
-              (rawData[rowIndex] as any)[
-                (mergedColumns as any)[columnIndex].dataIndex
-              ]
-            }
-          </div>
-        )}
-      </Grid>
-    );
-  };
-
-  return (
-    <ResizeObserver
-      onResize={({ width }) => {
-        setTableWidth(width);
-      }}
-    >
-      <Table
-        {...props}
-        className="virtual-table"
-        columns={mergedColumns}
-        pagination={false}
-        components={{
-          body: renderVirtualList as any,
-        }}
-      />
-    </ResizeObserver>
-  );
+  }, [scroll?.y]);
+  return <ProTable {...props} components={vComponents} search={false} />;
 };
-
 // Usage
-const columns = [
-  { title: "A", dataIndex: "key", width: 150 },
-  { title: "B", dataIndex: "key" },
-  { title: "C", dataIndex: "key" },
-  { title: "D", dataIndex: "key" },
-  { title: "E", dataIndex: "key", width: 200 },
-  { title: "F", dataIndex: "key", width: 100 },
-];
 
-const data = Array.from({ length: 100000 }, (_, key) => ({ key }));
+const data = Array.from({ length: 1000 }, (_, key) => ({
+  key,
+  id: `aaa${key}`,
+}));
 
 const App: React.FC = () => (
   <VirtualTable
-    columns={columns}
+    columns={[
+      {
+        title: "A",
+        dataIndex: "key",
+      },
+      {
+        title: "B",
+        dataIndex: "key",
+        render: () => {
+          return <Input />;
+        },
+      },
+    ]}
+    rowSelection={{
+      type: "checkbox",
+    }}
     dataSource={data}
-    scroll={{ y: 300, x: "100vw" }}
+    scroll={{ y: 300 }}
+    pagination={false}
+    rowKey="id"
   />
 );
 

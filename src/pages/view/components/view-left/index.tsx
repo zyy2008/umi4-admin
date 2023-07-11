@@ -2,27 +2,30 @@ import React from "react";
 import ViewFlow from "@/components/flow";
 import type { NsGraph, IAppLoad, IApplication } from "@antv/xflow";
 import { CanvasScaleToolbar } from "@antv/xflow";
-import { graphReader } from "@/utils";
+import { graphinReader } from "@/utils";
 import { Graph } from "@antv/x6";
+import Graphin, { Utils, Behaviors } from "@antv/graphin";
+import { Grid } from "@antv/graphin-components";
 
 type IProps = {
   graphData?: NsGraph.IGraphData;
 };
 
-type ViewHandle = {
-  app?: IApplication;
+export type ViewHandle = {
+  app?: Graphin;
 };
+
+const data = Utils.mock(10).circle().graphin();
 
 const ViewLeft = React.forwardRef<ViewHandle, IProps>((props, ref) => {
   const { graphData } = props;
-  const [app, setApp] = React.useState<IApplication>();
-  const [graph, setGraph] = React.useState<Graph>();
-  const onLoad: IAppLoad = async (app) => {
-    const graph = await app.getGraphInstance();
-    graph.off("node:mouseenter");
-    setApp(app);
-    setGraph(graph);
-  };
+  const [app, setApp] = React.useState<Graphin>();
+  const graphinRef = React.useRef<Graphin>(null);
+  React.useEffect(() => {
+    if (graphinRef.current) {
+      setApp(graphinRef.current);
+    }
+  }, [graphinRef.current]);
   React.useImperativeHandle(
     ref,
     () => {
@@ -32,26 +35,8 @@ const ViewLeft = React.forwardRef<ViewHandle, IProps>((props, ref) => {
     },
     [app]
   );
-
-  React.useEffect(() => {
-    if (graphData && app) {
-      graphReader(graphData, app);
-    }
-    return () => {
-      if (graph) {
-        graph.clearCells();
-      }
-    };
-  }, [graphData, app, graph]);
   return (
-    <ViewFlow
-      position={{ left: 0, right: 0 }}
-      nodeMovable={false}
-      onLoad={onLoad}
-      contextMenu={false}
-    >
-      <CanvasScaleToolbar position={{ top: 12, left: 12 }} />
-    </ViewFlow>
+    <Graphin data={data} ref={graphinRef} graphDOM={<div></div>}></Graphin>
   );
 });
 

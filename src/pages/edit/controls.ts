@@ -3,7 +3,7 @@ import { ControlShapeEnum } from "@/components/custom-form";
 
 const { ControlShape } = NsJsonSchemaForm;
 
-const returnType = ["int", "float", "string", "boolean", "void"];
+export const returnType = ["int", "float", "string", "boolean", "void"];
 
 const formatSelect: { title: string; value: string | number | boolean }[] =
   returnType.map((val, index) => ({ title: val, value: index + 1 }));
