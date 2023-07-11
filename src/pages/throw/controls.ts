@@ -12,14 +12,13 @@ const controlsFuc: (
   targetData: NsJsonSchemaForm.TargetData
 ) => NsJsonSchemaForm.IControlSchema[] = (targetData) => {
   const ControlRecord: Record<string, NsJsonSchemaForm.IControlSchema[]> = {
-    StartNode: [
+    StartProcessNode: [
       {
         name: "label",
         label: "知识名称",
         shape: ControlShape.INPUT,
         value: targetData?.label,
         placeholder: "请输入",
-        disabled: true,
       },
     ],
     ProcessNode: [

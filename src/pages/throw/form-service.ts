@@ -35,11 +35,9 @@ type IFormValueUpdateService = {
 export namespace NsJsonForm {
   /** 保存form的values */
   export const formValueUpdateService: IFormValueUpdateService = async (
-    args,
-    graph
+    args
   ) => {
-    const { commandService, targetData: data, allFields } = args;
-    const targetData = graph?.getCellById(data?.id as string).getData();
+    const { commandService, targetData, allFields } = args;
     const updateNode = (node: NsGraph.INodeConfig) => {
       return commandService.executeCommand<NsNodeCmd.UpdateNode.IArgs>(
         XFlowNodeCommands.UPDATE_NODE.id,
