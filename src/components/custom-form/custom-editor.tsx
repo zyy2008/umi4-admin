@@ -61,17 +61,20 @@ interface IEditorProps extends NsJsonSchemaForm.IFormItemProps {
 
 type ParamMenuProps = {
   onClick: (T: { key: string }) => void;
+  isRadio?: boolean;
 };
 
 const ParamMenu: React.FC<ParamMenuProps> = (props) => {
-  const { onClick } = props;
+  const { onClick, isRadio } = props;
   const [data, setData] = React.useState<ParamBean[]>([]);
   return (
     <List
-      className={styles["list"]}
+      style={{
+        width: isRadio ? "230px" : "180px",
+      }}
       bordered
       size="small"
-      header={<CardRadio onChange={setData} />}
+      header={<CardRadio isRadio={isRadio} onChange={setData} />}
     >
       {data.length === 0 ? (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
@@ -102,7 +105,7 @@ const ParamMenu: React.FC<ParamMenuProps> = (props) => {
 };
 
 const Editor: React.FC<IEditorProps> = (props) => {
-  const { placeholder, disabled, onChange, value, originData = {} } = props;
+  const { placeholder, disabled, onChange, value, originData } = props;
   const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
   const [open, setOpen] = React.useState<boolean>(false);
   const insertText = (val: string) => {
@@ -123,6 +126,7 @@ const Editor: React.FC<IEditorProps> = (props) => {
               placement="bottom"
               content={
                 <ParamMenu
+                  {...originData}
                   onClick={({ key }) => {
                     insertText(key);
                     setOpen(false);

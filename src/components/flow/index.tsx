@@ -43,7 +43,7 @@ export interface IProps {
   graphData?: NsGraph.IGraphData;
   nodeMovable?: boolean;
   contextMenu?: boolean | ICanvasContextMenuProps;
-  menuDisabled?: Array<"node" | "edge" | "blank" | "null">;
+  menuDisabled?: Array<"node" | "edge" | "blank" | "null" | string>;
   commandConfig?: (T: ICmdHooks, ...args: any) => Disposable[] | undefined;
   graphLayout?: NsGraphCmd.GraphLayout.IArgs;
   graphOptions?: (T: Graph.Options) => Graph.Options;

@@ -70,13 +70,9 @@ export const useMenuConfig = createCtxMenuConfig<IProps>((config, proxy) => {
   config.setMenuModelService(async (data, model) => {
     let { type, cell } = data ?? {};
     const { renderKey } = cell?.getData();
-    const findIndex = menuDisabled.findIndex((item) => item === type);
-    if (
-      findIndex > -1 ||
-      renderKey === "循环" ||
-      renderKey === "StartNode" ||
-      renderKey === "GroupCollapsed"
-    ) {
+    const is =
+      menuDisabled.includes(type ?? "null") || menuDisabled.includes(renderKey);
+    if (is) {
       type = "blank";
     }
     switch (type) {

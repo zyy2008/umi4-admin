@@ -16,6 +16,7 @@ import { ListSelectShape } from "./custom-list-select";
 import { ListTableShape } from "./custom-list-table";
 import { MultiInputShape } from "./custom-multi-input";
 import { InputShape } from "./custom-input";
+import { UploadShape } from "./custom-upload";
 import { Context } from "@/pages/edit";
 import { ParamBean } from "@/services";
 import styles from "./styles.less";
@@ -34,6 +35,7 @@ export enum ControlShapeEnum {
   LIST_TABLE_SHAPE = "LIST-TABLE",
   MULTI_INPUT_SHAPE = "MULTI_INPUT",
   INPUT_SHAPE = "NEW-INPUT",
+  UPLOAD_SHAPE = "UPLOAD",
 }
 
 export const controlMapService: NsJsonSchemaForm.IControlMapService = (
@@ -49,6 +51,7 @@ export const controlMapService: NsJsonSchemaForm.IControlMapService = (
   controlMap.set(ControlShapeEnum.LIST_TABLE_SHAPE, ListTableShape);
   controlMap.set(ControlShapeEnum.MULTI_INPUT_SHAPE, MultiInputShape);
   controlMap.set(ControlShapeEnum.INPUT_SHAPE, InputShape);
+  controlMap.set(ControlShapeEnum.UPLOAD_SHAPE, UploadShape);
   return controlMap;
 };
 

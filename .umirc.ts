@@ -62,9 +62,14 @@ export default defineConfig({
       redirect: "/throw",
     },
     {
-      name: "首页",
+      name: "异常编辑",
       path: "/throw",
       component: "./throw/edit",
+    },
+    {
+      name: "异常显示",
+      path: "/throw-view",
+      component: "./throw",
     },
     // {
     //   path: "/vue3/dashboard",

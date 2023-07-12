@@ -49,6 +49,7 @@ const Edit: React.FC = () => {
         snapline: true,
       })}
       onLoad={onLoad}
+      menuDisabled={["StartProcessNode"]}
     >
       <React.Fragment>
         <CustomPanel position={{ width: 260, top: 0, bottom: 0, left: 0 }} />
