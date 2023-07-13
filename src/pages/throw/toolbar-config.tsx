@@ -58,7 +58,9 @@ namespace NsConfig {
           commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {
-              saveGraphDataService: async (meta, data) => {},
+              saveGraphDataService: async (meta, data) => {
+                console.log(JSON.stringify(data));
+              },
             }
           );
         },
