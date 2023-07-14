@@ -62,6 +62,11 @@ export default defineConfig({
       redirect: "/throw",
     },
     {
+      name: "流程编辑",
+      path: "/bpmn",
+      component: "./bpmn",
+    },
+    {
       name: "异常编辑",
       path: "/throw",
       component: "./throw/edit",

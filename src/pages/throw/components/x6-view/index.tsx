@@ -42,8 +42,7 @@ const X6View: React.FC<IProps> = (props) => {
       const gridLayout = new DagreLayout({
         type: "dagre",
         rankdir: "TB",
-
-        align: undefined,
+        align: void 0,
         ranksep: 40,
         nodesep: 30,
         controlPoints: false,
