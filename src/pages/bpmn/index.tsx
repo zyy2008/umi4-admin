@@ -43,7 +43,7 @@ const Bpmn = () => {
         nodes: [
           {
             id: uuidv4(),
-            label: "Start",
+            label: "开始",
             renderKey: "StartNode",
             width: 70,
             height: 70,

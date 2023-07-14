@@ -4,7 +4,7 @@ import { NsNodeCmd, NsGraph, uuidv4 } from "@antv/xflow";
 import type { IModelService, IGraphCommandService } from "@antv/xflow-core";
 import type { Cell, Graph as X6Graph, Node } from "@antv/x6";
 import { ParamBean } from "@/services";
-import controlsFuc from "./controls";
+import { controlsFuc, controlsMainFun } from "./controls";
 
 type IFormSchemaService = (
   args: {
@@ -65,7 +65,12 @@ export namespace NsJsonForm {
           {
             /** Tab的title */
             name: "属性",
-            groups: [],
+            groups: [
+              {
+                name: "dag",
+                controls: controlsMainFun(targetData),
+              },
+            ],
           },
         ],
       };
