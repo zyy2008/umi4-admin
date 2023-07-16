@@ -1,8 +1,28 @@
 import React from "react";
 import data from "../../json";
 import Graph from "./register";
-import { Cell } from "@antv/x6";
+import { Node } from "@antv/x6";
 import { DagreLayout } from "@antv/layout";
+import Drawer from "./drawer";
+import { Portal } from "@antv/x6-react-shape";
+
+type TypeOpen = {
+  value: boolean;
+  data: { [key: string]: any };
+};
+
+export type ContextProps = {
+  graph?: Graph;
+  open?: TypeOpen;
+  setOpen?: React.Dispatch<React.SetStateAction<TypeOpen>>;
+};
+
+const X6ReactPortalProvider = Portal.getProvider();
+
+export const ViewContext = React.createContext<ContextProps>({
+  graph: void 0,
+  setOpen: void 0,
+});
 
 type IProps = {
   selectValue?: number;
@@ -12,15 +32,21 @@ const X6View: React.FC<IProps> = (props) => {
   const { selectValue } = props;
   const divRef = React.useRef<HTMLDivElement>(null);
   const [graph, setGraph] = React.useState<Graph>();
+  const [open, setOpen] = React.useState<TypeOpen>({
+    value: false,
+    data: {},
+  });
+
   React.useEffect(() => {
     if (divRef.current) {
       // 初始化画布
       const graph = new Graph({
         container: divRef.current,
+        panning: {
+          enabled: true,
+        },
         grid: true,
         connecting: {
-          allowBlank: false,
-          allowPort: false,
           router: {
             name: "manhattan",
             args: {
@@ -30,6 +56,9 @@ const X6View: React.FC<IProps> = (props) => {
             },
           },
           connectionPoint: "boundary",
+        },
+        selecting: {
+          enabled: false,
         },
         interacting: false,
       });
@@ -49,19 +78,32 @@ const X6View: React.FC<IProps> = (props) => {
       });
       const model = gridLayout.layout({
         ...nowData,
+        edges: nowData.edges.map((item) => ({ ...item, shape: "org-edge" })),
         nodes: nowData.nodes.map(
-          ({ id, renderKey: shape, width, height, label, fontSize }) => ({
+          ({
+            id,
+            renderKey: shape,
+            width,
+            height,
+            label,
+            fontSize,
+            ...others
+          }) => ({
             id,
             shape,
             width,
             height,
             data: {
+              id,
+              shape,
               label,
               fontSize,
               size: {
                 width,
                 height,
               },
+              collapse: true,
+              ...others,
             },
           })
         ),
@@ -71,12 +113,17 @@ const X6View: React.FC<IProps> = (props) => {
     }
   }, [graph, selectValue]);
   return (
-    <div
-      ref={divRef}
-      style={{
-        height: "100%",
-      }}
-    />
+    <ViewContext.Provider value={{ graph, open, setOpen }}>
+      <X6ReactPortalProvider />
+      <div
+        ref={divRef}
+        style={{
+          height: "100%",
+        }}
+      >
+        <Drawer />
+      </div>
+    </ViewContext.Provider>
   );
 };
 
