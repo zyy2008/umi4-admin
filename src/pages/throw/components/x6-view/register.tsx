@@ -5,7 +5,6 @@ import React from "react";
 import { ViewContext } from "./index";
 import type { NsGraph } from "@antv/xflow-core";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
-import { Button } from "antd";
 import styles from "./index.less";
 
 type IProps = {
@@ -23,8 +22,6 @@ export function isValidKey(
 const Component: React.FC<IProps> = ({ cell, nodeComponent }) => {
   const data = cell.getData();
   const { graph, setOpen } = React.useContext(ViewContext);
-  const [collapse, setCollapse] = React.useState<string>("");
-
   React.useEffect(() => {
     if (graph && data) {
       const succ = graph.getSuccessors(cell);
@@ -34,7 +31,7 @@ const Component: React.FC<IProps> = ({ cell, nodeComponent }) => {
         });
       }
     }
-  }, [graph, collapse]);
+  }, [graph, data]);
 
   const isCollapse = React.useMemo<boolean>(() => {
     if (graph) {
@@ -69,11 +66,11 @@ const Component: React.FC<IProps> = ({ cell, nodeComponent }) => {
         <a
           onClick={(e) => {
             e.stopPropagation();
-            setCollapse(`${new Date().getTime()}`);
             cell.setData({
               ...cell.getData(),
               collapse: !data?.collapse,
             });
+            return false;
           }}
           className="collapse"
         >
@@ -92,7 +89,9 @@ const Component: React.FC<IProps> = ({ cell, nodeComponent }) => {
   );
 };
 
-const NodeComponent = React.memo(Component);
+const NodeComponent = React.memo(Component, (prev, next: any) => {
+  return !Boolean(next.node?.hasChanged("data"));
+});
 
 Object.keys(NodesComponent).forEach((key) => {
   if (isValidKey(key, NodesComponent)) {

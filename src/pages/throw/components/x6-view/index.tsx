@@ -58,7 +58,7 @@ const X6View: React.FC<IProps> = (props) => {
           connectionPoint: "boundary",
         },
         selecting: {
-          enabled: false,
+          enabled: true,
         },
         interacting: false,
       });
@@ -94,7 +94,7 @@ const X6View: React.FC<IProps> = (props) => {
             width,
             height,
             data: {
-              id,
+              collapse: true,
               shape,
               label,
               fontSize,
@@ -102,7 +102,6 @@ const X6View: React.FC<IProps> = (props) => {
                 width,
                 height,
               },
-              collapse: true,
               ...others,
             },
           })
