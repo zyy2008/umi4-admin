@@ -4,6 +4,7 @@ import { Graph, Cell } from "@antv/x6";
 import { ProCard } from "@ant-design/pro-components";
 import styles from "./index.less";
 import { ViewContext } from "./index";
+import img from "@/assets/yay.jpg";
 
 const DrawerBody: React.FC<{ data?: { [key: string]: any } }> = (props) => {
   const { data } = props;
@@ -55,21 +56,13 @@ const DrawerBody: React.FC<{ data?: { [key: string]: any } }> = (props) => {
             </ProCard.TabPane>
             <ProCard.TabPane key="tab4" tab="图片">
               <Row gutter={[8, 8]}>
-                <Col span={8}>
-                  <Card hoverable bodyStyle={{ padding: 0 }}>
-                    <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                  </Card>
-                </Col>
-                <Col span={8}>
-                  <Card bodyStyle={{ padding: 0 }}>
-                    <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                  </Card>
-                </Col>
-                <Col span={8}>
-                  <Card bodyStyle={{ padding: 0 }}>
-                    <Image src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png" />
-                  </Card>
-                </Col>
+                {[img].map((item, index) => (
+                  <Col span={8}>
+                    <Card hoverable bodyStyle={{ padding: 0 }} key={index}>
+                      <Image src={item} />
+                    </Card>
+                  </Col>
+                ))}
               </Row>
             </ProCard.TabPane>
             <ProCard.TabPane key="tab5" tab="连接">
