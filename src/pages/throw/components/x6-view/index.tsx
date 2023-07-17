@@ -5,6 +5,7 @@ import { Node } from "@antv/x6";
 import { DagreLayout } from "@antv/layout";
 import Drawer from "./drawer";
 import { Portal } from "@antv/x6-react-shape";
+import { NsGraph } from "@antv/xflow";
 
 type TypeOpen = {
   value: boolean;
@@ -25,11 +26,11 @@ export const ViewContext = React.createContext<ContextProps>({
 });
 
 type IProps = {
-  selectValue?: number;
+  viewData: NsGraph.IGraphData;
 };
 
 const X6View: React.FC<IProps> = (props) => {
-  const { selectValue } = props;
+  const { viewData } = props;
   const divRef = React.useRef<HTMLDivElement>(null);
   const [graph, setGraph] = React.useState<Graph>();
   const [open, setOpen] = React.useState<TypeOpen>({
@@ -64,8 +65,7 @@ const X6View: React.FC<IProps> = (props) => {
     }
   }, [divRef.current]);
   React.useEffect(() => {
-    if (graph) {
-      const nowData = data[0];
+    if (graph && viewData) {
       const gridLayout = new DagreLayout({
         type: "dagre",
         rankdir: "TB",
@@ -75,9 +75,9 @@ const X6View: React.FC<IProps> = (props) => {
         controlPoints: false,
       });
       const model = gridLayout.layout({
-        ...nowData,
-        edges: nowData.edges.map((item) => ({ ...item, shape: "org-edge" })),
-        nodes: nowData.nodes.map(
+        ...viewData,
+        edges: viewData.edges.map((item) => ({ ...item, shape: "org-edge" })),
+        nodes: viewData.nodes.map(
           ({
             id,
             renderKey: shape,
@@ -108,7 +108,7 @@ const X6View: React.FC<IProps> = (props) => {
       graph.fromJSON(model);
       graph.centerContent();
     }
-  }, [graph, selectValue]);
+  }, [graph, viewData]);
   return (
     <ViewContext.Provider value={{ graph, open, setOpen }}>
       <X6ReactPortalProvider />
@@ -124,4 +124,4 @@ const X6View: React.FC<IProps> = (props) => {
   );
 };
 
-export default X6View;
+export default React.memo(X6View);

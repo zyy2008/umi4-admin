@@ -4,7 +4,7 @@ import * as NodesComponent from "@/components/nodes";
 import React from "react";
 import { ViewContext } from "./index";
 import type { NsGraph } from "@antv/xflow-core";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons";
 import styles from "./index.less";
 
 type IProps = {
@@ -75,11 +75,11 @@ const Component: React.FC<IProps> = ({ cell, nodeComponent }) => {
         >
           {data?.collapse ? (
             <span>
-              <MinusOutlined />
+              <MinusCircleOutlined />
             </span>
           ) : (
             <span>
-              <PlusOutlined />
+              <PlusCircleOutlined />
             </span>
           )}
         </a>

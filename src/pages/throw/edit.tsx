@@ -19,11 +19,13 @@ const Edit: React.FC = () => {
       nodes: [
         {
           id: uuidv4(),
-          label: "Start",
+          label: "开始",
           renderKey: "StartProcessNode",
           width: 110,
           height: 50,
           fontSize: 14,
+          fill: "rgba(90, 120, 200, 0.56);",
+          fontFill: "#ebf7ff",
           ports: [
             {
               type: NsGraph.AnchorType.OUTPUT,

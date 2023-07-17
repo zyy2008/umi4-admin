@@ -128,7 +128,6 @@ const DrawerBody: React.FC<{ data?: { [key: string]: any } }> = (props) => {
 
 const Drawer: React.FC = () => {
   const { open, setOpen, graph } = React.useContext(ViewContext);
-  console.log(open);
   const onClose = () => {
     setOpen?.({
       value: false,

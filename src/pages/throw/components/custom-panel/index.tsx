@@ -10,20 +10,7 @@ import styles from "./index.less";
 const CardBody: React.FC<IBodyProps> = (props) => {
   const { onMouseDown } = useGraphDnd(props);
   return (
-    <Card
-      size="small"
-      title={
-        <div className="node-title">
-          <span> 卫星</span>
-          <Select
-            placeholder="请选择卫星"
-            style={{ flex: 1, margin: "0 5px" }}
-          />
-        </div>
-      }
-      bodyStyle={{ padding: 0 }}
-      headStyle={{ padding: 0 }}
-    >
+    <Card size="small" bodyStyle={{ padding: 0 }} headStyle={{ padding: 0 }}>
       <Row className={styles["row"]}>
         <Col span={24}>
           <ColNode
@@ -33,10 +20,16 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               label: "流程元素",
               width: 110,
               height: 50,
+              fill: "rgba(90, 120, 200, 0.56);",
+              fontFill: "#ebf7ff",
             }}
             size={{
               width: 110,
               height: 50,
+            }}
+            data={{
+              fill: "rgba(90, 120, 200, 0.56);",
+              fontFill: "#ebf7ff",
             }}
             node={ProcessNode}
           />
@@ -49,6 +42,8 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               width: 70,
               height: 70,
               label: "判断元素",
+              fill: "rgba(90, 120, 200, 0.56);",
+              fontFill: "#ebf7ff",
               ports: [
                 {
                   type: NsGraph.AnchorType.INPUT,
@@ -60,6 +55,10 @@ const CardBody: React.FC<IBodyProps> = (props) => {
             size={{
               width: 70,
               height: 70,
+            }}
+            data={{
+              fill: "rgba(90, 120, 200, 0.56);",
+              fontFill: "#ebf7ff",
             }}
             node={ConnectorNode}
           />
@@ -72,6 +71,8 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               label: "判断元素",
               width: 70,
               height: 70,
+              fill: "rgba(90, 120, 200, 0.56);",
+              fontFill: "#ebf7ff",
               ports: [
                 {
                   type: NsGraph.AnchorType.INPUT,
@@ -83,6 +84,10 @@ const CardBody: React.FC<IBodyProps> = (props) => {
             size={{
               width: 70,
               height: 70,
+            }}
+            data={{
+              fill: "rgba(90, 120, 200, 0.56);",
+              fontFill: "#ebf7ff",
             }}
             node={SquareNode}
           />

@@ -29,27 +29,27 @@ namespace NsConfig {
     IToolbarGroupOptions[]
   > = async () => {
     const toolbarGroup1: IToolbarItemOptions[] = [
-      {
-        id: "CameraOutlined ",
-        iconName: "CameraOutlined",
-        tooltip: "截图",
-        onClick: async ({ modelService }) => {
-          const res = await MODELS.GRAPH_META.useValue(modelService);
-          const graph: Graph = await res.getX6Graph();
-          graph.toPNG(
-            async (dataUri) => {
-              DataUri.downloadDataUri(dataUri, "chart.png");
-            },
-            {
-              backgroundColor: "rgba(0, 0, 0, 0)",
-              copyStyles: true,
-              quality: 1,
-              width: 1920,
-              height: 1080,
-            }
-          );
-        },
-      },
+      // {
+      //   id: "CameraOutlined ",
+      //   iconName: "CameraOutlined",
+      //   tooltip: "截图",
+      //   onClick: async ({ modelService }) => {
+      //     const res = await MODELS.GRAPH_META.useValue(modelService);
+      //     const graph: Graph = await res.getX6Graph();
+      //     graph.toPNG(
+      //       async (dataUri) => {
+      //         DataUri.downloadDataUri(dataUri, "chart.png");
+      //       },
+      //       {
+      //         backgroundColor: "rgba(0, 0, 0, 0)",
+      //         copyStyles: true,
+      //         quality: 1,
+      //         width: 1920,
+      //         height: 1080,
+      //       }
+      //     );
+      //   },
+      // },
       {
         id: XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         iconName: "SaveOutlined",
@@ -58,8 +58,12 @@ namespace NsConfig {
           commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {
-              saveGraphDataService: async (meta, data) => {
-                console.log(JSON.stringify(data));
+              saveGraphDataService: async ({ meta }, data) => {
+                const object = {
+                  meta,
+                  graphData: data,
+                };
+                console.log(JSON.stringify(object));
               },
             }
           );

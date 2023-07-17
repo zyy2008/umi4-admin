@@ -100,8 +100,9 @@ export const ColNode: React.FC<
     nodeConfig: Omit<NsGraph.INodeConfig, "id">;
     size?: NsGraph.IReactNodeProps["size"];
     colProps?: ColProps;
+    data?: NsGraph.IReactNodeProps["data"];
   }
-> = ({ onMouseDown, node, nodeConfig, size, colProps }) => {
+> = ({ onMouseDown, node, nodeConfig, size, colProps, data }) => {
   const { label } = nodeConfig;
   return (
     <Col
@@ -122,7 +123,7 @@ export const ColNode: React.FC<
           height: 50,
           ...size,
         },
-        data: { label, fontSize: 14 },
+        data: { label, fontSize: 14, ...data },
         position: {
           x: 0,
           y: 0,

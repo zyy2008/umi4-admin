@@ -51,7 +51,6 @@ export namespace NsJsonForm {
         allFields.forEach((val) => {
           set(meta, val.name, val.value);
         });
-        console.log(meta);
         updateMeta(meta);
       }
     };

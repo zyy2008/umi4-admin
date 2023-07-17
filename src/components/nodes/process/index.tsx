@@ -36,7 +36,12 @@ export const ProcessNode: NsGraph.INodeRender = (props) => {
       width={width}
       height={height}
     >
-      <path d={createPath(path)} fill={fill} stroke={stroke} />
+      <path
+        d={createPath(path)}
+        fill={fill}
+        stroke={stroke}
+        strokeLinecap="round"
+      />
       <text
         x={width / 2}
         y={height / 2}

@@ -4,47 +4,53 @@ import {
   CheckCard,
   CheckCardGroupProps,
 } from "@ant-design/pro-components";
-import { Button, Checkbox } from "antd";
+import { Button, Space } from "antd";
 import styles from "./index.less";
 import React from "react";
 import { X6View } from "./components";
-import data from "./json";
+import data, { DataType } from "./json";
+import { NsGraph } from "@antv/xflow";
+import ButtonModal from "@/components/button-modal";
 
 export default () => {
   const [value, setValue] = React.useState<number>();
+  const [open, setOpen] = React.useState<boolean>(false);
   const formatData = React.useMemo<CheckCardGroupProps["options"]>(() => {
     return data.map((item, index) => {
-      const find = item.nodes.filter(
-        (item) => item.renderKey === "StartProcessNode"
-      );
-      const [{ label }] = find;
-      return { title: label, value: index };
+      const { meta } = item;
+      return { title: meta?.name, value: index };
     });
   }, []);
+  const findData = React.useMemo<DataType>(() => {
+    if (value != void 0) {
+      return data[value];
+    }
+    return {
+      meta: { flowId: "" },
+      graphData: { nodes: [], edges: [] },
+    };
+  }, [value]);
   return (
     <ProCard
+      className={styles["card-main"]}
       split="vertical"
       bordered
       headerBordered
-      style={{
-        height: "100%",
-      }}
-      size="small"
-    >
-      <ProCard
-        title="事件"
-        colSpan="260px"
-        headerBordered
-        extra={
+      title={<span className="title-main">{findData.meta.name}</span>}
+      extra={
+        <Space>
           <BetaSchemaForm
             width={600}
             trigger={
               <Button type="primary" size="small">
-                启动
+                流程启动
               </Button>
             }
-            title="启动"
+            title="流程运行"
             layoutType="ModalForm"
+            modalProps={{
+              okText: "运行",
+            }}
             layout="horizontal"
             labelCol={{ span: 3 }}
             wrapperCol={{
@@ -88,7 +94,29 @@ export default () => {
               },
             ]}
           />
-        }
+          <ButtonModal
+            buttonProps={{
+              children: "运行结果",
+              size: "small",
+              type: "default",
+              onClick: () => setOpen(true),
+            }}
+            modalProps={{
+              open,
+              onCancel: () => setOpen(false),
+            }}
+          />
+        </Space>
+      }
+      style={{
+        height: "100%",
+      }}
+      size="small"
+    >
+      <ProCard
+        title={<span className="title-sub">{findData.meta.satCode}</span>}
+        colSpan="260px"
+        headerBordered
       >
         <CheckCard.Group
           className={styles["check-card"]}
@@ -103,7 +131,7 @@ export default () => {
           height: "100%",
         }}
       >
-        <X6View selectValue={value} />
+        <X6View viewData={findData.graphData} />
       </ProCard>
     </ProCard>
   );
