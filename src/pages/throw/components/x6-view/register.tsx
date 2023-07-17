@@ -118,7 +118,7 @@ Graph.registerEdge(
         fill: "none",
         strokeLinejoin: "round",
         strokeWidth: 2,
-        stroke: "#A2B1C3",
+        stroke: "rgba(134, 212, 255, 1)",
         sourceMarker: null,
         targetMarker: null,
       },
