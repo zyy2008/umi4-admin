@@ -70,7 +70,6 @@ const Component: React.FC<IProps> = ({ cell, nodeComponent }) => {
               ...cell.getData(),
               collapse: !data?.collapse,
             });
-            return false;
           }}
           className="collapse"
         >

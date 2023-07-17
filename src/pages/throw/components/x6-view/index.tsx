@@ -57,9 +57,7 @@ const X6View: React.FC<IProps> = (props) => {
           },
           connectionPoint: "boundary",
         },
-        selecting: {
-          enabled: true,
-        },
+        selecting: false,
         interacting: false,
       });
       setGraph(graph);
