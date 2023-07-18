@@ -22,16 +22,6 @@ export function isValidKey(
 const Component: React.FC<IProps> = ({ cell, nodeComponent }) => {
   const data = cell.getData();
   const { graph, setOpen } = React.useContext(ViewContext);
-  React.useEffect(() => {
-    if (graph && data) {
-      const succ = graph.getSuccessors(cell);
-      if (succ) {
-        succ.forEach((node) => {
-          node.toggleVisible(data?.collapse);
-        });
-      }
-    }
-  }, [graph, data]);
 
   const isCollapse = React.useMemo<boolean>(() => {
     if (graph) {
@@ -70,6 +60,21 @@ const Component: React.FC<IProps> = ({ cell, nodeComponent }) => {
               ...cell.getData(),
               collapse: !data?.collapse,
             });
+            if (graph) {
+              const run = (pre: Cell) => {
+                const succ = graph.getSuccessors(pre);
+                if (succ) {
+                  succ.forEach((node: Cell) => {
+                    node.toggleVisible();
+                    const { collapse } = node.getData();
+                    if (!collapse) {
+                      run(node);
+                    }
+                  });
+                }
+              };
+              run(cell);
+            }
           }}
           className="collapse"
         >
