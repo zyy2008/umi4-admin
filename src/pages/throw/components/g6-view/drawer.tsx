@@ -7,7 +7,6 @@ import img from "@/assets/yay.jpg";
 
 const DrawerBody: React.FC<{ data?: { [key: string]: any } }> = (props) => {
   const { data } = props;
-  console.log(data);
   if (data) {
     switch (data.renderKey) {
       case "ProcessNode":

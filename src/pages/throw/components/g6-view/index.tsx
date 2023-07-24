@@ -32,11 +32,6 @@ const G6View: React.FC<IProps> = ({ viewData }) => {
             stroke: "red",
           },
         },
-        nodeStateStyles: {
-          selected: {
-            fill: "red",
-          },
-        },
         defaultNode: {
           anchorPoints: [
             [0.5, 0],

@@ -23,6 +23,28 @@ const onNodeClick: ShapeEventListner = (_, node, shape, graph) => {
   graph.emit("onNodeDrawer", node);
 };
 
+const fittingString = (str: string, maxWidth: number, fontSize: number) => {
+  const ellipsis = "...";
+  const ellipsisLength = G6.Util.getTextSize(ellipsis, fontSize)[0];
+  let currentWidth = 0;
+  let res = str;
+  const pattern = new RegExp("[\u4E00-\u9FA5]+"); // distinguish the Chinese charactors and letters
+  str.split("").forEach((letter, i) => {
+    if (currentWidth > maxWidth - ellipsisLength) return;
+    if (pattern.test(letter)) {
+      // Chinese charactors
+      currentWidth += fontSize;
+    } else {
+      // get the width of single letter according to the fontSize
+      currentWidth += G6.Util.getLetterWidth(letter, fontSize);
+    }
+    if (currentWidth > maxWidth - ellipsisLength) {
+      res = `${str.substr(0, i)}${ellipsis}`;
+    }
+  });
+  return res;
+};
+
 const RectNode = (props: { cfg: ModelConfig }) => {
   const { cfg } = props;
   const {
@@ -31,6 +53,7 @@ const RectNode = (props: { cfg: ModelConfig }) => {
     fontSize,
     collapsed,
     children,
+    width = 50,
   } = cfg as NsGraph.INodeConfig;
   const onClick: ShapeEventListner = (evt, node, shape, graph) => {
     node &&
@@ -51,6 +74,7 @@ const RectNode = (props: { cfg: ModelConfig }) => {
           alignItems: "center",
           flexWrap: "wrap",
           cursor: "pointer",
+          display: "flex",
         }}
         onClick={onNodeClick as any}
       >
@@ -62,7 +86,7 @@ const RectNode = (props: { cfg: ModelConfig }) => {
           }}
           onClick={onNodeClick as any}
         >
-          {label}
+          {fittingString(label, width, fontSize)}
         </Text>
       </Rect>
       {children?.length > 0 && (
@@ -100,7 +124,12 @@ const RectNode = (props: { cfg: ModelConfig }) => {
 
 const CircleNode = (props: { cfg: ModelConfig }) => {
   const { cfg } = props;
-  const { label = "label", fontFill, fontSize } = cfg as NsGraph.INodeConfig;
+  const {
+    label = "label",
+    fontFill,
+    width = 50,
+    fontSize,
+  } = cfg as NsGraph.INodeConfig;
   return (
     <Group draggable>
       <Circle
@@ -122,7 +151,7 @@ const CircleNode = (props: { cfg: ModelConfig }) => {
           }}
           onClick={onNodeClick as any}
         >
-          {label}
+          {fittingString(label, width, fontSize)}
         </Text>
       </Circle>
     </Group>
@@ -131,7 +160,12 @@ const CircleNode = (props: { cfg: ModelConfig }) => {
 
 const SquareNode = (props: { cfg: ModelConfig }) => {
   const { cfg } = props;
-  const { label = "label", fontFill, fontSize } = cfg as NsGraph.INodeConfig;
+  const {
+    label = "label",
+    fontFill,
+    fontSize,
+    width = 50,
+  } = cfg as NsGraph.INodeConfig;
   return (
     <Group draggable>
       <Rect
@@ -152,7 +186,7 @@ const SquareNode = (props: { cfg: ModelConfig }) => {
           }}
           onClick={onNodeClick as any}
         >
-          {label}
+          {fittingString(label, width, fontSize)}
         </Text>
       </Rect>
     </Group>
@@ -164,7 +198,15 @@ const options: ShapeOptions = {
     return cfg?.anchorPoints;
   },
   setState(name, value, item) {
-    console.log(name);
+    const group = item?.getContainer();
+    const shape = group?.get("children")[0];
+    if (name === "selected") {
+      if (value) {
+        shape.attr("fill", "red");
+      } else {
+        shape.attr("fill", "");
+      }
+    }
   },
 };
 
