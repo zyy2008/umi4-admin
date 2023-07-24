@@ -7,13 +7,12 @@ import {
 import { Button, Space } from "antd";
 import styles from "./index.less";
 import React from "react";
-import { X6View } from "./components";
+import { G6View } from "./components";
 import data, { DataType } from "./json";
-import { NsGraph } from "@antv/xflow";
 import ButtonModal from "@/components/button-modal";
 
 export default () => {
-  const [value, setValue] = React.useState<number>();
+  const [value, setValue] = React.useState<number>(0);
   const [open, setOpen] = React.useState<boolean>(false);
   const formatData = React.useMemo<CheckCardGroupProps["options"]>(() => {
     return data.map((item, index) => {
@@ -130,8 +129,11 @@ export default () => {
         style={{
           height: "100%",
         }}
+        bodyStyle={{
+          padding: 0,
+        }}
       >
-        <X6View viewData={findData.graphData} />
+        <G6View viewData={findData.graphData} />
       </ProCard>
     </ProCard>
   );

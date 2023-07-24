@@ -20,7 +20,7 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               label: "流程元素",
               width: 110,
               height: 50,
-              fill: "rgba(90, 120, 200, 0.56);",
+              fill: "rgba(90, 120, 200, 0.56)",
               fontFill: "#ebf7ff",
             }}
             size={{
@@ -28,7 +28,7 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               height: 50,
             }}
             data={{
-              fill: "rgba(90, 120, 200, 0.56);",
+              fill: "rgba(90, 120, 200, 0.56)",
               fontFill: "#ebf7ff",
             }}
             node={ProcessNode}
@@ -42,7 +42,7 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               width: 70,
               height: 70,
               label: "判断元素",
-              fill: "rgba(90, 120, 200, 0.56);",
+              fill: "rgba(90, 120, 200, 0.56)",
               fontFill: "#ebf7ff",
               ports: [
                 {
@@ -57,7 +57,7 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               height: 70,
             }}
             data={{
-              fill: "rgba(90, 120, 200, 0.56);",
+              fill: "rgba(90, 120, 200, 0.56)",
               fontFill: "#ebf7ff",
             }}
             node={ConnectorNode}
@@ -71,7 +71,7 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               label: "判断元素",
               width: 70,
               height: 70,
-              fill: "rgba(90, 120, 200, 0.56);",
+              fill: "rgba(90, 120, 200, 0.56)",
               fontFill: "#ebf7ff",
               ports: [
                 {
@@ -86,7 +86,7 @@ const CardBody: React.FC<IBodyProps> = (props) => {
               height: 70,
             }}
             data={{
-              fill: "rgba(90, 120, 200, 0.56);",
+              fill: "rgba(90, 120, 200, 0.56)",
               fontFill: "#ebf7ff",
             }}
             node={SquareNode}

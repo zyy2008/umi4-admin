@@ -13,6 +13,7 @@
   "dependencies": {
     "@alita/plugins": "^3.2.3",
     "@ant-design/pro-components": "^2.3.58",
+    "@antv/g6-react-node": "^1.4.5",
     "@antv/graphin": "^2.7.16",
     "@antv/graphin-components": "^2.4.0",
     "@antv/graphin-icons": "^1.0.0",

@@ -1,0 +1,28 @@
+.g6-view {
+  position: relative;
+  height: 100%;
+  display: flex;
+
+  :global {
+    .g6-grid-container {
+      z-index: 0 !important;
+    }
+
+    canvas {
+      z-index: 1;
+      position: relative;
+    }
+  }
+}
+
+.drawer {
+  :global {
+    .main-tabs-tabpane {
+      padding: 15px;
+    }
+
+    .main-pro-card-body {
+      padding: 0;
+    }
+  }
+}
