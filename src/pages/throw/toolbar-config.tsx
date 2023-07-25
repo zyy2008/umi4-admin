@@ -9,6 +9,7 @@ import {
   MODELS,
   XFlowGraphCommands,
   IconStore,
+  NsGraph,
 } from "@antv/xflow";
 import {
   SaveOutlined,
@@ -17,6 +18,7 @@ import {
   CameraOutlined,
 } from "@ant-design/icons";
 import { DataUri, Graph } from "@antv/x6";
+import { merge, mergeWith, isArray } from "lodash";
 
 namespace NsConfig {
   /** 注册icon 类型 */
@@ -54,7 +56,43 @@ namespace NsConfig {
         id: XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         iconName: "SaveOutlined",
         tooltip: "保存数据",
-        onClick: async ({ commandService }) => {
+        onClick: async ({ commandService, modelService }) => {
+          const res = await MODELS.GRAPH_META.useValue(modelService);
+          const graph: Graph = await res.getX6Graph();
+          let format: { [key: string]: NsGraph.INodeConfig[] } = {};
+          const cells = graph.getLeafNodes();
+          const getParentsIds: { [key: string]: NsGraph.INodeConfig[] }[] =
+            cells.map((cell) => {
+              const [edge] = graph.getConnectedEdges(cell, { incoming: true }); // 返回输入边
+              const { source } =
+                edge?.getData() ?? ({ source: "" } as NsGraph.IEdgeConfig);
+              return {
+                [source]: [cell.getData()],
+              };
+            });
+          getParentsIds.forEach((item) => {
+            format = mergeWith(format, item, (objValue, srcValue) => {
+              if (isArray(objValue)) {
+                return objValue.concat(srcValue);
+              }
+            });
+          });
+          const postFormat = Object.keys(format).map((key) => {
+            const children = format[key].map(({ id, expression }) => ({
+              id,
+              expression,
+            }));
+            const { condition } = graph.getCellById(key).getData();
+            return {
+              parent: {
+                id: key,
+                condition,
+              },
+              children,
+            };
+          });
+          console.log(postFormat);
+          // console.log(getParentsIds);
           commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {
@@ -63,7 +101,7 @@ namespace NsConfig {
                   meta,
                   graphData: data,
                 };
-                console.log(JSON.stringify(object));
+                console.log(JSON.stringify(postFormat));
               },
             }
           );

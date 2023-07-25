@@ -6,6 +6,7 @@ import { JsonSchemaForm, uuidv4, NsGraph, IAppLoad } from "@antv/xflow";
 import { controlMapService } from "@/components/custom-form";
 import { NsJsonForm } from "./form-service";
 import { Graph } from "@antv/x6";
+import data from "./json";
 
 const Edit: React.FC = () => {
   const toolbarConfig = useToolbarConfig();
@@ -15,6 +16,7 @@ const Edit: React.FC = () => {
     setGraph(graph);
   };
   const graphData = React.useMemo<NsGraph.IGraphData>(() => {
+    return data[1].graphData;
     return {
       nodes: [
         {

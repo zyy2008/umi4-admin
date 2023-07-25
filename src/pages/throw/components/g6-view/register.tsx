@@ -62,7 +62,7 @@ const RectNode = (props: { cfg: ModelConfig }) => {
       });
     graph.layout();
     graph.fitView();
-    graph.fitCenter();
+    // graph.fitCenter();
   };
 
   return (
@@ -72,9 +72,7 @@ const RectNode = (props: { cfg: ModelConfig }) => {
           ...cfg,
           justifyContent: "center",
           alignItems: "center",
-          flexWrap: "wrap",
           cursor: "pointer",
-          display: "flex",
         }}
         onClick={onNodeClick as any}
       >
@@ -200,12 +198,15 @@ const options: ShapeOptions = {
   setState(name, value, item) {
     const group = item?.getContainer();
     const shape = group?.get("children")[0];
-    if (name === "selected") {
-      if (value) {
-        shape.attr("fill", "red");
-      } else {
-        shape.attr("fill", "");
-      }
+    switch (name) {
+      case "selected":
+        shape.attr("fill", value ? "red" : "");
+        break;
+      case "warning":
+        shape.attr("fill", value ? "yellow" : "");
+        break;
+      default:
+        break;
     }
   },
 };

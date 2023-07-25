@@ -69,6 +69,19 @@ const G6View: React.FC<IProps> = ({ viewData }) => {
     }
   }, [graph, viewData]);
 
+  //模拟告警
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      if (graph) {
+      }
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, [graph]);
+
   return (
     <React.Fragment>
       <Drawer graph={graph} />
