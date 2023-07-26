@@ -18,7 +18,7 @@ import {
   CameraOutlined,
 } from "@ant-design/icons";
 import { DataUri, Graph } from "@antv/x6";
-import { merge, mergeWith, isArray } from "lodash";
+import { mergeWith, isArray } from "lodash";
 
 namespace NsConfig {
   /** 注册icon 类型 */
@@ -91,8 +91,6 @@ namespace NsConfig {
               children,
             };
           });
-          console.log(postFormat);
-          // console.log(getParentsIds);
           commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
             XFlowGraphCommands.SAVE_GRAPH_DATA.id,
             {

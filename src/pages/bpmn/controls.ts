@@ -1,12 +1,6 @@
 import { NsJsonSchemaForm } from "@antv/xflow";
-import { ControlShapeEnum } from "@/components/custom-form";
 
 const { ControlShape } = NsJsonSchemaForm;
-
-export const returnType = ["int", "float", "string", "boolean", "void"];
-
-const formatSelect: { title: string; value: string | number | boolean }[] =
-  returnType.map((val, index) => ({ title: val, value: index + 1 }));
 
 const controlsFuc: (
   targetData: NsJsonSchemaForm.TargetData
