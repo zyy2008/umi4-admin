@@ -6,8 +6,10 @@ import { CustomPanel } from "./components";
 import { controlMapService } from "@/components/custom-form";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
-import { APIS, ParamBean } from "@/services";
+import { ParamBean } from "@/services";
 import { Graph } from "@antv/x6";
+import classnames from "classnames";
+import ReactDOM from "react-dom";
 
 export type Check = { uuid: string; version: string } | null;
 
@@ -43,16 +45,22 @@ const Bpmn = () => {
             fontSize: 14,
             ports: [
               {
-                type: NsGraph.AnchorType.INPUT,
                 group: NsGraph.AnchorGroup.TOP,
-                tooltip: "输入桩",
                 attrs: portAttrs,
                 id: uuidv4(),
               },
               {
-                type: NsGraph.AnchorType.OUTPUT,
+                group: NsGraph.AnchorGroup.RIGHT,
+                attrs: portAttrs,
+                id: uuidv4(),
+              },
+              {
+                group: NsGraph.AnchorGroup.LEFT,
+                attrs: portAttrs,
+                id: uuidv4(),
+              },
+              {
                 group: NsGraph.AnchorGroup.BOTTOM,
-                tooltip: "输出桩",
                 attrs: portAttrs,
                 id: uuidv4(),
               },
@@ -75,6 +83,47 @@ const Bpmn = () => {
       }}
       graphData={graphData}
       onLoad={onLoad}
+      menuDisabled={["StartNode"]}
+      connectionType="many-to-many"
+      graphOptions={(opt) => ({
+        ...opt,
+        connecting: {
+          ...opt.connecting,
+          validateConnection({
+            sourceView,
+            targetView,
+            sourceMagnet,
+            targetMagnet,
+          }) {
+            // 不允许连接到自己
+            if (sourceView === targetView) {
+              return false;
+            }
+            const node = targetView!.cell as any;
+            // 判断目标链接桩是否可连接
+            if (targetMagnet) {
+              const portId = targetMagnet.getAttribute("port");
+              const port = node.getPort(portId);
+              return !(port && port.connected);
+            }
+            return false;
+          },
+        },
+        onPortRendered(args) {
+          const { port } = args;
+          const { contentSelectors } = args;
+          const container = contentSelectors && contentSelectors.content;
+          const clz = classnames("xflow-port", {
+            connected: (port as any).connected,
+          });
+          if (container) {
+            ReactDOM.render(
+              (<span className={clz} />) as React.ReactElement,
+              container as HTMLElement
+            );
+          }
+        },
+      })}
     >
       <>
         <CustomPanel

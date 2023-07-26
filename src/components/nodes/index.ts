@@ -15,3 +15,4 @@ export {
 } from "./process";
 export { GroupNode } from "./group-node";
 export { GroupCollapsed } from "./group-collapsed";
+export { TaskNode } from "./task";

@@ -78,6 +78,7 @@ export namespace MockApi {
     if (groupChildren && groupChildren.length) {
       node.ports = [];
     }
+    console.log(node);
     return node;
   };
 

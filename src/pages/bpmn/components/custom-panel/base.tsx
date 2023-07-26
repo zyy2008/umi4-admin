@@ -1,4 +1,3 @@
-import { WorkspacePanel, IWorkspacePanelProps } from "@antv/xflow";
 import { NsGraph } from "@antv/xflow-core";
 import { Card, Row } from "antd";
 import { IConfigRenderOptions } from "@/components/flow";
@@ -7,8 +6,29 @@ import {
   DataIONode,
   SectorNode,
   ManualOperationNode,
+  TaskNode,
+  RectNode,
 } from "@/components/nodes";
 import { ColNode } from "@/components/flow-custom";
+
+const ports: NsGraph.INodeAnchor[] = [
+  {
+    group: NsGraph.AnchorGroup.BOTTOM,
+    id: "",
+  },
+  {
+    group: NsGraph.AnchorGroup.LEFT,
+    id: "",
+  },
+  {
+    group: NsGraph.AnchorGroup.RIGHT,
+    id: "",
+  },
+  {
+    group: NsGraph.AnchorGroup.TOP,
+    id: "",
+  },
+];
 
 const Base: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
@@ -21,28 +41,7 @@ const Base: React.FC<IConfigRenderOptions> = (props) => {
           nodeConfig={{
             label: "条件",
             renderKey: "DecisionNode",
-            ports: [
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.BOTTOM,
-                tooltip: "输出桩",
-              },
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.LEFT,
-                tooltip: "输出桩:true",
-              },
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.RIGHT,
-                tooltip: "输出桩:false",
-              },
-              {
-                type: NsGraph.AnchorType.INPUT,
-                group: NsGraph.AnchorGroup.TOP,
-                tooltip: "输入桩",
-              },
-            ] as NsGraph.INodeAnchor[],
+            ports,
           }}
         />
         <ColNode
@@ -51,82 +50,33 @@ const Base: React.FC<IConfigRenderOptions> = (props) => {
           nodeConfig={{
             label: "网关",
             renderKey: "DataIONode",
-            ports: [
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.BOTTOM,
-                tooltip: "输出桩:true",
-              },
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.LEFT,
-                tooltip: "输出桩:false",
-                args: {
-                  dx: 16,
-                },
-              },
-              {
-                type: NsGraph.AnchorType.INPUT,
-                group: NsGraph.AnchorGroup.TOP,
-                tooltip: "输入桩",
-              },
-            ] as NsGraph.INodeAnchor[],
+            ports,
           }}
         />
         <ColNode
           onMouseDown={onMouseDown}
-          node={SectorNode}
+          node={RectNode}
           size={{
-            width: 110,
-            height: 55,
+            width: 90,
+            height: 40,
           }}
           nodeConfig={{
-            label: "事件3",
-            renderKey: "SectorNode",
-            ports: [
-              {
-                type: NsGraph.AnchorType.INPUT,
-                group: NsGraph.AnchorGroup.TOP,
-                tooltip: "输入桩",
-              },
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.LEFT,
-                tooltip: "输出桩:false",
-              },
-            ] as NsGraph.INodeAnchor[],
+            label: "用户任务",
+            renderKey: "RectNode",
+            ports,
           }}
         />
         <ColNode
           onMouseDown={onMouseDown}
-          node={ManualOperationNode}
+          node={RectNode}
           size={{
-            width: 100,
-            height: 50,
+            width: 90,
+            height: 40,
           }}
           nodeConfig={{
-            label: "事件4",
-            renderKey: "ManualOperationNode",
-            ports: [
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.BOTTOM,
-                tooltip: "输出桩:true",
-              },
-              {
-                type: NsGraph.AnchorType.OUTPUT,
-                group: NsGraph.AnchorGroup.LEFT,
-                tooltip: "输出桩:false",
-                args: {
-                  dx: 16,
-                },
-              },
-              {
-                type: NsGraph.AnchorType.INPUT,
-                group: NsGraph.AnchorGroup.TOP,
-                tooltip: "输入桩",
-              },
-            ] as NsGraph.INodeAnchor[],
+            label: "系统任务",
+            renderKey: "RectNode",
+            ports,
           }}
         />
       </Row>
