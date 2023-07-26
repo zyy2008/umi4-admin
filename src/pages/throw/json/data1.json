@@ -9,7 +9,7 @@
         "width": 110,
         "height": 50,
         "fontSize": 14,
-        "fill": "rgba(90, 120, 200, 0.56);",
+        "fill": "rgba(90, 120, 200, 0.56)",
         "fontFill": "#ebf7ff",
         "ports": [
           {

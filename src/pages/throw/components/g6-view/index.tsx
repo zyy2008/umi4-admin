@@ -6,6 +6,7 @@ import { formatTree } from "./uilts";
 import G6 from "./register";
 import { appenAutoShapeListener } from "./event";
 import Drawer from "./drawer";
+import DataState from "./data-state";
 
 type IProps = {
   viewData: NsGraph.IGraphData;
@@ -14,6 +15,7 @@ type IProps = {
 const G6View: React.FC<IProps> = ({ viewData }) => {
   const divRef = React.useRef<HTMLDivElement>(null);
   const [graph, setGraph] = React.useState<Graph>();
+  const [dataState, setDataState] = React.useState<DataState>();
   React.useEffect(() => {
     if (divRef.current) {
       // 初始化画布
@@ -29,7 +31,7 @@ const G6View: React.FC<IProps> = ({ viewData }) => {
         defaultEdge: {
           type: "polyline",
           style: {
-            stroke: "red",
+            stroke: "rgba(134, 212, 255, 1)",
           },
         },
         defaultNode: {
@@ -55,6 +57,7 @@ const G6View: React.FC<IProps> = ({ viewData }) => {
         },
       });
       setGraph(graph);
+      appenAutoShapeListener(graph);
     }
     return () => {
       graph?.destroy();
@@ -65,21 +68,16 @@ const G6View: React.FC<IProps> = ({ viewData }) => {
       const res = formatTree(viewData);
       graph.data(res);
       graph.render();
-      appenAutoShapeListener(graph);
     }
   }, [graph, viewData]);
 
   //模拟告警
 
   React.useEffect(() => {
-    const timer = setInterval(() => {
-      if (graph) {
-      }
-    }, 1000);
-
-    return () => {
-      clearInterval(timer);
-    };
+    if (graph) {
+      const dataState = new DataState([], graph);
+      setDataState(dataState);
+    }
   }, [graph]);
 
   return (

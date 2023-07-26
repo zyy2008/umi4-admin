@@ -196,14 +196,23 @@ const options: ShapeOptions = {
     return cfg?.anchorPoints;
   },
   setState(name, value, item) {
-    const group = item?.getContainer();
+    const group = item?.getContainer().get("children")?.[0];
     const shape = group?.get("children")[0];
     switch (name) {
       case "selected":
-        shape.attr("fill", value ? "red" : "");
+        shape.attr("stroke", value ? "blue" : "");
         break;
       case "warning":
-        shape.attr("fill", value ? "yellow" : "");
+        shape.attr(
+          "fill",
+          value ? "rgba(200, 104, 90, 0.56)" : "rgba(90, 120, 200, 0.56)"
+        );
+        break;
+      case "normal":
+        shape.attr(
+          "fill",
+          value ? "rgba(51, 167, 110, 0.56)" : "rgba(90, 120, 200, 0.56)"
+        );
         break;
       default:
         break;
