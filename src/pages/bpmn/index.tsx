@@ -1,18 +1,11 @@
 import React from "react";
-import {
-  JsonSchemaForm,
-  NsGraph,
-  NsJsonSchemaForm,
-  IAppLoad,
-  uuidv4,
-} from "@antv/xflow";
+import { JsonSchemaForm, NsGraph, IAppLoad, uuidv4 } from "@antv/xflow";
 import BpmnFlow, { portAttrs } from "@/components/flow";
 import { NsJsonForm } from "./form-service";
 import { CustomPanel } from "./components";
 import { controlMapService } from "@/components/custom-form";
 import * as dndPanelConfig from "@/components/flow/config-dnd-panel";
 import { useToolbarConfig } from "./toolbar-config";
-import { useRequest, useSearchParams } from "@umijs/max";
 import { APIS, ParamBean } from "@/services";
 import { Graph } from "@antv/x6";
 
