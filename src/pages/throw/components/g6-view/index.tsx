@@ -76,11 +76,38 @@ const G6View: React.FC<IProps> = ({ viewData }) => {
   //模拟告警
 
   React.useEffect(() => {
-    if (graph) {
-      const dataState = new DataState([], graph);
+    if (graph && viewData) {
+      const mock1 = [
+        {
+          id: "5cf107d3-ef9c-4073-bcc4-c56508301f4d",
+          // id: "f1aed138-3cd6-4dfc-bee3-255ad4f5c37e",
+          result: false,
+          child: [
+            {
+              id: "bad71862-dc50-4223-a281-2b0c103822fb",
+              result: true,
+            },
+            {
+              id: "83a2d286-683c-4822-b969-eb4bccb44ff6",
+              result: false,
+            },
+            {
+              id: "476e5c6d-39db-4978-9f96-923069169ec9",
+              result: false,
+            },
+          ],
+        },
+      ];
+      const dataState = new DataState(graph, {
+        graphData: viewData,
+        targetData: mock1,
+      });
       setDataState(dataState);
+      setTimeout(() => {
+        dataState.run();
+      }, 3000);
     }
-  }, [graph]);
+  }, [graph, viewData]);
 
   return (
     <React.Fragment>

@@ -1,41 +1,79 @@
 import { Graph } from "@antv/g6";
+import { NsGraph } from "@antv/xflow";
 
-type MockType = {
+type ResultType = {
   id: string;
   result: boolean;
-  child?: MockType[];
+  child?: ResultType[];
+};
+
+type Data = {
+  graphData: NsGraph.IGraphData;
+  targetData: ResultType[];
 };
 
 export default class DataState {
-  private data: MockType[];
+  private data: Data = {
+    graphData: { nodes: [], edges: [] },
+    targetData: [],
+  };
   private graph: Graph;
   private timer: NodeJS.Timeout | null = null;
   private isRun: boolean = true;
-  constructor(data: MockType[], graph: Graph) {
-    this.data = data;
+  constructor(graph: Graph, data?: Data) {
+    this.data = {
+      ...this.data,
+      ...data,
+    };
     this.graph = graph;
   }
-  set setData(data: MockType[]) {
-    this.data = data;
+  set setData(data: Data) {
+    this.data = {
+      ...this.data,
+      ...data,
+    };
   }
   get getDate() {
     return this.data;
   }
-  run(data: MockType[] = this.data, graph: Graph = this.graph) {
-    data.forEach(({ id, result, child }) => {
+  run(data: Data = this.data, graph: Graph = this.graph) {
+    const { targetData, graphData } = data;
+    targetData?.forEach(({ id, result, child }) => {
       const item = graph.findById(id);
       if (item) {
         if (result) {
-          graph.setItemState(item, "normal", true);
+          item.setState("normal", true);
         } else {
-          graph.setItemState(item, "warning", true);
+          item.setState("warning", true);
         }
-        if (child) {
-          this.run(child, graph);
+      }
+      if (child) {
+        const { edges } = graphData;
+        if (!result && edges.length > 0) {
+          this.findParentId(id, edges);
         }
-        this.cycle();
-      } else {
-        this.cycle();
+        this.run({
+          targetData: child,
+          graphData,
+        });
+      }
+      this.cycle();
+    });
+  }
+  findParentId(id: string, edges: NsGraph.IEdgeConfig[]) {
+    const handle = (id: string): string[] => {
+      const find = edges.filter(({ target }) => target === id);
+      if (find.length > 0) {
+        const [{ source }] = find;
+        return [source, ...handle(source)];
+      }
+      return [];
+    };
+    const res = handle(id);
+    res.forEach((id) => {
+      const item = this.graph.findById(id);
+      if (item) {
+        item.setState("warning", true);
       }
     });
   }
