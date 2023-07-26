@@ -12,7 +12,7 @@ import data, { DataType } from "./json";
 import ButtonModal from "@/components/button-modal";
 
 export default () => {
-  const [value, setValue] = React.useState<number>(1);
+  const [value, setValue] = React.useState<number>();
   const [open, setOpen] = React.useState<boolean>(false);
   const formatData = React.useMemo<CheckCardGroupProps["options"]>(() => {
     return data.map((item, index) => {

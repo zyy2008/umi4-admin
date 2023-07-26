@@ -66,8 +66,10 @@ const G6View: React.FC<IProps> = ({ viewData }) => {
   React.useEffect(() => {
     if (graph && viewData) {
       const res = formatTree(viewData);
-      graph.data(res);
-      graph.render();
+      if (res) {
+        graph.data(res);
+        graph.render();
+      }
     }
   }, [graph, viewData]);
 
