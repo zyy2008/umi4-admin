@@ -1,13 +1,19 @@
 .condition {
-  width: 60px;
-  height: 60px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: rotateZ(45deg);
+
+
+
 
   :global {
+    .view {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotateZ(45deg);
+    }
+
     .diamond {
       width: calc(100% - 10px);
       height: calc(100% - 10px);
@@ -20,15 +26,14 @@
     .x {
       font-size: 20px;
       transform: rotateZ(-45deg);
+      font-weight: bold;
     }
 
     .text {
-      position: absolute;
-      transform: rotateZ(-45deg);
-      bottom: -30px;
-      left: 0;
       width: 100%;
-      color: #A2B1C3;
+      overflow: hidden;
+      word-break: break-word;
+      text-align: center;
     }
   }
 

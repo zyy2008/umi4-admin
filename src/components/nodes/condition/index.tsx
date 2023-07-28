@@ -20,18 +20,19 @@ export const ConditionNode: NsGraph.INodeRender = (props) => {
   const { width, height } = size;
 
   return (
-    <div className={styles["condition"]} style={{ width, height, fontSize }}>
-      <div className="diamond">
-        <div
-          className="x"
-          style={{
-            fontSize: XfontSize,
-          }}
-        >
-          X
+    <div className={styles["condition"]}>
+      <div className="view" style={{ width, height, fontSize }}>
+        <div className="diamond">
+          <div
+            className="x"
+            style={{
+              fontSize: XfontSize,
+            }}
+          >
+            X
+          </div>
         </div>
       </div>
-
       <div className="text">{label}</div>
     </div>
   );

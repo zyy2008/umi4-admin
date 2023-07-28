@@ -17,6 +17,25 @@ const controlsFuc: (
       },
     ],
     TaskNode: controlsMainFun(targetData),
+    EndNode: [
+      {
+        name: "label",
+        label: "名称",
+        shape: ControlShape.INPUT,
+        value: targetData?.label,
+        placeholder: "请输入",
+        disabled: true,
+      },
+    ],
+    ConditionNode: [
+      {
+        name: "label",
+        label: "名称",
+        shape: ControlShape.INPUT,
+        value: targetData?.label,
+        placeholder: "请输入",
+      },
+    ],
   };
   if (targetData?.renderKey) {
     return ControlRecord[targetData.renderKey];
