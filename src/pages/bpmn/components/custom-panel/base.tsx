@@ -1,14 +1,7 @@
 import { NsGraph } from "@antv/xflow-core";
 import { Card, Row } from "antd";
 import { IConfigRenderOptions } from "@/components/flow";
-import {
-  DecisionNode,
-  DataIONode,
-  SectorNode,
-  ManualOperationNode,
-  TaskNode,
-  RectNode,
-} from "@/components/nodes";
+import { TaskNode, EndNode, ConditionNode } from "@/components/nodes";
 import { ColNode } from "@/components/flow-custom";
 
 const ports: NsGraph.INodeAnchor[] = [
@@ -37,46 +30,57 @@ const Base: React.FC<IConfigRenderOptions> = (props) => {
       <Row>
         <ColNode
           onMouseDown={onMouseDown}
-          node={DecisionNode}
+          node={ConditionNode}
+          size={{
+            width: 40,
+            height: 40,
+          }}
           nodeConfig={{
-            label: "条件",
-            renderKey: "DecisionNode",
+            renderKey: "ConditionNode",
             ports,
+            width: 50,
+            height: 50,
+            fontSize: 20,
+            XfontSize: 30,
           }}
         />
         <ColNode
           onMouseDown={onMouseDown}
-          node={DataIONode}
-          nodeConfig={{
-            label: "网关",
-            renderKey: "DataIONode",
-            ports,
-          }}
-        />
-        <ColNode
-          onMouseDown={onMouseDown}
-          node={RectNode}
+          node={TaskNode}
           size={{
             width: 90,
             height: 40,
           }}
+          data={{
+            fontSize: 12,
+          }}
           nodeConfig={{
-            label: "用户任务",
-            renderKey: "RectNode",
+            label: "服务任务",
+            renderKey: "TaskNode",
             ports,
+            width: 100,
+            height: 70,
           }}
         />
         <ColNode
           onMouseDown={onMouseDown}
-          node={RectNode}
+          node={EndNode}
           size={{
-            width: 90,
+            width: 40,
             height: 40,
           }}
+          data={{
+            fontSize: 12,
+          }}
           nodeConfig={{
-            label: "系统任务",
-            renderKey: "RectNode",
-            ports,
+            label: "结束",
+            renderKey: "EndNode",
+            ports: ports.map((item) => ({
+              ...item,
+              type: NsGraph.AnchorType.INPUT,
+            })),
+            width: 50,
+            height: 50,
           }}
         />
       </Row>

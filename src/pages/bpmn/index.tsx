@@ -10,6 +10,7 @@ import { ParamBean } from "@/services";
 import { Graph } from "@antv/x6";
 import classnames from "classnames";
 import ReactDOM from "react-dom";
+import { connecting } from "./connection";
 
 export type Check = { uuid: string; version: string } | null;
 
@@ -40,26 +41,30 @@ const Bpmn = () => {
             id: uuidv4(),
             label: "开始",
             renderKey: "StartNode",
-            width: 70,
-            height: 70,
+            width: 50,
+            height: 50,
             fontSize: 14,
             ports: [
               {
+                type: NsGraph.AnchorType.OUTPUT,
                 group: NsGraph.AnchorGroup.TOP,
                 attrs: portAttrs,
                 id: uuidv4(),
               },
               {
+                type: NsGraph.AnchorType.OUTPUT,
                 group: NsGraph.AnchorGroup.RIGHT,
                 attrs: portAttrs,
                 id: uuidv4(),
               },
               {
+                type: NsGraph.AnchorType.OUTPUT,
                 group: NsGraph.AnchorGroup.LEFT,
                 attrs: portAttrs,
                 id: uuidv4(),
               },
               {
+                type: NsGraph.AnchorType.OUTPUT,
                 group: NsGraph.AnchorGroup.BOTTOM,
                 attrs: portAttrs,
                 id: uuidv4(),
@@ -87,27 +92,12 @@ const Bpmn = () => {
       connectionType="many-to-many"
       graphOptions={(opt) => ({
         ...opt,
+        snapline: {
+          enabled: true,
+        },
         connecting: {
           ...opt.connecting,
-          validateConnection({
-            sourceView,
-            targetView,
-            sourceMagnet,
-            targetMagnet,
-          }) {
-            // 不允许连接到自己
-            if (sourceView === targetView) {
-              return false;
-            }
-            const node = targetView!.cell as any;
-            // 判断目标链接桩是否可连接
-            if (targetMagnet) {
-              const portId = targetMagnet.getAttribute("port");
-              const port = node.getPort(portId);
-              return !(port && port.connected);
-            }
-            return false;
-          },
+          ...connecting,
         },
         onPortRendered(args) {
           const { port } = args;

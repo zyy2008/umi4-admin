@@ -16,3 +16,5 @@ export {
 export { GroupNode } from "./group-node";
 export { GroupCollapsed } from "./group-collapsed";
 export { TaskNode } from "./task";
+export { EndNode } from "./end";
+export { ConditionNode } from "./condition";

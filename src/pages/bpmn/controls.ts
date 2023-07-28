@@ -16,6 +16,7 @@ const controlsFuc: (
         disabled: true,
       },
     ],
+    TaskNode: controlsMainFun(targetData),
   };
   if (targetData?.renderKey) {
     return ControlRecord[targetData.renderKey];
@@ -29,34 +30,32 @@ const controlsMainFun: (
 ) => NsJsonSchemaForm.IControlSchema[] = (targetData) => {
   return [
     {
-      name: "name",
+      name: "label",
       label: "名称",
       shape: ControlShape.INPUT,
-      value: targetData?.name,
+      placeholder: "请输入",
+      value: targetData?.label,
     },
     {
       name: "importRule",
       label: "入口规则",
-      shape: ControlShape.INPUT,
+      shape: ControlShape.SELECT,
+      placeholder: "请选择",
       value: targetData?.importRule,
     },
     {
       name: "exportRule",
       label: "出口规则",
-      shape: ControlShape.INPUT,
+      shape: ControlShape.SELECT,
+      placeholder: "请选择",
       value: targetData?.exportRule,
     },
     {
-      name: "timeout",
-      label: "超时时间",
-      shape: ControlShape.FLOAT,
-      value: targetData?.timeout,
-    },
-    {
-      name: "info",
-      label: "过程信息",
-      shape: ControlShape.INPUT,
-      value: targetData?.info,
+      name: "execution",
+      label: "业务执行",
+      shape: ControlShape.SELECT,
+      placeholder: "请选择",
+      value: targetData?.execution,
     },
   ];
 };

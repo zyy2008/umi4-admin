@@ -1,0 +1,24 @@
+.round {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #A2B1C3;
+  border-radius: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    border: 1px solid #A2B1C3;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 100%;
+  }
+}

@@ -1,16 +1,12 @@
-import React from "react";
-import { SettingOutlined } from "@ant-design/icons";
-import type { NsGraph } from "@antv/xflow";
-import styles from "./index.less";
+import type { NsGraph } from "@antv/xflow-core";
 import {
   NODE_HEIGHT,
   NODE_WIDTH,
   DefaultNodeConfig,
 } from "@/components/flow/constants";
+import styles from "./index.less";
 
-// const fontStyle = { fontSize: "16px" };
-
-export const TaskNode: NsGraph.INodeRender = (props) => {
+export const EndNode: NsGraph.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data = {} } =
     props;
   const {
@@ -21,12 +17,10 @@ export const TaskNode: NsGraph.INodeRender = (props) => {
     fontSize = DefaultNodeConfig.fontSize,
   } = data;
   const { width, height } = size;
+
   return (
-    <div className={styles["task"]} style={{ width, height, fontSize }}>
-      <span className="icon">
-        <SettingOutlined />
-      </span>
-      <span className="label">{label}</span>
+    <div className={styles["round"]} style={{ width, height, fontSize }}>
+      <span>{label}</span>
     </div>
   );
 };

@@ -65,12 +65,7 @@ export namespace NsJsonForm {
           {
             /** Tab的title */
             name: "属性",
-            groups: [
-              {
-                name: "dag",
-                controls: controlsMainFun(targetData),
-              },
-            ],
+            groups: [],
           },
         ],
       };

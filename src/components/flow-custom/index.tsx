@@ -111,9 +111,9 @@ export const ColNode: React.FC<
       onMouseDown={onMouseDown({
         width: 110,
         height: 55,
-        ...nodeConfig,
         id: uuidv4(),
         fontSize: 14,
+        ...nodeConfig,
       })}
       {...colProps}
     >
