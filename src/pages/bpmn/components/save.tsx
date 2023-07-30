@@ -103,6 +103,10 @@ const Save: IToolbarItemOptions["render"] = (props) => {
                 label: "公共事件",
                 value: "2",
               },
+              {
+                label: "普通事件",
+                value: "3",
+              },
             ],
           },
           formItemProps: {
@@ -118,7 +122,7 @@ const Save: IToolbarItemOptions["render"] = (props) => {
           valueType: "dependency",
           name: ["saveType"],
           columns: ({ saveType }) => {
-            if (saveType === "2") {
+            if (saveType === "2" || saveType === "3") {
               return [
                 {
                   title: "触发方式",
@@ -161,7 +165,7 @@ const Save: IToolbarItemOptions["render"] = (props) => {
             triggerType: string[];
             saveType: string;
           }) => {
-            if (saveType === "2") {
+            if (saveType === "2" || saveType === "3") {
               const columns: ProFormColumnsType[] = [
                 {
                   title: "频次",

@@ -29,7 +29,7 @@ export const SelectShape: React.FC<NsJsonSchemaForm.IControlProps> = (
     if (data) {
       return data as IOption[];
     }
-    return [];
+    return initOptions ?? [];
   }, [initOptions, data]);
 
   return (

@@ -98,16 +98,38 @@ const controlsMainFun: (
       label: "业务执行",
       shape: ControlShapeEnum.SELECT_SHAPE,
       placeholder: "请选择",
+
       options: [
         {
-          title: "微服务申请",
+          title: "调度计划生成",
           value: "1",
         },
         {
-          title: "微服务查询",
+          title: "低轨资源申请",
           value: "2",
         },
+        {
+          title: "低轨测控资源修改",
+          value: "3",
+        },
+        {
+          title: "低轨轨控策略生成",
+          value: "4",
+        },
+        {
+          title: "高轨测控资源申请",
+          value: "4",
+        },
+        {
+          title: "控后评估",
+          value: "5",
+        },
       ],
+      originData: {
+        mode: "multiple",
+        maxTagTextLength: 3,
+        maxTagCount: 2,
+      },
       value: targetData?.execution,
     },
   ];
