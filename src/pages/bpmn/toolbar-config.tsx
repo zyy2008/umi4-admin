@@ -1,9 +1,5 @@
 import React from "react";
-import type {
-  IToolbarItemOptions,
-  IToolbarGroupOptions,
-  NsGraphCmd,
-} from "@antv/xflow";
+import type { IToolbarItemOptions, IToolbarGroupOptions } from "@antv/xflow";
 import {
   createToolbarConfig,
   MODELS,
@@ -12,17 +8,16 @@ import {
 } from "@antv/xflow";
 import {
   SaveOutlined,
-  CheckOutlined,
-  CodeOutlined,
   CameraOutlined,
+  PlusCircleOutlined,
 } from "@ant-design/icons";
 import { DataUri, Graph } from "@antv/x6";
+import { Save } from "./components";
 
 namespace NsConfig {
   /** 注册icon 类型 */
   IconStore.set("SaveOutlined", SaveOutlined);
-  IconStore.set("CheckOutlined", CheckOutlined);
-  IconStore.set("CodeOutlined", CodeOutlined);
+  IconStore.set("PlusCircleOutlined ", PlusCircleOutlined);
   IconStore.set("CameraOutlined", CameraOutlined);
   /** 获取toobar配置项 */
   export const getToolbarItems: () => Promise<
@@ -51,19 +46,15 @@ namespace NsConfig {
         },
       },
       {
+        id: "create",
+        iconName: "PlusCircleOutlined ",
+        tooltip: "新建",
+      },
+      {
         id: XFlowGraphCommands.SAVE_GRAPH_DATA.id,
         iconName: "SaveOutlined",
         tooltip: "保存数据",
-        onClick: async ({ commandService }) => {
-          commandService.executeCommand<NsGraphCmd.SaveGraphData.IArgs>(
-            XFlowGraphCommands.SAVE_GRAPH_DATA.id,
-            {
-              saveGraphDataService: async (meta, data) => {
-                console.log(JSON.stringify(data));
-              },
-            }
-          );
-        },
+        render: Save,
       },
     ];
 
