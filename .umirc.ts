@@ -48,10 +48,10 @@ export default defineConfig({
     },
   },
   proxy: {
-    "/atlas": {
-      target: "http://192.169.7.200:8079/",
+    "/rule": {
+      target: "http://192.169.7.131:8081/",
       changeOrigin: true,
-      pathRewrite: { "^/atlas": "" },
+      pathRewrite: { "^/rule": "" },
     },
   },
 
@@ -59,23 +59,29 @@ export default defineConfig({
   routes: [
     {
       path: "/",
-      redirect: "/throw",
+      redirect: "/view",
     },
     {
-      name: "流程编辑",
+      name: "整体态势",
+      path: "/view",
+      component: "./bpmn-view",
+    },
+    {
+      name: "事件定制",
       path: "/bpmn",
       component: "./bpmn",
     },
-    {
-      name: "异常编辑",
-      path: "/throw",
-      component: "./throw/edit",
-    },
-    {
-      name: "异常显示",
-      path: "/throw-view",
-      component: "./throw",
-    },
+
+    // {
+    //   name: "异常编辑",
+    //   path: "/throw",
+    //   component: "./throw/edit",
+    // },
+    // {
+    //   name: "异常显示",
+    //   path: "/throw-view",
+    //   component: "./throw",
+    // },
   ],
   npmClient: "yarn",
 });

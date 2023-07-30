@@ -1,5 +1,5 @@
 import React from "react";
-import { BetaSchemaForm } from "@ant-design/pro-components";
+import { BetaSchemaForm, ProFormColumnsType } from "@ant-design/pro-components";
 import { IToolbarItemOptions, useXFlowApp } from "@antv/xflow";
 import { Radio, Space, TimePicker } from "antd";
 import moment from "moment";
@@ -54,6 +54,15 @@ const Save: IToolbarItemOptions["render"] = (props) => {
   const app = useXFlowApp();
   return (
     <BetaSchemaForm
+      modalProps={{
+        maskClosable: false,
+        destroyOnClose: true,
+      }}
+      title="保存"
+      onFinish={async (value) => {
+        console.log(value);
+        return true;
+      }}
       trigger={
         <div
           className="x6-toolbar-item xflow-toolbar-item"
@@ -82,7 +91,7 @@ const Save: IToolbarItemOptions["render"] = (props) => {
         },
         {
           title: "保存类型",
-          dataIndex: "type",
+          dataIndex: "saveType",
           valueType: "radio",
           fieldProps: {
             options: [
@@ -106,36 +115,54 @@ const Save: IToolbarItemOptions["render"] = (props) => {
           },
         },
         {
-          title: "触发方式",
-          dataIndex: "triggerType",
-          valueType: "checkbox",
-          fieldProps: {
-            options: [
-              {
-                label: "计划任务",
-                value: "1",
-              },
-              {
-                label: "应急任务",
-                value: "2",
-              },
-            ],
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: "此项为必填项",
-              },
-            ],
+          valueType: "dependency",
+          name: ["saveType"],
+          columns: ({ saveType }) => {
+            if (saveType === "2") {
+              return [
+                {
+                  title: "触发方式",
+                  dataIndex: "triggerType",
+                  valueType: "checkbox",
+                  fieldProps: {
+                    options: [
+                      {
+                        label: "计划任务",
+                        value: "1",
+                      },
+                      {
+                        label: "应急任务",
+                        value: "2",
+                      },
+                    ],
+                  },
+                  formItemProps: {
+                    rules: [
+                      {
+                        required: true,
+                        message: "此项为必填项",
+                      },
+                    ],
+                  },
+                },
+              ];
+            }
+
+            return [];
           },
         },
         {
           valueType: "dependency",
-          name: ["triggerType"],
-          columns: ({ triggerType }: { triggerType: string[] }) => {
-            if (triggerType?.includes("1")) {
-              return [
+          name: ["triggerType", "saveType"],
+          columns: ({
+            triggerType,
+            saveType,
+          }: {
+            triggerType: string[];
+            saveType: string;
+          }) => {
+            if (saveType === "2") {
+              const columns: ProFormColumnsType[] = [
                 {
                   title: "频次",
                   dataIndex: "frequency",
@@ -151,8 +178,24 @@ const Save: IToolbarItemOptions["render"] = (props) => {
                     ],
                   },
                 },
+                {
+                  title: "主题",
+                  dataIndex: "topic",
+                  formItemProps: {
+                    rules: [
+                      {
+                        required: true,
+                        message: "此项为必填项",
+                      },
+                    ],
+                  },
+                },
               ];
+              if (triggerType) {
+                return triggerType.map((key) => columns[Number(key) - 1]);
+              }
             }
+
             return [];
           },
           formItemProps: {

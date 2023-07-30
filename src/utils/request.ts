@@ -109,10 +109,10 @@ interceptors.response.use(async (response: Response, opt) => {
   if (hasSuccess) {
     return res;
   }
-  notification.error({
-    message: `请求错误`,
-    description: errorMsg,
-  });
+  // notification.error({
+  //   message: `请求错误`,
+  //   description: errorMsg,
+  // });
   return res;
 });
 
