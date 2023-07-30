@@ -41,16 +41,16 @@ export const SelectShape: React.FC<NsJsonSchemaForm.IControlProps> = (
           placeholder={placeholder}
           loading={loading}
           showSearch
-          filterOption={(input, option) =>
-            ((option?.label as string) ?? "")
+          filterOption={(input, option) => {
+            return ((option?.title as string) ?? "")
               .toLowerCase()
-              .includes(input.toLowerCase())
-          }
+              .includes(input.toLowerCase());
+          }}
         >
           {options?.map((option, index) => {
             const { title, value } = option;
             return (
-              <ASelect.Option key={index} value={value as any}>
+              <ASelect.Option key={index} value={value as any} title={title}>
                 {title}
               </ASelect.Option>
             );
