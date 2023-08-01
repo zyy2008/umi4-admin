@@ -4,7 +4,12 @@ import type { IMenuOptions } from "@antv/xflow";
 import { createCtxMenuConfig } from "@antv/xflow";
 import { MenuItemType } from "@antv/xflow";
 import { IconStore, XFlowNodeCommands, XFlowEdgeCommands } from "@antv/xflow";
-import { DeleteOutlined, EditOutlined, StopOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  StopOutlined,
+  SaveOutlined,
+} from "@ant-design/icons";
 import type { IProps } from "./index";
 
 /** menuitem 配置 */
@@ -13,6 +18,7 @@ export namespace NsCustomMenuItems {
   IconStore.set("DeleteOutlined", DeleteOutlined);
   IconStore.set("EditOutlined", EditOutlined);
   IconStore.set("StopOutlined", StopOutlined);
+  IconStore.set("SaveOutlined", SaveOutlined);
 
   export const DELETE_EDGE: IMenuOptions = {
     id: XFlowEdgeCommands.DEL_EDGE.id,
@@ -59,6 +65,13 @@ export namespace NsCustomMenuItems {
     },
   };
 
+  export const SAVE_MENU: IMenuOptions = {
+    id: "SAVE_MENU_ITEM",
+    label: "保存事件",
+    iconName: "SaveOutlined",
+    onClick: async ({ target, commandService }) => {},
+  };
+
   export const SEPARATOR: IMenuOptions = {
     id: "separator",
     type: MenuItemType.Separator,
@@ -77,10 +90,17 @@ export const useMenuConfig = createCtxMenuConfig<IProps>((config, proxy) => {
     }
     switch (type) {
       case "node":
+        const submenu: () => IMenuOptions[] = () => {
+          if (renderKey === "TaskNode") {
+            return [NsCustomMenuItems.SAVE_MENU];
+          }
+          return [];
+        };
+
         model.setValue({
           id: "root",
           type: MenuItemType.Root,
-          submenu: [NsCustomMenuItems.DELETE_NODE],
+          submenu: [NsCustomMenuItems.DELETE_NODE, ...submenu()],
         });
         break;
       case "edge":

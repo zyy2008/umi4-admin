@@ -90,69 +90,36 @@ const Save: IToolbarItemOptions["render"] = (props) => {
           },
         },
         {
-          title: "保存类型",
-          dataIndex: "saveType",
-          valueType: "radio",
-          fieldProps: {
-            options: [
-              {
-                label: "事件工具",
-                value: "1",
-              },
-              {
-                label: "公共事件",
-                value: "2",
-              },
-              {
-                label: "普通事件",
-                value: "3",
-              },
-            ],
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: "此项为必填项",
-              },
-            ],
-          },
-        },
-        {
           valueType: "dependency",
           name: ["saveType"],
           columns: ({ saveType }) => {
-            if (saveType === "2" || saveType === "3") {
-              return [
-                {
-                  title: "触发方式",
-                  dataIndex: "triggerType",
-                  valueType: "checkbox",
-                  fieldProps: {
-                    options: [
-                      {
-                        label: "计划任务",
-                        value: "1",
-                      },
-                      {
-                        label: "应急任务",
-                        value: "2",
-                      },
-                    ],
-                  },
-                  formItemProps: {
-                    rules: [
-                      {
-                        required: true,
-                        message: "此项为必填项",
-                      },
-                    ],
-                  },
+            return [
+              {
+                title: "触发方式",
+                dataIndex: "triggerType",
+                valueType: "checkbox",
+                fieldProps: {
+                  options: [
+                    {
+                      label: "计划任务",
+                      value: "1",
+                    },
+                    {
+                      label: "应急任务",
+                      value: "2",
+                    },
+                  ],
                 },
-              ];
-            }
-
-            return [];
+                formItemProps: {
+                  rules: [
+                    {
+                      required: true,
+                      message: "此项为必填项",
+                    },
+                  ],
+                },
+              },
+            ];
           },
         },
         {
@@ -165,42 +132,37 @@ const Save: IToolbarItemOptions["render"] = (props) => {
             triggerType: string[];
             saveType: string;
           }) => {
-            if (saveType === "2" || saveType === "3") {
-              const columns: ProFormColumnsType[] = [
-                {
-                  title: "频次",
-                  dataIndex: "frequency",
-                  renderFormItem: () => {
-                    return <FieldRadioTime />;
-                  },
-                  formItemProps: {
-                    rules: [
-                      {
-                        required: true,
-                        message: "此项为必填项",
-                      },
-                    ],
-                  },
+            const columns: ProFormColumnsType[] = [
+              {
+                title: "频次",
+                dataIndex: "frequency",
+                renderFormItem: () => {
+                  return <FieldRadioTime />;
                 },
-                {
-                  title: "主题",
-                  dataIndex: "topic",
-                  formItemProps: {
-                    rules: [
-                      {
-                        required: true,
-                        message: "此项为必填项",
-                      },
-                    ],
-                  },
+                formItemProps: {
+                  rules: [
+                    {
+                      required: true,
+                      message: "此项为必填项",
+                    },
+                  ],
                 },
-              ];
-              if (triggerType) {
-                return triggerType.map((key) => columns[Number(key) - 1]);
-              }
-            }
+              },
+              {
+                title: "主题",
+                dataIndex: "topic",
+                formItemProps: {
+                  rules: [
+                    {
+                      required: true,
+                      message: "此项为必填项",
+                    },
+                  ],
+                },
+              },
+            ];
 
-            return [];
+            return columns;
           },
           formItemProps: {
             rules: [
