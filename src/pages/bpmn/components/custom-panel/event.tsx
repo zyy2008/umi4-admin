@@ -3,14 +3,24 @@ import { uuidv4 } from "@antv/xflow";
 import type { IConfigRenderOptions } from "@/components/flow";
 import { useRequest } from "@umijs/max";
 import { CardList, CardListProps } from "@/components/flow-custom";
-import { eventToolsSearch } from "@/pages/bpmn/service";
+import { eventToolsSearch, Context } from "@/pages/bpmn";
 
 const Event: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
-  const { data = [], loading } = useRequest(eventToolsSearch, {
+  const ctx = React.useContext(Context);
+  const {
+    data = [],
+    loading,
+    run,
+  } = useRequest(eventToolsSearch, {
     formatResult: (res) => {
       return res;
     },
+  });
+  ctx?.event$?.useSubscription((val) => {
+    if (val === "event") {
+      run();
+    }
   });
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     return data?.map((item) => {

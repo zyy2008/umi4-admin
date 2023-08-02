@@ -2,11 +2,12 @@ import React from "react";
 import type { IConfigRenderOptions } from "@/components/flow";
 import { useRequest } from "@umijs/max";
 import { CardList, CardListProps } from "@/components/flow-custom";
-import { customEventSearch } from "@/pages/bpmn/service";
+import { customEventSearch, Context } from "@/pages/bpmn";
 import { uuidv4 } from "@antv/xflow";
 
 const Public: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
+  const ctx = React.useContext(Context);
   const {
     data = [],
     loading,
@@ -15,6 +16,11 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
     formatResult: (res) => {
       return res;
     },
+  });
+  ctx?.event$?.useSubscription((val) => {
+    if (val === "public") {
+      run();
+    }
   });
   const dataSource = React.useMemo<CardListProps["dataSource"]>(() => {
     return data?.map((item) => {

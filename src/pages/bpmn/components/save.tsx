@@ -3,7 +3,7 @@ import { BetaSchemaForm, ProFormColumnsType } from "@ant-design/pro-components";
 import { IToolbarItemOptions, useXFlowApp, uuidv4 } from "@antv/xflow";
 import { Radio, Space, TimePicker, message } from "antd";
 import moment from "moment";
-import { customEventSave } from "@/pages/bpmn/service";
+import { customEventSave, Context } from "@/pages/bpmn";
 
 type FieldRadioTimeProps = {
   onChange?: <T = any>(value: T) => void;
@@ -52,6 +52,7 @@ const FieldRadioTime: React.FC<FieldRadioTimeProps> = (props) => {
 
 const Save: IToolbarItemOptions["render"] = (props) => {
   const { children } = props;
+  const ctx = React.useContext(Context);
   const app = useXFlowApp();
   return (
     <BetaSchemaForm<{
@@ -71,6 +72,7 @@ const Save: IToolbarItemOptions["render"] = (props) => {
         });
         if (res === "success") {
           message.success("保存成功");
+          ctx?.event$?.emit("public");
           return true;
         }
         message.warning("保存失败");

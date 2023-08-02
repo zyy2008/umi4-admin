@@ -22,6 +22,7 @@
     "@formily/core": "^2.2.27",
     "@formily/react": "^2.2.27",
     "@umijs/max": "^4.0.55",
+    "ahooks": "^3.7.8",
     "antd": "^4.24.4",
     "insert-text-at-cursor": "^0.3.0",
     "lodash": "^4.17.21",
