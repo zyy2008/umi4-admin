@@ -89,90 +89,90 @@ const Save: IToolbarItemOptions["render"] = (props) => {
             ],
           },
         },
-        {
-          valueType: "dependency",
-          name: ["saveType"],
-          columns: ({ saveType }) => {
-            return [
-              {
-                title: "触发方式",
-                dataIndex: "triggerType",
-                valueType: "checkbox",
-                fieldProps: {
-                  options: [
-                    {
-                      label: "计划任务",
-                      value: "1",
-                    },
-                    {
-                      label: "应急任务",
-                      value: "2",
-                    },
-                  ],
-                },
-                formItemProps: {
-                  rules: [
-                    {
-                      required: true,
-                      message: "此项为必填项",
-                    },
-                  ],
-                },
-              },
-            ];
-          },
-        },
-        {
-          valueType: "dependency",
-          name: ["triggerType", "saveType"],
-          columns: ({
-            triggerType,
-            saveType,
-          }: {
-            triggerType: string[];
-            saveType: string;
-          }) => {
-            const columns: ProFormColumnsType[] = [
-              {
-                title: "频次",
-                dataIndex: "frequency",
-                renderFormItem: () => {
-                  return <FieldRadioTime />;
-                },
-                formItemProps: {
-                  rules: [
-                    {
-                      required: true,
-                      message: "此项为必填项",
-                    },
-                  ],
-                },
-              },
-              {
-                title: "主题",
-                dataIndex: "topic",
-                formItemProps: {
-                  rules: [
-                    {
-                      required: true,
-                      message: "此项为必填项",
-                    },
-                  ],
-                },
-              },
-            ];
+        // {
+        //   valueType: "dependency",
+        //   name: ["saveType"],
+        //   columns: ({ saveType }) => {
+        //     return [
+        //       {
+        //         title: "触发方式",
+        //         dataIndex: "triggerType",
+        //         valueType: "checkbox",
+        //         fieldProps: {
+        //           options: [
+        //             {
+        //               label: "计划任务",
+        //               value: "1",
+        //             },
+        //             {
+        //               label: "应急任务",
+        //               value: "2",
+        //             },
+        //           ],
+        //         },
+        //         formItemProps: {
+        //           rules: [
+        //             {
+        //               required: true,
+        //               message: "此项为必填项",
+        //             },
+        //           ],
+        //         },
+        //       },
+        //     ];
+        //   },
+        // },
+        // {
+        //   valueType: "dependency",
+        //   name: ["triggerType", "saveType"],
+        //   columns: ({
+        //     triggerType,
+        //     saveType,
+        //   }: {
+        //     triggerType: string[];
+        //     saveType: string;
+        //   }) => {
+        //     const columns: ProFormColumnsType[] = [
+        //       {
+        //         title: "频次",
+        //         dataIndex: "frequency",
+        //         renderFormItem: () => {
+        //           return <FieldRadioTime />;
+        //         },
+        //         formItemProps: {
+        //           rules: [
+        //             {
+        //               required: true,
+        //               message: "此项为必填项",
+        //             },
+        //           ],
+        //         },
+        //       },
+        //       {
+        //         title: "主题",
+        //         dataIndex: "topic",
+        //         formItemProps: {
+        //           rules: [
+        //             {
+        //               required: true,
+        //               message: "此项为必填项",
+        //             },
+        //           ],
+        //         },
+        //       },
+        //     ];
 
-            return columns;
-          },
-          formItemProps: {
-            rules: [
-              {
-                required: true,
-                message: "此项为必填项",
-              },
-            ],
-          },
-        },
+        //     return columns;
+        //   },
+        //   formItemProps: {
+        //     rules: [
+        //       {
+        //         required: true,
+        //         message: "此项为必填项",
+        //       },
+        //     ],
+        //   },
+        // },
       ]}
     />
   );

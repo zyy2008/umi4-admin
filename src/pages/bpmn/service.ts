@@ -1,6 +1,7 @@
 import ajax, { AjaxPromise, ExtraFetchParams } from "@ajax";
 
-const prefix: string = "/rule";
+const RulePrefix: string = "/rule";
+const EventPrefix: string = "/event";
 
 export async function getRulesList(
   params: {
@@ -12,7 +13,24 @@ export async function getRulesList(
     method: "POST",
     url: "/rules/list",
     params,
-    prefix,
+    prefix: RulePrefix,
+    ...(options || {}),
+  });
+}
+
+export async function eventToolsSave(
+  data: {
+    toolId: string;
+    toolName: string;
+    toolData: string;
+  },
+  options?: ExtraFetchParams
+): AjaxPromise<API.RuleDTO[]> {
+  return ajax.ajax({
+    method: "POST",
+    url: "/flowable/eventToolsSave",
+    data,
+    prefix: EventPrefix,
     ...(options || {}),
   });
 }

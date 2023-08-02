@@ -1,6 +1,8 @@
 import React from "react";
-import { ProCard, ProList, BetaSchemaForm } from "@ant-design/pro-components";
-import { Tag, Progress } from "antd";
+import { ProCard, CheckCard, BetaSchemaForm } from "@ant-design/pro-components";
+import { Tag, Progress, Card, Pagination, Empty } from "antd";
+import styles from "./index.less";
+import { DrawerFlow } from "./components";
 
 const data = [
   "语雀的天空",
@@ -36,12 +38,24 @@ const data = [
 }));
 
 const BpmnView = () => {
+  const [checkValue, setCheckValue] = React.useState<string>();
+  const [data, setData] = React.useState<number[]>([]);
+
+  React.useEffect(() => {
+    setTimeout(() => {
+      setData([...new Array(100).keys()]);
+    }, 3000);
+  }, []);
   return (
     <ProCard
+      size="small"
       bordered
       headerBordered
+      type="inner"
+      className={styles["view"]}
       title={
         <BetaSchemaForm
+          span={6}
           layoutType="QueryFilter"
           columns={[
             {
@@ -83,33 +97,35 @@ const BpmnView = () => {
         padding: 0,
       }}
     >
-      <ProList<any>
-        pagination={{
-          defaultPageSize: 8,
-          showSizeChanger: false,
-        }}
-        showActions="hover"
-        rowSelection={{}}
-        grid={{ gutter: 16, column: 2 }}
-        onItem={(record: any) => {
-          return {
-            onMouseEnter: () => {
-              console.log(record);
-            },
-            onClick: () => {
-              console.log(record);
-            },
-          };
-        }}
-        metas={{
-          title: {},
-          subTitle: {},
-          type: {},
-          avatar: {},
-          content: {},
-        }}
-        dataSource={data}
-      />
+      <Card
+        title={
+          <CheckCard.Group
+            value={checkValue}
+            onChange={(value) => {
+              setCheckValue(value as string);
+            }}
+            className={styles["check"]}
+          >
+            {data.length > 0 ? (
+              data.map((key) => {
+                return (
+                  <CheckCard
+                    key={key}
+                    title="Card A"
+                    description="选项一"
+                    value={key}
+                  />
+                );
+              })
+            ) : (
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+            )}
+          </CheckCard.Group>
+        }
+      >
+        <Pagination defaultCurrent={1} total={50} />
+      </Card>
+      <DrawerFlow checkValue={checkValue} setCheckValue={setCheckValue} />
     </ProCard>
   );
 };

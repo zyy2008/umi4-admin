@@ -11,6 +11,7 @@ import { Graph } from "@antv/x6";
 import classnames from "classnames";
 import ReactDOM from "react-dom";
 import { connecting } from "./connection";
+import { nodeSubmenu } from "./sub-menu";
 
 export type Check = { uuid: string; version: string } | null;
 
@@ -114,6 +115,7 @@ const Bpmn = () => {
           }
         },
       })}
+      nodeSubmenu={nodeSubmenu}
     >
       <>
         <CustomPanel

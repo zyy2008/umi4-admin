@@ -65,13 +65,6 @@ export namespace NsCustomMenuItems {
     },
   };
 
-  export const SAVE_MENU: IMenuOptions = {
-    id: "SAVE_MENU_ITEM",
-    label: "保存事件",
-    iconName: "SaveOutlined",
-    onClick: async ({ target, commandService }) => {},
-  };
-
   export const SEPARATOR: IMenuOptions = {
     id: "separator",
     type: MenuItemType.Separator,
@@ -79,7 +72,7 @@ export namespace NsCustomMenuItems {
 }
 
 export const useMenuConfig = createCtxMenuConfig<IProps>((config, proxy) => {
-  const { menuDisabled = [] } = proxy.getValue();
+  const { menuDisabled = [], nodeSubmenu } = proxy.getValue();
   config.setMenuModelService(async (data, model) => {
     let { type, cell } = data ?? {};
     const { renderKey } = cell?.getData();
@@ -90,17 +83,11 @@ export const useMenuConfig = createCtxMenuConfig<IProps>((config, proxy) => {
     }
     switch (type) {
       case "node":
-        const submenu: () => IMenuOptions[] = () => {
-          if (renderKey === "TaskNode") {
-            return [NsCustomMenuItems.SAVE_MENU];
-          }
-          return [];
-        };
-
+        const submenu = nodeSubmenu?.(renderKey) ?? [];
         model.setValue({
           id: "root",
           type: MenuItemType.Root,
-          submenu: [NsCustomMenuItems.DELETE_NODE, ...submenu()],
+          submenu: [NsCustomMenuItems.DELETE_NODE, ...submenu],
         });
         break;
       case "edge":

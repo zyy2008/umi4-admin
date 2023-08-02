@@ -55,7 +55,7 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
   );
   return (
     <CardList
-      title="公共事件"
+      title="已定制事件"
       loading={loading}
       dataSource={dataSource}
       onMouseDown={onMouseDown}

@@ -37,6 +37,42 @@ const controlsFuc: (
         value: targetData?.label,
         placeholder: "请输入",
       },
+      {
+        name: "importRule",
+        label: "入口规则",
+        shape: ControlShapeEnum.SELECT_SHAPE,
+        placeholder: "请选择",
+        value: targetData?.importRule,
+        originData: {
+          service: async () => {
+            const res = await getRulesList({ ruleName: "" });
+            return (
+              res?.map((item) => ({
+                title: item.ruleName,
+                value: item.id,
+              })) ?? []
+            );
+          },
+        },
+      },
+      {
+        name: "exportRule",
+        label: "出口规则",
+        shape: ControlShapeEnum.SELECT_SHAPE,
+        placeholder: "请选择",
+        originData: {
+          service: async () => {
+            const res = await getRulesList({ ruleName: "" });
+            return (
+              res?.map((item) => ({
+                title: item.ruleName,
+                value: item.id,
+              })) ?? []
+            );
+          },
+        },
+        value: targetData?.exportRule,
+      },
     ],
   };
   if (targetData?.renderKey) {

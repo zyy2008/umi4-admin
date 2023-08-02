@@ -53,6 +53,11 @@ export default defineConfig({
       changeOrigin: true,
       pathRewrite: { "^/rule": "" },
     },
+    "/event": {
+      target: "http://192.169.7.156:8081/",
+      changeOrigin: true,
+      pathRewrite: { "^/event": "" },
+    },
   },
 
   clickToComponent: {},
@@ -65,6 +70,11 @@ export default defineConfig({
       name: "整体态势",
       path: "/view",
       component: "./bpmn-view",
+    },
+    {
+      name: "事件绑定",
+      path: "/bind",
+      component: "./event-bind",
     },
     {
       name: "事件定制",

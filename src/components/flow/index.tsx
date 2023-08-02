@@ -15,6 +15,7 @@ import {
   Disposable,
   ICmdHooks,
   NsGraphCmd,
+  IMenuOptions,
 } from "@antv/xflow";
 import type { Graph } from "@antv/x6";
 import { useGraphConfig } from "./graph-config";
@@ -47,6 +48,7 @@ export interface IProps {
   commandConfig?: (T: ICmdHooks, ...args: any) => Disposable[] | undefined;
   graphLayout?: NsGraphCmd.GraphLayout.IArgs;
   graphOptions?: (T: Graph.Options) => Graph.Options;
+  nodeSubmenu?: (T: string) => IMenuOptions[];
 }
 
 const toolbarConfig = createToolbarConfig(() => {});
