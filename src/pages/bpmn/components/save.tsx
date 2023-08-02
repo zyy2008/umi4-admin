@@ -1,8 +1,9 @@
 import React from "react";
 import { BetaSchemaForm, ProFormColumnsType } from "@ant-design/pro-components";
-import { IToolbarItemOptions, useXFlowApp } from "@antv/xflow";
-import { Radio, Space, TimePicker } from "antd";
+import { IToolbarItemOptions, useXFlowApp, uuidv4 } from "@antv/xflow";
+import { Radio, Space, TimePicker, message } from "antd";
 import moment from "moment";
+import { customEventSave } from "@/pages/bpmn/service";
 
 type FieldRadioTimeProps = {
   onChange?: <T = any>(value: T) => void;
@@ -53,15 +54,27 @@ const Save: IToolbarItemOptions["render"] = (props) => {
   const { children } = props;
   const app = useXFlowApp();
   return (
-    <BetaSchemaForm
+    <BetaSchemaForm<{
+      eventName: string;
+    }>
       modalProps={{
         maskClosable: false,
         destroyOnClose: true,
       }}
       title="保存"
       onFinish={async (value) => {
-        console.log(value);
-        return true;
+        const data = await app.getGraphData();
+        const res = await customEventSave({
+          eventId: uuidv4(),
+          eventData: JSON.stringify(data),
+          ...value,
+        });
+        if (res === "success") {
+          message.success("保存成功");
+          return true;
+        }
+        message.warning("保存失败");
+        return false;
       }}
       trigger={
         <div
@@ -79,7 +92,7 @@ const Save: IToolbarItemOptions["render"] = (props) => {
       columns={[
         {
           title: "名称",
-          dataIndex: "name",
+          dataIndex: "eventName",
           formItemProps: {
             rules: [
               {

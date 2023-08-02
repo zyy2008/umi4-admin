@@ -94,11 +94,11 @@ const controlsMainFun: (
       value: targetData?.label,
     },
     {
-      name: "importRule",
+      name: "entranceRule",
       label: "入口规则",
       shape: ControlShapeEnum.SELECT_SHAPE,
       placeholder: "请选择",
-      value: targetData?.importRule,
+      value: targetData?.entranceRule,
       originData: {
         service: async () => {
           const res = await getRulesList({ ruleName: "" });
@@ -112,7 +112,7 @@ const controlsMainFun: (
       },
     },
     {
-      name: "exportRule",
+      name: "exitRule",
       label: "出口规则",
       shape: ControlShapeEnum.SELECT_SHAPE,
       placeholder: "请选择",
@@ -127,14 +127,13 @@ const controlsMainFun: (
           );
         },
       },
-      value: targetData?.exportRule,
+      value: targetData?.exitRule,
     },
     {
-      name: "execution",
+      name: "microserviceStart",
       label: "业务执行",
       shape: ControlShapeEnum.SELECT_SHAPE,
       placeholder: "请选择",
-
       options: [
         {
           title: "调度计划生成",
@@ -166,7 +165,7 @@ const controlsMainFun: (
         maxTagTextLength: 3,
         maxTagCount: 2,
       },
-      value: targetData?.execution,
+      value: targetData?.microserviceStart,
     },
   ];
 };

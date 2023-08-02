@@ -19,17 +19,48 @@ export async function getRulesList(
 }
 
 export async function eventToolsSave(
-  data: {
-    toolId: string;
-    toolName: string;
-    toolData: string;
-  },
+  data: API.EventData,
   options?: ExtraFetchParams
-): AjaxPromise<API.RuleDTO[]> {
+): AjaxPromise<string> {
   return ajax.ajax({
     method: "POST",
     url: "/flowable/eventToolsSave",
     data,
+    prefix: EventPrefix,
+    ...(options || {}),
+  });
+}
+
+export async function eventToolsSearch(
+  options?: ExtraFetchParams
+): AjaxPromise<API.EventData[]> {
+  return ajax.ajax({
+    method: "POST",
+    url: "/flowable/eventToolsSearch",
+    prefix: EventPrefix,
+    ...(options || {}),
+  });
+}
+
+export async function customEventSave(
+  data: API.CustomEvent,
+  options?: ExtraFetchParams
+): AjaxPromise<string> {
+  return ajax.ajax({
+    method: "POST",
+    url: "/flowable/customEventSave",
+    data,
+    prefix: EventPrefix,
+    ...(options || {}),
+  });
+}
+
+export async function customEventSearch(
+  options?: ExtraFetchParams
+): AjaxPromise<API.CustomEvent[]> {
+  return ajax.ajax({
+    method: "POST",
+    url: "/flowable/customEventSearch",
     prefix: EventPrefix,
     ...(options || {}),
   });

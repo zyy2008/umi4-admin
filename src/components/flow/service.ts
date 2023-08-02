@@ -114,7 +114,6 @@ export namespace MockApi {
   export const addGroup: NsGroupCmd.AddGroup.IArgs["createService"] = async (
     args: NsGroupCmd.AddGroup.IArgs
   ) => {
-    debugger;
     const portItems = [
       {
         type: NsGraph.AnchorType.INPUT,

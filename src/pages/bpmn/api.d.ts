@@ -10,4 +10,16 @@ declare namespace API {
     ruleName: string;
     updateTime: string;
   };
+
+  type EventData = {
+    toolId?: string;
+    toolName?: string;
+    toolData?: string;
+  };
+
+  type CustomEvent = {
+    eventId?: string;
+    eventName?: string;
+    eventData?: string;
+  };
 }

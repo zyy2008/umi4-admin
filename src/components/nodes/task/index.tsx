@@ -1,5 +1,9 @@
 import React from "react";
-import { SettingOutlined } from "@ant-design/icons";
+import {
+  SettingOutlined,
+  ApartmentOutlined,
+  ToolOutlined,
+} from "@ant-design/icons";
 import type { NsGraph } from "@antv/xflow";
 import styles from "./index.less";
 import {
@@ -14,19 +18,39 @@ export const TaskNode: NsGraph.INodeRender = (props) => {
   const { size = { width: NODE_WIDTH, height: NODE_HEIGHT }, data = {} } =
     props;
   const {
-    stroke = DefaultNodeConfig.stroke,
     label = DefaultNodeConfig.label,
-    fill = DefaultNodeConfig.fill,
-    fontFill = DefaultNodeConfig.fontFill,
     fontSize = DefaultNodeConfig.fontSize,
+    icon = <SettingOutlined />,
   } = data;
   const { width, height } = size;
   return (
     <div className={styles["task"]} style={{ width, height, fontSize }}>
-      <span className="icon">
-        <SettingOutlined />
-      </span>
+      <span className="icon">{icon}</span>
       <span className="label">{label}</span>
     </div>
+  );
+};
+
+export const ToolNode: NsGraph.INodeRender = (props) => {
+  return (
+    <TaskNode
+      {...props}
+      data={{
+        ...props.data,
+        icon: <ToolOutlined />,
+      }}
+    />
+  );
+};
+
+export const EventNode: NsGraph.INodeRender = (props) => {
+  return (
+    <TaskNode
+      {...props}
+      data={{
+        ...props.data,
+        icon: <ApartmentOutlined />,
+      }}
+    />
   );
 };
