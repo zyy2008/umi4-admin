@@ -32,6 +32,9 @@ const Bind: React.FC<IProps> = () => {
         onCancel={() => {
           setOpen(false);
         }}
+        destroyOnClose
+        maskClosable={false}
+        width={600}
       >
         <Form ref={formRef} />
       </Modal>

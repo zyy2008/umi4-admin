@@ -7,6 +7,7 @@ import {
   useField,
   RecursionField,
   ISchema,
+  useForm,
 } from "@formily/react";
 import {
   createForm,
@@ -22,6 +23,8 @@ import {
   ArrayItems,
   Space,
   FormCollapse,
+  Checkbox,
+  SelectTable,
 } from "@formily/antd";
 import { eventISchema } from "./schema";
 
@@ -35,7 +38,6 @@ type MidsItem = {
 };
 
 type IProps = {};
-
 const formTab = FormTab.createFormTab();
 // const formCollapse = FormCollapse.createFormCollapse();
 const SchemaField = createSchemaField({
@@ -48,6 +50,8 @@ const SchemaField = createSchemaField({
     ArrayItems,
     Space,
     FormCollapse,
+    Checkbox,
+    SelectTable,
   },
 });
 
@@ -65,17 +69,27 @@ const EventSetting: React.FC<{
   name: string;
 }> = observer(({ name }) => {
   const field = useField();
+  const form = useForm();
   const [schema, setSchema] = React.useState<ISchema>({});
   useFormEffects(() => {
     onFieldValueChange(`setting.${name}.events`, (field) => {
       if (field.value.length > 0) {
-        setSchema(eventISchema);
+        const find = mockEvents.filter((item) => {
+          const is =
+            field.value.findIndex((value: any) => value === item.value) > -1;
+          if (!is) {
+            form.clearFormGraph(`setting.${name}.setting.${item.value}.*`);
+            form.clearFormGraph(`setting.${name}.setting.${item.value}`);
+          }
+          return is;
+        });
+        const schema = eventISchema(find);
+        setSchema(schema);
       } else {
         setSchema({});
       }
     });
   });
-
   return (
     <RecursionField
       basePath={field.address}
@@ -91,7 +105,16 @@ const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
     () =>
       createForm({
         effects() {
-          onFieldValueChange("mids", (field) => {
+          onFieldValueChange("mids", (field, form) => {
+            mockMids.forEach((item) => {
+              const is =
+                field.value.findIndex((value: any) => value === item.value) >
+                -1;
+              if (!is) {
+                form.clearFormGraph(`setting.${item.value}.*`);
+                form.clearFormGraph(`setting.${item.value}`);
+              }
+            });
             setMids(field.value);
           });
         },
@@ -100,9 +123,10 @@ const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
   );
 
   const midsItems = React.useMemo<MidsItem[]>(() => {
-    return mockMids.filter(
-      (item) => mids.findIndex((value) => value === item.value) > -1
-    );
+    return mockMids.filter((item) => {
+      const is = mids.findIndex((value) => value === item.value) > -1;
+      return is;
+    });
   }, [mids]);
 
   React.useImperativeHandle(
@@ -116,7 +140,7 @@ const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
   );
   return (
     <FormProvider form={form}>
-      <SchemaField>
+      <SchemaField scope={{ formTab }}>
         <SchemaField.Array
           name="mids"
           title="卫星"
@@ -130,7 +154,7 @@ const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
             placeholder: "请选择卫星",
           }}
         />
-        <SchemaField.Void x-component="FormTab" x-component-props={{ formTab }}>
+        <SchemaField.Void x-component="FormTab">
           {midsItems?.map((item) => {
             return (
               <SchemaField.Void
@@ -146,7 +170,7 @@ const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
                   <SchemaField.Object name={item.value}>
                     <SchemaField.Array
                       name="events"
-                      title="选择事件"
+                      title="事件"
                       x-decorator="FormItem"
                       x-component="Select"
                       enum={mockEvents}
@@ -154,12 +178,11 @@ const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
                       x-component-props={{
                         mode: "multiple",
                         maxTagCount: 3,
-                        placeholder: "请选择卫星",
+                        placeholder: "请选择事件",
                       }}
                     />
                     <SchemaField.Object
-                      name="ddd"
-                      x-decorator="FormItem"
+                      name="setting"
                       x-component={() => <EventSetting name={item.value} />}
                     ></SchemaField.Object>
                   </SchemaField.Object>

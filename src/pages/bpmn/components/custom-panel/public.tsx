@@ -36,7 +36,7 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
   }, [data]);
   return (
     <CardList
-      title="已定制事件"
+      title="已定制流程"
       loading={loading}
       dataSource={dataSource}
       onMouseDown={onMouseDown}
