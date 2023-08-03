@@ -1,10 +1,17 @@
 import React from "react";
-import { FormProvider, createSchemaField, FormConsumer } from "@formily/react";
+import {
+  FormProvider,
+  createSchemaField,
+  useFormEffects,
+  observer,
+  useField,
+  RecursionField,
+  ISchema,
+} from "@formily/react";
 import {
   createForm,
   onFieldValueChange,
   Form as FormHandle,
-  Field,
 } from "@formily/core";
 import {
   Select,
@@ -14,7 +21,9 @@ import {
   FormTab,
   ArrayItems,
   Space,
+  FormCollapse,
 } from "@formily/antd";
+import { eventISchema } from "./schema";
 
 export type ViewHandle = {
   form?: FormHandle;
@@ -26,7 +35,9 @@ type MidsItem = {
 };
 
 type IProps = {};
+
 const formTab = FormTab.createFormTab();
+// const formCollapse = FormCollapse.createFormCollapse();
 const SchemaField = createSchemaField({
   components: {
     Select,
@@ -36,6 +47,7 @@ const SchemaField = createSchemaField({
     Input,
     ArrayItems,
     Space,
+    FormCollapse,
   },
 });
 
@@ -43,6 +55,35 @@ const mockMids: MidsItem[] = [...new Array(10).keys()].map((key) => ({
   label: `卫星${key}`,
   value: `A${key}`,
 }));
+
+const mockEvents: MidsItem[] = [...new Array(10).keys()].map((key) => ({
+  label: `事件${key}`,
+  value: `B${key}`,
+}));
+
+const EventSetting: React.FC<{
+  name: string;
+}> = observer(({ name }) => {
+  const field = useField();
+  const [schema, setSchema] = React.useState<ISchema>({});
+  useFormEffects(() => {
+    onFieldValueChange(`setting.${name}.events`, (field) => {
+      if (field.value.length > 0) {
+        setSchema(eventISchema);
+      } else {
+        setSchema({});
+      }
+    });
+  });
+
+  return (
+    <RecursionField
+      basePath={field.address}
+      schema={schema}
+      onlyRenderProperties
+    />
+  );
+});
 
 const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
   const [mids, setMids] = React.useState<string[]>([]);
@@ -82,23 +123,18 @@ const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
           x-decorator="FormItem"
           x-component="Select"
           enum={mockMids}
+          required
           x-component-props={{
             mode: "multiple",
             maxTagCount: 3,
             placeholder: "请选择卫星",
           }}
         />
-        <SchemaField.Void
-          type="void"
-          x-component="FormTab"
-          x-component-props={{ formTab }}
-          title="222"
-        >
+        <SchemaField.Void x-component="FormTab" x-component-props={{ formTab }}>
           {midsItems?.map((item) => {
             return (
               <SchemaField.Void
                 key={item.value}
-                type="void"
                 name={item.value}
                 x-component="FormTab.TabPane"
                 x-component-props={{
@@ -106,13 +142,28 @@ const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
                   key: item.value,
                 }}
               >
-                <SchemaField.String
-                  name="aaa"
-                  x-decorator="FormItem"
-                  title="AAA"
-                  required
-                  x-component="Input"
-                />
+                <SchemaField.Object name="setting">
+                  <SchemaField.Object name={item.value}>
+                    <SchemaField.Array
+                      name="events"
+                      title="选择事件"
+                      x-decorator="FormItem"
+                      x-component="Select"
+                      enum={mockEvents}
+                      required
+                      x-component-props={{
+                        mode: "multiple",
+                        maxTagCount: 3,
+                        placeholder: "请选择卫星",
+                      }}
+                    />
+                    <SchemaField.Object
+                      name="ddd"
+                      x-decorator="FormItem"
+                      x-component={() => <EventSetting name={item.value} />}
+                    ></SchemaField.Object>
+                  </SchemaField.Object>
+                </SchemaField.Object>
               </SchemaField.Void>
             );
           })}

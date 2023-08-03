@@ -54,7 +54,7 @@ export default defineConfig({
       pathRewrite: { "^/rule": "" },
     },
     "/event": {
-      target: "http://192.169.7.156:8081/",
+      target: "http://192.168.8.22:8081/",
       changeOrigin: true,
       pathRewrite: { "^/event": "" },
     },
