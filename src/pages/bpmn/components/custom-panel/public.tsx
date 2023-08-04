@@ -4,6 +4,7 @@ import { useRequest } from "@umijs/max";
 import { CardList, CardListProps } from "@/components/flow-custom";
 import { customEventSearch, Context } from "@/pages/bpmn";
 import { uuidv4 } from "@antv/xflow";
+import { ports } from "./base";
 
 const Public: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
@@ -31,6 +32,7 @@ const Public: React.FC<IConfigRenderOptions> = (props) => {
         renderKey: "EventNode",
         width: 100,
         height: 70,
+        ports,
       };
     });
   }, [data]);

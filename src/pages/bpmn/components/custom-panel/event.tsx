@@ -4,6 +4,7 @@ import type { IConfigRenderOptions } from "@/components/flow";
 import { useRequest } from "@umijs/max";
 import { CardList, CardListProps } from "@/components/flow-custom";
 import { eventToolsSearch, Context } from "@/pages/bpmn";
+import { ports } from "./base";
 
 const Event: React.FC<IConfigRenderOptions> = (props) => {
   const { onMouseDown } = props;
@@ -32,6 +33,7 @@ const Event: React.FC<IConfigRenderOptions> = (props) => {
         renderKey: "ToolNode",
         width: 100,
         height: 70,
+        ports,
         ...others,
       };
     });

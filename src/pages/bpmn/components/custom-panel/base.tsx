@@ -4,7 +4,7 @@ import { IConfigRenderOptions } from "@/components/flow";
 import { TaskNode, EndNode, ConditionNode } from "@/components/nodes";
 import { ColNode } from "@/components/flow-custom";
 
-const ports: NsGraph.INodeAnchor[] = [
+export const ports: NsGraph.INodeAnchor[] = [
   {
     group: NsGraph.AnchorGroup.BOTTOM,
     id: "",
