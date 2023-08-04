@@ -25,8 +25,10 @@ import {
   FormCollapse,
   Checkbox,
   SelectTable,
+  Radio,
+  TimePicker,
 } from "@formily/antd";
-import { eventISchema } from "./schema";
+import { eventISchema, handlerEnum } from "./schema";
 
 export type ViewHandle = {
   form?: FormHandle;
@@ -52,15 +54,17 @@ const SchemaField = createSchemaField({
     FormCollapse,
     Checkbox,
     SelectTable,
+    Radio,
+    TimePicker,
   },
 });
 
-const mockMids: MidsItem[] = [...new Array(10).keys()].map((key) => ({
+export const mockMids: MidsItem[] = [...new Array(10).keys()].map((key) => ({
   label: `卫星${key}`,
   value: `A${key}`,
 }));
 
-const mockEvents: MidsItem[] = [...new Array(10).keys()].map((key) => ({
+export const mockEvents: MidsItem[] = [...new Array(10).keys()].map((key) => ({
   label: `事件${key}`,
   value: `B${key}`,
 }));
@@ -140,7 +144,7 @@ const Form = React.forwardRef<ViewHandle, IProps>((props, ref) => {
   );
   return (
     <FormProvider form={form}>
-      <SchemaField scope={{ formTab }}>
+      <SchemaField scope={{ formTab, handlerEnum }}>
         <SchemaField.Array
           name="mids"
           title="卫星"
